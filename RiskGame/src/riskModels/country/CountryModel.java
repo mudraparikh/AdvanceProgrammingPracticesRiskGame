@@ -15,7 +15,7 @@ import riskModels.country.CountryConstants;
 public class CountryModel  {
 	/**
 	 * This method will  read all lines under [territory] from map and return list of countries with in it. 
-	 * @param BufferReader textBuffer
+	 * @param textBuffer :text buffer to be read
 	 * @return List of Country Objects
 	 */
 	public  List<Country> readCountries(BufferedReader textBuffer){
