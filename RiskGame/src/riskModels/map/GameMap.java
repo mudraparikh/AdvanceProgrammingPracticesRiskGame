@@ -31,5 +31,4 @@ public class GameMap {
 	{
 		this.continentList = continentList;
 	}
-	
 }
