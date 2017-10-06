@@ -13,7 +13,7 @@ public class Continent {
 	
 	public String continentName;
 	public List<Country> memberCountriesList = new ArrayList<Country>();
-	public int nummberOfTerritories;
+	public int numberOfTerritories;
 	
 	public String getContinentName() 
 	{
@@ -31,11 +31,11 @@ public class Continent {
 	{
 		this.memberCountriesList = memberCountriesList;
 	}
-	public int getNummberOfTerritories() {
-		return nummberOfTerritories;
+	public int getNumberOfTerritories() {
+		return numberOfTerritories;
 	}
-	public void setNummberOfTerritories(int nummberOfTerritories) {
-		this.nummberOfTerritories = nummberOfTerritories;
+	public void setNumberOfTerritories(int nummberOfTerritories) {
+		this.numberOfTerritories = nummberOfTerritories;
 	}
 	
 	

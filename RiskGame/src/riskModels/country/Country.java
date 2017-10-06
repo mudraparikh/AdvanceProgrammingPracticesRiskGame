@@ -18,7 +18,7 @@ public class Country {
 	
 	public Country(String countryName, int startPixel, int endPixel, String continentName)
 	{
-		this.countryName=continentName;
+		this.countryName=countryName;
 		this.startPixel= startPixel;
 		this.endPixel=endPixel;
 		this.belongsToContinet=continentName;
