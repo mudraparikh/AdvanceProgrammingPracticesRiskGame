@@ -3,15 +3,17 @@ package riskView.map;
 import java.io.IOException;
 
 
-public class StartGame extends java.awt.Frame {
-	public StartGame() {
-	       initComponents();
-	        jButton1.setEnabled(true);
-	        setLocationRelativeTo(null);
-            }
+public class StartGame extends java.awt.Frame 
+    {
+	public StartGame() 
+	  {
+	    initComponents();
+	    jButton1.setEnabled(true);
+	    setLocationRelativeTo(null);
+      }
 	
-	private void initComponents() {
-
+	private void initComponents()
+       {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -20,51 +22,64 @@ public class StartGame extends java.awt.Frame {
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(1, 1, 1));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter() 
+           {
+            public void windowClosing(java.awt.event.WindowEvent evt) 
+              {
                 exitForm(evt);
-            }
-        });
+              }
+           });
+    
     jPanel1.setBackground(new java.awt.Color(1, 1, 1));
     jPanel1.setName("jPanel1"); 
 
     jButton1.setText("Start Game");
     jButton1.setName("jButton1"); 
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-   //    jButton1ActionPerformed(evt);
-        }
-    });
+    jButton1.addActionListener(new java.awt.event.ActionListener() 
+       {
+         public void actionPerformed(java.awt.event.ActionEvent evt) 
+         {
+            jButton1ActionPerformed(evt);
+         }
+       });
     
     jButton2.setText("Add Player");
-    jButton2.setName("jButton2"); // NOI18N
-    jButton2.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+    jButton2.setName("jButton2"); 
+    jButton2.addActionListener(new java.awt.event.ActionListener() 
+       {
+        public void actionPerformed(java.awt.event.ActionEvent evt) 
+        {
         //    jButton2ActionPerformed(evt);
         }
-    });
+       });
+    
     jButton3.setText("Map Editor");
     jButton3.setName("jButton3"); 
-    jButton3.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton3ActionPerformed(evt);
-        }
-    });
+    jButton3.addActionListener(new java.awt.event.ActionListener() 
+       {
+         public void actionPerformed(java.awt.event.ActionEvent evt) 
+         {
+           jButton3ActionPerformed(evt);
+         }
+       });
 
     jButton4.setText("Exit");
     jButton4.setName("jButton4"); 
-    jButton4.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton4ActionPerformed(evt);
-        }
-    });
+    jButton4.addActionListener(new java.awt.event.ActionListener() 
+       {
+         public void actionPerformed(java.awt.event.ActionEvent evt) 
+         {
+           jButton4ActionPerformed(evt);
+         }
+       });
 
-  //jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Risk/resources/risk-logo.jpg"))); // NOI18N
+  
     jLabel1.setName("jLabel1");
     
     javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
     jPanel1.setLayout(jPanel1Layout);
-    jPanel1Layout.setHorizontalGroup(
+    jPanel1Layout.setHorizontalGroup
+    (
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addContainerGap()
@@ -79,7 +94,8 @@ public class StartGame extends java.awt.Frame {
                 .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
             .addGap(87, 87, 87))
     );
-    jPanel1Layout.setVerticalGroup(
+    jPanel1Layout.setVerticalGroup
+    (
         jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(jPanel1Layout.createSequentialGroup()
             .addContainerGap()
@@ -93,47 +109,55 @@ public class StartGame extends java.awt.Frame {
             .addGap(18, 18, 18)
             .addComponent(jButton4)
             .addGap(21, 21, 21))
-        );
+     );
     add(jPanel1, java.awt.BorderLayout.CENTER);
     pack();
-}
+       }
 
-private void exitForm(java.awt.event.WindowEvent evt) {
-    System.exit(0);
-}
-/*private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-    RiskGame add = new RiskGame();
-	add.setVisible(true);
-}
-private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-	AddPlayer add = new AddPlayer();
-	add.setVisible(true);
-}*/
+   private void exitForm(java.awt.event.WindowEvent evt) 
+     {
+      System.exit(0);
+     }
+  private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) 
+    {
+       LaunchGame add = new LaunchGame();
+	   add.setVisible(true);
+     }
+/*   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) 
+     {
+	   AddPlayer add = new AddPlayer();
+	   add.setVisible(true);
+     }*/
 
-private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-	MapView add = new MapView();
-	add.setVisible(true);
-}
+   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)
+     {
+	   MapView add = new MapView();
+	   add.setVisible(true);
+     }
 
-private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-	System.exit(0);
-}
+   private void jButton4ActionPerformed(java.awt.event.ActionEvent evt)
+     {
+	 System.exit(0);
+     }
 
-public static void main(String args[]) {
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
+public static void main(String args[]) 
+   {
+     java.awt.EventQueue.invokeLater(new Runnable() 
+        {
+          public void run() 
+          {
             new StartGame().setVisible(true);
-        }
-    });
-}
+          }
+        });     
+   }
 
 
-// Variables declaration - do not modify//GEN-BEGIN:variables
-public static javax.swing.JButton jButton1;
-private javax.swing.JButton jButton2;
-private javax.swing.JButton jButton3;
-private javax.swing.JButton jButton4;
-private javax.swing.JLabel jLabel1;
-private javax.swing.JPanel jPanel1;
-// End of variables declaration//GEN-END:variables
-}
+     // Variables declaration - do not modify//GEN-BEGIN:variables
+     public static javax.swing.JButton jButton1;
+     private javax.swing.JButton jButton2;
+     private javax.swing.JButton jButton3;
+     private javax.swing.JButton jButton4;
+     private javax.swing.JLabel jLabel1;
+     private javax.swing.JPanel jPanel1;
+     // End of variables declaration//GEN-END:variables
+    }
