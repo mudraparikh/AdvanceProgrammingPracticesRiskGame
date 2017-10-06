@@ -66,8 +66,4 @@ public class Country {
 	{
 		this.neighborNodes = neighborNodes;
 	}
-	
-	
-	
-
 }
