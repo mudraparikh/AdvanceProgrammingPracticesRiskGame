@@ -7,5 +7,6 @@ riskControllers.map
 riskControllers.reinforcement
 riskModels.continent
 riskModels.country
+riskModels.map
 riskView.map
 util
