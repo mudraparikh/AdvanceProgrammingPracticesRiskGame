@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Objects;
+
 /**
  * This class will have common utility methods
  * for example  checking null string or blank string
@@ -15,9 +17,6 @@ public class RiskGameUtil {
      * @return true or false based on validation
      */
     public static boolean checkNullString(String name) {
-        if (name != "" && name != null && !name.isEmpty()) {
-            return true;
-        }
-        return false;
+        return !Objects.equals(name, "") && name != null && !name.isEmpty();
     }
 }

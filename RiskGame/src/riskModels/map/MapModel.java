@@ -23,13 +23,13 @@ public class MapModel {
         HashMap<Country, List<Country>> countryAndNeighbours = new HashMap<Country, List<Country>>();
 
         for (Country country : countryAndNeighbors) {
-            countryContinentMap.put(country.getCountryName(), country.getBelongsToContinet());
+            countryContinentMap.put(country.getCountryName(), country.getBelongsToContinent());
         }
         for (Country country : countryAndNeighbors) {
             List<Country> neighbourList = new ArrayList<Country>();
             for (Country neighbour : country.getNeighborNodes()) {
                 String continentName = countryContinentMap.get(neighbour.getCountryName());
-                neighbour.setBelongsToContinet(continentName);
+                neighbour.setBelongsToContinent(continentName);
                 neighbourList.add(neighbour);
             }
             countryAndNeighbours.put(country, neighbourList);
@@ -101,10 +101,7 @@ public class MapModel {
                 bufferReaderForFile.mark(0);
             }
             bufferReaderForFile.reset();
-        } catch (NumberFormatException e) {
-
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (NumberFormatException | IOException e) {
 
             e.printStackTrace();
         }
@@ -115,7 +112,7 @@ public class MapModel {
      * This method will read the mapfile and provide data to creategraph
      *
      * @param filePath
-     * @return
+     * @return Function will return the map details obj
      */
     public GameMap readMapFile(String filePath) {
         BufferedReader bufferReaderForFile = null;
@@ -154,9 +151,9 @@ public class MapModel {
                             Map.Entry pair = (Map.Entry) it.next();
                             Country country = (Country) pair.getKey();
                             List<Country> neighbours = (List<Country>) pair.getValue();
-                            System.out.println("------" + country.getCountryName() + "-----" + country.getBelongsToContinet());
+                            System.out.println("------" + country.getCountryName() + "-----" + country.getBelongsToContinent());
                             for (Country neighbour : neighbours) {
-                                System.out.println(neighbour.getCountryName() + " " + neighbour.getBelongsToContinet());
+                                System.out.println(neighbour.getCountryName() + " " + neighbour.getBelongsToContinent());
                             }
 
                         }

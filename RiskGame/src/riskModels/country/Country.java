@@ -12,14 +12,14 @@ public class Country {
     public String countryName;
     public int startPixel;
     public int endPixel;
-    public String belongsToContinet;// to Represent county belongs to which continent
+    public String belongsToContinent;// to Represent county belongs to which continent
     public List<Country> neighborNodes; // to Represents adjacent country nodes
 
     public Country(String countryName, int startPixel, int endPixel, String continentName) {
         this.countryName = countryName;
         this.startPixel = startPixel;
         this.endPixel = endPixel;
-        this.belongsToContinet = continentName;
+        this.belongsToContinent = continentName;
     }
 
     public Country(String neighbourCountryName) {
@@ -50,12 +50,12 @@ public class Country {
         this.endPixel = endPixel;
     }
 
-    public String getBelongsToContinet() {
-        return belongsToContinet;
+    public String getBelongsToContinent() {
+        return belongsToContinent;
     }
 
-    public void setBelongsToContinet(String belongsToContinet) {
-        this.belongsToContinet = belongsToContinet;
+    public void setBelongsToContinent(String belongsToContinent) {
+        this.belongsToContinent = belongsToContinent;
     }
 
     public List<Country> getNeighborNodes() {
