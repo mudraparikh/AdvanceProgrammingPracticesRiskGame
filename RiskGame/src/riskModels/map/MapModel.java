@@ -18,7 +18,7 @@ public class MapModel {
      * @param countryAndNeighbors It is same List returned while reading [Territories] part
      * @return HashMap ,Which will have Country as a key and List of Country (neighbors) as a Value.it will help to create graph
      */
-    private static HashMap<Country, List<Country>> assignContinentToNeighbors(List<Country> countryAndNeighbors) {
+    public static HashMap<Country, List<Country>> assignContinentToNeighbors(List<Country> countryAndNeighbors) {
         HashMap<String, String> countryContinentMap = new HashMap<String, String>();
         HashMap<Country, List<Country>> countryAndNeighbours = new HashMap<Country, List<Country>>();
 
@@ -69,11 +69,9 @@ public class MapModel {
                 }
 
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IOException e) {
             e.printStackTrace();
 
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return countryList;
     }
@@ -125,7 +123,6 @@ public class MapModel {
                 if (st.startsWith("[")) {
 
                     String id = st.substring(st.indexOf("[") + 1, st.indexOf("]"));
-                    System.out.println(id);
                     if (id.equalsIgnoreCase("Map")) {
                         while ((maps = bufferReaderForFile.readLine()) != null && !maps.startsWith("[")) {
                             if (RiskGameUtil.checkNullString(maps)) {
@@ -146,16 +143,10 @@ public class MapModel {
                         List<Country> countryAndNeighbor = MapModel.readTerritories(bufferReaderForFile);
                         HashMap<Country, List<Country>> graphReadyMap = MapModel.assignContinentToNeighbors(countryAndNeighbor);
                         System.out.println("Reading of Territories Completed");
-                        Iterator it = graphReadyMap.entrySet().iterator();
-                        while (it.hasNext()) {
-                            Map.Entry pair = (Map.Entry) it.next();
+                        for (Object o : graphReadyMap.entrySet()) {
+                            Map.Entry pair = (Map.Entry) o;
                             Country country = (Country) pair.getKey();
                             List<Country> neighbours = (List<Country>) pair.getValue();
-                            System.out.println("------" + country.getCountryName() + "-----" + country.getBelongsToContinent());
-                            for (Country neighbour : neighbours) {
-                                System.out.println(neighbour.getCountryName() + " " + neighbour.getBelongsToContinent());
-                            }
-
                         }
                         mapDetails.setCountryAndNeighborsMap(graphReadyMap);
                     }
