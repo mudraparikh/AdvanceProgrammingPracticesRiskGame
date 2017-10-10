@@ -130,9 +130,8 @@ public class StartGame extends java.awt.Frame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         MapView add = new MapView();
-        add.setVisible(true);
+        //add.setVisible(true);
     }
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
     }

@@ -1,5 +1,7 @@
 package riskModels.country;
 
+import riskModels.player.Player;
+
 import java.util.List;
 
 /**
@@ -14,12 +16,35 @@ public class Country {
     public int endPixel;
     public String belongsToContinent;// to Represent county belongs to which continent
     public List<Country> neighborNodes; // to Represents adjacent country nodes
+    public Player belongsToPlayer;
+    public int currentArmiesDeployed;
 
     public Country(String countryName, int startPixel, int endPixel, String continentName) {
         this.countryName = countryName;
         this.startPixel = startPixel;
         this.endPixel = endPixel;
         this.belongsToContinent = continentName;
+    }
+
+    public Country(Player belongsToPlayer, int currentArmiesDeployed){
+        this.belongsToPlayer = belongsToPlayer;
+        this.currentArmiesDeployed = currentArmiesDeployed;
+    }
+
+    public Player getBelongsToPlayer() {
+        return belongsToPlayer;
+    }
+
+    public void setBelongsToPlayer(Player belongsToPlayer) {
+        this.belongsToPlayer = belongsToPlayer;
+    }
+
+    public int getCurrentArmiesDeployed() {
+        return currentArmiesDeployed;
+    }
+
+    public void setCurrentArmiesDeployed(int currentArmiesDeployed) {
+        this.currentArmiesDeployed = currentArmiesDeployed;
     }
 
     public Country(String neighbourCountryName) {

@@ -109,14 +109,22 @@ public class MapModel {
     /**
      * This method will read the mapfile and provide data to creategraph
      *
-     * @param filePath
+     *
      * @return Function will return the map details obj
      */
+    public int mapFileInputParse(){
+        GameMap t = readMapFile("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/src/riskModels/map/canada.map");
+        System.out.println(""+t);
+        return 1;
+    }
     public GameMap readMapFile(String filePath) {
         BufferedReader bufferReaderForFile = null;
         GameMap mapDetails = new GameMap();
         try {
             File file = new File(filePath);
+            System.out.println(file.exists());
+            System.out.println(new File(".").getAbsoluteFile());
+            System.out.println(System.getProperty("user.dir"));
             bufferReaderForFile = new BufferedReader(new FileReader(file));
             String st, maps, Continents, Territories;
             while ((st = bufferReaderForFile.readLine()) != null) {

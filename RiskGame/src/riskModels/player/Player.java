@@ -3,6 +3,7 @@ package riskModels.player;
 import riskModels.cards.Card;
 import riskModels.country.Country;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,19 @@ public class Player {
     public String name;
     public String alias;
     public int totalArmies;
+
+    public int getReinforcementArmies() {
+        return reinforcementArmies;
+    }
+
+    public void setReinforcementArmies(int reinforcementArmies) {
+        this.reinforcementArmies = reinforcementArmies;
+    }
+
+    public int reinforcementArmies;
     public List<Country> assignedCountries;
     public Card cards;
+    public Color colors;
 
     public String getName() {
         return name;
