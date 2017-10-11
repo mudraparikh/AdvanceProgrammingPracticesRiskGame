@@ -16,7 +16,11 @@ public class Continent {
     public List<Country> memberCountriesList = new ArrayList<Country>();
     public int numberOfTerritories;
 
-    public String getContinentName() {
+    public Continent(String continentName) {
+		this.continentName=continentName;
+	}
+
+	public String getContinentName() {
         return continentName;
     }
 
