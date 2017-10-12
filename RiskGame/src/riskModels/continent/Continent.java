@@ -11,11 +11,11 @@ import riskModels.country.Country;
  */
 public class Continent {
 	
-	public String continentName;
+	public static String continentName;
 	public List<Country> memberCountriesList = new ArrayList<Country>();
 	public int numberOfTerritories;
 	
-	public String getContinentName() 
+	public static String getContinentName() 
 	{
 		return continentName;
 	}
