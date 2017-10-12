@@ -11,32 +11,31 @@ import java.util.List;
  * @author prashantp95
  */
 public class Continent {
-
-    public String continentName;
-    public List<Country> memberCountriesList = new ArrayList<Country>();
-    public int numberOfTerritories;
+	
+	public static String continentName;
+	public List<Country> memberCountriesList = new ArrayList<Country>();
+	public int numberOfTerritories;
+	
+	public static String getContinentName() 
+	{
+		return continentName;
+	}
+	public void setContinentName(String continentName) 
+	{
+		this.continentName = continentName;
+	}
+	public List<Country> getMemberCountriesList() {
+		return memberCountriesList;
+	}
 
     public Continent(String continentName) {
 		this.continentName=continentName;
 	}
 
 
-	public Continent() 
-	{
+	public Continent() {
 		 //default constructor
 	}
-
-	public String getContinentName() {
-        return continentName;
-    }
-
-    public void setContinentName(String continentName) {
-        this.continentName = continentName;
-    }
-
-    public List<Country> getMemberCountriesList() {
-        return memberCountriesList;
-    }
 
     public void setMemberCountriesList(List<Country> memberCountriesList) {
         this.memberCountriesList = memberCountriesList;

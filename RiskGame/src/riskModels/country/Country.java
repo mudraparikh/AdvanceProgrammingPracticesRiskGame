@@ -19,6 +19,19 @@ public class Country {
     public Player belongsToPlayer;
     public int currentArmiesDeployed;
 
+    @Override
+	public boolean equals(Object o) {
+		String countryName = ((Country)o).getCountryName();
+	      if(countryName.equals(this.getCountryName())){
+	    	  return true;
+	      }
+		return false;
+	   }
+	@Override
+	public int hashCode() {
+		return this.countryName.hashCode();
+	}
+	
     public Country(String countryName, int startPixel, int endPixel, String continentName) {
         this.countryName = countryName;
         this.startPixel = startPixel;
