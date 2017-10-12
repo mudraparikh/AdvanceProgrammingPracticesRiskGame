@@ -30,10 +30,10 @@ public static void main(String[] args) {
 	        Map.Entry pair = (Map.Entry)it.next();
 	        Country country=(Country) pair.getKey();
 	        List<Country> neighbours = (List<Country>) pair.getValue();
-	        System.out.println("------"+country.getCountryName()+"-----"+country.getBelongsToContinet());
+	       // System.out.println("------"+country.getCountryName()+"-----"+country.getBelongsToContinet());
 	        for(Country neighbour:neighbours) 
 	        {
-	        	System.out.println(neighbour.getCountryName()+" "+neighbour.getBelongsToContinet());
+	        //	System.out.println(neighbour.getCountryName()+" "+neighbour.getBelongsToContinet());
 	        }
 	        
 	    }
