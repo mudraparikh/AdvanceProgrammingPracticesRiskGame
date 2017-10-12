@@ -16,8 +16,17 @@ public class GameMap {
 
     public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
     public List<Continent> continentList = new ArrayList<>();
+    public boolean isCorrectMap =true;
 
-    public HashMap<Country, List<Country>> getCountryAndNeighborsMap() {
+    public boolean isCorrectMap() {
+		return isCorrectMap;
+	}
+
+	public void setCorrectMap(boolean isCorrectMap) {
+		this.isCorrectMap = isCorrectMap;
+	}
+
+	public HashMap<Country, List<Country>> getCountryAndNeighborsMap() {
         return countryAndNeighborsMap;
     }
 
