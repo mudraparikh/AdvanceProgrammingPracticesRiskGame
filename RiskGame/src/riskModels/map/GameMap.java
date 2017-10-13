@@ -17,6 +17,7 @@ public class GameMap {
     public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
     public List<Continent> continentList = new ArrayList<>();
     public boolean isCorrectMap =true;
+    public String errorMessage;
 
     public boolean isCorrectMap() {
 		return isCorrectMap;
@@ -41,4 +42,13 @@ public class GameMap {
     public void setContinentList(List<Continent> continentList) {
         this.continentList = continentList;
     }
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
+    
 }

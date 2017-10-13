@@ -125,6 +125,12 @@ public class MapModel {
             System.out.println(file.exists());
             System.out.println(new File(".").getAbsoluteFile());
             System.out.println(System.getProperty("user.dir"));
+            String validationMessage=validateFile(file);
+            if(!validationMessage.equalsIgnoreCase("Valid File")) {
+            	mapDetails.setCorrectMap(false);
+            	mapDetails.setErrorMessage(validationMessage);
+            	return mapDetails;
+            }
             bufferReaderForFile = new BufferedReader(new FileReader(file));
             String st, maps, Continents, Territories;
             while ((st = bufferReaderForFile.readLine()) != null) {
@@ -168,4 +174,30 @@ public class MapModel {
         return mapDetails;
 
     }
+    /**
+     * This method will perform validation of provided input file 
+     * @param file 
+     * @return error/success Message 
+     */
+public String validateFile(File file) {
+		
+		
+		if(!file.exists()){
+			return "File does not exists";
+		}
+		 String name = file.getName();
+		 String extension= name.substring(name.lastIndexOf(".") + 1);
+		 
+		 if(!extension.equalsIgnoreCase("map")){
+			 return "Invalid extension of  File Please provide correct file";
+		 }
+		 
+		 if(file.length()==0)
+		 {
+			 return "File is empty please select correct file";
+		 }
+		return "Valid File" ;
+		   
+		
+	}
 }
