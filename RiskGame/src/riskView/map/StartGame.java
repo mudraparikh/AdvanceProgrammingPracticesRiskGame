@@ -6,11 +6,11 @@ public class StartGame extends java.awt.Frame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-/*   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) 
-     {
-	   AddPlayer add = new AddPlayer();
-	   add.setVisible(true);
-     }*/
+    /*   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)
+         {
+           AddPlayer add = new AddPlayer();
+           add.setVisible(true);
+         }*/
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
 
@@ -132,6 +132,7 @@ public class StartGame extends java.awt.Frame {
         MapView add = new MapView();
         add.setVisible(true);
     }
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
         System.exit(0);
     }

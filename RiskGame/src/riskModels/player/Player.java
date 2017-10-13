@@ -12,6 +12,16 @@ public class Player {
     public String name;
     public String alias;
     public int totalArmies;
+    public int reinforcementArmies;
+    public List<Country> assignedCountries;
+    public Card cards;
+    public Color colors;
+    public Player(String name) {
+        super();
+        this.name = name;
+        assignedCountries = new ArrayList<>();
+        cards = new Card();
+    }
 
     public int getReinforcementArmies() {
         return reinforcementArmies;
@@ -20,11 +30,6 @@ public class Player {
     public void setReinforcementArmies(int reinforcementArmies) {
         this.reinforcementArmies = reinforcementArmies;
     }
-
-    public int reinforcementArmies;
-    public List<Country> assignedCountries;
-    public Card cards;
-    public Color colors;
 
     public String getName() {
         return name;
@@ -64,13 +69,6 @@ public class Player {
 
     public void setCards(Card cards) {
         this.cards = cards;
-    }
-
-    public Player(String name) {
-        super();
-        this.name = name;
-        assignedCountries = new ArrayList<>();
-        cards = new Card();
     }
 }
 

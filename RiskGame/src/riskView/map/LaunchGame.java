@@ -1,5 +1,8 @@
 package riskView.map;
 
+import riskModels.map.GameMap;
+import riskModels.map.MapModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,7 +37,11 @@ public class LaunchGame extends java.awt.Frame {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = filechooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-
+            MapModel mapmodel = new MapModel();
+            GameMap gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
+            if (gameMap.isCorrectMap == false) {
+                System.out.println(gameMap.errorMessage);
+            }
             textField.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {

@@ -9,7 +9,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MapModel {
     /**
@@ -109,14 +112,14 @@ public class MapModel {
     /**
      * This method will read the mapfile and provide data to creategraph
      *
-     *
      * @return Function will return the map details obj
      */
-    public int mapFileInputParse(){
+    public int mapFileInputParse() {
         GameMap t = readMapFile("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/src/riskModels/map/canada.map");
-        System.out.println(""+t);
+        System.out.println("" + t);
         return 1;
     }
+
     public GameMap readMapFile(String filePath) {
         BufferedReader bufferReaderForFile = null;
         GameMap mapDetails = new GameMap();
@@ -125,6 +128,12 @@ public class MapModel {
             System.out.println(file.exists());
             System.out.println(new File(".").getAbsoluteFile());
             System.out.println(System.getProperty("user.dir"));
+            String validationMessage = validateFile(file);
+            if (!validationMessage.equalsIgnoreCase("Valid File")) {
+                mapDetails.setCorrectMap(false);
+                mapDetails.setErrorMessage(validationMessage);
+                return mapDetails;
+            }
             bufferReaderForFile = new BufferedReader(new FileReader(file));
             String st, maps, Continents, Territories;
             while ((st = bufferReaderForFile.readLine()) != null) {
@@ -166,6 +175,33 @@ public class MapModel {
             exception.printStackTrace();
         }
         return mapDetails;
+
+    }
+
+    /**
+     * This method will perform validation of provided input file
+     *
+     * @param file
+     * @return error/success Message
+     */
+    public String validateFile(File file) {
+
+
+        if (!file.exists()) {
+            return "File does not exists";
+        }
+        String name = file.getName();
+        String extension = name.substring(name.lastIndexOf(".") + 1);
+
+        if (!extension.equalsIgnoreCase("map")) {
+            return "Invalid extension of  File Please provide correct file";
+        }
+
+        if (file.length() == 0) {
+            return "File is empty please select correct file";
+        }
+        return "Valid File";
+
 
     }
 }

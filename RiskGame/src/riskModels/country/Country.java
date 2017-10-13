@@ -26,9 +26,24 @@ public class Country {
         this.belongsToContinent = continentName;
     }
 
-    public Country(Player belongsToPlayer, int currentArmiesDeployed){
+    public Country(Player belongsToPlayer, int currentArmiesDeployed) {
         this.belongsToPlayer = belongsToPlayer;
         this.currentArmiesDeployed = currentArmiesDeployed;
+    }
+
+    public Country(String neighbourCountryName) {
+        this.countryName = neighbourCountryName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        String countryName = ((Country) o).getCountryName();
+        return countryName.equals(this.getCountryName());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.countryName.hashCode();
     }
 
     public Player getBelongsToPlayer() {
@@ -45,10 +60,6 @@ public class Country {
 
     public void setCurrentArmiesDeployed(int currentArmiesDeployed) {
         this.currentArmiesDeployed = currentArmiesDeployed;
-    }
-
-    public Country(String neighbourCountryName) {
-        this.countryName = neighbourCountryName;
     }
 
     public String getCountryName() {

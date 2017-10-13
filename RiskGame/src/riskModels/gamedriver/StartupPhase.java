@@ -92,16 +92,16 @@ public class StartupPhase {
         }
 
         //print Countries assigned players
-        for (Map.Entry<Country, List<Country>> e: graphMap.entrySet()){
-            System.out.println(e.getKey().getCountryName()+"  ------ "+ e.getKey().getBelongsToPlayer().getName() +"----------"+ e.getKey().getCurrentArmiesDeployed());
+        for (Map.Entry<Country, List<Country>> e : graphMap.entrySet()) {
+            System.out.println(e.getKey().getCountryName() + "  ------ " + e.getKey().getBelongsToPlayer().getName() + "----------" + e.getKey().getCurrentArmiesDeployed());
         }
 
         //Allocating armies to countries for each player in RR fashion
         j = 0;
-        for (Player p:playerList){
-            System.out.println(""+playerList.get(j % totalPlayers).getName()+" pls select from :");
+        for (Player p : playerList) {
+            System.out.println("" + playerList.get(j % totalPlayers).getName() + " pls select from :");
             StringBuilder assigned = new StringBuilder();
-            for (Country c : p.getAssignedCountries()){
+            for (Country c : p.getAssignedCountries()) {
                 assigned.append(c.getCountryName()).append(", ");
             }
             System.out.println(assigned);
@@ -115,7 +115,7 @@ public class StartupPhase {
 
     }
 
-    public void reinforcementPhaseAssign(Country countrySelected, Player player){
+    public void reinforcementPhaseAssign(Country countrySelected, Player player) {
         System.out.println(countrySelected.toString());
         int currentArmiesOnCountry = countrySelected.getCurrentArmiesDeployed();
         countrySelected.setCurrentArmiesDeployed(currentArmiesOnCountry + 1);

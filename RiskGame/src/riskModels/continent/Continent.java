@@ -12,11 +12,19 @@ import java.util.List;
  */
 public class Continent {
 
-    public String continentName;
+    public static String continentName;
     public List<Country> memberCountriesList = new ArrayList<Country>();
     public int numberOfTerritories;
 
-    public String getContinentName() {
+    public Continent(String continentName) {
+        this.continentName = continentName;
+    }
+
+    public Continent() {
+        //default constructor
+    }
+
+    public static String getContinentName() {
         return continentName;
     }
 
