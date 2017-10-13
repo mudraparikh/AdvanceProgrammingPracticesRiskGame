@@ -1,5 +1,5 @@
 package riskView.map;
 
-public class MapView {
+public class MapView extends java.awt.Frame{
 
 }

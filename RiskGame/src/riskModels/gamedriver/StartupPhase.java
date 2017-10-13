@@ -107,14 +107,19 @@ public class StartupPhase {
             System.out.println(assigned);
             Scanner scanner1 = new Scanner(System.in);
             String countryNameToAssign = scanner1.next();
-            s.reinforcementPhaseAssign(countryNameToAssign, p);
+            Country c = (Country) graphMap.get(countryNameToAssign);
+            System.out.println(c.toString());
+            s.reinforcementPhaseAssign(c, p);
             j++;
         }
 
     }
 
-    public void reinforcementPhaseAssign(String country_name, Player player){
-        player.setReinforcementArmies(player.getTotalArmies() - player.getAssignedCountries().size());
+    public void reinforcementPhaseAssign(Country countrySelected, Player player){
+        System.out.println(countrySelected.toString());
+        int currentArmiesOnCountry = countrySelected.getCurrentArmiesDeployed();
+        countrySelected.setCurrentArmiesDeployed(currentArmiesOnCountry + 1);
+        player.setReinforcementArmies(player.getTotalArmies() - player.getAssignedCountries().size() - 1);
 
     }
 }
