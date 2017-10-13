@@ -194,3 +194,5 @@ local.properties
 *.iml
 out
 gen
+.classpath
+.project
