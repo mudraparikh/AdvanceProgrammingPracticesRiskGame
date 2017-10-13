@@ -1,19 +1,20 @@
 package riskControllers.country;
 
-import java.io.BufferedReader;
-import java.util.List;
 import riskModels.country.Country;
 import riskModels.country.CountryModel;
 
+import java.io.BufferedReader;
+import java.util.List;
+
 
 public class CountryController {
-	CountryModel model;
-	
-	public CountryController() {
-		this.model = new CountryModel();
-	}
+    CountryModel model;
 
-	public List<Country> readCountries(BufferedReader br){
-		return model.readCountries(br);
-	}
+    public CountryController() {
+        this.model = new CountryModel();
+    }
+
+    public List<Country> readCountries(BufferedReader br) {
+        return model.readCountries(br);
+    }
 }

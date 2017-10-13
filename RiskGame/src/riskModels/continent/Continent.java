@@ -1,21 +1,22 @@
 package riskModels.continent;
 
+import riskModels.country.Country;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import riskModels.country.Country;
 /**
  * Continent Bean class that will hold the properties of continent.
- * @author prashantp95
  *
+ * @author prashantp95
  */
 public class Continent {
 	
-	public String continentName;
+	public static String continentName;
 	public List<Country> memberCountriesList = new ArrayList<Country>();
-	public int nummberOfTerritories;
+	public int numberOfTerritories;
 	
-	public String getContinentName() 
+	public static String getContinentName() 
 	{
 		return continentName;
 	}
@@ -23,20 +24,29 @@ public class Continent {
 	{
 		this.continentName = continentName;
 	}
-	public List<Country> getMemberCountriesList()
-	{
+	public List<Country> getMemberCountriesList() {
 		return memberCountriesList;
 	}
-	public void setMemberCountriesList(List<Country> memberCountriesList)
-	{
-		this.memberCountriesList = memberCountriesList;
+
+    public Continent(String continentName) {
+		this.continentName=continentName;
 	}
-	public int getNummberOfTerritories() {
-		return nummberOfTerritories;
+
+
+	public Continent() {
+		 //default constructor
 	}
-	public void setNummberOfTerritories(int nummberOfTerritories) {
-		this.nummberOfTerritories = nummberOfTerritories;
-	}
-	
-	
+
+    public void setMemberCountriesList(List<Country> memberCountriesList) {
+        this.memberCountriesList = memberCountriesList;
+    }
+
+    public int getNumberOfTerritories() {
+        return numberOfTerritories;
+    }
+
+    public void setNumberOfTerritories(int nummberOfTerritories) {
+        this.numberOfTerritories = nummberOfTerritories;
+    }
+
 }

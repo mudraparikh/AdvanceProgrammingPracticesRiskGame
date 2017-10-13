@@ -1,0 +1,121 @@
+package riskModels.gamedriver;
+
+import riskModels.country.Country;
+import riskModels.player.Player;
+
+import java.util.*;
+
+public class StartupPhase {
+
+    public static HashMap<Country, List<Country>> graphMap = new HashMap<>();
+    public static List<Country> neighNodeList = new ArrayList<>();
+
+    public static void main(String arg[]) {
+        StartupPhase s = new StartupPhase();
+        Country n1 = new Country("Pakistan", 13, 14, "Asia");
+        neighNodeList.add(n1);
+        Country n2 = new Country("China", 13, 14, "Asia");
+        neighNodeList.add(n2);
+
+        Country country1 = new Country("USA", 10, 11, "NorthAmerica");
+        Country country2 = new Country("Canada", 10, 11, "NorthAmerica");
+        Country country3 = new Country("Australia", 10, 11, "NorthAmerica");
+        Country country4 = new Country("Britian", 10, 11, "NorthAmerica");
+        Country country5 = new Country("Iceland", 10, 11, "NorthAmerica");
+        Country country6 = new Country("Mexico", 10, 11, "NorthAmerica");
+        Country country7 = new Country("Spain", 10, 11, "NorthAmerica");
+        Country country8 = new Country("Rome", 10, 11, "NorthAmerica");
+
+        graphMap.put(country1, neighNodeList);
+        graphMap.put(country2, neighNodeList);
+        graphMap.put(country3, neighNodeList);
+        graphMap.put(country4, neighNodeList);
+        graphMap.put(country5, neighNodeList);
+        graphMap.put(country6, neighNodeList);
+        graphMap.put(country7, neighNodeList);
+        graphMap.put(country8, neighNodeList);
+
+        Scanner scanner = new Scanner(System.in);
+        int totalPlayers = scanner.nextInt();
+
+        // players
+        List<Player> playerList = new ArrayList<>();
+        int i = 0;
+        while (i < totalPlayers) {
+            playerList.add(new Player("player" + i));
+            i++;
+        }
+
+        // assign countries to players
+        int j = 0;
+        for (Map.Entry<Country, List<Country>> e : graphMap.entrySet()) {
+            playerList.get(j % totalPlayers).assignedCountries.add(e.getKey());
+            j++;
+        }
+
+        //To assign initial number iof armies/infantries according to the players
+        switch (totalPlayers) {
+            case 2:
+                for (Player p : playerList) {
+                    p.setTotalArmies(40);
+                }
+                break;
+            case 3:
+                for (Player p : playerList) {
+                    p.setTotalArmies(35);
+                }
+                break;
+            case 4:
+                for (Player p : playerList) {
+                    p.setTotalArmies(30);
+                }
+                break;
+            case 5:
+                for (Player p : playerList) {
+                    p.setTotalArmies(25);
+                }
+                break;
+
+        }
+
+        // print players assigned countries
+        for (Player p : playerList) {
+            StringBuilder assigned = new StringBuilder();
+            for (Country c : p.assignedCountries) {
+                c.setBelongsToPlayer(p);
+                c.setCurrentArmiesDeployed(1);
+                assigned.append(c.getCountryName()).append(", ");
+            }
+
+            System.out.println("Player " + p.getName() + " : [" + assigned + "]");
+            System.out.println("Player " + p.getName() + " : [" + p.getTotalArmies() + "]");
+        }
+
+        //print Countries assigned players
+        for (Map.Entry<Country, List<Country>> e: graphMap.entrySet()){
+            System.out.println(e.getKey().getCountryName()+"  ------ "+ e.getKey().getBelongsToPlayer().getName() +"----------"+ e.getKey().getCurrentArmiesDeployed());
+        }
+
+        //Allocating armies to countries for each player in RR fashion
+        j = 0;
+        for (Player p:playerList){
+            System.out.println(""+playerList.get(j % totalPlayers).getName()+" pls select from :");
+            StringBuilder assigned = new StringBuilder();
+            for (Country c : p.getAssignedCountries()){
+                assigned.append(c.getCountryName()).append(", ");
+            }
+            System.out.println(assigned);
+            Scanner scanner1 = new Scanner(System.in);
+            String countryNameToAssign = scanner1.next();
+            s.reinforcementPhaseAssign(countryNameToAssign, p);
+            j++;
+        }
+
+    }
+
+    public void reinforcementPhaseAssign(String country_name, Player player){
+        player.setReinforcementArmies(player.getTotalArmies() - player.getAssignedCountries().size());
+
+    }
+}
+
