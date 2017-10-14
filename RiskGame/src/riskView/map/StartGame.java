@@ -1,16 +1,17 @@
 package riskView.map;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
 public class StartGame extends java.awt.Frame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    /*   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)
-         {
-           AddPlayer add = new AddPlayer();
-           add.setVisible(true);
-         }*/
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
 
@@ -23,7 +24,7 @@ public class StartGame extends java.awt.Frame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StartGame().setVisible(true);
+                new StartGame().setVisible(true);;
             }
         });
     }
@@ -122,12 +123,17 @@ public class StartGame extends java.awt.Frame {
     private void exitForm(java.awt.event.WindowEvent evt) {
         System.exit(0);
     }
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        LaunchGame add = new LaunchGame();
-        add.setVisible(true);
+    LaunchGame add = new LaunchGame();
+    add.setVisible(true);
     }
 
+	/*private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) 
+    {
+	   AddPlayer add = new AddPlayer();
+	   add.setVisible(true);
+    }*/
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         MapView add = new MapView();
         add.setVisible(true);

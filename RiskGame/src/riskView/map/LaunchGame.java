@@ -11,45 +11,63 @@ import java.io.File;
 
 
 @SuppressWarnings("serial")
-public class LaunchGame extends java.awt.Frame {
-    private JLabel label = new JLabel("Enter No of Players: ");
-    private JLabel label1 = new JLabel("Select a map file :");
+public class LaunchGame extends JPanel {
+    private JLabel label = new JLabel("Enter No of Players (2-4): ");
+    private JLabel label1 = new JLabel("Please Select a Correct File");
+    private JLabel label2 = new JLabel("Correct File");
     private JTextField textField = new JTextField(20);
     private JButton button = new JButton("OK");
     private JFileChooser filechooser = new JFileChooser();
+    private JDialog dialog = new JDialog();
 
     public LaunchGame() {
-        JFrame frame = new JFrame();
-        frame.setVisible(true);
-        frame.setSize(375, 100);
-        frame.add(label, BorderLayout.WEST);
-        frame.add(label1, BorderLayout.LINE_START);
-        frame.add(textField, BorderLayout.EAST);
-        frame.add(button, BorderLayout.PAGE_END);
-        label.setVisible(true);
-        label1.setHorizontalAlignment(HEIGHT);
+    	JFrame frame = new JFrame();
+    	frame.setLayout(new BorderLayout());
+    	frame.setSize(400,100);
+    	frame.setVisible(true);
+    	label.setVisible(true);
+    	label1.setVisible(true);
+    	label2.setVisible(true);
         textField.setVisible(true);
-        button.setBounds(50, 50, 75, 50);
         button.setVisible(true);
+        frame.add(label,BorderLayout.LINE_START);
+        frame.add(textField, BorderLayout.LINE_END);
+        frame.add(button, BorderLayout.PAGE_END);
+        button.addActionListener(new ActionListener() {
 
-        filechooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        int result = filechooser.showOpenDialog(this);
+			@Override
+			public void actionPerformed(ActionEvent e) {		
+		filechooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        filechooser.setDialogTitle("Select a .map file");
+        
+        int result = filechooser.showOpenDialog(filechooser);
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = filechooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             MapModel mapmodel = new MapModel();
-            GameMap gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
-            if (gameMap.isCorrectMap == false) {
-                System.out.println(gameMap.errorMessage);
+            GameMap gameMap =mapmodel.readMapFile(selectedFile.getAbsolutePath());
+            if(gameMap.isCorrectMap == false)
+            {
+            	dialog.setVisible(true);
+            	dialog.setTitle("ERROR");
+            	dialog.add(label1);
+            	
             }
+            else if(gameMap.isCorrectMap == true)
+            {
+            	
             textField.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent event) {
-                    String text = textField.getText();
+                    dialog.setVisible(true);
+                    dialog.add(label2);
+                	String text = textField.getText();
                     System.out.println(text);
                 }
             });
-        }
+            }
+        }	  }
+  	  });
     }
 }
 

@@ -10,9 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class MapView extends JPanel {
 
-
+public class MapView extends java.awt.Frame{
+	
     public static void main(String[] args) {
 //	MapView h=new MapView();
 

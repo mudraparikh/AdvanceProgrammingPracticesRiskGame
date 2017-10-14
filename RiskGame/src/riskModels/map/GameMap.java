@@ -1,8 +1,10 @@
+
 package riskModels.map;
 
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,31 +15,21 @@ import java.util.List;
  * @author prashantp95
  */
 public class GameMap {
-	public HashMap<String, String> mapDetail = new HashMap<>();
+
     public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
     public List<Continent> continentList = new ArrayList<>();
-    public boolean isCorrectMap = true;
+    public boolean isCorrectMap =true;
     public String errorMessage;
 
     public boolean isCorrectMap() {
-        return isCorrectMap;
-    }
-
-    public HashMap<String, String> getMapDetail() {
-		return mapDetail;
+		return isCorrectMap;
 	}
-
-	public void setMapDetail(HashMap<String, String> mapDetail) {
-		this.mapDetail = mapDetail;
-	}
-
-
 
 	public void setCorrectMap(boolean isCorrectMap) {
-        this.isCorrectMap = isCorrectMap;
-    }
+		this.isCorrectMap = isCorrectMap;
+	}
 
-    public HashMap<Country, List<Country>> getCountryAndNeighborsMap() {
+	public HashMap<Country, List<Country>> getCountryAndNeighborsMap() {
         return countryAndNeighborsMap;
     }
 
@@ -53,12 +45,10 @@ public class GameMap {
         this.continentList = continentList;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
-    }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+		
+	}
+    
 }
