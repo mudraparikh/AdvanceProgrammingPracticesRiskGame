@@ -1,19 +1,22 @@
 package riskModels.map;
 
-import riskModels.continent.Continent;
-import riskModels.country.Country;
-import riskModels.country.CountryConstants;
-import util.RiskGameUtil;
-
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import riskModels.continent.Continent;
+import riskModels.country.Country;
+import riskModels.country.CountryConstants;
+import util.RiskGameUtil;
 
 public class MapModel {
     /**
@@ -142,18 +145,20 @@ public class MapModel {
             String st, maps, Continents, Territories;
             while ((st = bufferReaderForFile.readLine()) != null) {
                 if (st.startsWith("[")) {
-
+                	HashMap<String,String> mapDetail = new HashMap<>();
                     String id = st.substring(st.indexOf("[") + 1, st.indexOf("]"));
                     if (id.equalsIgnoreCase("Map")) {
                     	isMAPpresent=true;
                         while ((maps = bufferReaderForFile.readLine()) != null && !maps.startsWith("[")) {
                             if (RiskGameUtil.checkNullString(maps)) {
                                 System.out.println(maps);
+                                String[] mapsEntry = maps.split("=");
+                                mapDetail.put(mapsEntry[0],mapsEntry[1]);
                                 bufferReaderForFile.mark(0);
                             }
                         }
                         bufferReaderForFile.reset();
-
+                        mapDetails.setMapDetail(mapDetail);
                     }
                     if (id.equalsIgnoreCase("Continents")) {
                     	isContinentPresent=true;
@@ -258,5 +263,61 @@ public void removeCountry(String country,GameMap gameMap) {
 		gameMap.getCountryAndNeighborsMap().put(neiborCountry, updatedNeiborList); // this will replace existing  key-value pair. 
 	}
 	gameMap.getCountryAndNeighborsMap().remove(countryToRemove);
+}
+
+
+//UPDATED WRITE MAP
+public void writeMap(GameMap graphMap, String filename) {
+	String maps = "[Map]\n";
+	for(Map.Entry<String, String> entry:graphMap.getMapDetail().entrySet()){
+		maps = maps + entry.getKey() + "=" + entry.getValue() +"\n";
+	}
+	maps = maps + "\n";
+
+	String continents = "[Continents]\n";
+	for (Continent continent : graphMap.getContinentList()) {
+		continents = continents + continent.continentName + "=" + continent.numberOfTerritories + "\n";
+	}
+	continents = continents + "\n";
+	
+	String territories = "[Territories]\n";
+	
+	// loop of graphMap
+	Iterator<Map.Entry<Country, List<Country>>> it = graphMap.getCountryAndNeighborsMap().entrySet().iterator();
+	while (it.hasNext()) {
+		Map.Entry<Country, List<Country>> pair = it.next();
+		// get country object
+		Country keyCountry = (Country) pair.getKey();
+		// get list of the neighbors
+		List<Country> neiCountryList = (List<Country>) pair.getValue();
+
+		// index of the country from the all countries of all continents
+		// list
+		
+		// get values of each country object
+		territories = territories + keyCountry.countryName + "," + keyCountry.getStartPixel() + ","
+				+ keyCountry.getEndPixel() + "," + keyCountry.getBelongsToContinent();
+
+		// get the index value of the neighbor
+		for (Country c : neiCountryList) {
+			territories = territories + "," + c.countryName;
+		}
+		territories = territories + "\n";
+	}
+
+	String result = maps + continents + territories;
+
+	String dotMapFile = filename + ".map";
+	PrintWriter out = null;
+	try {
+		out = new PrintWriter(new BufferedWriter(new FileWriter(dotMapFile)));
+		out.print(result);
+		out.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	} finally {
+		out.close();
+	}
+
 }
 }

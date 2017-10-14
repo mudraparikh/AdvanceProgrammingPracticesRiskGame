@@ -13,7 +13,7 @@ import java.util.List;
  * @author prashantp95
  */
 public class GameMap {
-
+	public HashMap<String, String> mapDetail = new HashMap<>();
     public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
     public List<Continent> continentList = new ArrayList<>();
     public boolean isCorrectMap = true;
@@ -23,7 +23,17 @@ public class GameMap {
         return isCorrectMap;
     }
 
-    public void setCorrectMap(boolean isCorrectMap) {
+    public HashMap<String, String> getMapDetail() {
+		return mapDetail;
+	}
+
+	public void setMapDetail(HashMap<String, String> mapDetail) {
+		this.mapDetail = mapDetail;
+	}
+
+
+
+	public void setCorrectMap(boolean isCorrectMap) {
         this.isCorrectMap = isCorrectMap;
     }
 
