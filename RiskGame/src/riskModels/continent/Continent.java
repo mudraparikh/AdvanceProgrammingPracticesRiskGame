@@ -16,6 +16,17 @@ public class Continent {
     public List<Country> memberCountriesList = new ArrayList<Country>();
     public int numberOfTerritories;
 
+    @Override
+    public boolean equals(Object continentObject) {
+        String continentName = ((Continent) continentObject).getContinentName();
+        return continentName.equals(this.getContinentName());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.continentName.hashCode();
+    }
+    
     public Continent(String continentName) {
         this.continentName = continentName;
     }
