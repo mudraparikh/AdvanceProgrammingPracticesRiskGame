@@ -20,6 +20,7 @@ public class GameMap {
     public List<Continent> continentList = new ArrayList<>();
     public boolean isCorrectMap =true;
     public String errorMessage;
+	public HashMap<String, String> mapDetail;
 
     public boolean isCorrectMap() {
 		return isCorrectMap;
@@ -50,5 +51,9 @@ public class GameMap {
 		this.errorMessage = errorMessage;
 		
 	}
-    
+
+	public void setMapDetail(HashMap<String, String> mapDetail) {
+		this.mapDetail = mapDetail;
+		
+	}
 }
