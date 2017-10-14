@@ -1,15 +1,23 @@
 package util;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
 import riskModels.continent.Continent;
 import riskModels.country.Country;
-
-import java.util.*;
+import riskModels.map.GameMap;
+import riskModels.map.MapModel;
 
 public class CreateMap {
 
 
     public static void main(String args[]) {
-        //AssingPlayerAndCountry();
+        
         System.out.println("How many continent do you want?");
         Scanner sc = new Scanner(System.in);
         int numberOfContinents = sc.nextInt();
@@ -41,7 +49,15 @@ public class CreateMap {
             if (continentNameList.contains(continentName)) {
                 Country singleCountry = new Country(countryName, 0, 0, continentName);
                 countryList.add(singleCountry);
-                continentList.add(new Continent(continentName));
+                Continent continent = new Continent(continentName);
+                //if continent is not present in continent list then only add it 
+                if(!continentList.contains(continent)) {
+                	continent.setNumberOfTerritories(1);
+                	continentList.add(continent);
+                }else { // if continent is already there , we need to increase the Number of territories of that continent
+                	int numberOfTerritory=continentList.get(continentList.indexOf(continent)).getNumberOfTerritories();
+                	continentList.get(continentList.indexOf(continent)).setNumberOfTerritories(numberOfTerritory+1);
+                }
                 countryContinentMap.put(singleCountry.getCountryName(), singleCountry.getBelongsToContinent());
             } else {
                 System.out.println("Please enter proper continent name");
@@ -60,7 +76,6 @@ public class CreateMap {
         for (Country country : countryList) {
             System.out.println(country.getCountryName() + "   " + country.getBelongsToContinent());
         }
-        System.out.println("Assign neighbors to Country using comma seprated for example c2,c4,c5");
         while (counter < countryNameList.size()) {
             String countryName = countryNameList.toArray(new String[countryNameList.size()])[counter];
             String continentName = countryContinentMap.get(countryName);
@@ -97,6 +112,16 @@ public class CreateMap {
             countryNameList.remove(countryToBeRemoved);
         }
         countryNeibourMap = correctNebourNodes(countryNeibourMap);
+        System.out.println("Please Enter the Name of The Map that you want to create");
+        Scanner scanMapFileName = new Scanner(System.in);
+        String fileName= scanMapFileName.nextLine();
+        GameMap gameMap = new GameMap();
+        gameMap.setCountryAndNeighborsMap(countryNeibourMap);
+        gameMap.setContinentList(continentList);
+        MapModel mapModel = new MapModel();
+        if(RiskGameUtil.checkNullString(fileName)) {
+        mapModel.writeMap(gameMap,fileName);
+        }
         Iterator it = countryNeibourMap.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
