@@ -10,7 +10,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * MapView class holds the property of generating map.
+ *
+ * @author hanita
+ */
 public class MapView extends java.awt.Frame{
 	
     public static void main(String[] args) {
