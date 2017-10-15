@@ -43,6 +43,10 @@ public class LaunchGame extends JPanel {
 
     public List<Player> playerList;
 
+    /**
+     * This LaunchGame method allows you to select no. of players and select the .map file from your local folder.
+     */
+    
     public LaunchGame() {
         JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout());
@@ -64,7 +68,7 @@ public class LaunchGame extends JPanel {
 
         player1.setVisible(true);
         player1.setOpaque(true);
-        player1.setBackground(Color.RED);
+        player1.setBackground(Color.RED); // assigning colors to the players
         player2.setVisible(true);
         player2.setOpaque(true);
         player2.setBackground(Color.MAGENTA);
