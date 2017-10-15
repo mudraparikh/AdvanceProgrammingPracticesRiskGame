@@ -94,7 +94,7 @@ public class LaunchGame extends JPanel {
                     System.out.println("No. of players is 4");
                     numberOfPlayers = 4;
                 } else {
-                    System.out.println("Select One Player At-least");
+                    System.out.println("Select One Player At-least"); 
                 }
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 fileChooser.setDialogTitle("Select a .map file");
@@ -111,6 +111,15 @@ public class LaunchGame extends JPanel {
                         System.out.println(p.getName());
                         System.out.println(p.getColors());
                     }
+                    
+                    /**
+                     * This checks whether the map is correct then it loads the map from directory
+                     * 
+                     * @param playerList It holds list of players
+                     * @param gameMap this holds the location of .map file in the directory
+                     * @param numberOfPlayer this holds the value of no. of players selected
+                     */
+                    
                     startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
                     if (!gameMap.isCorrectMap) {
                         dialog.setVisible(true);
@@ -132,7 +141,12 @@ public class LaunchGame extends JPanel {
                         }
                         ImageIcon icon = new ImageIcon(image);
                         JLabel jIcon = new JLabel(icon) {
-                            @Override
+                            
+                        	/**
+                             * This paintComponent method helps to draw connects between the neighboring countries in the map
+                             */
+                        	
+                        	@Override
                             protected void paintComponent(Graphics g) {
                                 super.paintComponent(g);
                                 HashMap<Country, List<Country>> map = gameMap.getCountryAndNeighborsMap();
