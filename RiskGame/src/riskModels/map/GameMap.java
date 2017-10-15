@@ -16,11 +16,11 @@ import java.util.List;
  */
 public class GameMap {
 
-    public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
+	public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
     public List<Continent> continentList = new ArrayList<>();
     public boolean isCorrectMap =true;
     public String errorMessage;
-	public HashMap<String, String> mapDetail;
+	public HashMap<String, String> mapDetail = new HashMap<>();
 
     public boolean isCorrectMap() {
 		return isCorrectMap;
@@ -28,6 +28,14 @@ public class GameMap {
 
 	public void setCorrectMap(boolean isCorrectMap) {
 		this.isCorrectMap = isCorrectMap;
+	}
+	
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public HashMap<String, String> getMapDetail() {
+		return mapDetail;
 	}
 
 	public HashMap<Country, List<Country>> getCountryAndNeighborsMap() {
