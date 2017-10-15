@@ -203,6 +203,11 @@ public class MapModel {
         return mapDetails;
 
     }
+    /**
+     * This method will do validation on the details we parsed from the .map file
+     * @param mapDetails mapDetials that we have parsed from .map file 
+     * @return mapDetails with correct error message.
+     */
     public  GameMap validateMap(GameMap mapDetails) {
     	Iterator it = mapDetails.getCountryAndNeighborsMap().entrySet().iterator();
     	while (it.hasNext()) {
@@ -225,18 +230,18 @@ public class MapModel {
      */
 public String validateFile(File file) {
 		
+		//check if file is present or not
 		 if(!file.exists()){
 			return "File does not exists";
 		}
 		 String name = file.getName();
 		 String extension= name.substring(name.lastIndexOf(".") + 1);
-		 
+		 //check if user has selected  file with .map extension 
 		 if(!extension.equalsIgnoreCase("map")){
 			 return "Invalid extension of  File Please provide correct file";
 		 }
-		 
-		 if(file.length()==0)
-		 {
+		 //check if file selected by user is empty or not
+		 if(file.length()==0){
 			 return "File is empty please select correct file";
 		 }
 		return "Valid File" ;
@@ -262,11 +267,16 @@ public void removeCountry(String country,GameMap gameMap) {
 		}
 		gameMap.getCountryAndNeighborsMap().put(neiborCountry, updatedNeiborList); // this will replace existing  key-value pair. 
 	}
+		// finally removing country from the map details
 	gameMap.getCountryAndNeighborsMap().remove(countryToRemove);
 }
 
+/**
+ * This method will create .map file based on input provided from user
+ * @param graphMap Details provided from the user 
+ * @param filename Map file name that user wants to give
+ */
 
-//UPDATED WRITE MAP
 public void writeMap(GameMap graphMap, String filename) {
 	String maps = "[Map]\n";
 	for(Map.Entry<String, String> entry:graphMap.getMapDetail().entrySet()){
