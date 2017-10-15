@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
+import util.CreateMap;
 
 @SuppressWarnings("serial")
 public class LaunchGame extends JPanel {
@@ -39,9 +40,15 @@ public class LaunchGame extends JPanel {
 	private JRadioButton option1 = new JRadioButton("2");
 	private JRadioButton option2 = new JRadioButton("3");
 	private JRadioButton option3 = new JRadioButton("4");
+	public static javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
 
 	public LaunchGame() {
 		JFrame frame = new JFrame();
+		jButton1.setEnabled(true);
+		jButton2.setEnabled(true);
+		jButton3.setEnabled(true);
 		frame.setLayout(new BorderLayout());
 		frame.setSize(400, 100);
 		frame.setVisible(true);
@@ -58,7 +65,8 @@ public class LaunchGame extends JPanel {
 		frame.add(option2, BorderLayout.CENTER);
 		frame.add(option3, BorderLayout.LINE_END);
 		frame.add(button, BorderLayout.PAGE_END);
-
+	
+		
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -132,7 +140,51 @@ public class LaunchGame extends JPanel {
 							l[i].setToolTipText("Solider:");
 							i++;
 						}
+	/*					
 						
+						jButton1 = new javax.swing.JButton();
+				        jButton3 = new javax.swing.JButton();
+				        jButton2 = new javax.swing.JButton();
+				        
+				        jButton1.setText("Dice");
+				        jButton1.setName("jButton1");
+				        jButton1.addActionListener(new java.awt.event.ActionListener() {
+				            public void actionPerformed(java.awt.event.ActionEvent evt) {
+				                jButton1ActionPerformed(evt);
+				            }
+				        });
+
+				        jButton2.setText("ATTACK");
+				        jButton2.setName("jButton2");
+				        jButton2.addActionListener(new java.awt.event.ActionListener() {
+				            public void actionPerformed(java.awt.event.ActionEvent evt) {
+				                   jButton2ActionPerformed(evt);
+				            }
+				        });
+
+				        jButton3.setText("REINFORCEMENT");
+				        jButton3.setName("jButton3");
+				        jButton3.addActionListener(new java.awt.event.ActionListener() {
+				            public void actionPerformed(java.awt.event.ActionEvent evt) {
+				                jButton3ActionPerformed(evt);
+				            }
+				        });
+
+				        private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+				            LaunchGame add = new LaunchGame();
+				            add.setVisible(true);
+				            }
+
+				        	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) 
+				            {
+				        	   CreateMap add = new CreateMap();
+				        	   add.setVisible(true);
+				            }
+				            private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+				               MapView add = new MapView();
+				               add.setVisible(true);
+				            }
+*/
 						textField.addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent event) {
