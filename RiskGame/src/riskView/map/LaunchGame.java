@@ -68,7 +68,7 @@ public class LaunchGame extends JPanel {
 					System.out.println("No. of players is 2");
 				} else if (isoptionSelected = option2.isSelected()) {
 					System.out.println("No. of players is 3");
-				} else if (isoptionSelected = option2.isSelected()) {
+				} else if (isoptionSelected = option3.isSelected()) {
 					System.out.println("No. of players is 4");
 				} else {
 					System.out.println("Select One Player Atleast");

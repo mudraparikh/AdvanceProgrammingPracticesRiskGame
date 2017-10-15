@@ -240,9 +240,6 @@ public class CreateMap {
 			//l[i].setToolTipText("Solider:");
 			i++;
 		}
-        
-		
-		
     }
 
 
@@ -299,6 +296,4 @@ public class CreateMap {
         }
         return returnListofContinent;
     }
-
-
 }

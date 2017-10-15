@@ -31,6 +31,7 @@ public class MapView extends java.awt.Frame{
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             Country country = (Country) pair.getKey();
+            
             List<Country> neighbours = (List<Country>) pair.getValue();
             // System.out.println("------"+country.getCountryName()+"-----"+country.getBelongsToContinet());
             for (Country neighbour : neighbours) {
