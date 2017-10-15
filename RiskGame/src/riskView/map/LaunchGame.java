@@ -27,49 +27,48 @@ import javax.swing.JTextField;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
-import util.CreateMap;
 
 @SuppressWarnings("serial")
 public class LaunchGame extends JPanel {
+	private JLabel label = new JLabel("Select number of Players :");
+	private JLabel label1 = new JLabel("Please Select a Correct File");
+	private JTextField textField = new JTextField(20);
+	private JButton button = new JButton("OK");
+	private JFileChooser filechooser = new JFileChooser();
+	private JDialog dialog = new JDialog();
+	private JRadioButton option1 = new JRadioButton("2");
+	private JRadioButton option2 = new JRadioButton("3");
+	private JRadioButton option3 = new JRadioButton("4");
 
-    private JLabel label = new JLabel("Select number of Players :");
-    private JLabel label1 = new JLabel("Please Select a Correct File");
-    private JTextField textField = new JTextField(20);
-    private JButton button = new JButton("OK");
-    private JFileChooser filechooser = new JFileChooser();
-    private JDialog dialog = new JDialog();
-    private JRadioButton option1 = new JRadioButton("2");
-    private JRadioButton option2 = new JRadioButton("3");
-    private JRadioButton option3 = new JRadioButton("4");
-    private int players;
-    boolean isoptionSelected ;
-    public LaunchGame() {
-    	JFrame frame = new JFrame();
-    	frame.setLayout(new BorderLayout());
-    	frame.setSize(400,100);
-    	frame.setVisible(true);
-    	label.setVisible(true);
-        textField.setVisible(true);
-        button.setVisible(true);
-        ButtonGroup group = new ButtonGroup();
-        group.add(option1);
-        group.add(option2);
-        group.add(option3);
-        
-        frame.add(label,BorderLayout.PAGE_START);
-        frame.add(option1,BorderLayout.LINE_START);
-        frame.add(option2,BorderLayout.CENTER);
-        frame.add(option3,BorderLayout.LINE_END);
-        frame.add(button,BorderLayout.PAGE_END);
-             
-        button.addActionListener(new ActionListener() {
-        	@Override
+	public LaunchGame() {
+		JFrame frame = new JFrame();
+		frame.setLayout(new BorderLayout());
+		frame.setSize(400, 100);
+		frame.setVisible(true);
+		label.setVisible(true);
+		textField.setVisible(true);
+		button.setVisible(true);
+		ButtonGroup group = new ButtonGroup();
+		group.add(option1);
+		group.add(option2);
+		group.add(option3);
+
+		frame.add(label, BorderLayout.PAGE_START);
+		frame.add(option1, BorderLayout.LINE_START);
+		frame.add(option2, BorderLayout.CENTER);
+		frame.add(option3, BorderLayout.LINE_END);
+		frame.add(button, BorderLayout.PAGE_END);
+
+		button.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
+
+				boolean isoptionSelected;
 				if (isoptionSelected = option1.isSelected()) {
 					System.out.println("No. of players is 2");
 				} else if (isoptionSelected = option2.isSelected()) {
 					System.out.println("No. of players is 3");
-				} else if (isoptionSelected = option3.isSelected()) {
+				} else if (isoptionSelected = option2.isSelected()) {
 					System.out.println("No. of players is 4");
 				} else {
 					System.out.println("Select One Player Atleast");
@@ -90,13 +89,12 @@ public class LaunchGame extends JPanel {
 						label1.setSize(275, 100);
 						dialog.setTitle("ERROR");
 						dialog.add(label1);
-					} 
-					else if (gameMap.isCorrectMap == true) {
+					} else if (gameMap.isCorrectMap == true) {
 						String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
 						JFrame f = new JFrame();
 						BufferedImage image = null;
 						try {
-							//image = ImageIO.read(new File(absolute));
+							image = ImageIO.read(new File(absolute));
 						} catch (Exception ex) {
 							ex.printStackTrace();
 							System.exit(1);
@@ -134,51 +132,10 @@ public class LaunchGame extends JPanel {
 							l[i].setToolTipText("Solider:");
 							i++;
 						}
-	/*					
 						
-						jButton1 = new javax.swing.JButton();
-				        jButton3 = new javax.swing.JButton();
-				        jButton2 = new javax.swing.JButton();
-				        
-				        jButton1.setText("Dice");
-				        jButton1.setName("jButton1");
-				        jButton1.addActionListener(new java.awt.event.ActionListener() {
-				            public void actionPerformed(java.awt.event.ActionEvent evt) {
-				                jButton1ActionPerformed(evt);
-				            }
-				        });
+						
 
-				        jButton2.setText("ATTACK");
-				        jButton2.setName("jButton2");
-				        jButton2.addActionListener(new java.awt.event.ActionListener() {
-				            public void actionPerformed(java.awt.event.ActionEvent evt) {
-				                   jButton2ActionPerformed(evt);
-				            }
-				        });
-
-				        jButton3.setText("REINFORCEMENT");
-				        jButton3.setName("jButton3");
-				        jButton3.addActionListener(new java.awt.event.ActionListener() {
-				            public void actionPerformed(java.awt.event.ActionEvent evt) {
-				                jButton3ActionPerformed(evt);
-				            }
-				        });
-
-				        private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-				            LaunchGame add = new LaunchGame();
-				            add.setVisible(true);
-				            }
-
-				        	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) 
-				            {
-				        	   CreateMap add = new CreateMap();
-				        	   add.setVisible(true);
-				            }
-				            private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-				               MapView add = new MapView();
-				               add.setVisible(true);
-				            }
-*/
+						
 						textField.addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent event) {
@@ -188,13 +145,11 @@ public class LaunchGame extends JPanel {
 								// open a map
 							}
 						});
-	} 
-					else
-					{
-					System.out.println("Error");	
+
+
 					}
 				}
-        	}
-        });
-    }
-}
+			}
+		});
+	}
+	}
