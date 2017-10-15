@@ -22,6 +22,7 @@ public class LaunchGame extends JPanel {
     private JRadioButton option1 = new JRadioButton("2");
     private JRadioButton option2 = new JRadioButton("3");
     private JRadioButton option3 = new JRadioButton("4");
+    private int players;
     public LaunchGame() {
     	JFrame frame = new JFrame();
     	frame.setLayout(new BorderLayout());
@@ -47,12 +48,15 @@ public class LaunchGame extends JPanel {
 				
 				boolean isoptionSelected;
 		        if(isoptionSelected = option1.isSelected()){
+		        	players=2;
 		        	System.out.println("No. of players is 2");
 		        }
 		        else if(isoptionSelected = option2.isSelected()){
+		        	players=3;
 		        	System.out.println("No. of players is 3");
 		        }
-		        else if(isoptionSelected = option2.isSelected()){
+		        else if(isoptionSelected = option3.isSelected()){
+		        	players=4;
 		        	System.out.println("No. of players is 4");
 		        }
 		        else {
@@ -84,14 +88,16 @@ public class LaunchGame extends JPanel {
                 public void actionPerformed(ActionEvent event) {
                 	String text = textField.getText();
                     System.out.println(text);
-                    
-                    //open a map
+                    openMap(gameMap,players);                    {}
                 }
+
+				private void openMap(GameMap gameMap, int players) {
+					//call the function that loads MAP
+				}
             });
             }
         }	  }
   	  });
-    }
 }
-
+}
 	 
