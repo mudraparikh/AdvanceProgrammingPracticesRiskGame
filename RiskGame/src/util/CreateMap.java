@@ -106,8 +106,7 @@ public class CreateMap {
             Scanner scanMapFileName = new Scanner(System.in);
             String fileName = scanMapFileName.nextLine();
             GameMap gameMap = new GameMap();
-            HashMap<String, String> mapDetail = new HashMap<>();
-            //change to default image file
+            HashMap<String, String> mapDetail = new HashMap<>(); //change to default image file
             mapDetail.put("image", "Canada.bmp");
             gameMap.setMapDetail(mapDetail);
             gameMap.setCountryAndNeighborsMap(countryNeibourMap);

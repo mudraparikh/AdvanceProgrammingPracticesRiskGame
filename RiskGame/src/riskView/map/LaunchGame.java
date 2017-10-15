@@ -126,7 +126,7 @@ public class LaunchGame extends JPanel {
                         dialog.setSize(275, 100);
                         label1.setVisible(true);
                         label1.setSize(275, 100);
-                        dialog.setTitle("ERROR");
+                        dialog.setTitle("ERROR"); // error message when wrong file is selected
                         dialog.add(label1);
                     } else {
                         String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
@@ -167,7 +167,7 @@ public class LaunchGame extends JPanel {
                         f.setSize(icon.getIconWidth(), icon.getIconHeight());
                         f.setVisible(true);
                         if (numberOfPlayers == 2) {
-                            f.add(player1, BorderLayout.PAGE_START);
+                            f.add(player1, BorderLayout.PAGE_START); // alignment of players on the screen
                             f.add(player2, BorderLayout.PAGE_END);
                             f.add(jIcon, BorderLayout.CENTER);
                         } else if (numberOfPlayers == 3) {
