@@ -18,7 +18,7 @@ public class Continent {
 
     @Override
     public boolean equals(Object continentObject) {
-        String continentName = ((Continent) continentObject).getContinentName();
+        String continentName = getContinentName();
         return continentName.equals(this.getContinentName());
     }
 
@@ -55,8 +55,8 @@ public class Continent {
         return numberOfTerritories;
     }
 
-    public void setNumberOfTerritories(int nummberOfTerritories) {
-        this.numberOfTerritories = nummberOfTerritories;
+    public void setNumberOfTerritories(int numberOfTerritories) {
+        this.numberOfTerritories = numberOfTerritories;
     }
 
 }

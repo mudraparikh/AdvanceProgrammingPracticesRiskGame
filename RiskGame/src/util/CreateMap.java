@@ -1,35 +1,29 @@
 package util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 
+import java.util.*;
+
 public class CreateMap {
 
 
     public static void main(String args[]) {
-        
-        System.out.println("How many continent do you want?");
+
+        System.out.println("How many Continent do you want?");
         Scanner sc = new Scanner(System.in);
         int numberOfContinents = sc.nextInt();
         System.out.println("How many Countries do you want ?");
         int numberOfCountries = sc.nextInt();
-        List<String> continentNameList = createCountinentList(numberOfContinents);
+        List<String> continentNameList = createContinentList(numberOfContinents);
         List<String> toBeRemoved = new ArrayList<>();
         Collection<String> countryNameList = createCountryList(numberOfCountries);
-        List<Country> countryList = new ArrayList<Country>();
-        List<Continent> continentList = new ArrayList<Continent>();
+        List<Country> countryList = new ArrayList<>();
+        List<Continent> continentList = new ArrayList<>();
         HashMap<String, String> countryContinentMap = new HashMap<>();
-        HashMap<Country, List<Country>> countryNeibourMap = new HashMap<>();
+        HashMap<Country, List<Country>> countryNeighbourMap = new HashMap<>();
         System.out.println("Continent names are");
         for (String continent : continentNameList) {
             System.out.print(continent + " ");
@@ -70,7 +64,7 @@ public class CreateMap {
         for (String country : toBeRemoved) {
             countryNameList.remove(country);
         }
-        toBeRemoved = new ArrayList<String>();
+        toBeRemoved = new ArrayList<>();
         counter = 0;
         System.out.println("Country and Continent is -->");
         for (Country country : countryList) {
@@ -83,7 +77,7 @@ public class CreateMap {
             System.out.println(" Assign neighbor for Country-->" + countryName);
             Scanner readNeigbors = new Scanner(System.in);
             String neighborCountries[] = readNeigbors.nextLine().split(",");
-            List<Country> neiborNodeList = new ArrayList<Country>();
+            List<Country> neiborNodeList = new ArrayList<>();
             for (String neighbor : neighborCountries) {
                 if (neighbor.equals(countryName)) {
                     System.out.println("Country Can not be neighbor to it self Please enter correct value");
@@ -102,7 +96,7 @@ public class CreateMap {
                     neighborCountry.setBelongsToContinent(countryContinentMap.get(neighbor));
                     neiborNodeList.add(neighborCountry);
                     country.setNeighborNodes(neiborNodeList);
-                    countryNeibourMap.put(country, neiborNodeList);
+                    countryNeighbourMap.put(country, neiborNodeList);
                 }
             }
             counter++;
@@ -111,20 +105,19 @@ public class CreateMap {
         for (String countryToBeRemoved : toBeRemoved) {
             countryNameList.remove(countryToBeRemoved);
         }
-        countryNeibourMap = correctNebourNodes(countryNeibourMap);
+        countryNeighbourMap = correctNeighborNodes(countryNeighbourMap);
         System.out.println("Please Enter the Name of The Map that you want to create");
         Scanner scanMapFileName = new Scanner(System.in);
-        String fileName= scanMapFileName.nextLine();
+        String fileName = scanMapFileName.nextLine();
         GameMap gameMap = new GameMap();
-        gameMap.setCountryAndNeighborsMap(countryNeibourMap);
+        gameMap.setCountryAndNeighborsMap(countryNeighbourMap);
         gameMap.setContinentList(continentList);
         MapModel mapModel = new MapModel();
-        if(RiskGameUtil.checkNullString(fileName)) {
-        mapModel.writeMap(gameMap,fileName);
+        if (RiskGameUtil.checkNullString(fileName)) {
+            mapModel.writeMap(gameMap, fileName);
         }
-        Iterator it = countryNeibourMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
+        for (Object o : countryNeighbourMap.entrySet()) {
+            Map.Entry pair = (Map.Entry) o;
             Country country = (Country) pair.getKey();
             List<Country> neighbours = (List<Country>) pair.getValue();
             System.out.println("------" + country.getCountryName() + "-----" + country.getBelongsToContinent());
@@ -137,60 +130,55 @@ public class CreateMap {
     }
 
 
-    private static HashMap<Country, List<Country>> correctNebourNodes(HashMap<Country, List<Country>> countryNeibourMap) {
+    private static HashMap<Country, List<Country>> correctNeighborNodes(HashMap<Country, List<Country>> countryNeibourMap) {
 
         Iterator it = countryNeibourMap.entrySet().iterator();
-        HashMap<Country, List<Country>> updatedCountryNeiborMap = new HashMap<>();
-        //updatedCountryNeiborMap.putAll(countryNeibourMap);
+        HashMap<Country, List<Country>> updatedCountryNeighborMap = new HashMap<>();
+        //updatedCountryNeighborMap.putAll(countryNeibourMap);
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             Country country = (Country) pair.getKey();
             List<Country> neighbours = (List<Country>) pair.getValue();
             for (Country neighbor : neighbours) {
                 if (countryNeibourMap.containsKey(neighbor)) {
-                    List<Country> neiborNodes = countryNeibourMap.get(neighbor);
+                    List<Country> neighborNodes = countryNeibourMap.get(neighbor);
                     List<Country> countryToBeAdded = new ArrayList<>();
-                    countryToBeAdded.addAll(neiborNodes);
-                    for (Country neibor : neiborNodes) {
-                        if (!neibor.getCountryName().equals(country.getCountryName())) {
+                    countryToBeAdded.addAll(neighborNodes);
+                    for (Country neighbor1 : neighborNodes) {
+                        if (!neighbor1.getCountryName().equals(country.getCountryName())) {
                             if (!countryToBeAdded.contains(country)) {
                                 countryToBeAdded.add(country);
-                                updatedCountryNeiborMap.put(neighbor, countryToBeAdded);
+                                updatedCountryNeighborMap.put(neighbor1, countryToBeAdded);
                             }
-
                         }
                     }
-
-
                 }
             }
         }
-        if (!updatedCountryNeiborMap.isEmpty()) {
-            return updatedCountryNeiborMap;
+        if (!updatedCountryNeighborMap.isEmpty()) {
+            return updatedCountryNeighborMap;
         }
         return countryNeibourMap;
     }
 
-    ;
-
 
     private static List<String> createCountryList(int numberOfCountries) {
         // TODO Auto-generated method stub
-        List<String> returnCountryList = new ArrayList<String>();
-        for (int i = 0; i < numberOfCountries; i++) {
+        List<String> returnCountryList = new ArrayList<>();
+        for (int i = 1; i <= numberOfCountries; i++) {
             returnCountryList.add(String.valueOf(i));
         }
         return returnCountryList;
 
     }
 
-    private static List<String> createCountinentList(int numberOfContinents) {
+    private static List<String> createContinentList(int numberOfContinents) {
         // TODO Auto-generated method stub
-        List<String> returnListofContinent = new ArrayList<String>();
-        for (int i = 0; i < numberOfContinents; i++) {
-            returnListofContinent.add("c" + i);
+        List<String> returnContinentList = new ArrayList<>();
+        for (int i = 1; i <= numberOfContinents; i++) {
+            returnContinentList.add("c" + i);
         }
-        return returnListofContinent;
+        return returnContinentList;
     }
 
 

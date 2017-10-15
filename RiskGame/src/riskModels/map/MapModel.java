@@ -275,7 +275,8 @@ public void writeMap(GameMap graphMap, String filename) {
 	maps = maps + "\n";
 
 	String continents = "[Continents]\n";
-	for (Continent continent : graphMap.getContinentList()) {
+    System.out.println("this is the size of continents:"+graphMap.getContinentList().size());
+    for (Continent continent : graphMap.getContinentList()) {
 		continents = continents + continent.continentName + "=" + continent.numberOfTerritories + "\n";
 	}
 	continents = continents + "\n";
