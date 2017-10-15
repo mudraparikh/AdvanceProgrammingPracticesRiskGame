@@ -16,6 +16,8 @@ import java.util.Map;
  * @author hanita
  */
 public class MapView extends java.awt.Frame{
+	private javax.swing.JButton jButton1;
+	
 	
     public static void main(String[] args) {
 //	MapView h=new MapView();
