@@ -87,7 +87,7 @@ public class MapModel {
     /**
      * This method will read the continet part of map file
      *
-     * @param bufferReaderForFile
+     * @param bufferReaderForFile BufferReader object that read the .map file for continent
      * @return List of Continent. every single object of the list contains continentName and number of countries it hold.
      */
     public static List<Continent> readContinents(BufferedReader bufferReaderForFile) {
@@ -273,7 +273,7 @@ public void removeCountry(String country,GameMap gameMap) {
 }
 /**
  * This method will add country in existing Map
- * @param countryName Name of the country that you want to add
+ * @param country the country that you want to add
  * @param gameMap  current map details
  * @param neighbor List of neighborCountry
  */
@@ -298,12 +298,12 @@ public void removeCountry(String country,GameMap gameMap) {
 		 }
 	 }
  }
+ 
 /**
  * This method will create .map file based on input provided from user
  * @param graphMap Details provided from the user 
  * @param filename Map file name that user wants to give
  */
-
  public void writeMap(GameMap graphMap, String filename) {
 		String maps = "[Map]\n";
 		for(Map.Entry<String, String> entry:graphMap.getMapDetail().entrySet()){
