@@ -98,8 +98,8 @@ public class MapModel {
                     Continent continents = new Continent();
                     List<Integer> allContinents = new ArrayList<Integer>();
                     String[] ConProperties = Continents.split("=");
-                    continents.setContinentName(ConProperties[0]);
-                    continents.setNumberOfTerritories(Integer.parseInt(ConProperties[1]));
+                    continents.setContinentName(ConProperties[0].trim());
+                    continents.setNumberOfTerritories(Integer.parseInt(ConProperties[1].trim()));
                     continentsList.add(continents);
                     System.out.println(ConProperties[1]);
                 }

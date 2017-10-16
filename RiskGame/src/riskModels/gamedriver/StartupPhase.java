@@ -1,8 +1,10 @@
 package riskModels.gamedriver;
 
 import riskModels.country.Country;
+import riskModels.map.GameMap;
 import riskModels.player.Player;
 
+import java.awt.Color;
 import java.util.*;
 
 public class StartupPhase {
@@ -36,25 +38,25 @@ public class StartupPhase {
         graphMap.put(country8, neighNodeList);
 
         Scanner scanner = new Scanner(System.in);
-        int totalPlayers = scanner.nextInt();
-
+        int numberOfPlayers = scanner.nextInt();
+        Color color[]= {Color.RED,Color.YELLOW,Color.BLUE,Color.GREEN};
         // players
         List<Player> playerList = new ArrayList<>();
         int i = 0;
-        while (i < totalPlayers) {
-            playerList.add(new Player("player" + i));
+        while (i < numberOfPlayers) {
+            playerList.add(new Player("player" + i,color[i]));
             i++;
         }
 
         // assign countries to players
         int j = 0;
         for (Map.Entry<Country, List<Country>> e : graphMap.entrySet()) {
-            playerList.get(j % totalPlayers).assignedCountries.add(e.getKey());
+            playerList.get(j % numberOfPlayers).assignedCountries.add(e.getKey());
             j++;
         }
 
         //To assign initial number iof armies/infantries according to the players
-        switch (totalPlayers) {
+        switch (numberOfPlayers) {
             case 2:
                 for (Player p : playerList) {
                     p.setTotalArmies(40);
@@ -99,7 +101,7 @@ public class StartupPhase {
         //Allocating armies to countries for each player in RR fashion
         j = 0;
         for (Player p : playerList) {
-            System.out.println("" + playerList.get(j % totalPlayers).getName() + " pls select from :");
+            System.out.println("" + playerList.get(j % numberOfPlayers).getName() + " pls select from :");
             StringBuilder assigned = new StringBuilder();
             for (Country c : p.getAssignedCountries()) {
                 assigned.append(c.getCountryName()).append(", ");
@@ -122,5 +124,67 @@ public class StartupPhase {
         player.setReinforcementArmies(player.getTotalArmies() - player.getAssignedCountries().size() - 1);
 
     }
+
+	public void assignCountriesToPlayer(int numberOfPlayers, GameMap gameMap) {
+		
+		Color color[]= {Color.RED,Color.MAGENTA,Color.BLUE,Color.GREEN};
+        // players
+        List<Player> playerList = new ArrayList<>();
+        int i = 0;
+        while (i < numberOfPlayers) {
+            playerList.add(new Player("player" + i,color[i]));
+            i++;
+        }
+        // assign countries to players
+        int j = 0;
+        for (Map.Entry<Country, List<Country>> e : gameMap.getCountryAndNeighborsMap().entrySet()) {
+            playerList.get(j % numberOfPlayers).assignedCountries.add(e.getKey());
+            e.getKey().setBelongsToPlayer(playerList.get(j % numberOfPlayers));
+            j++;
+        }
+        assignInitialArmiesToPlayers(numberOfPlayers,playerList);
+        // print players assigned countries
+        for (Player p : playerList) {
+            StringBuilder assigned = new StringBuilder();
+            for (Country c : p.assignedCountries) {
+                c.setBelongsToPlayer(p);
+                c.setCurrentArmiesDeployed(1);
+                assigned.append(c.getCountryName()).append(", ");
+            }
+
+            System.out.println("Player " + p.getName() + " : [" + assigned + "]");
+            System.out.println("Player " + p.getName() + " : [" + p.getTotalArmies() + "]");
+        }
+		
+	}
+
+	public void assignInitialArmiesToPlayers(int numberOfPlayers, List<Player> playerList) {
+		switch (numberOfPlayers) {
+        case 2:
+            for (Player p : playerList) {
+                p.setTotalArmies(40);
+            }
+            break;
+        case 3:
+            for (Player p : playerList) {
+                p.setTotalArmies(35);
+            }
+            break;
+        case 4:
+            for (Player p : playerList) {
+                p.setTotalArmies(30);
+            }
+            break;
+        case 5:
+            for (Player p : playerList) {
+                p.setTotalArmies(25);
+            }
+            break;
+
+    }
+		
+	}
+	
+	
 }
 

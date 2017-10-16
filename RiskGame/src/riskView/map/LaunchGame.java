@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
@@ -25,6 +27,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import riskModels.country.Country;
+import riskModels.gamedriver.StartupPhase;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 
@@ -64,12 +67,16 @@ public class LaunchGame extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				boolean isoptionSelected;
+				int numberOfPlayers =0;
 				if (isoptionSelected = option1.isSelected()) {
 					System.out.println("No. of players is 2");
+					numberOfPlayers=2;
 				} else if (isoptionSelected = option2.isSelected()) {
 					System.out.println("No. of players is 3");
-				} else if (isoptionSelected = option2.isSelected()) {
+					numberOfPlayers=3;
+				} else if (isoptionSelected = option3.isSelected()) {
 					System.out.println("No. of players is 4");
+					numberOfPlayers=4;
 				} else {
 					System.out.println("Select One Player Atleast");
 				}
@@ -81,7 +88,9 @@ public class LaunchGame extends JPanel {
 					File selectedFile = filechooser.getSelectedFile();
 					System.out.println("Selected file: " + selectedFile.getAbsolutePath());
 					MapModel mapmodel = new MapModel();
+					StartupPhase startupPhase = new StartupPhase();
 					GameMap gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
+					startupPhase.assignCountriesToPlayer(numberOfPlayers,gameMap); 
 					if (gameMap.isCorrectMap == false) {
 						dialog.setVisible(true);
 						dialog.setSize(275, 100);
@@ -110,9 +119,8 @@ public class LaunchGame extends JPanel {
 						        	for(Country c:entry.getValue()){
 						        		for(Country t:countryList){
 						        			if(c.getCountryName().equals(t.getCountryName())){
-						        				g.setColor(Color.RED);
-						        				g.drawLine(t.getStartPixel()-10, t.getEndPixel()-40, entry.getKey().getStartPixel()-10, entry.getKey().getEndPixel()-40);
-						        				
+						        				g.setColor(Color.darkGray);
+						        				g.drawLine(t.getStartPixel()-10, t.getEndPixel()-40, entry.getKey().getStartPixel()-10, entry.getKey().getEndPixel()-40);						        				
 						        			}
 						        		}
 						        	}
@@ -125,16 +133,19 @@ public class LaunchGame extends JPanel {
 						JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()];
 						int i = 0;
 						for(Country c:gameMap.getCountryAndNeighborsMap().keySet()){
-							l[i] = new JLabel(c.getCountryName());
+							l[i] = new JLabel(""+c.getCountryName()+":"+c.getCurrentArmiesDeployed());
 							l[i].setBounds(c.getStartPixel()-15, c.getEndPixel()-90, 100, 100);
 							l[i].setVisible(true);
 							jIcon.add(l[i]);
-							l[i].setToolTipText("Solider:");
+							l[i].setForeground(c.getBelongsToPlayer().getColors());
+							l[i].addMouseListener(new MouseAdapter() {
+								 public void mouseClicked(MouseEvent e)  
+								    {  								       
+									 	System.out.println(c.countryName+" was clicked !");
+								    }
+							});
 							i++;
 						}
-						
-						
-
 						
 						textField.addActionListener(new ActionListener() {
 							@Override
