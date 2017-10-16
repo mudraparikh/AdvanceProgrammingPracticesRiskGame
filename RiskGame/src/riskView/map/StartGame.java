@@ -1,6 +1,9 @@
 package riskView.map;
 
 import javax.swing.*;
+
+import util.CreateMap;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,15 +58,15 @@ public class StartGame extends java.awt.Frame {
             }
         });
 
-        jButton2.setText("Add Player");
+        jButton2.setText("Create Map");
         jButton2.setName("jButton2");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //    jButton2ActionPerformed(evt);
+            jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Map Editor");
+        jButton3.setText("Edit Map");
         jButton3.setName("jButton3");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,11 +132,12 @@ public class StartGame extends java.awt.Frame {
     add.setVisible(true);
     }
 
-	/*private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) 
+	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) 
     {
-	   AddPlayer add = new AddPlayer();
-	   add.setVisible(true);
-    }*/
+	   util.CreateMap add = new util.CreateMap();
+	   add.main(null);
+	   System.exit(0);
+    }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         MapView add = new MapView();
         add.setVisible(true);
