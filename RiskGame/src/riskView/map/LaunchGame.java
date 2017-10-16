@@ -91,65 +91,74 @@ public class LaunchGame extends JPanel {
 						dialog.add(label1);
 					} else if (gameMap.isCorrectMap == true) {
 						String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
-						JFrame f = new JFrame();
-						BufferedImage image = null;
-						try {
-							image = ImageIO.read(new File(absolute));
-						} catch (Exception ex) {
-							ex.printStackTrace();
-							System.exit(1);
-						}
-						ImageIcon icon = new ImageIcon(image);
-						JLabel jIcon = new JLabel(icon){
-							@Override
-							protected void paintComponent(Graphics g) {
-						        super.paintComponent(g);
-						        HashMap<Country,List<Country>> map =  gameMap.getCountryAndNeighborsMap();
-						        Set<Country> countryList = map.keySet();
-						        for(Entry<Country, List<Country>> entry :map.entrySet()){
-						        	for(Country c:entry.getValue()){
-						        		for(Country t:countryList){
-						        			if(c.getCountryName().equals(t.getCountryName())){
-						        				g.setColor(Color.RED);
-						        				g.drawLine(t.getStartPixel()-10, t.getEndPixel()-40, entry.getKey().getStartPixel()-10, entry.getKey().getEndPixel()-40);
-						        				
-						        			}
-						        		}
-						        	}
-						        }
-						    }
-						};
-						f.add(jIcon);
-						f.setSize(icon.getIconWidth(), icon.getIconHeight());
-						f.setVisible(true);
-						JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()];
-						int i = 0;
-						for(Country c:gameMap.getCountryAndNeighborsMap().keySet()){
-							l[i] = new JLabel(c.getCountryName());
-							l[i].setBounds(c.getStartPixel()-15, c.getEndPixel()-90, 100, 100);
-							l[i].setVisible(true);
-							jIcon.add(l[i]);
-							l[i].setToolTipText("Solider:");
-							i++;
-						}
-						
-						
-
-						
-						textField.addActionListener(new ActionListener() {
-							@Override
-							public void actionPerformed(ActionEvent event) {
-								String text = textField.getText();
-								System.out.println(text);
-
-								// open a map
-							}
-						});
-
-
+						openMap(gameMap,absolute);
 					}
 				}
 			}
 		});
 	}
+	
+	
+	static public void openMap(GameMap gameMap, String absoluteImgPath){
+			JFrame f = new JFrame();
+			BufferedImage image = null;
+			if(gameMap.getMapDetail().get("image")!=null){
+			try {
+				image = ImageIO.read(new File(absoluteImgPath));
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				System.exit(1);
+			}
+			}
+
+			JLabel jIcon = new JLabel(){
+				@Override
+				protected void paintComponent(Graphics g) {
+			        super.paintComponent(g);
+			        HashMap<Country,List<Country>> map =  gameMap.getCountryAndNeighborsMap();
+			        Set<Country> countryList = map.keySet();
+			        for(Entry<Country, List<Country>> entry :map.entrySet()){
+			        	for(Country c:entry.getValue()){
+			        		for(Country t:countryList){
+			        			if(c.getCountryName().equals(t.getCountryName())){
+			        				g.setColor(Color.RED);
+			        				g.drawLine(t.getStartPixel()-10, t.getEndPixel()-40, entry.getKey().getStartPixel()-10, entry.getKey().getEndPixel()-40);
+			        				
+			        			}
+			        		}
+			        	}
+			        }
+			    }
+			};
+			int high = 0;
+			int width = 0;
+			if(image!=null){
+				ImageIcon icon = new ImageIcon(image);
+				jIcon.setIcon(icon);
+				width = icon.getIconWidth();
+				high = icon.getIconHeight();
+			}else{
+				for(Country c:gameMap.getCountryAndNeighborsMap().keySet()){
+					if(c.getStartPixel()>width){
+						width = c.getStartPixel();
+					}
+					if(c.getEndPixel()>high){
+						high = c.getEndPixel();
+					}
+				}
+			}
+			f.add(jIcon);
+			f.setSize(width,high);
+			f.setVisible(true);
+			JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()];
+			int i = 0;
+			for(Country c:gameMap.getCountryAndNeighborsMap().keySet()){
+				l[i] = new JLabel(c.getCountryName());
+				l[i].setBounds(c.getStartPixel()-15, c.getEndPixel()-90, 100, 100);
+				l[i].setVisible(true);
+				jIcon.add(l[i]);
+				l[i].setToolTipText("Solider:");
+				i++;
+			}
+		}
 	}

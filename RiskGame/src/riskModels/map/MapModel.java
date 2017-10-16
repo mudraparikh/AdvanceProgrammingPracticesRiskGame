@@ -176,18 +176,13 @@ public class MapModel {
                         List<Country> countryAndNeighbor = MapModel.readTerritories(bufferReaderForFile);
                         HashMap<Country, List<Country>> graphReadyMap = MapModel.assignContinentToNeighbors(countryAndNeighbor);
                         System.out.println("Reading of Territories Completed");
-                        for (Object o : graphReadyMap.entrySet()) {
-                            Map.Entry pair = (Map.Entry) o;
-                            Country country = (Country) pair.getKey();
-                            List<Country> neighbours = (List<Country>) pair.getValue();
-                        }
                         mapDetails.setCountryAndNeighborsMap(graphReadyMap);
                     }
                     }
                 }
             }
             
-            if(isMAPpresent && isContinentPresent && isTerritoryPresent){
+            if(isContinentPresent && isTerritoryPresent){
             	System.out.println("Map Continents and Territories tags are present");
             }
             else {
@@ -278,12 +273,15 @@ public void removeCountry(String country,GameMap gameMap) {
  */
 
 public void writeMap(GameMap graphMap, String filename) {
-	String maps = "[Map]\n";
+	boolean hasMap = false;
+	String maps = "";
 	for(Map.Entry<String, String> entry:graphMap.getMapDetail().entrySet()){
+		hasMap = true;
 		maps = maps + entry.getKey() + "=" + entry.getValue() +"\n";
 	}
-	maps = maps + "\n";
-
+	if(hasMap){
+		maps = "[Map]\n" + maps + "\n";
+	}
 	String continents = "[Continents]\n";
     System.out.println("this is the size of continents:"+graphMap.getContinentList().size());
     for (Continent continent : graphMap.getContinentList()) {
