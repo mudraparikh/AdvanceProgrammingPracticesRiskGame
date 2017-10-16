@@ -42,6 +42,11 @@ public class LaunchGame extends JPanel {
 	private JRadioButton option1 = new JRadioButton("2");
 	private JRadioButton option2 = new JRadioButton("3");
 	private JRadioButton option3 = new JRadioButton("4");
+	
+	private JLabel player1 = new JLabel("Player 1") ;
+	private JLabel player2 = new JLabel("Player 2") ;
+	private JLabel player3 = new JLabel("Player 3") ;
+	private JLabel player4 = new JLabel("Player 4") ;
 
 	public LaunchGame() {
 		JFrame frame = new JFrame();
@@ -62,6 +67,18 @@ public class LaunchGame extends JPanel {
 		frame.add(option3, BorderLayout.LINE_END);
 		frame.add(button, BorderLayout.PAGE_END);
 
+		player1.setVisible(true);
+		player1.setOpaque(true);
+		player1.setBackground(Color.RED);
+		player2.setVisible(true);
+		player2.setOpaque(true);
+		player2.setBackground(Color.MAGENTA);
+		player3.setVisible(true);
+		player3.setOpaque(true);
+		player3.setBackground(Color.BLUE);
+		player4.setVisible(true);
+		player4.setOpaque(true);
+		player4.setBackground(Color.GREEN);
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -127,9 +144,27 @@ public class LaunchGame extends JPanel {
 						        }
 						    }
 						};
-						f.add(jIcon);
+						jIcon.setMaximumSize(getMaximumSize());
 						f.setSize(icon.getIconWidth(), icon.getIconHeight());
 						f.setVisible(true);
+						if(numberOfPlayers==2){
+						    f.add(player1, BorderLayout.PAGE_START);
+						    f.add(player2, BorderLayout.PAGE_END);
+						    f.add(jIcon, BorderLayout.CENTER);
+						}
+						else if(numberOfPlayers==3) {
+							f.add(player1, BorderLayout.PAGE_START);
+							f.add(player2, BorderLayout.BEFORE_LINE_BEGINS);
+							f.add(jIcon, BorderLayout.CENTER);
+							f.add(player3, BorderLayout.PAGE_END);
+						}
+						else if(numberOfPlayers==4) {
+							f.add(player1, BorderLayout.PAGE_START);
+							f.add(player2, BorderLayout.LINE_START);
+							f.add(jIcon, BorderLayout.CENTER);
+							f.add(player3, BorderLayout.LINE_END);
+							f.add(player4, BorderLayout.PAGE_END);
+						}
 						JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()];
 						int i = 0;
 						for(Country c:gameMap.getCountryAndNeighborsMap().keySet()){
@@ -146,7 +181,6 @@ public class LaunchGame extends JPanel {
 							});
 							i++;
 						}
-						
 						textField.addActionListener(new ActionListener() {
 							@Override
 							public void actionPerformed(ActionEvent event) {
