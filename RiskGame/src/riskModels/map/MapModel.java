@@ -271,7 +271,33 @@ public void removeCountry(String country,GameMap gameMap) {
 		// finally removing country from the map details
 	gameMap.getCountryAndNeighborsMap().remove(countryToRemove);
 }
-
+/**
+ * This method will add country in existing Map
+ * @param countryName Name of the country that you want to add
+ * @param gameMap  current map details
+ * @param neighbor List of neighborCountry
+ */
+ public void addCountry(Country country,GameMap gameMap,List<Country> neighbor){
+	  if(country!=null && !neighbor.isEmpty()) {
+		 if( gameMap.getCountryAndNeighborsMap().containsKey(country)) {
+			 gameMap.getCountryAndNeighborsMap().put(country, neighbor); // country added to existing game details map
+		 }
+	  }
+ }
+ /**
+  * This method will add neighbor to Country
+  * @param countryName country name where neighbors to be added
+  * @param gameMap current map details
+  * @param neighborCountry neighbor country to be added.
+  */
+ public void addNeighbor(String countryName,GameMap gameMap,Country neighborCountry) {
+	 if(RiskGameUtil.checkNullString(countryName)) {
+		 Country country = new Country(countryName);
+		 if(gameMap.getCountryAndNeighborsMap().containsKey(country)){
+			 gameMap.getCountryAndNeighborsMap().get(country).add(neighborCountry);
+		 }
+	 }
+ }
 /**
  * This method will create .map file based on input provided from user
  * @param graphMap Details provided from the user 
