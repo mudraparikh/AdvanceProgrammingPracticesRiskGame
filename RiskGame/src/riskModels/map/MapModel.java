@@ -304,59 +304,60 @@ public void removeCountry(String country,GameMap gameMap) {
  * @param filename Map file name that user wants to give
  */
 
-public void writeMap(GameMap graphMap, String filename) {
-	String maps = "[Map]\n";
-	for(Map.Entry<String, String> entry:graphMap.getMapDetail().entrySet()){
-		maps = maps + entry.getKey() + "=" + entry.getValue() +"\n";
-	}
-	maps = maps + "\n";
-
-	String continents = "[Continents]\n";
-    System.out.println("this is the size of continents:"+graphMap.getContinentList().size());
-    for (Continent continent : graphMap.getContinentList()) {
-		continents = continents + continent.continentName + "=" + continent.numberOfTerritories + "\n";
-	}
-	continents = continents + "\n";
-	
-	String territories = "[Territories]\n";
-	
-	// loop of graphMap
-	Iterator<Map.Entry<Country, List<Country>>> it = graphMap.getCountryAndNeighborsMap().entrySet().iterator();
-	while (it.hasNext()) {
-		Map.Entry<Country, List<Country>> pair = it.next();
-		// get country object
-		Country keyCountry = (Country) pair.getKey();
-		// get list of the neighbors
-		List<Country> neiCountryList = (List<Country>) pair.getValue();
-
-		// index of the country from the all countries of all continents
-		// list
-		
-		// get values of each country object
-		territories = territories + keyCountry.countryName + "," + keyCountry.getStartPixel() + ","
-				+ keyCountry.getEndPixel() + "," + keyCountry.getBelongsToContinent();
-
-		// get the index value of the neighbor
-		for (Country c : neiCountryList) {
-			territories = territories + "," + c.countryName;
+ public void writeMap(GameMap graphMap, String filename) {
+		String maps = "[Map]\n";
+		for(Map.Entry<String, String> entry:graphMap.getMapDetail().entrySet()){
+			maps = maps + entry.getKey() + "=" + entry.getValue() +"\n";
 		}
-		territories = territories + "\n";
+		maps = maps + "\n";
+
+		String continents = "[Continents]\n";
+	    System.out.println("this is the size of continents:"+graphMap.getContinentList().size());
+	    for (Continent continent : graphMap.getContinentList()) {
+			continents = continents + continent.continentName + "=" + continent.numberOfTerritories + "\n";
+		}
+		continents = continents + "\n";
+		
+		String territories = "[Territories]\n";
+		
+		// loop of graphMap
+		Iterator<Map.Entry<Country, List<Country>>> it = graphMap.getCountryAndNeighborsMap().entrySet().iterator();
+		int startPixel=45;
+		int endPixel=60;
+		while (it.hasNext()) {
+			Map.Entry<Country, List<Country>> pair = it.next();
+			// get country object
+			Country keyCountry = (Country) pair.getKey();
+			// get list of the neighbors
+			List<Country> neiCountryList = (List<Country>) pair.getValue();
+
+			// index of the country from the all countries of all continents
+			// list
+			startPixel+=10;endPixel+=10;
+			// get values of each country object
+			territories = territories + keyCountry.countryName + "," + startPixel + ","
+					+ endPixel + "," + keyCountry.getBelongsToContinent();
+
+			// get the index value of the neighbor
+			for (Country c : neiCountryList) {
+				territories = territories + "," + c.countryName;
+			}
+			territories = territories + "\n";
+		}
+
+		String result = maps + continents + territories;
+
+		String dotMapFile = filename + ".map";
+		PrintWriter out = null;
+		try {
+			out = new PrintWriter(new BufferedWriter(new FileWriter(dotMapFile)));
+			out.print(result);
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			out.close();
+		}
+
 	}
-
-	String result = maps + continents + territories;
-
-	String dotMapFile = filename + ".map";
-	PrintWriter out = null;
-	try {
-		out = new PrintWriter(new BufferedWriter(new FileWriter(dotMapFile)));
-		out.print(result);
-		out.close();
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		out.close();
-	}
-
 }
-}
-
