@@ -25,6 +25,7 @@ import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
+import riskView.map.LaunchGame;
 
 public class CreateMap {
 
@@ -142,6 +143,10 @@ public class CreateMap {
         Scanner scanMapFileName = new Scanner(System.in);
         String fileName= scanMapFileName.nextLine();
         GameMap gameMap = new GameMap();
+        HashMap<String,String> mapDetail = new HashMap<>();
+        //change to default image file
+        mapDetail.put("image", "Canada.bmp");
+        gameMap.setMapDetail(mapDetail);
         gameMap.setCountryAndNeighborsMap(countryNeibourMap);
         gameMap.setContinentList(continentList);
         MapModel mapModel = new MapModel();
@@ -160,95 +165,13 @@ public class CreateMap {
             }
 
         }
-        
-        JFrame f = new JFrame();
-        f.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(e.getX()+","+e.getY());
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(e.getX()+","+e.getY());
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(e.getX()+","+e.getY());
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(e.getX()+","+e.getY());
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println(e.getX()+","+e.getY());
-			}
-		});
-		int width = 0;
-		int height = 0;
-		//find size of jframe from the position of countries
-		for(Country c:gameMap.getCountryAndNeighborsMap().keySet()){
-			if(c.getStartPixel()>width){
-				width = c.getStartPixel();
-			}
-			if(c.getEndPixel()>height){
-				height = c.getEndPixel();
-			}
-		}
-		
-		JLabel jIcon = new JLabel(){
-			@Override
-			protected void paintComponent(Graphics g) {
-		        super.paintComponent(g);
-		        HashMap<Country,List<Country>> map =  gameMap.getCountryAndNeighborsMap();
-		        Set<Country> countryList = map.keySet();
-		        for(Entry<Country, List<Country>> entry :map.entrySet()){
-		        	for(Country c:entry.getValue()){
-		        		for(Country t:countryList){
-		        			if(c.getCountryName().equals(t.getCountryName())){
-		        				g.setColor(Color.RED);
-		        				g.drawLine(t.getStartPixel(), t.getEndPixel()+50, entry.getKey().getStartPixel(), entry.getKey().getEndPixel()+50);
-		        			}
-		        		}
-		        	}
-		        }
-		    }
-		};
-		jIcon.setSize(width, height);
-
-		f.add(jIcon);
-		f.setSize(width+100, height+100);
-		jIcon.setVisible(true);
-		f.setVisible(true);
-		JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()];
-		int i = 0;
-		for(Country c:gameMap.getCountryAndNeighborsMap().keySet()){
-			l[i] = new JLabel(c.getCountryName());
-			l[i].setBounds(c.getStartPixel(), c.getEndPixel(), 100, 100);
-			l[i].setVisible(true);
-			jIcon.add(l[i]);
-			//l[i].setToolTipText("Solider:");
-			i++;
-		}
-        
-		
-		
+        LaunchGame.openMap(gameMap, System.getProperty("user.dir")+"\\\\" +mapDetail.get("image"));		
     }
 
 
     private static HashMap<Country, List<Country>> correctNebourNodes(HashMap<Country, List<Country>> countryNeibourMap) {
 
-        Iterator it = countryNeibourMap.entrySet().iterator();
+        Iterator<Entry<Country, List<Country>>> it = countryNeibourMap.entrySet().iterator();
         HashMap<Country, List<Country>> updatedCountryNeiborMap = new HashMap<>();
         //updatedCountryNeiborMap.putAll(countryNeibourMap);
         while (it.hasNext()) {
@@ -278,9 +201,6 @@ public class CreateMap {
         return countryNeibourMap;
     }
 
-    ;
-
-
     private static List<String> createCountryList(int numberOfCountries) {
         // TODO Auto-generated method stub
         List<String> returnCountryList = new ArrayList<String>();
@@ -299,6 +219,5 @@ public class CreateMap {
         }
         return returnListofContinent;
     }
-
 
 }
