@@ -145,7 +145,7 @@ public class CreateMap {
         GameMap gameMap = new GameMap();
         HashMap<String,String> mapDetail = new HashMap<>();
         //change to default image file
-        mapDetail.put("image", "Africa.bmp");
+        mapDetail.put("image", "Canada.bmp");
         gameMap.setMapDetail(mapDetail);
         gameMap.setCountryAndNeighborsMap(countryNeibourMap);
         gameMap.setContinentList(continentList);
@@ -165,13 +165,13 @@ public class CreateMap {
             }
 
         }
-        LaunchGame.openMap(gameMap, LaunchGame.class.getProtectionDomain().getCodeSource().getLocation().getPath()+"//..//" +mapDetail.get("image"));		
+        LaunchGame.openMap(gameMap, System.getProperty("user.dir")+"\\\\" +mapDetail.get("image"));		
     }
 
 
     private static HashMap<Country, List<Country>> correctNebourNodes(HashMap<Country, List<Country>> countryNeibourMap) {
 
-        Iterator it = countryNeibourMap.entrySet().iterator();
+        Iterator<Entry<Country, List<Country>>> it = countryNeibourMap.entrySet().iterator();
         HashMap<Country, List<Country>> updatedCountryNeiborMap = new HashMap<>();
         //updatedCountryNeiborMap.putAll(countryNeibourMap);
         while (it.hasNext()) {
