@@ -20,7 +20,7 @@ public class StartGame extends java.awt.Frame {
 
     public StartGame() {
     	super("RISK Game");
-        initComponents();
+        initMenuComponents();
         jButton1.setEnabled(true);
         setLocationRelativeTo(null);
     }
@@ -28,12 +28,12 @@ public class StartGame extends java.awt.Frame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StartGame().setVisible(true);;
+                new StartGame().setVisible(true);
             }
         });
     }
 
-    private void initComponents() {
+    private void initMenuComponents() {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();

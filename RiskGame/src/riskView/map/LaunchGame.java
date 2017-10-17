@@ -50,10 +50,10 @@ public class LaunchGame extends JPanel {
 	private JLabel player4 = new JLabel("Player 4") ;
 
 	public LaunchGame() {
-		initComponens();
+		initGameComponents();
 	}
 
-	private void initComponens() {
+	private void initGameComponents() {
 	
 		JFrame frame = new JFrame();
 		frame.setLocationRelativeTo(null);
