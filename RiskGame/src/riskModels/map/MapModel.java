@@ -55,12 +55,12 @@ public class MapModel {
         String Territories;
         List<Country> countryList = new ArrayList<Country>();
         try {
-            while ((Territories = bufferReaderForFile.readLine()) != null && !Territories.startsWith(CountryConstants.bracket)) {
+            while ((Territories = bufferReaderForFile.readLine()) != null && !Territories.startsWith("[")) {
                 if (RiskGameUtil.checkNullString(Territories)) {
                     String countryName, continentName = null;
                     int startPixel, endPixel = 0;
                     List<Country> neighbourNodes = new ArrayList<Country>();
-                    String[] terrProperties = Territories.split(CountryConstants.comma);
+                    String[] terrProperties = Territories.split(",");
                     countryName = terrProperties[0];
                     continentName = terrProperties[3];
                     startPixel = Integer.parseInt(terrProperties[1]);
