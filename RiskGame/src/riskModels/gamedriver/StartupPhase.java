@@ -92,7 +92,7 @@ public class StartupPhase {
             System.out.println("Player " + p.getName() + " : [" + assigned + "]");
             System.out.println("Player " + p.getName() + " : [" + p.getTotalArmies() + "]");
         }
-
+        
         //print Countries assigned players
         for (Map.Entry<Country, List<Country>> e : graphMap.entrySet()) {
             System.out.println(e.getKey().getCountryName() + "  ------ " + e.getKey().getBelongsToPlayer().getName() + "----------" + e.getKey().getCurrentArmiesDeployed());

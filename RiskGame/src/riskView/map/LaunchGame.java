@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,7 +34,7 @@ import riskModels.map.MapModel;
 
 @SuppressWarnings("serial")
 public class LaunchGame extends JPanel {
-	private JLabel label = new JLabel("Select number of Players :");
+	private JLabel label = new JLabel("Select number of Players  ");
 	private JLabel label1 = new JLabel("Please Select a Correct File");
 	private JTextField textField = new JTextField(20);
 	private JButton button = new JButton("OK");
@@ -49,9 +50,16 @@ public class LaunchGame extends JPanel {
 	private JLabel player4 = new JLabel("Player 4") ;
 
 	public LaunchGame() {
+		initComponens();
+	}
+
+	private void initComponens() {
+	
 		JFrame frame = new JFrame();
-		frame.setLayout(new BorderLayout());
-		frame.setSize(400, 100);
+		frame.setLocationRelativeTo(null);
+		frame.setSize(250,200);
+		frame.setTitle("Select Players");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		label.setVisible(true);
 		textField.setVisible(true);
@@ -60,11 +68,13 @@ public class LaunchGame extends JPanel {
 		group.add(option1);
 		group.add(option2);
 		group.add(option3);
-
+		Box box1 = Box.createVerticalBox();
+		box1.add(option1);
+		box1.add(option2);
+		box1.add(option3);
+		
 		frame.add(label, BorderLayout.PAGE_START);
-		frame.add(option1, BorderLayout.LINE_START);
-		frame.add(option2, BorderLayout.CENTER);
-		frame.add(option3, BorderLayout.LINE_END);
+		frame.add(box1,BorderLayout.LINE_START);
 		frame.add(button, BorderLayout.PAGE_END);
 
 		player1.setVisible(true);
@@ -146,11 +156,12 @@ public class LaunchGame extends JPanel {
 						};
 						jIcon.setMaximumSize(getMaximumSize());
 						f.setSize(icon.getIconWidth(), icon.getIconHeight());
+						f.setLocationRelativeTo(null);
 						f.setVisible(true);
 						if(numberOfPlayers==2){
 						    f.add(player1, BorderLayout.PAGE_START);
+						    f.add(jIcon, BorderLayout.LINE_START);
 						    f.add(player2, BorderLayout.PAGE_END);
-						    f.add(jIcon, BorderLayout.CENTER);
 						}
 						else if(numberOfPlayers==3) {
 							f.add(player1, BorderLayout.PAGE_START);
@@ -165,6 +176,7 @@ public class LaunchGame extends JPanel {
 							f.add(player3, BorderLayout.LINE_END);
 							f.add(player4, BorderLayout.PAGE_END);
 						}
+						f.pack();
 						JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()];
 						int i = 0;
 						for(Country c:gameMap.getCountryAndNeighborsMap().keySet()){
@@ -186,8 +198,6 @@ public class LaunchGame extends JPanel {
 							public void actionPerformed(ActionEvent event) {
 								String text = textField.getText();
 								System.out.println(text);
-
-								// open a map
 							}
 						});
 
@@ -196,6 +206,7 @@ public class LaunchGame extends JPanel {
 				}
 			}
 		});
+		
 	}
 
 	}

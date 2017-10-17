@@ -19,6 +19,7 @@ public class StartGame extends java.awt.Frame {
     private javax.swing.JPanel jPanel1;
 
     public StartGame() {
+    	super("RISK Game");
         initComponents();
         jButton1.setEnabled(true);
         setLocationRelativeTo(null);
