@@ -8,6 +8,8 @@ import riskModels.continent.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.Caret;
+import javax.swing.text.Document;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -35,17 +37,19 @@ public class MapView extends java.awt.Frame {
 	private javax.swing.JButton jButton1;
 	private JFileChooser filechooser = new JFileChooser();
 	private JDialog dialog = new JDialog();
-	private JLabel label1 = new JLabel("Please Select a Correct File");
-	BufferedImage image = null;
-	ImageIcon icon = new ImageIcon(image);
-	JLabel jIcon = new JLabel(icon);
+	private JLabel label = new JLabel();
+	private JFrame frame = new JFrame();
 	
 	public MapView(){
 		initMapComponents();
 	}
 	
 	private void initMapComponents() {
-		
+		label.setText("Please Select a Correct File!");
+		frame.setLocationRelativeTo(null);
+		frame.setTitle("Edit Map");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
 		filechooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 		filechooser.setDialogTitle("Select a .map file");
 
@@ -54,53 +58,18 @@ public class MapView extends java.awt.Frame {
 			File selectedFile = filechooser.getSelectedFile();
 			System.out.println("Selected file: " + selectedFile.getAbsolutePath());
 			MapModel mapmodel = new MapModel();
-			StartupPhase startupPhase = new StartupPhase();
-			GameMap gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
-			startupPhase.assignCountriesToPlayer(numberOfPlayers,gameMap); 
-			if (gameMap.isCorrectMap == false) {
+			GameMap gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath()); 
+			if (gameMap.isCorrectMap == true) {
+			frame.setVisible(true);
+			}
+			else if (gameMap.isCorrectMap == false) {
 				dialog.setVisible(true);
 				dialog.setSize(275, 100);
-				label1.setVisible(true);
-				label1.setSize(275, 100);
+				label.setVisible(true);
+				label.setSize(275, 100);
 				dialog.setTitle("ERROR");
-				dialog.add(label1);
+				dialog.add(label);
 			} 
-			else if (gameMap.isCorrectMap == true) {
-				String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
-				JFrame f = new JFrame();
-				BufferedImage image = null;
-				try {
-					image = ImageIO.read(new File(absolute));
-				} 
-				catch (Exception ex) {
-					ex.printStackTrace();
-					System.exit(1);
-				}
-			}
 		}
 	}
-public static void main(String[] args) {
-	java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            new MapView().setVisible(true);
-        }
-    });
-        MapModel mapmodel = new MapModel();
-        GameMap gameMapDetails = mapmodel.readMapFile("C:\\CanadaMap.txt");
-        for (Continent continent : gameMapDetails.getContinentList()) {
-            System.out.println("Name" + continent.getContinentName() + "--" + continent.getNumberOfTerritories());
-        }
-        Iterator it = gameMapDetails.getCountryAndNeighborsMap().entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry) it.next();
-            Country country = (Country) pair.getKey();
-            
-            List<Country> neighbours = (List<Country>) pair.getValue();
-            // System.out.println("------"+country.getCountryName()+"-----"+country.getBelongsToContinet());
-            for (Country neighbour : neighbours) {
-                //	System.out.println(neighbour.getCountryName()+" "+neighbour.getBelongsToContinet());
-            }
-
-        }
-}
 }
