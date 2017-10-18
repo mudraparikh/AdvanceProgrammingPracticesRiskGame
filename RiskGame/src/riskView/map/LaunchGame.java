@@ -32,6 +32,14 @@ import riskModels.gamedriver.StartupPhase;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 
+/**
+ * This class holds the methods to Launch the game by taking input of no.of players,selection of map
+ * and generating selected map on the screen.
+ * 
+ * @author Hanita
+ *
+ */
+
 @SuppressWarnings("serial")
 public class LaunchGame extends JPanel {
 	private JLabel label = new JLabel("Select number of Players  ");
@@ -49,6 +57,9 @@ public class LaunchGame extends JPanel {
 	private JLabel player3 = new JLabel("Player 3") ;
 	private JLabel player4 = new JLabel("Player 4") ;
 
+	/**
+	 * Constructor 
+	 */
 	public LaunchGame() {
 		initGameComponents();
 	}
