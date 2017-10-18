@@ -236,23 +236,27 @@ public class MapModel {
      * @param country - Country that to be removed
      * @param gameMap - Existing GameMap From where country will be removed
      */
-    public void removeCountry(String country, GameMap gameMap) {
-        Country countryToRemove = new Country(country);
-        List<Country> neiborCountryList = gameMap.getCountryAndNeighborsMap().get(countryToRemove);
-        // removing country from the neighbor list of other countries.
-        for (Country neiborCountry : neiborCountryList) {
-            List<Country> removeCountyNeiborList = gameMap.getCountryAndNeighborsMap().get(neiborCountry);
-            List<Country> updatedNeiborList = new ArrayList<>();
-            for (Country countryRemoveFromNeibor : removeCountyNeiborList) {
-                if (!countryRemoveFromNeibor.getCountryName().equalsIgnoreCase(country)) {
-                    updatedNeiborList.add(countryRemoveFromNeibor);
-                }
-            }
-            gameMap.getCountryAndNeighborsMap().put(neiborCountry, updatedNeiborList); // this will replace existing  key-value pair.
-        }
-        // finally removing country from the map details
-        gameMap.getCountryAndNeighborsMap().remove(countryToRemove);
-    }
+    public void removeCountry(Country country, GameMap gameMap) {
+		Country  countryToRemove = country;
+		List<Country> neiborCountryList = gameMap.getCountryAndNeighborsMap().get(countryToRemove);
+		
+		// removing country from the neighbor list of other countries.
+		for(Country neiborCountry: neiborCountryList){
+		List<Country> removeCountyNeiborList=gameMap.getCountryAndNeighborsMap().get(neiborCountry);
+		List<Country> updatedNeiborList = new ArrayList<>();
+		for(Country countryRemoveFromNeibor:removeCountyNeiborList) {
+			if(!countryRemoveFromNeibor.getCountryName().equalsIgnoreCase(country.getCountryName())) {
+				updatedNeiborList.add(countryRemoveFromNeibor);
+			}
+		}
+		gameMap.getCountryAndNeighborsMap().put(neiborCountry, updatedNeiborList); // this will replace existing  key-value pair. 
+	}
+	// finally removing country from the map details and update number of territories for continent
+    int indexOfContinent = gameMap.getContinentList().indexOf(new Continent(country.getBelongsToContinent()));
+	int numberOfTerritories=gameMap.getContinentList().get(indexOfContinent).getNumberOfTerritories();
+	gameMap.getContinentList().get(indexOfContinent).setNumberOfTerritories(numberOfTerritories-1);
+	gameMap.getCountryAndNeighborsMap().remove(countryToRemove);
+}
 
     /**
      * This method will add country in existing Map
@@ -261,13 +265,18 @@ public class MapModel {
      * @param gameMap  current map details
      * @param neighbor List of neighborCountry
      */
-    public void addCountry(Country country, GameMap gameMap, List<Country> neighbor) {
-        if (country != null && !neighbor.isEmpty()) {
-            if (gameMap.getCountryAndNeighborsMap().containsKey(country)) {
-                gameMap.getCountryAndNeighborsMap().put(country, neighbor); // country added to existing game details map
-            }
-        }
-    }
+    public void addCountry(Country country, GameMap gameMap, List<Country> neighborList) {
+  	  if(country!=null && !neighborList.isEmpty()) {
+ 	     gameMap.getCountryAndNeighborsMap().put(country, neighborList); // country added to existing game details map
+ 	     int indexOfContinent = gameMap.getContinentList().indexOf(new Continent(country.getBelongsToContinent()));
+ 	     int numberOfTerritories=gameMap.getContinentList().get(indexOfContinent).getNumberOfTerritories();
+ 	 	 gameMap.getContinentList().get(indexOfContinent).setNumberOfTerritories(numberOfTerritories+1); // increasing number of territories in continent.
+ 	 	MapModel mapmodel = new MapModel();
+ 	 	for(Country neighbor:neighborList) {
+ 	 		mapmodel.addNeighbor(neighbor.getCountryName(),gameMap,country);
+ 	 	}
+ 	  }
+  }
 
     /**
      * This method will add neighbor to Country
@@ -277,13 +286,13 @@ public class MapModel {
      * @param neighborCountry neighbor country to be added.
      */
     public void addNeighbor(String countryName, GameMap gameMap, Country neighborCountry) {
-        if (RiskGameUtil.checkNullString(countryName)) {
-            Country country = new Country(countryName);
-            if (gameMap.getCountryAndNeighborsMap().containsKey(country)) {
-                gameMap.getCountryAndNeighborsMap().get(country).add(neighborCountry);
-            }
-        }
-    }
+	  if(RiskGameUtil.checkNullString(countryName)) {
+		 Country country = new Country(countryName);
+		 if(gameMap.getCountryAndNeighborsMap().containsKey(country)){
+			 gameMap.getCountryAndNeighborsMap().get(country).add(neighborCountry);
+		 }
+	 }
+ }
 
     /**
      * This method will create .map file based on input provided from user
