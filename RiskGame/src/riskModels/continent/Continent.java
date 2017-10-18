@@ -2,6 +2,7 @@ package riskModels.continent;
 
 import riskModels.country.Country;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,12 @@ public class Continent {
     public String continentName;
     public List<Country> memberCountriesList = new ArrayList<Country>();
     public int numberOfTerritories;
+    public Color color;
+    public int controlValue;
 
     public Continent(String continentName) {
         this.continentName = continentName;
+        this.controlValue = 1;
     }
 
     public Continent() {
@@ -57,6 +61,21 @@ public class Continent {
 
     public void setNumberOfTerritories(int numberOfTerritories) {
         this.numberOfTerritories = numberOfTerritories;
+    }
+
+    public int getControlValue() {
+        return controlValue;
+    }
+
+    public void setControlValue(int controlValue) {
+        this.controlValue = controlValue;
+    }
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
 }

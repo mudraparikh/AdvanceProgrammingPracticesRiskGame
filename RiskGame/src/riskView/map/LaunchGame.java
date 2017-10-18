@@ -11,6 +11,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.HashMap;
@@ -110,7 +112,7 @@ public class LaunchGame extends JPanel {
                         dialog.setTitle("ERROR");
                         dialog.add(label1);
                     } else {
-                        String absolute = selectedFile.getParent() + "/" + gameMap.getMapDetail().get("image");
+                        String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
                         System.out.println(absolute);
                         JFrame f = new JFrame();
                         BufferedImage image = null;
@@ -166,11 +168,11 @@ public class LaunchGame extends JPanel {
                             l[i].setVisible(true);
                             jIcon.add(l[i]);
                             l[i].setForeground(c.getBelongsToPlayer().getColors());
-                            /*l[i].addMouseListener(new MouseAdapter() {
+                            l[i].addMouseListener(new MouseAdapter() {
                                 public void mouseClicked(MouseEvent e) {
                                     System.out.println(c.countryName + " was clicked !");
                                 }
-                            });*/
+                            });
                             i++;
                         }
                         textField.addActionListener(event -> {
