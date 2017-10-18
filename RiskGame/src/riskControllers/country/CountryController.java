@@ -14,7 +14,4 @@ public class CountryController {
         this.model = new CountryModel();
     }
 
-    public List<Country> readCountries(BufferedReader br) {
-        return model.readCountries(br);
-    }
 }
