@@ -5,7 +5,6 @@ import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 
-import javax.swing.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +14,10 @@ import java.util.Map;
  *
  * @author hanita
  */
-public class MapView extends java.awt.Frame{
-	private javax.swing.JButton jButton1;
-	
-	
+public class MapView extends java.awt.Frame {
+    private javax.swing.JButton jButton1;
+
+
     public static void main(String[] args) {
 //	MapView h=new MapView();
 
@@ -31,7 +30,7 @@ public class MapView extends java.awt.Frame{
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             Country country = (Country) pair.getKey();
-            
+
             List<Country> neighbours = (List<Country>) pair.getValue();
             // System.out.println("------"+country.getCountryName()+"-----"+country.getBelongsToContinet());
             for (Country neighbour : neighbours) {

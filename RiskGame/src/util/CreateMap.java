@@ -1,52 +1,34 @@
 package util;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Scanner;
-import java.util.Set;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
-import riskView.map.LaunchGame;
+
+import java.util.*;
+import java.util.Map.Entry;
+
 /**
  * This class holds the methods to get inputs and validate input ,and create .map file from it
- * @author prashantp95
  *
+ * @author prashantp95
  */
 public class CreateMap {
-	
-	public static void main(String args[]) {
-		
+
+    public static void main(String args[]) {
+
         System.out.println("How many continent do you want?");
         Scanner sc = new Scanner(System.in);
-        int numberOfContinents = sc.nextInt(); 
+        int numberOfContinents = sc.nextInt();
         System.out.println("How many Countries do you want ?");
         int numberOfCountries = sc.nextInt();
-        List<String> continentNameList = createCountinentList(numberOfContinents); //create and name the continents
+        List<String> continentNameList = createContinentList(numberOfContinents); //create and name the continents
         Collection<String> countryNameList = createCountryList(numberOfCountries); //create and name the countries
         List<Country> countryList = new ArrayList<Country>();
         List<Continent> continentList = new ArrayList<Continent>();
         HashMap<String, String> countryContinentMap = new HashMap<>(); //map to define relation between country and continent
         HashMap<Country, List<Country>> countryNeibourMap = new HashMap<>(); //map to define relation between country and its neighbor.
-        List<String> errrorMessage= new ArrayList<String>(); // to store Error messages for invalid details provided by user
+        List<String> errorMessage = new ArrayList<String>(); // to store Error messages for invalid details provided by user
         //display continent names
         System.out.println("Continent names are");
         for (String continent : continentNameList) {
@@ -65,22 +47,22 @@ public class CreateMap {
             System.out.println(" Assign country-->" + countryName + "-->To Continent");
             Scanner sca = new Scanner(System.in);
             String continentName = sca.nextLine();
-            
+
             if (continentNameList.contains(continentName)) {
                 Country singleCountry = new Country(countryName, 0, 0, continentName);
                 countryList.add(singleCountry);
                 Continent continent = new Continent(continentName);
                 //if continent is not present in continent list then only add it 
-                if(!continentList.contains(continent)) {
-                	continent.setNumberOfTerritories(1);
-                	continentList.add(continent);
-                }else { // if continent is already there , we need to increase the Number of territories of that continent
-                	int numberOfTerritory=continentList.get(continentList.indexOf(continent)).getNumberOfTerritories();
-                	continentList.get(continentList.indexOf(continent)).setNumberOfTerritories(numberOfTerritory+1);
+                if (!continentList.contains(continent)) {
+                    continent.setNumberOfTerritories(1);
+                    continentList.add(continent);
+                } else { // if continent is already there , we need to increase the Number of territories of that continent
+                    int numberOfTerritory = continentList.get(continentList.indexOf(continent)).getNumberOfTerritories();
+                    continentList.get(continentList.indexOf(continent)).setNumberOfTerritories(numberOfTerritory + 1);
                 }
                 countryContinentMap.put(singleCountry.getCountryName(), singleCountry.getBelongsToContinent());
             } else {
-            	errrorMessage.add(continentName +"is not part of Continent Name List Please Assign proper continent for country-> "+countryName);
+                errorMessage.add(continentName + "is not part of Continent Name List Please Assign proper continent for country-> " + countryName);
             }
             counter++;
         }
@@ -99,10 +81,10 @@ public class CreateMap {
             List<Country> neiborNodeList = new ArrayList<Country>();
             for (String neighbor : neighborCountries) {
                 if (neighbor.equals(countryName)) {
-                    errrorMessage.add("Country Can not be neighbor to it self Please enter correct value for->" +countryName);
+                    errorMessage.add("Country Can not be neighbor to it self Please enter correct value for->" + countryName);
                 } else if (!countryNameList.contains(neighbor)) {
-                	errrorMessage.add(neighbor+" is not part of CountryList Please enter correct name");
-                    
+                    errorMessage.add(neighbor + " is not part of CountryList Please enter correct name");
+
                 } else {
                     Country neighborCountry = new Country(neighbor);
                     neighborCountry.setBelongsToContinent(countryContinentMap.get(neighbor));
@@ -113,47 +95,47 @@ public class CreateMap {
             }
             counter++;
         }
-        if(!errrorMessage.isEmpty()){
-        	System.out.println("Details you have entered is not correct");
-        	for(String error:errrorMessage) {
-        		System.out.println(error);
-        	}
-        }else {
-	        countryNeibourMap = correctNebourNodes(countryNeibourMap);
-	        System.out.println("Please Enter the Name of The Map that you want to create");
-	        Scanner scanMapFileName = new Scanner(System.in);
-	        String fileName= scanMapFileName.nextLine();
-	        GameMap gameMap = new GameMap();
-	        HashMap<String,String> mapDetail = new HashMap<>();
-	        //change to default image file
-	        mapDetail.put("image", "Canada.bmp");
-	        gameMap.setMapDetail(mapDetail);
-	        gameMap.setCountryAndNeighborsMap(countryNeibourMap);
-	        gameMap.setContinentList(continentList);
-	        MapModel mapModel = new MapModel();
-	        if(RiskGameUtil.checkNullString(fileName)) {
-	        mapModel.writeMap(gameMap,fileName); //generate .map files based on details
-	        }
-	        Iterator it = countryNeibourMap.entrySet().iterator();
-	        while (it.hasNext()) {
-	            Map.Entry pair = (Map.Entry) it.next();
-	            Country country = (Country) pair.getKey();
-	            List<Country> neighbours = (List<Country>) pair.getValue();
-	            System.out.println("------" + country.getCountryName() + "-----" + country.getBelongsToContinent());
-	            for (Country neighbour : neighbours) {
-	                System.out.println(neighbour.getCountryName() + " " + neighbour.getBelongsToContinent());
-	
-	            }
-	
-	        }
-	       	
+        if (!errorMessage.isEmpty()) {
+            System.out.println("Details you have entered is not correct");
+            for (String error : errorMessage) {
+                System.out.println(error);
+            }
+        } else {
+            countryNeibourMap = correctNebourNodes(countryNeibourMap);
+            System.out.println("Please Enter the Name of The Map that you want to create");
+            Scanner scanMapFileName = new Scanner(System.in);
+            String fileName = scanMapFileName.nextLine();
+            GameMap gameMap = new GameMap();
+            HashMap<String, String> mapDetail = new HashMap<>();
+            //change to default image file
+            mapDetail.put("image", "Canada.bmp");
+            gameMap.setMapDetail(mapDetail);
+            gameMap.setCountryAndNeighborsMap(countryNeibourMap);
+            gameMap.setContinentList(continentList);
+            MapModel mapModel = new MapModel();
+            if (RiskGameUtil.checkNullString(fileName)) {
+                mapModel.writeMap(gameMap, fileName); //generate .map files based on details
+            }
+            for (Object o : countryNeibourMap.entrySet()) {
+                Entry pair = (Entry) o;
+                Country country = (Country) pair.getKey();
+                List<Country> neighbours = (List<Country>) pair.getValue();
+                System.out.println("------" + country.getCountryName() + "-----" + country.getBelongsToContinent());
+                for (Country neighbour : neighbours) {
+                    System.out.println(neighbour.getCountryName() + " " + neighbour.getBelongsToContinent());
+
+                }
+
+            }
+
         }
     }
 
     /**
      * This method will correct neighbor nodes  of each country
      * Example if country X's neighbor is Country Y then in Y's neighbor list we should add X too
-     * @param countryNeibourMap
+     *
+     * @param countryNeibourMap This is a Hashmap Object
      * @return updated countryNeibourMap
      */
     private static HashMap<Country, List<Country>> correctNebourNodes(HashMap<Country, List<Country>> countryNeibourMap) {
@@ -161,11 +143,11 @@ public class CreateMap {
         Iterator<Entry<Country, List<Country>>> it = countryNeibourMap.entrySet().iterator();
         HashMap<Country, List<Country>> updatedCountryNeiborMap = new HashMap<>();
         while (it.hasNext()) {
-        	
+
             Map.Entry pair = (Map.Entry) it.next();
             Country country = (Country) pair.getKey();
             List<Country> neighbours = (List<Country>) pair.getValue();
-            
+
             for (Country neighbor : neighbours) {
                 if (countryNeibourMap.containsKey(neighbor)) {
                     List<Country> neiborNodes = countryNeibourMap.get(neighbor);// user neighbor nodes as Key and get it's neighbor nodes.
@@ -176,13 +158,13 @@ public class CreateMap {
                             if (!countryToBeAdded.contains(country)) {
                                 countryToBeAdded.add(country);
                                 updatedCountryNeiborMap.put(neighbor, countryToBeAdded);
-                            	}
+                            }
 
-                        	}
-                    	}
-                	}
-            	}
-        	}
+                        }
+                    }
+                }
+            }
+        }
         if (!updatedCountryNeiborMap.isEmpty()) {
             return updatedCountryNeiborMap; // if we have done any update in existing map data then only we need to return updated map.
         }
@@ -191,7 +173,8 @@ public class CreateMap {
 
     /**
      * This method will create country and name it to default.
-     * @param numberOfCountries
+     *
+     * @param numberOfCountries integer data type
      * @return List of Countries
      */
     private static List<String> createCountryList(int numberOfCountries) {
@@ -203,18 +186,20 @@ public class CreateMap {
         return returnCountryList;
 
     }
+
     /**
      * This method will create continents and name it to default.
-     * @param numberOfContinents
+     *
+     * @param numberOfContinents integer data type
      * @return List of continents
      */
-    private static List<String> createCountinentList(int numberOfContinents) {
+    private static List<String> createContinentList(int numberOfContinents) {
         // TODO Auto-generated method stub
-        List<String> returnListofContinent = new ArrayList<String>();
+        List<String> returnListOfContinent = new ArrayList<String>();
         for (int i = 0; i < numberOfContinents; i++) {
-            returnListofContinent.add("c" + i);
+            returnListOfContinent.add("c" + i);
         }
-        return returnListofContinent;
+        return returnListOfContinent;
     }
 
 }

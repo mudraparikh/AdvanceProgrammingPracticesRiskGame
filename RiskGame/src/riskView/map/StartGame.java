@@ -1,14 +1,5 @@
 package riskView.map;
 
-import javax.swing.*;
-
-import util.CreateMap;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-
 public class StartGame extends java.awt.Frame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JButton jButton1;
@@ -27,7 +18,8 @@ public class StartGame extends java.awt.Frame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StartGame().setVisible(true);;
+                new StartGame().setVisible(true);
+                ;
             }
         });
     }
@@ -62,7 +54,7 @@ public class StartGame extends java.awt.Frame {
         jButton2.setName("jButton2");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton2ActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -126,18 +118,18 @@ public class StartGame extends java.awt.Frame {
     private void exitForm(java.awt.event.WindowEvent evt) {
         System.exit(0);
     }
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-    LaunchGame add = new LaunchGame();
-    add.setVisible(true);
+        LaunchGame add = new LaunchGame();
+        add.setVisible(true);
     }
 
-	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) 
-    {
-	   util.CreateMap add = new util.CreateMap();
-	   add.main(null);
-	   System.exit(0);
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+        util.CreateMap add = new util.CreateMap();
+        add.main(null);
+        System.exit(0);
     }
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
         MapView add = new MapView();
         add.setVisible(true);

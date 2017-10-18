@@ -12,9 +12,17 @@ import java.util.List;
  */
 public class Continent {
 
-    public  String continentName;
+    public String continentName;
     public List<Country> memberCountriesList = new ArrayList<Country>();
     public int numberOfTerritories;
+
+    public Continent(String continentName) {
+        this.continentName = continentName;
+    }
+
+    public Continent() {
+        //default constructor
+    }
 
     @Override
     public boolean equals(Object continentObject) {
@@ -25,14 +33,6 @@ public class Continent {
     @Override
     public int hashCode() {
         return this.continentName.hashCode();
-    }
-    
-    public Continent(String continentName) {
-        this.continentName = continentName;
-    }
-
-    public Continent() {
-        //default constructor
     }
 
     public String getContinentName() {

@@ -1,10 +1,8 @@
-
 package riskModels.map;
 
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 
-import java.awt.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,29 +14,39 @@ import java.util.List;
  */
 public class GameMap {
 
-	public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
+    public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
     public List<Continent> continentList = new ArrayList<>();
-    public boolean isCorrectMap =true;
+    public boolean isCorrectMap = true;
     public String errorMessage;
-	public HashMap<String, String> mapDetail = new HashMap<>();
+    public HashMap<String, String> mapDetail = new HashMap<>();
 
     public boolean isCorrectMap() {
-		return isCorrectMap;
-	}
+        return isCorrectMap;
+    }
 
-	public void setCorrectMap(boolean isCorrectMap) {
-		this.isCorrectMap = isCorrectMap;
-	}
-	
-	public String getErrorMessage() {
-		return errorMessage;
-	}
+    public void setCorrectMap(boolean isCorrectMap) {
+        this.isCorrectMap = isCorrectMap;
+    }
 
-	public HashMap<String, String> getMapDetail() {
-		return mapDetail;
-	}
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 
-	public HashMap<Country, List<Country>> getCountryAndNeighborsMap() {
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+
+    }
+
+    public HashMap<String, String> getMapDetail() {
+        return mapDetail;
+    }
+
+    public void setMapDetail(HashMap<String, String> mapDetail) {
+        this.mapDetail = mapDetail;
+
+    }
+
+    public HashMap<Country, List<Country>> getCountryAndNeighborsMap() {
         return countryAndNeighborsMap;
     }
 
@@ -53,15 +61,4 @@ public class GameMap {
     public void setContinentList(List<Continent> continentList) {
         this.continentList = continentList;
     }
-
-
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-		
-	}
-
-	public void setMapDetail(HashMap<String, String> mapDetail) {
-		this.mapDetail = mapDetail;
-		
-	}
 }

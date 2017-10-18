@@ -39,12 +39,12 @@ public class StartupPhase {
 
         Scanner scanner = new Scanner(System.in);
         int numberOfPlayers = scanner.nextInt();
-        Color color[]= {Color.RED,Color.YELLOW,Color.BLUE,Color.GREEN};
+        Color color[] = {Color.RED, Color.YELLOW, Color.BLUE, Color.GREEN};
         // players
         List<Player> playerList = new ArrayList<>();
         int i = 0;
         while (i < numberOfPlayers) {
-            playerList.add(new Player("player" + i,color[i]));
+            playerList.add(new Player("player" + i, color[i]));
             i++;
         }
 
@@ -125,14 +125,14 @@ public class StartupPhase {
 
     }
 
-	public void assignCountriesToPlayer(int numberOfPlayers, GameMap gameMap) {
-		
-		Color color[]= {Color.RED,Color.MAGENTA,Color.BLUE,Color.GREEN};
+    public void assignCountriesToPlayer(int numberOfPlayers, GameMap gameMap) {
+
+        Color color[] = {Color.RED, Color.MAGENTA, Color.BLUE, Color.GREEN};
         // players
         List<Player> playerList = new ArrayList<>();
         int i = 0;
         while (i < numberOfPlayers) {
-            playerList.add(new Player("player" + i,color[i]));
+            playerList.add(new Player("player" + i, color[i]));
             i++;
         }
         // assign countries to players
@@ -142,7 +142,7 @@ public class StartupPhase {
             e.getKey().setBelongsToPlayer(playerList.get(j % numberOfPlayers));
             j++;
         }
-        assignInitialArmiesToPlayers(numberOfPlayers,playerList);
+        assignInitialArmiesToPlayers(numberOfPlayers, playerList);
         // print players assigned countries
         for (Player p : playerList) {
             StringBuilder assigned = new StringBuilder();
@@ -155,36 +155,36 @@ public class StartupPhase {
             System.out.println("Player " + p.getName() + " : [" + assigned + "]");
             System.out.println("Player " + p.getName() + " : [" + p.getTotalArmies() + "]");
         }
-		
-	}
-
-	public void assignInitialArmiesToPlayers(int numberOfPlayers, List<Player> playerList) {
-		switch (numberOfPlayers) {
-        case 2:
-            for (Player p : playerList) {
-                p.setTotalArmies(40);
-            }
-            break;
-        case 3:
-            for (Player p : playerList) {
-                p.setTotalArmies(35);
-            }
-            break;
-        case 4:
-            for (Player p : playerList) {
-                p.setTotalArmies(30);
-            }
-            break;
-        case 5:
-            for (Player p : playerList) {
-                p.setTotalArmies(25);
-            }
-            break;
 
     }
-		
-	}
-	
-	
+
+    public void assignInitialArmiesToPlayers(int numberOfPlayers, List<Player> playerList) {
+        switch (numberOfPlayers) {
+            case 2:
+                for (Player p : playerList) {
+                    p.setTotalArmies(40);
+                }
+                break;
+            case 3:
+                for (Player p : playerList) {
+                    p.setTotalArmies(35);
+                }
+                break;
+            case 4:
+                for (Player p : playerList) {
+                    p.setTotalArmies(30);
+                }
+                break;
+            case 5:
+                for (Player p : playerList) {
+                    p.setTotalArmies(25);
+                }
+                break;
+
+        }
+
+    }
+
+
 }
 
