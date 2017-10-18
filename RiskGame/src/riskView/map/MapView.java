@@ -54,7 +54,7 @@ public class MapView extends java.awt.Frame {
 		initMapComponents();
 	}
 	
-	//Function to Add or Remove Continents from a map
+	//Function to Add or Remove Continents from a Map
 	
 	private void continent() {
 	    continentModel = new DefaultListModel();
@@ -63,7 +63,7 @@ public class MapView extends java.awt.Frame {
 	    JButton addButton = new JButton("Add Continent");
 	    JButton removeButton = new JButton("Remove Continent");
 	    JButton saveButton = new JButton("Save Changes");
-	    for (int i = 0; i < 15; i++)
+	    for (int i = 1; i <= 15; i++)
 	      continentModel.addElement("Continent " + i);
 
 	    addButton.addActionListener(new ActionListener() {
@@ -90,6 +90,8 @@ public class MapView extends java.awt.Frame {
 	    frame1.add(saveButton, BorderLayout.EAST);
 	  }		
 	
+	//Function to Add or Remove Countries from a Map
+
 	private void country() {
 		countryModel = new DefaultListModel();
 	    countryList = new JList(countryModel);
@@ -97,7 +99,7 @@ public class MapView extends java.awt.Frame {
 	    JButton addButton = new JButton("Add Country");
 	    JButton removeButton = new JButton("Remove Country");
 	    JButton saveButton = new JButton("Save Changes");
-	    for (int i = 0; i < 15; i++)
+	    for (int i = 1; i <= 15; i++)
 	      countryModel.addElement("Country " + i);
 
 	    addButton.addActionListener(new ActionListener() {
@@ -124,13 +126,47 @@ public class MapView extends java.awt.Frame {
 	    frame1.add(saveButton, BorderLayout.EAST);
 	}
 	
+	//Function to Add or Remove Territories from a Map
+	
 	private void territory() {
-		// TODO Auto-generated method stub
+		territoryModel = new DefaultListModel();
+	    territoryList = new JList(territoryModel);
+	    JScrollPane pane = new JScrollPane(territoryList);
+	    JButton addButton = new JButton("Add Territory");
+	    JButton removeButton = new JButton("Remove Territory");
+	    JButton saveButton = new JButton("Save Changes");
+	    for (int i = 1; i <= 15; i++)
+	      territoryModel.addElement("Territory " + i);
+
+	    addButton.addActionListener(new ActionListener() {
+	      public void actionPerformed(ActionEvent e) {
+	        territoryModel.addElement("Territory " + counter);
+	        counter++;
+	      }
+	    });
+	    
+	    removeButton.addActionListener(new ActionListener() {
+	      public void actionPerformed(ActionEvent e) {
+	        if (territoryModel.getSize() > 0)
+	          territoryModel.removeElementAt(0);
+	      }
+	    });
+	    JFrame frame1 = new JFrame();
+	    frame1.setTitle("Add or Remove Territory");
+		frame1.setVisible(true);
+		frame1.setSize(450,300);
+		frame1.setLocationRelativeTo(null);
+	    frame1.add(pane, BorderLayout.NORTH);
+	    frame1.add(addButton, BorderLayout.WEST);
+	    frame1.add(removeButton, BorderLayout.CENTER);
+	    frame1.add(saveButton, BorderLayout.EAST);
 	}
 
+	//Function to initalize the components used in MapView
+	
 	private void initMapComponents() {
 		label.setText("Please Select a Correct File!");
-		label1.setText("Click on the Button to Add/Remove Continent/Country/Territory from Map :");
+		label1.setText("Click on the Button to Add/Remove Continent/Country/Territory from Map  ");
 		label1.setVisible(true);
 		btn_continent.setText("Continent");
 		btn_continent.setName("button1");
