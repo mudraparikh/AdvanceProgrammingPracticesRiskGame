@@ -87,5 +87,12 @@ public class Player {
         this.colors = colors;
     }
 
+    public void addArmy(int n) {
+        this.totalArmies+=n;
+    }
+    public void subArmy(int n) {
+        this.totalArmies-=n;
+    }
+
 }
 

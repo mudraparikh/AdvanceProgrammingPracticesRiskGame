@@ -109,4 +109,21 @@ public class Country {
     public void setNeighborNodes(List<Country> neighborNodes) {
         this.neighborNodes = neighborNodes;
     }
+
+    public void addArmy(int n) {
+        currentArmiesDeployed+=n;
+        // update UI
+    }
+
+    public void subtractArmy(int n) {
+        currentArmiesDeployed-=n;
+        // update UI
+    }
+
+    public void setPlayer(Player player, int noOfArmy) {
+        this.belongsToPlayer = player;
+        this.currentArmiesDeployed = currentArmiesDeployed;
+        // update UI
+    }
+
 }

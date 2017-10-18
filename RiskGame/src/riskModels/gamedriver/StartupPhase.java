@@ -13,7 +13,7 @@ public class StartupPhase {
     public static HashMap<Country, List<Country>> graphMap = new HashMap<>();
     public static List<Country> neighNodeList = new ArrayList<>();
 
-    public static void main(String arg[]) {
+    /*public static void main(String arg[]) {
         StartupPhase s = new StartupPhase();
         Country n1 = new Country("Pakistan", 13, 14, "Asia");
         neighNodeList.add(n1);
@@ -116,36 +116,22 @@ public class StartupPhase {
             j++;
         }
 
-    }
+    }*/
 
-    public void reinforcementPhaseAssign(Country countrySelected, Player player) {
-        System.out.println(countrySelected.toString());
-        int currentArmiesOnCountry = countrySelected.getCurrentArmiesDeployed();
-        countrySelected.setCurrentArmiesDeployed(currentArmiesOnCountry + 1);
-        player.setReinforcementArmies(player.getTotalArmies() - player.getAssignedCountries().size() - 1);
+    public void initialisePlayersData(List<Player> playerList, GameMap gameMap, int numberOfPlayers) {
 
-    }
-
-    public void assignCountriesToPlayer(int numberOfPlayers, GameMap gameMap) {
-
-        Color color[] = {Color.RED, Color.MAGENTA, Color.BLUE, Color.GREEN};
-        // players
-        List<Player> playerList = new ArrayList<>();
-        int i = 0;
-        while (i < numberOfPlayers) {
-            playerList.add(new Player("player" + i, color[i]));
-            i++;
-        }
-        // assign countries to players
-        int j = 0;
-        for (Map.Entry<Country, List<Country>> e : gameMap.getCountryAndNeighborsMap().entrySet()) {
-            playerList.get(j % numberOfPlayers).assignedCountries.add(e.getKey());
-            e.getKey().setBelongsToPlayer(playerList.get(j % numberOfPlayers));
-            j++;
-        }
+        // init players data
         assignInitialArmiesToPlayers(numberOfPlayers, playerList);
+
+        // allocate countries to players
+        allocateCountriesToPlayers(playerList, gameMap, numberOfPlayers);
+
+        // add initial army using round-robin fashion
+        addArmiesToCountries(playerList, numberOfPlayers);
+
+
         // print players assigned countries
-        for (Player p : playerList) {
+        /*for (Player p : playerList) {
             StringBuilder assigned = new StringBuilder();
             for (Country c : p.assignedCountries) {
                 c.setBelongsToPlayer(p);
@@ -155,37 +141,62 @@ public class StartupPhase {
 
             System.out.println("Player " + p.getName() + " : [" + assigned + "]");
             System.out.println("Player " + p.getName() + " : [" + p.getTotalArmies() + "]");
-        }
+        }*/
 
+    }
+
+    private void allocateCountriesToPlayers(List<Player> playerList, GameMap gameMap, int numberOfPlayers) {
+        int j = 0;
+        for (Map.Entry<Country, List<Country>> e : gameMap.getCountryAndNeighborsMap().entrySet()) {
+            playerList.get(j % numberOfPlayers).assignedCountries.add(e.getKey());
+            e.getKey().setBelongsToPlayer(playerList.get(j % numberOfPlayers));
+            j++;
+        }
     }
 
     public void assignInitialArmiesToPlayers(int numberOfPlayers, List<Player> playerList) {
-        switch (numberOfPlayers) {
-            case 2:
-                for (Player p : playerList) {
-                    p.setTotalArmies(40);
-                }
-                break;
-            case 3:
-                for (Player p : playerList) {
-                    p.setTotalArmies(35);
-                }
-                break;
-            case 4:
-                for (Player p : playerList) {
-                    p.setTotalArmies(30);
-                }
-                break;
-            case 5:
-                for (Player p : playerList) {
-                    p.setTotalArmies(25);
-                }
-                break;
-
+        for (Player p:playerList){
+            p.setTotalArmies(getInitialArmy(numberOfPlayers));
+            System.out.println(p.getName()+" "+p.getColors()+" has total "+p.getTotalArmies());
         }
-
     }
 
 
+    public List<Player> setPlayer(int numberOfPlayers) {
+        Color color[] = {Color.RED, Color.MAGENTA, Color.BLUE, Color.GREEN};
+        List<Player> playerList = new ArrayList<>();
+        int i = 0;
+        while (i < numberOfPlayers) {
+            playerList.add(new Player("player" + i, color[i]));
+            i++;
+        }
+        return playerList;
+    }
+
+    private void addArmiesToCountries(List<Player> playerList, int numberOfPlayers) {
+        for (Player player : playerList) {
+            List<Country> cList = player.assignedCountries;
+            for (int i = 0; i < getInitialArmy(numberOfPlayers); i++) {
+                int index = i % cList.size();
+                Country putArmyAtCountry = cList.get(index);
+                addArmies(player, putArmyAtCountry, 1);
+            }
+        }
+    }
+    public int getInitialArmy(int numberOfPlayers) {
+        switch (numberOfPlayers) {
+            case 2: return 40;
+            case 3: return 35;
+            case 4: return 30;
+            default: return 10;
+        }
+    }
+
+    public void addArmies(Player player, Country country, int addAmount) {
+        if(country.currentArmiesDeployed==0 || player.getAssignedCountries().contains(country)) {
+            player.addArmy(addAmount);
+            country.addArmy(addAmount);
+        }
+    }
 }
 

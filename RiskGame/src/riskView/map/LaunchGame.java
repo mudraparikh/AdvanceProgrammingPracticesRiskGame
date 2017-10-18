@@ -4,6 +4,7 @@ import riskModels.country.Country;
 import riskModels.gamedriver.StartupPhase;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
+import riskModels.player.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -33,6 +34,8 @@ public class LaunchGame extends JPanel {
     private JLabel player2 = new JLabel("Player 2");
     private JLabel player3 = new JLabel("Player 3");
     private JLabel player4 = new JLabel("Player 4");
+
+    public List<Player> playerList;
 
     public LaunchGame() {
         JFrame frame = new JFrame();
@@ -91,9 +94,14 @@ public class LaunchGame extends JPanel {
                     File selectedFile = fileChooser.getSelectedFile();
                     System.out.println("Selected file: " + selectedFile.getAbsolutePath());
                     MapModel mapmodel = new MapModel();
-                    StartupPhase startupPhase = new StartupPhase();
                     GameMap gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
-                    startupPhase.assignCountriesToPlayer(numberOfPlayers, gameMap);
+                    StartupPhase startupPhase = new StartupPhase();
+                    playerList = startupPhase.setPlayer(numberOfPlayers);
+                    for (Player p : playerList){
+                        System.out.println(p.getName());
+                        System.out.println(p.getColors());
+                    }
+                    startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
                     if (!gameMap.isCorrectMap) {
                         dialog.setVisible(true);
                         dialog.setSize(275, 100);
@@ -102,7 +110,7 @@ public class LaunchGame extends JPanel {
                         dialog.setTitle("ERROR");
                         dialog.add(label1);
                     } else {
-                        String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
+                        String absolute = selectedFile.getParent() + "/" + gameMap.getMapDetail().get("image");
                         System.out.println(absolute);
                         JFrame f = new JFrame();
                         BufferedImage image = null;
