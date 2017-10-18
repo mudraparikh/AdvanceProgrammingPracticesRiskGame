@@ -4,8 +4,9 @@ import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.player.Player;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class StartupPhase {
 

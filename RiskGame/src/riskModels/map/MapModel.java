@@ -2,7 +2,6 @@ package riskModels.map;
 
 import riskModels.continent.Continent;
 import riskModels.country.Country;
-import riskModels.country.CountryConstants;
 import util.RiskGameUtil;
 
 import java.io.*;
@@ -37,19 +36,19 @@ public class MapModel {
     /**
      * This method will read [Territories] part of map file
      *
-     * @param bufferReaderForFile
+     * @param bufferReaderForFile BufferedReader class object as param
      * @return List of Country.Every single object of country will have countryname,continentname,start/end pixels;
      */
     private static List<Country> readTerritories(BufferedReader bufferReaderForFile) {
         String Territories;
         List<Country> countryList = new ArrayList<Country>();
         try {
-            while ((Territories = bufferReaderForFile.readLine()) != null && !Territories.startsWith(CountryConstants.bracket)) {
+            while ((Territories = bufferReaderForFile.readLine()) != null && !Territories.startsWith("[")) {
                 if (RiskGameUtil.checkNullString(Territories)) {
                     String countryName, continentName = null;
                     int startPixel, endPixel = 0;
                     List<Country> neighbourNodes = new ArrayList<Country>();
-                    String[] terrProperties = Territories.split(CountryConstants.comma);
+                    String[] terrProperties = Territories.split(",");
                     countryName = terrProperties[0];
                     continentName = terrProperties[3];
                     startPixel = Integer.parseInt(terrProperties[1]);
@@ -76,7 +75,7 @@ public class MapModel {
     /**
      * This method will read the continet part of map file
      *
-     * @param bufferReaderForFile
+     * @param bufferReaderForFile BufferReader object that read the .map file for continent
      * @return List of Continent. every single object of the list contains continentName and number of countries it hold.
      */
     public static List<Continent> readContinents(BufferedReader bufferReaderForFile) {
@@ -103,16 +102,6 @@ public class MapModel {
         return continentsList;
     }
 
-    /**
-     * This method will read the mapfile and provide data to creategraph
-     *
-     * @return Function will return the map details obj
-     */
-    public int mapFileInputParse() {
-        GameMap t = readMapFile("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/src/riskModels/map/canada.map");
-        System.out.println("" + t);
-        return 1;
-    }
 
     public GameMap readMapFile(String filePath) {
         BufferedReader bufferReaderForFile = null;
@@ -205,7 +194,7 @@ public class MapModel {
             Map.Entry pair = (Map.Entry) it.next();
             Country country = (Country) pair.getKey();
             List<Country> neighbours = (List<Country>) pair.getValue();
-            if (neighbours.isEmpty() || neighbours == null) {
+            if (neighbours.isEmpty()) {
                 mapDetails.setCorrectMap(false);
                 mapDetails.setErrorMessage(country.getCountryName() + " does not have any neighbor nodes");
             }
@@ -217,7 +206,7 @@ public class MapModel {
     /**
      * This method will perform validation of provided input file
      *
-     * @param file
+     * @param file File class object is passed where input file is selected by user and is check for validation
      * @return error/success Message
      */
     public String validateFile(File file) {
@@ -268,9 +257,9 @@ public class MapModel {
     /**
      * This method will add country in existing Map
      *
-     * @param countryName Name of the country that you want to add
-     * @param gameMap     current map details
-     * @param neighbor    List of neighborCountry
+     * @param country  the country that you want to add
+     * @param gameMap  current map details
+     * @param neighbor List of neighborCountry
      */
     public void addCountry(Country country, GameMap gameMap, List<Country> neighbor) {
         if (country != null && !neighbor.isEmpty()) {
@@ -302,22 +291,21 @@ public class MapModel {
      * @param graphMap Details provided from the user
      * @param filename Map file name that user wants to give
      */
-
     public void writeMap(GameMap graphMap, String filename) {
-        String maps = "[Map]\n";
+        StringBuilder maps = new StringBuilder("[Map]\n");
         for (Map.Entry<String, String> entry : graphMap.getMapDetail().entrySet()) {
-            maps = maps + entry.getKey() + "=" + entry.getValue() + "\n";
+            maps.append(entry.getKey()).append("=").append(entry.getValue()).append("\n");
         }
-        maps = maps + "\n";
+        maps.append("\n");
 
-        String continents = "[Continents]\n";
+        StringBuilder continents = new StringBuilder("[Continents]\n");
         System.out.println("this is the size of continents:" + graphMap.getContinentList().size());
         for (Continent continent : graphMap.getContinentList()) {
-            continents = continents + continent.continentName + "=" + continent.numberOfTerritories + "\n";
+            continents.append(continent.continentName).append("=").append(continent.numberOfTerritories).append("\n");
         }
-        continents = continents + "\n";
+        continents.append("\n");
 
-        String territories = "[Territories]\n";
+        StringBuilder territories = new StringBuilder("[Territories]\n");
 
         // loop of graphMap
         Iterator<Map.Entry<Country, List<Country>>> it = graphMap.getCountryAndNeighborsMap().entrySet().iterator();
@@ -335,28 +323,23 @@ public class MapModel {
             startPixel += 10;
             endPixel += 10;
             // get values of each country object
-            territories = territories + keyCountry.countryName + "," + startPixel + ","
-                    + endPixel + "," + keyCountry.getBelongsToContinent();
+            territories.append(keyCountry.countryName).append(",").append(startPixel).append(",").append(endPixel).append(",").append(keyCountry.getBelongsToContinent());
 
             // get the index value of the neighbor
             for (Country c : neiCountryList) {
-                territories = territories + "," + c.countryName;
+                territories.append(",").append(c.countryName);
             }
-            territories = territories + "\n";
+            territories.append("\n");
         }
 
-        String result = maps + continents + territories;
+        String result = maps + continents.toString() + territories;
 
         String dotMapFile = filename + ".map";
-        PrintWriter out = null;
-        try {
-            out = new PrintWriter(new BufferedWriter(new FileWriter(dotMapFile)));
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(dotMapFile)))) {
             out.print(result);
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            out.close();
         }
 
     }

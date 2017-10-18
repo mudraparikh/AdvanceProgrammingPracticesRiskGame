@@ -35,12 +35,20 @@ public class Country {
         this.countryName = neighbourCountryName;
     }
 
+    /**
+     * Overriding equals method.
+     * {@link https://www.ibm.com/developerworks/java/library/j-jtp05273/index.html}
+     */
     @Override
     public boolean equals(Object o) {
         String countryName = ((Country) o).getCountryName();
         return countryName.equals(this.getCountryName());
     }
 
+    /**
+     * Overiding hashcode method.
+     * {@link http://www.xyzws.com/javafaq/why-always-override-hashcode-if-overriding-equals/20}
+     */
     @Override
     public int hashCode() {
         return this.countryName.hashCode();
