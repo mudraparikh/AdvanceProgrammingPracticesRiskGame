@@ -122,7 +122,7 @@ public class Country {
 
     public void setPlayer(Player player, int noOfArmy) {
         this.belongsToPlayer = player;
-        this.currentArmiesDeployed = currentArmiesDeployed;
+        this.currentArmiesDeployed = noOfArmy;
         // update UI
     }
 
