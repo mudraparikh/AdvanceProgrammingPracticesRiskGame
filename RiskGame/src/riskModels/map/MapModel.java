@@ -7,6 +7,11 @@ import util.RiskGameUtil;
 import java.io.*;
 import java.util.*;
 
+/**
+ * This class will perform operation related to MapObj created from MapFile
+ * @author  Akshay and Prashant
+ * @version 1.0
+ */
 public class MapModel {
     /**
      * This method will assignContinent to Neighbor countries
@@ -15,14 +20,14 @@ public class MapModel {
      * @return HashMap ,Which will have Country as a key and List of Country (neighbors) as a Value.it will help to create graph
      */
     public static HashMap<Country, List<Country>> assignContinentToNeighbors(List<Country> countryAndNeighbors) {
-        HashMap<String, String> countryContinentMap = new HashMap<String, String>();
-        HashMap<Country, List<Country>> countryAndNeighbours = new HashMap<Country, List<Country>>();
+        HashMap<String, String> countryContinentMap = new HashMap<>();
+        HashMap<Country, List<Country>> countryAndNeighbours = new HashMap<>();
 
         for (Country country : countryAndNeighbors) {
             countryContinentMap.put(country.getCountryName(), country.getBelongsToContinent());
         }
         for (Country country : countryAndNeighbors) {
-            List<Country> neighbourList = new ArrayList<Country>();
+            List<Country> neighbourList = new ArrayList<>();
             for (Country neighbour : country.getNeighborNodes()) {
                 String continentName = countryContinentMap.get(neighbour.getCountryName());
                 neighbour.setBelongsToContinent(continentName);
@@ -39,15 +44,15 @@ public class MapModel {
      * @param bufferReaderForFile BufferedReader class object as param
      * @return List of Country.Every single object of country will have countryname,continentname,start/end pixels;
      */
-    private static List<Country> readTerritories(BufferedReader bufferReaderForFile) {
+    public static List<Country> readTerritories(BufferedReader bufferReaderForFile) {
         String Territories;
-        List<Country> countryList = new ArrayList<Country>();
+        List<Country> countryList = new ArrayList<>();
         try {
             while ((Territories = bufferReaderForFile.readLine()) != null && !Territories.startsWith("[")) {
                 if (RiskGameUtil.checkNullString(Territories)) {
                     String countryName, continentName = null;
                     int startPixel, endPixel = 0;
-                    List<Country> neighbourNodes = new ArrayList<Country>();
+                    List<Country> neighbourNodes = new ArrayList<>();
                     String[] terrProperties = Territories.split(",");
                     countryName = terrProperties[0];
                     continentName = terrProperties[3];
@@ -73,14 +78,14 @@ public class MapModel {
     }
 
     /**
-     * This method will read the continet part of map file
+     * This method will read the continent part of map file
      *
      * @param bufferReaderForFile BufferReader object that read the .map file for continent
      * @return List of Continent. every single object of the list contains continentName and number of countries it hold.
      */
     public static List<Continent> readContinents(BufferedReader bufferReaderForFile) {
         String Continents;
-        List<Continent> continentsList = new ArrayList<Continent>();
+        List<Continent> continentsList = new ArrayList<>();
         try {
             while ((Continents = bufferReaderForFile.readLine()) != null && !Continents.startsWith("[")) {
                 if (RiskGameUtil.checkNullString(Continents)) {
@@ -102,10 +107,15 @@ public class MapModel {
         return continentsList;
     }
 
-
+    /**
+     * This method will read the mapfile and provide data to creategraph
+     *
+     *
+     * @return Function will return the map details obj
+     */
     public GameMap readMapFile(String filePath) {
         BufferedReader bufferReaderForFile = null;
-        boolean isMAPpresent = false; //to check [MAP] is available in file or not
+        boolean isMAPresent = false; //to check [MAP] is available in file or not
         boolean isContinentPresent = false;//to check [Continent] is available in file or not
         boolean isTerritoryPresent = false;//to check [Territory] is available in file or not
         GameMap mapDetails = new GameMap();
@@ -121,13 +131,13 @@ public class MapModel {
                 return mapDetails;
             }
             bufferReaderForFile = new BufferedReader(new FileReader(file));
-            String st, maps, Continents, Territories;
+            String st, maps;
             while ((st = bufferReaderForFile.readLine()) != null) {
                 if (st.startsWith("[")) {
                     HashMap<String, String> mapDetail = new HashMap<>();
                     String id = st.substring(st.indexOf("[") + 1, st.indexOf("]"));
                     if (id.equalsIgnoreCase("Map")) {
-                        isMAPpresent = true;
+                        isMAPresent = true;
                         while ((maps = bufferReaderForFile.readLine()) != null && !maps.startsWith("[")) {
                             if (RiskGameUtil.checkNullString(maps)) {
                                 System.out.println(maps);
@@ -141,7 +151,7 @@ public class MapModel {
                     }
                     if (id.equalsIgnoreCase("Continents")) {
                         isContinentPresent = true;
-                        if (isMAPpresent) {
+                        if (isMAPresent) {
                             List<Continent> listOfContinents = MapModel.readContinents(bufferReaderForFile);
                             mapDetails.setContinentList(listOfContinents);
                             System.out.println("Reading of Continents Completed");
@@ -151,7 +161,7 @@ public class MapModel {
 
                     if (id.equalsIgnoreCase("Territories")) {
                         isTerritoryPresent = true;
-                        if (isMAPpresent && isTerritoryPresent) {
+                        if (isMAPresent) {
                             List<Country> countryAndNeighbor = MapModel.readTerritories(bufferReaderForFile);
                             HashMap<Country, List<Country>> graphReadyMap = MapModel.assignContinentToNeighbors(countryAndNeighbor);
                             System.out.println("Reading of Territories Completed");
@@ -166,7 +176,7 @@ public class MapModel {
                 }
             }
 
-            if (isMAPpresent && isContinentPresent && isTerritoryPresent) {
+            if (isMAPresent && isContinentPresent && isTerritoryPresent) {
                 System.out.println("Map Continents and Territories tags are present");
             } else {
                 mapDetails.setCorrectMap(false);
@@ -237,46 +247,47 @@ public class MapModel {
      * @param gameMap - Existing GameMap From where country will be removed
      */
     public void removeCountry(Country country, GameMap gameMap) {
-		Country  countryToRemove = country;
-		List<Country> neiborCountryList = gameMap.getCountryAndNeighborsMap().get(countryToRemove);
-		
-		// removing country from the neighbor list of other countries.
-		for(Country neiborCountry: neiborCountryList){
-		List<Country> removeCountyNeiborList=gameMap.getCountryAndNeighborsMap().get(neiborCountry);
-		List<Country> updatedNeiborList = new ArrayList<>();
-		for(Country countryRemoveFromNeibor:removeCountyNeiborList) {
-			if(!countryRemoveFromNeibor.getCountryName().equalsIgnoreCase(country.getCountryName())) {
-				updatedNeiborList.add(countryRemoveFromNeibor);
-			}
-		}
-		gameMap.getCountryAndNeighborsMap().put(neiborCountry, updatedNeiborList); // this will replace existing  key-value pair. 
-	}
-	// finally removing country from the map details and update number of territories for continent
-    int indexOfContinent = gameMap.getContinentList().indexOf(new Continent(country.getBelongsToContinent()));
-	int numberOfTerritories=gameMap.getContinentList().get(indexOfContinent).getNumberOfTerritories();
-	gameMap.getContinentList().get(indexOfContinent).setNumberOfTerritories(numberOfTerritories-1);
-	gameMap.getCountryAndNeighborsMap().remove(countryToRemove);
-}
+        List<Country> neighborCountryList = gameMap.getCountryAndNeighborsMap().get(country);
+
+        // removing country from the neighbor list of other countries.
+        for (Country neighborCountry : neighborCountryList) {
+            List<Country> removeCountyNeighborList = gameMap.getCountryAndNeighborsMap().get(neighborCountry);
+            List<Country> updatedNeighborList = new ArrayList<>();
+            for (Country countryRemoveFromNeighbor : removeCountyNeighborList) {
+                if (!countryRemoveFromNeighbor.getCountryName().equalsIgnoreCase(country.getCountryName())) {
+                    updatedNeighborList.add(countryRemoveFromNeighbor);
+                }
+            }
+            gameMap.getCountryAndNeighborsMap().put(neighborCountry, updatedNeighborList); // this will replace existing  key-value pair.
+        }
+        // finally removing country from the map details and update number of territories for continent
+        int indexOfContinent = gameMap.getContinentList().indexOf(new Continent(country.getBelongsToContinent()));
+        int numberOfTerritories = gameMap.getContinentList().get(indexOfContinent).getNumberOfTerritories();
+        gameMap.getContinentList().get(indexOfContinent).setNumberOfTerritories(numberOfTerritories - 1);
+        gameMap.getCountryAndNeighborsMap().remove(country);
+    }
 
     /**
      * This method will add country in existing Map
      *
-     * @param country  the country that you want to add
-     * @param gameMap  current map details
-     * @param neighbor List of neighborCountry
+     * @param country      the country that you want to add
+     * @param gameMap      current map details
+     * @param neighborList List of neighborCountry
      */
     public void addCountry(Country country, GameMap gameMap, List<Country> neighborList) {
-  	  if(country!=null && !neighborList.isEmpty()) {
- 	     gameMap.getCountryAndNeighborsMap().put(country, neighborList); // country added to existing game details map
- 	     int indexOfContinent = gameMap.getContinentList().indexOf(new Continent(country.getBelongsToContinent()));
- 	     int numberOfTerritories=gameMap.getContinentList().get(indexOfContinent).getNumberOfTerritories();
- 	 	 gameMap.getContinentList().get(indexOfContinent).setNumberOfTerritories(numberOfTerritories+1); // increasing number of territories in continent.
- 	 	MapModel mapmodel = new MapModel();
- 	 	for(Country neighbor:neighborList) {
- 	 		mapmodel.addNeighbor(neighbor.getCountryName(),gameMap,country);
- 	 	}
- 	  }
-  }
+        if (country != null && !neighborList.isEmpty()) {
+            gameMap.getCountryAndNeighborsMap().put(country, neighborList); // country added to existing game details map
+            //update number of territories for continent
+            int indexOfContinent = gameMap.getContinentList().indexOf(new Continent(country.getBelongsToContinent()));
+            int numberOfTerritories = gameMap.getContinentList().get(indexOfContinent).getNumberOfTerritories();
+            gameMap.getContinentList().get(indexOfContinent).setNumberOfTerritories(numberOfTerritories + 1); // increasing number of territories in continent.
+            // Updating neighbour list
+            MapModel mapmodel = new MapModel();
+            for (Country neighbor : neighborList) {
+                mapmodel.addNeighbor(neighbor.getCountryName(), gameMap, country);
+            }
+        }
+    }
 
     /**
      * This method will add neighbor to Country
@@ -286,13 +297,13 @@ public class MapModel {
      * @param neighborCountry neighbor country to be added.
      */
     public void addNeighbor(String countryName, GameMap gameMap, Country neighborCountry) {
-	  if(RiskGameUtil.checkNullString(countryName)) {
-		 Country country = new Country(countryName);
-		 if(gameMap.getCountryAndNeighborsMap().containsKey(country)){
-			 gameMap.getCountryAndNeighborsMap().get(country).add(neighborCountry);
-		 }
-	 }
- }
+        if (RiskGameUtil.checkNullString(countryName)) {
+            Country country = new Country(countryName);
+            if (gameMap.getCountryAndNeighborsMap().containsKey(country)) {
+                gameMap.getCountryAndNeighborsMap().get(country).add(neighborCountry);
+            }
+        }
+    }
 
     /**
      * This method will create .map file based on input provided from user
@@ -323,9 +334,9 @@ public class MapModel {
         while (it.hasNext()) {
             Map.Entry<Country, List<Country>> pair = it.next();
             // get country object
-            Country keyCountry = (Country) pair.getKey();
+            Country keyCountry = pair.getKey();
             // get list of the neighbors
-            List<Country> neiCountryList = (List<Country>) pair.getValue();
+            List<Country> neiCountryList = pair.getValue();
 
             // index of the country from the all countries of all continents
             // list

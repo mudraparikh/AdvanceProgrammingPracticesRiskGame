@@ -99,10 +99,6 @@ public class LaunchGame extends JPanel {
                     GameMap gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
                     StartupPhase startupPhase = new StartupPhase();
                     playerList = startupPhase.setPlayer(numberOfPlayers);
-                    for (Player p : playerList){
-                        System.out.println(p.getName());
-                        System.out.println(p.getColors());
-                    }
                     startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
                     if (!gameMap.isCorrectMap) {
                         dialog.setVisible(true);

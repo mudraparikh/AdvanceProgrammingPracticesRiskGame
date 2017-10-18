@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class contains the services for the Game Play.
+ * All the Phases relevant actions and events are listed down.
+ * @author Akshay
+ */
 public class GamePlayAPI {
     public static int turn = 0;
 
