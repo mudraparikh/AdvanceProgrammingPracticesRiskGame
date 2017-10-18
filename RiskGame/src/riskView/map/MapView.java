@@ -55,6 +55,7 @@ public class MapView extends java.awt.Frame {
 	private int index;
 	Object index1;
 	GameMap gameMap = new GameMap();
+	MapModel mapModel = new MapModel();
 
 	public MapView() {
 		initMapComponents();
@@ -73,6 +74,7 @@ public class MapView extends java.awt.Frame {
 		JFrame frameContinent = new JFrame();
 		JTextField textContinent = new JTextField();
 		JButton button1 = new JButton("OK");
+
 		for (int i = 0; i < gameMap.getContinentList().size(); i++)
 			continentDisplay.addElement(gameMap.getContinentList().get(i).getContinentName());
 
@@ -134,7 +136,13 @@ public class MapView extends java.awt.Frame {
 	private void country() {
 		countryDisplay = new DefaultListModel();
 		countryList = new JList(countryDisplay);
+		JList countryList2 = new JList(countryDisplay);
 		JScrollPane pane = new JScrollPane(countryList);
+		JScrollPane pane3 = new JScrollPane(countryList2);
+		continentDisplay = new DefaultListModel();
+		continentList = new JList(continentDisplay);
+		JScrollPane pane2 = new JScrollPane(continentList);
+		JLabel label2 = new JLabel("Click on the respective button to perform tasks");
 		JButton addButton = new JButton("Add Country");
 		JButton removeButton = new JButton("Remove Country");
 		JButton saveButton = new JButton("Save Changes");
@@ -142,6 +150,9 @@ public class MapView extends java.awt.Frame {
 		JFrame frameCountry = new JFrame();
 		JTextField textCountry = new JTextField();
 		JButton button2 = new JButton("OK");
+
+		for (int i = 0; i < gameMap.getContinentList().size(); i++)
+			continentDisplay.addElement(gameMap.getContinentList().get(i).getContinentName());
 
 		for (Map.Entry<Country, List<Country>> e : gameMap.getCountryAndNeighborsMap().entrySet()) {
 			countryDisplay.addElement(e.getKey().getCountryName());
@@ -151,27 +162,40 @@ public class MapView extends java.awt.Frame {
 				public void actionPerformed(ActionEvent e) {
 					frameCountry.setTitle("Add Country");
 					frameCountry.setVisible(true);
-					frameCountry.setSize(250, 150);
+					frameCountry.setSize(550, 250);
 					frameCountry.setLocationRelativeTo(null);
 					frameCountry.add(labelCountry, BorderLayout.PAGE_START);
+					frameCountry.add(pane2, BorderLayout.LINE_START);
 					frameCountry.add(textCountry, BorderLayout.CENTER);
+					frameCountry.add(pane3, BorderLayout.EAST);
 					frameCountry.add(button2, BorderLayout.PAGE_END);
-					button2.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							frameCountry.setTitle("Add Country");
-							frameCountry.setVisible(true);
-							frameCountry.setSize(250, 150);
-							frameCountry.setLocationRelativeTo(null);
-							frameCountry.add(labelCountry, BorderLayout.PAGE_START);
-							frameCountry.add(textCountry, BorderLayout.CENTER);
-							frameCountry.add(button2, BorderLayout.PAGE_END);
-							countryDisplay.addElement(textCountry.getText());
-						}
-					});
-
 				}
 			});
 		}
+		button2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				countryDisplay.addElement(textCountry.getText());
+				List<String> continents = continentList.getSelectedValuesList();
+				if (continents.size() > 0) {
+					Country country = new Country(textCountry.getText(), 0, 0, continents.get(0));
+					List<Country> countries = new ArrayList<Country>();
+					if (countryList2.getSelectedValuesList().size() > 0) {
+						List<String> countryNames = countryList2.getSelectedValuesList();
+						for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
+							for (String countryName : countryNames) {
+								if (countryName.equals(c.getCountryName())) {
+									countries.add(c);
+									break;
+								}
+							}
+						}
+					}
+					mapModel.addCountry(country, gameMap, countries);
+					mapModel.writeMap(gameMap, "sv");
+				}
+			}
+		});
 
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -179,20 +203,26 @@ public class MapView extends java.awt.Frame {
 					List<String> obj = countryList.getSelectedValuesList();
 					for (String string : obj) {
 						countryDisplay.removeElement(string);
+						for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
+							if (c.getCountryName().equals(string)) {
+								gameMap.getCountryAndNeighborsMap().remove(c);
+							}
+						}
+
 					}
 				}
 			}
-
 		});
 		JFrame frame1 = new JFrame();
 		frame1.setTitle("Add or Remove Country");
 		frame1.setVisible(true);
 		frame1.setSize(450, 300);
 		frame1.setLocationRelativeTo(null);
-		frame1.add(pane, BorderLayout.NORTH);
-		frame1.add(addButton, BorderLayout.WEST);
-		frame1.add(removeButton, BorderLayout.CENTER);
-		frame1.add(saveButton, BorderLayout.EAST);
+		frame1.add(pane, BorderLayout.PAGE_START);
+		frame1.add(addButton, BorderLayout.CENTER);
+		frame1.add(removeButton, BorderLayout.LINE_END);
+		frame1.add(saveButton, BorderLayout.PAGE_END);
+
 	}
 
 	// Function to Add or Remove Territories from a Map
@@ -266,29 +296,17 @@ public class MapView extends java.awt.Frame {
 
 				btn_continent.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
-						button1ActionPerformed(evt);
-					}
-
-					private void button1ActionPerformed(ActionEvent evt) {
 						continent();
 					}
 				});
 				btn_country.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
-						button2ActionPerformed(evt);
-					}
-
-					private void button2ActionPerformed(ActionEvent evt) {
 						country();
 					}
 				});
 
 				btn_territory.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent evt) {
-						button3ActionPerformed(evt);
-					}
-
-					private void button3ActionPerformed(ActionEvent evt) {
 						territory();
 					}
 				});
