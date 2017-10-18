@@ -91,7 +91,37 @@ public class MapView extends java.awt.Frame {
 	  }		
 	
 	private void country() {
-		// TODO Auto-generated method stub
+		countryModel = new DefaultListModel();
+	    countryList = new JList(countryModel);
+	    JScrollPane pane = new JScrollPane(countryList);
+	    JButton addButton = new JButton("Add Country");
+	    JButton removeButton = new JButton("Remove Country");
+	    JButton saveButton = new JButton("Save Changes");
+	    for (int i = 0; i < 15; i++)
+	      countryModel.addElement("Country " + i);
+
+	    addButton.addActionListener(new ActionListener() {
+	      public void actionPerformed(ActionEvent e) {
+	        countryModel.addElement("Country " + counter);
+	        counter++;
+	      }
+	    });
+	    
+	    removeButton.addActionListener(new ActionListener() {
+	      public void actionPerformed(ActionEvent e) {
+	        if (countryModel.getSize() > 0)
+	          countryModel.removeElementAt(0);
+	      }
+	    });
+	    JFrame frame1 = new JFrame();
+	    frame1.setTitle("Add or Remove Country");
+		frame1.setVisible(true);
+		frame1.setSize(450,300);
+		frame1.setLocationRelativeTo(null);
+	    frame1.add(pane, BorderLayout.NORTH);
+	    frame1.add(addButton, BorderLayout.WEST);
+	    frame1.add(removeButton, BorderLayout.CENTER);
+	    frame1.add(saveButton, BorderLayout.EAST);
 	}
 	
 	private void territory() {
@@ -136,14 +166,18 @@ public class MapView extends java.awt.Frame {
 				public void actionPerformed(ActionEvent evt) {
 					button2ActionPerformed(evt);
 				}
-				
+				private void button2ActionPerformed(ActionEvent evt) {
+					country();	
+				}
 			});
 			
 			btn_territory.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					button3ActionPerformed(evt);
 				}
-				
+				private void button3ActionPerformed(ActionEvent evt) {
+					territory();
+				}
 			});
 			frame.setTitle("Edit Map");
 			frame.setVisible(true);
@@ -164,11 +198,5 @@ public class MapView extends java.awt.Frame {
 				dialog.add(label);
 			} 
 		}
-	}
-	protected void button2ActionPerformed(ActionEvent evt) {
-		country();	
-	}
-	protected void button3ActionPerformed(ActionEvent evt) {
-		territory();
 	}
 }
