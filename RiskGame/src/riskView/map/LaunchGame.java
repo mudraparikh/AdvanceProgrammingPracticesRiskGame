@@ -19,7 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
-
+/**
+ * This class will get map details from model  and display the map with number of players
+ * @author hnath
+ *
+ */
 @SuppressWarnings("serial")
 public class LaunchGame extends JPanel {
     private JLabel label = new JLabel("Select number of Players :");

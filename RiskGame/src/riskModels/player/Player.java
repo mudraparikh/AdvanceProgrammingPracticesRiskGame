@@ -6,7 +6,9 @@ import riskModels.country.Country;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * This is bean class to set and get properties of player.
+ */
 public class Player {
 
     public String name;
