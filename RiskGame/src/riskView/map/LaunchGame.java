@@ -19,7 +19,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
-
+/**
+ * This class will get map details from model  and display the map with number of players
+ * @author hnath
+ *
+ */
 @SuppressWarnings("serial")
 public class LaunchGame extends JPanel {
     private JLabel label = new JLabel("Select number of Players :");
@@ -39,6 +43,10 @@ public class LaunchGame extends JPanel {
 
     public List<Player> playerList;
 
+    /**
+     * This LaunchGame method allows you to select no. of players and select the .map file from your local folder.
+     */
+    
     public LaunchGame() {
         JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout());
@@ -60,7 +68,7 @@ public class LaunchGame extends JPanel {
 
         player1.setVisible(true);
         player1.setOpaque(true);
-        player1.setBackground(Color.RED);
+        player1.setBackground(Color.RED); // assigning colors to the players
         player2.setVisible(true);
         player2.setOpaque(true);
         player2.setBackground(Color.MAGENTA);
@@ -86,7 +94,7 @@ public class LaunchGame extends JPanel {
                     System.out.println("No. of players is 4");
                     numberOfPlayers = 4;
                 } else {
-                    System.out.println("Select One Player At-least");
+                    System.out.println("Select One Player At-least"); 
                 }
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 fileChooser.setDialogTitle("Select a .map file");
@@ -103,13 +111,22 @@ public class LaunchGame extends JPanel {
                         System.out.println(p.getName());
                         System.out.println(p.getColors());
                     }
+                    
+                    /**
+                     * This checks whether the map is correct then it loads the map from directory
+                     * 
+                     * @param playerList It holds list of players
+                     * @param gameMap this holds the location of .map file in the directory
+                     * @param numberOfPlayer this holds the value of no. of players selected
+                     */
+                    
                     startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
                     if (!gameMap.isCorrectMap) {
                         dialog.setVisible(true);
                         dialog.setSize(275, 100);
                         label1.setVisible(true);
                         label1.setSize(275, 100);
-                        dialog.setTitle("ERROR");
+                        dialog.setTitle("ERROR"); // error message when wrong file is selected
                         dialog.add(label1);
                     } else {
                         String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
@@ -124,7 +141,12 @@ public class LaunchGame extends JPanel {
                         }
                         ImageIcon icon = new ImageIcon(image);
                         JLabel jIcon = new JLabel(icon) {
-                            @Override
+                            
+                        	/**
+                             * This paintComponent method helps to draw connects between the neighboring countries in the map
+                             */
+                        	
+                        	@Override
                             protected void paintComponent(Graphics g) {
                                 super.paintComponent(g);
                                 HashMap<Country, List<Country>> map = gameMap.getCountryAndNeighborsMap();
@@ -145,7 +167,7 @@ public class LaunchGame extends JPanel {
                         f.setSize(icon.getIconWidth(), icon.getIconHeight());
                         f.setVisible(true);
                         if (numberOfPlayers == 2) {
-                            f.add(player1, BorderLayout.PAGE_START);
+                            f.add(player1, BorderLayout.PAGE_START); // alignment of players on the screen
                             f.add(player2, BorderLayout.PAGE_END);
                             f.add(jIcon, BorderLayout.CENTER);
                         } else if (numberOfPlayers == 3) {
