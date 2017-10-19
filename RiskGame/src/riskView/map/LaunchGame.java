@@ -20,14 +20,15 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 /**
- * This class will get map details from model  and display the map with number of players
+ * This class will get map details from model and display the map with number of players
  * @author hnath
+ * @author mudraparikh
  *
  */
 @SuppressWarnings("serial")
 public class LaunchGame extends JPanel {
     private JLabel label = new JLabel("Select number of Players :");
-    private JLabel label1 = new JLabel("Please Select a Correct File");
+    private JLabel label1 = new JLabel(); 
     private JTextField textField = new JTextField(20);
     private JButton button = new JButton("OK");
     private JFileChooser fileChooser = new JFileChooser();
@@ -96,6 +97,8 @@ public class LaunchGame extends JPanel {
                 } else {
                     System.out.println("Select One Player At-least"); 
                 }
+                
+                //Displays the dialog to select a file from the user's machine.
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 fileChooser.setDialogTitle("Select a .map file");
 
@@ -120,15 +123,17 @@ public class LaunchGame extends JPanel {
                      * @param numberOfPlayer this holds the value of no. of players selected
                      */
                     
-                    startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
+                    //Condition to check if the correct file is selected.
                     if (!gameMap.isCorrectMap) {
-                        dialog.setVisible(true);
-                        dialog.setSize(275, 100);
+                    	label1.setText(gameMap.getErrorMessage());
                         label1.setVisible(true);
-                        label1.setSize(275, 100);
+                        label1.setSize(400, 100);
+                        dialog.setVisible(true);
+                        dialog.setSize(400, 100);
                         dialog.setTitle("ERROR"); // error message when wrong file is selected
                         dialog.add(label1);
                     } else {
+                    	startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
                         String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
                         System.out.println(absolute);
                         JFrame f = new JFrame();
