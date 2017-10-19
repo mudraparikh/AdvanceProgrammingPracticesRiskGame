@@ -20,7 +20,8 @@ public class MapModelTest {
     public void init() {
         mapObj = new MapModel();
         gameMapObj = new GameMap();
-        filePath=location.replaceAll("/bin", "/res");
+        filePath=location.replaceAll("/out", "/res");
+        //filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
     }
 
     @Test
@@ -50,6 +51,9 @@ public class MapModelTest {
     }
 
     @Test
-    public void testValidateFile() throws Exception {
+    public void testCountryObject() throws Exception {
+        gameMapObj = mapObj.readMapFile(filePath+ "validate.map");
+        mapObj.getCountryObj("44",gameMapObj);
+        assertEquals("44",mapObj.getCountryObj("44",gameMapObj).getCountryName());
     }
 }

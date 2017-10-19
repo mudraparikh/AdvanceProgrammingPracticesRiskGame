@@ -253,7 +253,7 @@ public class MapView extends java.awt.Frame {
 			gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
 			
 			//Condition to check if the correct file is selected.
-			if (gameMap.isCorrectMap == true) {
+			if (gameMap.isCorrectMap) {
 				
 				//calls the continent method on click of button continent.
 				btn_continent.addActionListener(new ActionListener() {
@@ -279,7 +279,7 @@ public class MapView extends java.awt.Frame {
 				
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-			} else if (gameMap.isCorrectMap == false) {
+			} else {
 				dialog.setVisible(true);
 				dialog.setSize(400, 100);
 				label.setVisible(true);

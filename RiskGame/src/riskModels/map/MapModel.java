@@ -195,7 +195,7 @@ public class MapModel {
     /**
      * This method will do validation on the details we parsed from the .map file
      *
-     * @param mapDetails mapDetials that we have parsed from .map file
+     * @param mapDetails mapDetails that we have parsed from .map file
      * @return mapDetails with correct error message.
      */
     public GameMap validateMap(GameMap mapDetails) {
@@ -307,8 +307,8 @@ public class MapModel {
 
     /**
      * This method finds the country from the gameMap object and returns the country object if present
-     * @param countryName
-     * @param gameMap
+     * @param countryName pass the name of the country to find from the gameMap as a string
+     * @param gameMap GameMap class object from which intended country need to be return
      * @return country object
      */
     public Country getCountryObj(String countryName, GameMap gameMap){
