@@ -45,5 +45,19 @@ public class StartupPhaseTest {
         startupPhase.assignInitialArmiesToPlayers(4, playerList);
         assertEquals(30,playerList.get(0).getTotalArmies());
     }
+    @Test
+    public void testPlayerCreation() throws Exception {
+
+        playerList = startupPhase.setPlayer(2);
+        assertEquals(2,playerList.size());
+        playerList.clear();
+
+        playerList = startupPhase.setPlayer(3);
+        assertEquals(3,playerList.size());
+        playerList.clear();
+
+        playerList = startupPhase.setPlayer(4);
+        assertEquals(4,playerList.size());
+    }
 
 }

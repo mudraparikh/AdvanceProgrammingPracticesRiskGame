@@ -1,6 +1,7 @@
 package riskView.map;
 
 import riskModels.country.Country;
+import riskModels.gamedriver.GamePlayAPI;
 import riskModels.gamedriver.StartupPhase;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
@@ -20,14 +21,16 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 /**
- * This class will get map details from model  and display the map with number of players
+ * This class will get map details from model and display the map with number of players
  * @author hnath
+ * @author mudraparikh
  *
  */
 @SuppressWarnings("serial")
 public class LaunchGame extends JPanel {
+    GamePlayAPI game;
     private JLabel label = new JLabel("Select number of Players :");
-    private JLabel label1 = new JLabel("Please Select a Correct File");
+    private JLabel label1 = new JLabel(); 
     private JTextField textField = new JTextField(20);
     private JButton button = new JButton("OK");
     private JFileChooser fileChooser = new JFileChooser();
@@ -41,13 +44,19 @@ public class LaunchGame extends JPanel {
     private JLabel player3 = new JLabel("Player 3");
     private JLabel player4 = new JLabel("Player 4");
 
+    private static String currentPhaseState = "RP";
+
     public List<Player> playerList;
+
+    private int turn = 1;
+    private int numberOfPlayers = 0;
+    private int noOfReinArmy = 0;
 
     /**
      * This LaunchGame method allows you to select no. of players and select the .map file from your local folder.
      */
-    
     public LaunchGame() {
+        game = new GamePlayAPI();
         JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout());
         frame.setSize(400, 100);
@@ -59,6 +68,12 @@ public class LaunchGame extends JPanel {
         group.add(option1);
         group.add(option2);
         group.add(option3);
+
+        JButton reinforcement = new JButton("reinforcement");
+        reinforcement.setSize(10,10);
+        reinforcement.setBounds(100,100,50,25);
+        reinforcement.setVisible(true);
+
 
         frame.add(label, BorderLayout.PAGE_START);
         frame.add(option1, BorderLayout.LINE_START);
@@ -78,12 +93,13 @@ public class LaunchGame extends JPanel {
         player4.setVisible(true);
         player4.setOpaque(true);
         player4.setBackground(Color.GREEN);
+        
+        //On click the button determines and storesthe value for the Number of Players.
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 boolean isOptionSelected;
-                int numberOfPlayers = 0;
                 if (isOptionSelected = option1.isSelected()) {
                     System.out.println("No. of players is 2");
                     numberOfPlayers = 2;
@@ -96,6 +112,8 @@ public class LaunchGame extends JPanel {
                 } else {
                     System.out.println("Select One Player At-least"); 
                 }
+                
+                //Displays the dialog to select a file from the user's machine.
                 fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
                 fileChooser.setDialogTitle("Select a .map file");
 
@@ -117,14 +135,16 @@ public class LaunchGame extends JPanel {
 
                     startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
                     if (!gameMap.isCorrectMap) {
-                        dialog.setVisible(true);
-                        dialog.setSize(275, 100);
+                    	label1.setText(gameMap.getErrorMessage());
                         label1.setVisible(true);
-                        label1.setSize(275, 100);
+                        label1.setSize(400, 100);
+                        dialog.setVisible(true);
+                        dialog.setSize(400, 100);
                         dialog.setTitle("ERROR"); // error message when wrong file is selected
                         dialog.add(label1);
                     } else {
-                        String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
+                    	startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
+                        String absolute = selectedFile.getParent() + "/" + gameMap.getMapDetail().get("image");
                         System.out.println(absolute);
                         JFrame f = new JFrame();
                         BufferedImage image = null;
@@ -152,6 +172,7 @@ public class LaunchGame extends JPanel {
                                             if (c.getCountryName().equals(t.getCountryName())) {
                                                 g.setColor(Color.darkGray);
                                                 g.drawLine(t.getStartPixel() - 10, t.getEndPixel() - 40, entry.getKey().getStartPixel() - 10, entry.getKey().getEndPixel() - 40);
+                                                //g.drawLine(t.getStartPixel(), t.getEndPixel(), entry.getKey().getStartPixel(), entry.getKey().getEndPixel());
                                             }
                                         }
                                     }
@@ -177,21 +198,61 @@ public class LaunchGame extends JPanel {
                             f.add(player3, BorderLayout.LINE_END);
                             f.add(player4, BorderLayout.PAGE_END);
                         }
+                        currentPhaseState = "SP";
+
+                        noOfReinArmy = game.getReinforcementArmyForPlayer(playerList.get(turn-1),gameMap) * numberOfPlayers;
+                        System.out.println("Reinforcement Army per player : " + (noOfReinArmy / numberOfPlayers));
+
                         JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()];
                         int i = 0;
                         for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
                             l[i] = new JLabel("" + c.getCountryName() + ":" + c.getCurrentArmiesDeployed());
-                            l[i].setBounds(c.getStartPixel() - 15, c.getEndPixel() - 90, 100, 100);
+                            //l[i].setBounds(c.getStartPixel() - 15, c.getEndPixel() - 90, 100, 100);
+                            l[i].setBounds(c.getStartPixel()-15, c.getEndPixel()-100, c.getStartPixel()+10, c.getEndPixel()+10);
                             l[i].setVisible(true);
                             jIcon.add(l[i]);
                             l[i].setForeground(c.getBelongsToPlayer().getColors());
                             l[i].addMouseListener(new MouseAdapter() {
                                 public void mouseClicked(MouseEvent e) {
                                     System.out.println(c.countryName + " was clicked !");
+                                    if(noOfReinArmy<=0) {
+                                        currentPhaseState = "FORTIFICATION_PHASE";
+                                        // go to next phase
+                                        Country from = mapmodel.getCountryObj("2",gameMap);
+                                        Country to = mapmodel.getCountryObj("4", gameMap);
+                                        if(from != null &&  to !=null){
+                                            if(from.neighborNodes.contains(to)){
+                                                game.moveArmy(playerList.get(1),from, to, 1);
+                                            }
+                                        }
+
+                                        return;
+                                    }
+                                    if(currentPhaseState.equalsIgnoreCase("RP")) {
+                                        if(c.getBelongsToPlayer().equals(playerList.get(turn-1))) {
+                                            JLabel l = (JLabel) e.getSource();
+                                            c.addArmy(1);
+                                            l.setText("" + c.getCountryName() + ":" + c.getCurrentArmiesDeployed());
+                                            turn = ((++turn)%(numberOfPlayers+1));
+                                            noOfReinArmy--;
+                                            if(turn==0) {
+                                                turn++;
+                                                System.out.println("Remaining Armies per Player : " + (noOfReinArmy/4));
+                                            }
+                                            System.out.println("Player-"+turn+" Turn");
+                                        }
+                                        else
+                                        {
+                                            System.out.println("\n\n\t\t"
+                                                    + "Its Player("+turn+") turn..."
+                                                    + "\n\n");
+                                        }
+                                    }
                                 }
                             });
                             i++;
                         }
+                        currentPhaseState = "RP";
                         textField.addActionListener(event -> {
                             String text = textField.getText();
                             System.out.println(text);
