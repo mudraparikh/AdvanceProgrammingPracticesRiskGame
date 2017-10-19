@@ -48,13 +48,15 @@ public class LaunchGame extends JPanel {
     public List<Player> playerList;
 
     private int turn = 1;
-    private int noOfPlayers = 4;
+    private int numberOfPlayers = 0;
+    private int noOfReinArmy = 0;
 
     /**
      * This LaunchGame method allows you to select no. of players and select the .map file from your local folder.
      */
     
     public LaunchGame() {
+        game = new GamePlayAPI();
         JFrame frame = new JFrame();
         frame.setLayout(new BorderLayout());
         frame.setSize(400, 100);
@@ -91,12 +93,12 @@ public class LaunchGame extends JPanel {
         player4.setVisible(true);
         player4.setOpaque(true);
         player4.setBackground(Color.GREEN);
+
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 boolean isOptionSelected;
-                int numberOfPlayers = 0;
                 if (isOptionSelected = option1.isSelected()) {
                     System.out.println("No. of players is 2");
                     numberOfPlayers = 2;
@@ -164,7 +166,8 @@ public class LaunchGame extends JPanel {
                                         for (Country t : countryList) {
                                             if (c.getCountryName().equals(t.getCountryName())) {
                                                 g.setColor(Color.darkGray);
-                                                g.drawLine(t.getStartPixel() - 10, t.getEndPixel() - 40, entry.getKey().getStartPixel() - 10, entry.getKey().getEndPixel() - 40);
+                                                //g.drawLine(t.getStartPixel() - 10, t.getEndPixel() - 40, entry.getKey().getStartPixel() - 10, entry.getKey().getEndPixel() - 40);
+                                                g.drawLine(t.getStartPixel(), t.getEndPixel(), entry.getKey().getStartPixel(), entry.getKey().getEndPixel());
                                             }
                                         }
                                     }
@@ -191,18 +194,23 @@ public class LaunchGame extends JPanel {
                             f.add(player4, BorderLayout.PAGE_END);
                         }
                         currentPhaseState = "SP";
+
+                        noOfReinArmy = game.getReinforcementArmyForPlayer(playerList.get(turn-1),gameMap) * numberOfPlayers;
+                        System.out.println("Reinforcement Army per player : " + (noOfReinArmy / numberOfPlayers));
+
                         JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()];
                         int i = 0;
                         for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
                             l[i] = new JLabel("" + c.getCountryName() + ":" + c.getCurrentArmiesDeployed());
-                            l[i].setBounds(c.getStartPixel() - 15, c.getEndPixel() - 90, 100, 100);
+                            //l[i].setBounds(c.getStartPixel() - 15, c.getEndPixel() - 90, 100, 100);
+                            l[i].setBounds(c.getStartPixel()-15, c.getEndPixel()-100, c.getStartPixel()+10, c.getEndPixel()+10);
                             l[i].setVisible(true);
                             jIcon.add(l[i]);
                             l[i].setForeground(c.getBelongsToPlayer().getColors());
                             l[i].addMouseListener(new MouseAdapter() {
                                 public void mouseClicked(MouseEvent e) {
                                     System.out.println(c.countryName + " was clicked !");
-                                    if(turn>noOfPlayers) {
+                                    if(noOfReinArmy<=0) {
                                         currentPhaseState = "FORTIFICATION_PHASE";
                                         // go to next phase
                                         return;
@@ -210,9 +218,15 @@ public class LaunchGame extends JPanel {
                                     if(currentPhaseState.equalsIgnoreCase("RP")) {
                                         if(c.getBelongsToPlayer().equals(playerList.get(turn-1))) {
                                             JLabel l = (JLabel) e.getSource();
-                                            c.addArmy(7);
+                                            c.addArmy(1);
                                             l.setText("" + c.getCountryName() + ":" + c.getCurrentArmiesDeployed());
-                                            turn++;
+                                            turn = ((++turn)%(numberOfPlayers+1));
+                                            noOfReinArmy--;
+                                            if(turn==0) {
+                                                turn++;
+                                                System.out.println("Remaining Armies per Player : " + (noOfReinArmy/4));
+                                            }
+                                            System.out.println("Player-"+turn+" Turn");
                                         }
                                         else
                                         {
@@ -238,7 +252,6 @@ public class LaunchGame extends JPanel {
     }
 
     private void startReinforcementPhase(List<Player> playerList, GameMap gameMap, int numberOfPlayers, JLabel[] labels) {
-        game = new GamePlayAPI();
         currentPhaseState = "RP";
         Player player = game.changeTurnToNextPlayer(numberOfPlayers, playerList);
         for (JLabel label:labels){
