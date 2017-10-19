@@ -207,8 +207,8 @@ public class LaunchGame extends JPanel {
                         int i = 0;
                         for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
                             l[i] = new JLabel("" + c.getCountryName() + ":" + c.getCurrentArmiesDeployed());
-                            //l[i].setBounds(c.getStartPixel() - 15, c.getEndPixel() - 90, 100, 100);
-                            l[i].setBounds(c.getStartPixel()-15, c.getEndPixel()-100, c.getStartPixel()+10, c.getEndPixel()+10);
+                            l[i].setBounds(c.getStartPixel() - 15, c.getEndPixel() - 90, 100, 100);
+                            //l[i].setBounds(c.getStartPixel()-15, c.getEndPixel()-100, c.getStartPixel()+10, c.getEndPixel()+10);
                             l[i].setVisible(true);
                             jIcon.add(l[i]);
                             l[i].setForeground(c.getBelongsToPlayer().getColors());
