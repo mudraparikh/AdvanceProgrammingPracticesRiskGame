@@ -245,7 +245,6 @@ public class LaunchGame extends JPanel {
                             i++;
                         }
                         currentPhaseState = "RP";
-                        //startReinforcementPhase(playerList, gameMap, numberOfPlayers, l);
                         textField.addActionListener(event -> {
                             String text = textField.getText();
                             System.out.println(text);
@@ -254,15 +253,5 @@ public class LaunchGame extends JPanel {
                 }
             }
         });
-    }
-
-    private void startReinforcementPhase(List<Player> playerList, GameMap gameMap, int numberOfPlayers, JLabel[] labels) {
-        currentPhaseState = "RP";
-        Player player = game.changeTurnToNextPlayer(numberOfPlayers, playerList);
-        for (JLabel label:labels){
-            if (player.assignedCountries.contains(label.getText()))
-            System.out.println(label.getText());
-        }
-
     }
 }
