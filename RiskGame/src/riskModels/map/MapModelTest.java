@@ -1,29 +1,31 @@
 
 package riskModels.map;
 
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.File;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+
+import java.net.URL;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class MapModelTest {
     private MapModel mapObj;
     private GameMap gameMapObj;
     private String filePath;
+    String location = MapModelTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+    
     @Before
     public void init() {
         mapObj = new MapModel();
         gameMapObj = new GameMap();
-        filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
+        filePath=location.replaceAll("/bin", "/res");
     }
 
     @Test
     public void testValidateMap() throws Exception {
-        gameMapObj = mapObj.readMapFile(filePath + "validate.map");
+        gameMapObj = mapObj.readMapFile(filePath+ "validate.map");
         assertEquals(true, gameMapObj.isCorrectMap());
     }
     @Test
