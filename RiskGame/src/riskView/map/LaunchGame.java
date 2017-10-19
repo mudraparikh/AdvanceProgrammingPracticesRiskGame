@@ -94,7 +94,7 @@ public class LaunchGame extends JPanel {
         player4.setOpaque(true);
         player4.setBackground(Color.GREEN);
         
-        //On click the button determines and storesthe value for the Number of Players.
+        //On click the button determines and stores the value for the Number of Players.
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -203,7 +203,7 @@ public class LaunchGame extends JPanel {
                         noOfReinArmy = game.getReinforcementArmyForPlayer(playerList.get(turn-1),gameMap) * numberOfPlayers;
                         System.out.println("Reinforcement Army per player : " + (noOfReinArmy / numberOfPlayers));
 
-                        JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()];
+                        JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()]; // It gets the info about neighboring countries
                         int i = 0;
                         for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
                             l[i] = new JLabel("" + c.getCountryName() + ":" + c.getCurrentArmiesDeployed());
@@ -215,6 +215,7 @@ public class LaunchGame extends JPanel {
                             l[i].addMouseListener(new MouseAdapter() {
                                 public void mouseClicked(MouseEvent e) {
                                     System.out.println(c.countryName + " was clicked !");
+                                    // fortification phase starts when no. of army <=0
                                     if(noOfReinArmy<=0) {
                                         currentPhaseState = "FORTIFICATION_PHASE";
                                         // go to next phase
@@ -228,12 +229,13 @@ public class LaunchGame extends JPanel {
 
                                         return;
                                     }
+                                    //It checks for reinforcement phase
                                     if(currentPhaseState.equalsIgnoreCase("RP")) {
-                                        if(c.getBelongsToPlayer().equals(playerList.get(turn-1))) {
-                                            JLabel l = (JLabel) e.getSource();
+                                        if(c.getBelongsToPlayer().equals(playerList.get(turn-1))) { //checks player turn
+                                            JLabel l = (JLabel) e.getSource(); // gets the respective layer
                                             c.addArmy(1);
                                             l.setText("" + c.getCountryName() + ":" + c.getCurrentArmiesDeployed());
-                                            turn = ((++turn)%(numberOfPlayers+1));
+                                            turn = ((++turn)%(numberOfPlayers+1)); // changes the players turn
                                             noOfReinArmy--;
                                             if(turn==0) {
                                                 turn++;
