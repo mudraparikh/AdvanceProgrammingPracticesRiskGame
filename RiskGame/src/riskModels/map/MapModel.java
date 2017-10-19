@@ -354,7 +354,7 @@ public class MapModel {
 
         String result = maps + continents.toString() + territories;
 
-        String dotMapFile = filename + ".map";
+        String dotMapFile = filename;
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(dotMapFile)))) {
             out.print(result);
             out.close();
