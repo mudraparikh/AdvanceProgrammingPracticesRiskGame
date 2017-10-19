@@ -1,6 +1,7 @@
 package riskView.map;
 
 import riskModels.country.Country;
+import riskModels.gamedriver.GamePlayAPI;
 import riskModels.gamedriver.StartupPhase;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
@@ -27,6 +28,7 @@ import java.util.Set;
  */
 @SuppressWarnings("serial")
 public class LaunchGame extends JPanel {
+    GamePlayAPI game;
     private JLabel label = new JLabel("Select number of Players :");
     private JLabel label1 = new JLabel(); 
     private JTextField textField = new JTextField(20);
@@ -42,7 +44,12 @@ public class LaunchGame extends JPanel {
     private JLabel player3 = new JLabel("Player 3");
     private JLabel player4 = new JLabel("Player 4");
 
+    private static String currentPhaseState = "RP";
+
     public List<Player> playerList;
+
+    private int turn = 1;
+    private int noOfPlayers = 4;
 
     /**
      * This LaunchGame method allows you to select no. of players and select the .map file from your local folder.
@@ -60,6 +67,12 @@ public class LaunchGame extends JPanel {
         group.add(option1);
         group.add(option2);
         group.add(option3);
+
+        JButton reinforcement = new JButton("reinforcement");
+        reinforcement.setSize(10,10);
+        reinforcement.setBounds(100,100,50,25);
+        reinforcement.setVisible(true);
+
 
         frame.add(label, BorderLayout.PAGE_START);
         frame.add(option1, BorderLayout.LINE_START);
@@ -110,11 +123,6 @@ public class LaunchGame extends JPanel {
                     GameMap gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
                     StartupPhase startupPhase = new StartupPhase();
                     playerList = startupPhase.setPlayer(numberOfPlayers);
-                    for (Player p : playerList){
-                        System.out.println(p.getName());
-                        System.out.println(p.getColors());
-                    }
-                    
                     /**
                      * This checks whether the map is correct then it loads the map from directory
                      * 
@@ -122,8 +130,13 @@ public class LaunchGame extends JPanel {
                      * @param gameMap this holds the location of .map file in the directory
                      * @param numberOfPlayer this holds the value of no. of players selected
                      */
+<<<<<<< HEAD
                     
                     //Condition to check if the correct file is selected.
+=======
+
+                    startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
+>>>>>>> branch 'master' of https://github.com/prashantp995/AdvanceProgrammingPracticesRiskGame
                     if (!gameMap.isCorrectMap) {
                     	label1.setText(gameMap.getErrorMessage());
                         label1.setVisible(true);
@@ -133,8 +146,12 @@ public class LaunchGame extends JPanel {
                         dialog.setTitle("ERROR"); // error message when wrong file is selected
                         dialog.add(label1);
                     } else {
+<<<<<<< HEAD
                     	startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
                         String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
+=======
+                        String absolute = selectedFile.getParent() + "/" + gameMap.getMapDetail().get("image");
+>>>>>>> branch 'master' of https://github.com/prashantp995/AdvanceProgrammingPracticesRiskGame
                         System.out.println(absolute);
                         JFrame f = new JFrame();
                         BufferedImage image = null;
@@ -187,6 +204,7 @@ public class LaunchGame extends JPanel {
                             f.add(player3, BorderLayout.LINE_END);
                             f.add(player4, BorderLayout.PAGE_END);
                         }
+                        currentPhaseState = "SP";
                         JLabel[] l = new JLabel[gameMap.getCountryAndNeighborsMap().keySet().size()];
                         int i = 0;
                         for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
@@ -198,10 +216,31 @@ public class LaunchGame extends JPanel {
                             l[i].addMouseListener(new MouseAdapter() {
                                 public void mouseClicked(MouseEvent e) {
                                     System.out.println(c.countryName + " was clicked !");
+                                    if(turn>noOfPlayers) {
+                                        currentPhaseState = "FORTIFICATION_PHASE";
+                                        // go to next phase
+                                        return;
+                                    }
+                                    if(currentPhaseState.equalsIgnoreCase("RP")) {
+                                        if(c.getBelongsToPlayer().equals(playerList.get(turn-1))) {
+                                            JLabel l = (JLabel) e.getSource();
+                                            c.addArmy(7);
+                                            l.setText("" + c.getCountryName() + ":" + c.getCurrentArmiesDeployed());
+                                            turn++;
+                                        }
+                                        else
+                                        {
+                                            System.out.println("\n\n\t\t"
+                                                    + "Its Player("+turn+") turn..."
+                                                    + "\n\n");
+                                        }
+                                    }
                                 }
                             });
                             i++;
                         }
+                        currentPhaseState = "RP";
+                        //startReinforcementPhase(playerList, gameMap, numberOfPlayers, l);
                         textField.addActionListener(event -> {
                             String text = textField.getText();
                             System.out.println(text);
@@ -210,5 +249,16 @@ public class LaunchGame extends JPanel {
                 }
             }
         });
+    }
+
+    private void startReinforcementPhase(List<Player> playerList, GameMap gameMap, int numberOfPlayers, JLabel[] labels) {
+        game = new GamePlayAPI();
+        currentPhaseState = "RP";
+        Player player = game.changeTurnToNextPlayer(numberOfPlayers, playerList);
+        for (JLabel label:labels){
+            if (player.assignedCountries.contains(label.getText()))
+            System.out.println(label.getText());
+        }
+
     }
 }

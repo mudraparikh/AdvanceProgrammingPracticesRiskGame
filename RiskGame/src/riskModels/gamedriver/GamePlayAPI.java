@@ -71,12 +71,10 @@ public class GamePlayAPI {
                     isOccupiedByPlayer = false;
                     break;
                 }
-
             }
             if(isOccupiedByPlayer)
                 lst.add(c);
         }
-
         return lst;
     }
 
