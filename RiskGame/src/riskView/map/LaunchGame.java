@@ -130,13 +130,8 @@ public class LaunchGame extends JPanel {
                      * @param gameMap this holds the location of .map file in the directory
                      * @param numberOfPlayer this holds the value of no. of players selected
                      */
-<<<<<<< HEAD
-                    
-                    //Condition to check if the correct file is selected.
-=======
 
                     startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
->>>>>>> branch 'master' of https://github.com/prashantp995/AdvanceProgrammingPracticesRiskGame
                     if (!gameMap.isCorrectMap) {
                     	label1.setText(gameMap.getErrorMessage());
                         label1.setVisible(true);
@@ -146,12 +141,8 @@ public class LaunchGame extends JPanel {
                         dialog.setTitle("ERROR"); // error message when wrong file is selected
                         dialog.add(label1);
                     } else {
-<<<<<<< HEAD
                     	startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
                         String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
-=======
-                        String absolute = selectedFile.getParent() + "/" + gameMap.getMapDetail().get("image");
->>>>>>> branch 'master' of https://github.com/prashantp995/AdvanceProgrammingPracticesRiskGame
                         System.out.println(absolute);
                         JFrame f = new JFrame();
                         BufferedImage image = null;
