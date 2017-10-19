@@ -84,7 +84,4 @@ public class MapModelTest {
 
     }
 
-    @Test
-    public void addNeighbor() throws Exception {
-    }
 }
