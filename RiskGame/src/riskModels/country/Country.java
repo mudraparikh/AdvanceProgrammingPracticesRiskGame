@@ -37,7 +37,7 @@ public class Country {
 
     /**
      * Overriding equals method.
-     * {@link https://www.ibm.com/developerworks/java/library/j-jtp05273/index.html}
+     * 
      */
     @Override
     public boolean equals(Object o) {
@@ -47,7 +47,7 @@ public class Country {
 
     /**
      * Overiding hashcode method.
-     * {@link http://www.xyzws.com/javafaq/why-always-override-hashcode-if-overriding-equals/20}
+     * 
      */
     @Override
     public int hashCode() {

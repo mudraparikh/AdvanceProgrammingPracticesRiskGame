@@ -39,7 +39,12 @@ public class GamePlayAPI {
         turn = (turn+1) % numberOfPlayers;
         return getCurrentTurnPlayer(playerList);
     }
-
+    /**
+     * This method will return number of Reinforcement Army for the player
+     * @param player Player object whose turn it is 
+     * @param gameMap current map details 
+     * @return return number of reinforcement army for the player
+     */
     public int getReinforcementArmyForPlayer(Player player, GameMap gameMap) {
         int countriesConquered = player.assignedCountries.size();
 
@@ -53,7 +58,13 @@ public class GamePlayAPI {
 
         return count<3?3:count;
     }
-
+    /**
+     * This method will subtract army from player and country
+     * @param player player from whom we need to subtract army  
+     * @param country country from where we need to subtract army 
+     * @param subAmount amount of subtraction
+     * @return  true if provided number of armies deleted else false
+     */
     public boolean subArmies(Player player, Country country, int subAmount) {
         if((country.getCurrentArmiesDeployed()==0 || player.assignedCountries.contains(country)) && ((country.getCurrentArmiesDeployed()-subAmount)>=0)) {
             player.subArmy(subAmount);
@@ -64,7 +75,14 @@ public class GamePlayAPI {
         }
         return false;
     }
-
+    /**
+     * This method will move army  for player from one country to another
+     * @param player player who wants to move army
+     * @param from country from where players wants to move army
+     * @param to country where player wants to move army	
+     * @param noOfArmy number of armies player wants to move
+     * @return true if armies moved else false if army not moved.
+     */
     public boolean moveArmy(Player player, Country from, Country to, int noOfArmy) {
         if(player.assignedCountries.contains(from) && (to.getCurrentArmiesDeployed()==0 || player.assignedCountries.contains(to)) && (from.getCurrentArmiesDeployed()-noOfArmy)>=1) {
             from.subtractArmy(noOfArmy);
@@ -76,14 +94,19 @@ public class GamePlayAPI {
         }
         return false;
     }
-
-    public List<Continent> getContinentsConqueredBy(Player p, GameMap gameMap) {
+    /**
+     * This method will return list of continents conquered by player.
+     * @param player player for whom we need to send list of continents conqueredd by him
+     * @param gameMap current map details
+     * @return list of continents 
+     */
+    public List<Continent> getContinentsConqueredBy(Player player, GameMap gameMap) {
         List<Continent> lst = new ArrayList<>();
 
         for(Continent c : getContinents(gameMap)) {
             boolean isOccupiedByPlayer = true;
             for(Map.Entry<Country, List<Country>> e : gameMap.getCountryAndNeighborsMap().entrySet()) {
-                if(!e.getKey().getBelongsToPlayer().equals(p)) {
+                if(!e.getKey().getBelongsToPlayer().equals(player)) {
                     isOccupiedByPlayer = false;
                     break;
                 }

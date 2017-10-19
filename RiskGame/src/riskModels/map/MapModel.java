@@ -110,7 +110,7 @@ public class MapModel {
     /**
      * This method will read the mapfile and provide data to creategraph
      *
-     *
+     * @param filePath path of .map file 
      * @return Function will return the map details obj
      */
     public GameMap readMapFile(String filePath) {
