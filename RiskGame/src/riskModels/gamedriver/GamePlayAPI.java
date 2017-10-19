@@ -10,15 +10,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class contains the services for the Game Play.
+ * All the Phases relevant actions and events are listed down.
+ * @author Akshay
+ */
 public class GamePlayAPI {
     public static int turn = 0;
 
     // Game APIs
 
+    /**
+     * This method will get the current player turn
+     * @param playerList The list of Player objects
+     * @return Player object whose turn is it
+     */
     public Player getCurrentTurnPlayer(List<Player> playerList) {
         return playerList.get(turn);
     }
 
+    /**
+     *
+     * @param numberOfPlayers total number of players playing the game
+     * @param playerList List of player objects
+     * @return Will call the <code>getCurrentTurnPlayer</code> which will return player object
+     */
     public Player changeTurnToNextPlayer(int numberOfPlayers, List<Player> playerList) {
         turn = (turn+1) % numberOfPlayers;
         return getCurrentTurnPlayer(playerList);
