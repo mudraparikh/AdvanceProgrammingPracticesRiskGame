@@ -93,12 +93,8 @@ public class LaunchGame extends JPanel {
         player4.setVisible(true);
         player4.setOpaque(true);
         player4.setBackground(Color.GREEN);
-<<<<<<< HEAD
         
         //On click the button determines and storesthe value for the Number of Players.
-=======
-
->>>>>>> branch 'master' of https://github.com/prashantp995/AdvanceProgrammingPracticesRiskGame
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
