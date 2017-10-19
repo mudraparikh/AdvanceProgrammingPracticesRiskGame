@@ -199,7 +199,6 @@ public class LaunchGame extends JPanel {
                             f.add(player4, BorderLayout.PAGE_END);
                         }
                         currentPhaseState = "SP";
-
                         noOfReinArmy = game.getReinforcementArmyForPlayer(playerList.get(turn-1),gameMap) * numberOfPlayers;
                         System.out.println("Reinforcement Army per player : " + (noOfReinArmy / numberOfPlayers));
 
