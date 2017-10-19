@@ -211,9 +211,14 @@ public class MapView extends java.awt.Frame {
 					List<String> obj = countryList.getSelectedValuesList();
 					for (String string : obj) {
 						countryDisplay.removeElement(string);
+						if(mapModel.getCountryObj(string, gameMap) !=null){
+						    mapModel.removeCountry(mapModel.getCountryObj(string, gameMap), gameMap);
+                        };
+
 					}
 				}
 				countryList.repaint();
+				mapModel.writeMap(gameMap, fileName);
 			}
 		});
 		JFrame frame1 = new JFrame();
