@@ -306,6 +306,23 @@ public class MapModel {
     }
 
     /**
+     * This method finds the country from the gameMap object and returns the country object if present
+     * @param countryName
+     * @param gameMap
+     * @return country object
+     */
+    public Country getCountryObj(String countryName, GameMap gameMap){
+        for (Map.Entry<Country, List<Country>> pair : gameMap.getCountryAndNeighborsMap().entrySet()) {
+            // get country object
+            Country keyCountry = pair.getKey();
+            if (keyCountry.getCountryName().equalsIgnoreCase(countryName)) {
+                return keyCountry;
+            }
+        }
+        return null;
+    }
+
+    /**
      * This method will create .map file based on input provided from user
      *
      * @param graphMap Details provided from the user

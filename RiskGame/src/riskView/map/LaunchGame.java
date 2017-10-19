@@ -144,7 +144,7 @@ public class LaunchGame extends JPanel {
                         dialog.add(label1);
                     } else {
                     	startupPhase.initialisePlayersData(playerList, gameMap, numberOfPlayers);
-                        String absolute = selectedFile.getParent() + "\\" + gameMap.getMapDetail().get("image");
+                        String absolute = selectedFile.getParent() + "/" + gameMap.getMapDetail().get("image");
                         System.out.println(absolute);
                         JFrame f = new JFrame();
                         BufferedImage image = null;
@@ -171,8 +171,8 @@ public class LaunchGame extends JPanel {
                                         for (Country t : countryList) {
                                             if (c.getCountryName().equals(t.getCountryName())) {
                                                 g.setColor(Color.darkGray);
-                                                //g.drawLine(t.getStartPixel() - 10, t.getEndPixel() - 40, entry.getKey().getStartPixel() - 10, entry.getKey().getEndPixel() - 40);
-                                                g.drawLine(t.getStartPixel(), t.getEndPixel(), entry.getKey().getStartPixel(), entry.getKey().getEndPixel());
+                                                g.drawLine(t.getStartPixel() - 10, t.getEndPixel() - 40, entry.getKey().getStartPixel() - 10, entry.getKey().getEndPixel() - 40);
+                                                //g.drawLine(t.getStartPixel(), t.getEndPixel(), entry.getKey().getStartPixel(), entry.getKey().getEndPixel());
                                             }
                                         }
                                     }
@@ -218,6 +218,14 @@ public class LaunchGame extends JPanel {
                                     if(noOfReinArmy<=0) {
                                         currentPhaseState = "FORTIFICATION_PHASE";
                                         // go to next phase
+                                        Country from = mapmodel.getCountryObj("2",gameMap);
+                                        Country to = mapmodel.getCountryObj("4", gameMap);
+                                        if(from != null &&  to !=null){
+                                            if(from.neighborNodes.contains(to)){
+                                                game.moveArmy(playerList.get(1),from, to, 1);
+                                            }
+                                        }
+
                                         return;
                                     }
                                     if(currentPhaseState.equalsIgnoreCase("RP")) {

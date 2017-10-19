@@ -2,6 +2,7 @@ package riskModels.gamedriver;
 
 import org.junit.Before;
 import org.junit.Test;
+import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskModels.player.Player;
@@ -37,6 +38,21 @@ public class GamePlayAPITest {
         startupPhase.initialisePlayersData(playerList, gameMap, 4);
         int armies = gamePlay.getReinforcementArmyForPlayer(playerList.get(0),gameMap);
         assertEquals(7,armies);
+    }
+
+    @Test
+    public void testFortificationPhase() throws Exception {
+        MapModel mapmodel = new MapModel();
+        GameMap gameMap = mapmodel.readMapFile(filePath + "validate.map");
+        playerList = startupPhase.setPlayer(4);
+        startupPhase.initialisePlayersData(playerList, gameMap, 4);
+        Country from = playerList.get(0).getAssignedCountries().get(0);
+        Country to = playerList.get(0).getAssignedCountries().get(1);
+        assertEquals(true,gamePlay.moveArmy(playerList.get(0),from, to, 1));
+
+        //Now only one army is remaining on 0th index country, so moving of the army should not happen.
+        //Hence the negative testing
+        assertEquals(false,gamePlay.moveArmy(playerList.get(0),from, to, 1));
     }
 
 }

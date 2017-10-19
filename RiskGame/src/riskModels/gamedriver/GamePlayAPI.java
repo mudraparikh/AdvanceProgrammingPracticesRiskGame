@@ -47,7 +47,7 @@ public class GamePlayAPI {
             return 3;
 
         int count = (countriesConquered / 3);
-        List<Continent> ruledContinents = getContinentsCounqueredBy(player, gameMap);
+        List<Continent> ruledContinents = getContinentsConqueredBy(player, gameMap);
         for(Continent c : ruledContinents)
             count += c.getControlValue();
 
@@ -65,7 +65,7 @@ public class GamePlayAPI {
         return false;
     }
 
-    public boolean moveArmyFromTo(Player player, Country from, Country to, int noOfArmy) {
+    public boolean moveArmy(Player player, Country from, Country to, int noOfArmy) {
         if(player.assignedCountries.contains(from) && (to.getCurrentArmiesDeployed()==0 || player.assignedCountries.contains(to)) && (from.getCurrentArmiesDeployed()-noOfArmy)>=1) {
             from.subtractArmy(noOfArmy);
             if(to.getCurrentArmiesDeployed()==0)
@@ -77,7 +77,7 @@ public class GamePlayAPI {
         return false;
     }
 
-    public List<Continent> getContinentsCounqueredBy(Player p, GameMap gameMap) {
+    public List<Continent> getContinentsConqueredBy(Player p, GameMap gameMap) {
         List<Continent> lst = new ArrayList<>();
 
         for(Continent c : getContinents(gameMap)) {
