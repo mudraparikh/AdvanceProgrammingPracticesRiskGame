@@ -68,7 +68,6 @@ public class MapView extends java.awt.Frame {
      */
 
 	private void continent() {
-		//continentDisplay = new DefaultListModel();
 		continentList = new JList(continentDisplay);
 		pane = new JScrollPane(continentList);
 		JButton addButton = new JButton("Add Continent");
@@ -136,12 +135,10 @@ public class MapView extends java.awt.Frame {
      */
 
 	private void country() {
-		//countryDisplay = new DefaultListModel();
 		countryList = new JList(countryDisplay);
 		JList countryList2 = new JList(countryDisplay);
 		JScrollPane pane = new JScrollPane(countryList);
 		JScrollPane pane3 = new JScrollPane(countryList2);
-		//continentDisplay1 = new DefaultListModel<>();
 
 		for(int i=0; i<continentDisplay.size(); i++)
 			continentDisplay1.addElement(continentDisplay.get(i));
@@ -168,7 +165,6 @@ public class MapView extends java.awt.Frame {
 			
 			//This button performs the add country operation on the map to be edited.
 			addButton.addActionListener(new ActionListener() {
-
 				public void actionPerformed(ActionEvent e) {
 					frameCountry.setTitle("Add Country");
 					frameCountry.setVisible(true);

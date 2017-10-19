@@ -15,14 +15,18 @@ public class StartGame extends java.awt.Frame {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-
+    /**
+     * This method calls the initMenuComponents method to initialize StartGame components.
+     */
     public StartGame() {
         super("RISK Game");
         initMenuComponents();
         jButton1.setEnabled(true);
         setLocationRelativeTo(null);
     }
-
+    /**
+     * This main method creates an instance of the startGame.
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -41,6 +45,8 @@ public class StartGame extends java.awt.Frame {
 
         setBackground(new java.awt.Color(1, 1, 1));
         addWindowListener(new java.awt.event.WindowAdapter() {
+        	
+        	//Method to terminate and close the program window.
             public void windowClosing(java.awt.event.WindowEvent evt) {
             	System.exit(0);
             }

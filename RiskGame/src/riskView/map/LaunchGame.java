@@ -55,7 +55,6 @@ public class LaunchGame extends JPanel {
     /**
      * This LaunchGame method allows you to select no. of players and select the .map file from your local folder.
      */
-    
     public LaunchGame() {
         game = new GamePlayAPI();
         JFrame frame = new JFrame();
@@ -94,7 +93,8 @@ public class LaunchGame extends JPanel {
         player4.setVisible(true);
         player4.setOpaque(true);
         player4.setBackground(Color.GREEN);
-
+        
+        //On click the button determines and storesthe value for the Number of Players.
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
