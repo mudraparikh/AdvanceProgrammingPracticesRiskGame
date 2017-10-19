@@ -5,6 +5,7 @@ import org.junit.Test;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
+import riskModels.map.MapModelTest;
 import riskModels.player.Player;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class GamePlayAPITest {
     private StartupPhase startupPhase;
     private List<Player> playerList;
     private String filePath;
+    String location = MapModelTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
     @Before
     public void init() {
@@ -28,7 +30,8 @@ public class GamePlayAPITest {
         gamePlay = new GamePlayAPI();
         startupPhase = new StartupPhase();
         playerList = new ArrayList<>();
-        filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
+        filePath=location.replaceAll("/bin", "/res");
+        //filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
     }
     @Test
     public void testReinforcementArmyForPlayer() throws Exception {
