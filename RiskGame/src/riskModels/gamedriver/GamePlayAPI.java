@@ -120,5 +120,25 @@ public class GamePlayAPI {
     public List<Continent> getContinents(GameMap gameMap) {
         return gameMap.getContinentList();
     }
+    /**
+	 * This method will return list of continent where player has at least one country
+	 * @param player object of player
+	 * @return list of continent objects
+	 */
+	public List<Continent> getContinentOfPlayer(Player player){
+		
+		List<Country> countriesOfPlayer = player.getAssignedCountries();
+		List<Continent> continentList = new ArrayList<>(); //List of Continent for the player 
+		if(countriesOfPlayer!=null && !countriesOfPlayer.isEmpty()) {
+			for(Country country : countriesOfPlayer) {
+				//we have country,now find the continent details  
+			    int indexOfContinent = GameMap.getInstance().getContinentList().indexOf(new Continent(country.getBelongsToContinent()));
+		        Continent continent =GameMap.getInstance().getContinentList().get(indexOfContinent); 
+				continentList.add(continent);
+			}
+		}
+		return continentList;
+		
+	}
 
 }
