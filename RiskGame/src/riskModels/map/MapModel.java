@@ -94,6 +94,7 @@ public class MapModel {
                     String[] ConProperties = Continents.split("=");
                     continents.setContinentName(ConProperties[0].trim());
                     continents.setNumberOfTerritories(Integer.parseInt(ConProperties[1].trim()));
+                    continents.setControlValue(Integer.parseInt(ConProperties[1].trim()));
                     continentsList.add(continents);
                     System.out.println(ConProperties[1]);
                 }
