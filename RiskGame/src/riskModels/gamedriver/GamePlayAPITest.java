@@ -26,7 +26,7 @@ public class GamePlayAPITest {
     @Before
     public void init() {
         mapObj = new MapModel();
-        gameMapObj = new GameMap();
+        gameMapObj = GameMap.getInstance();
         gamePlay = new GamePlayAPI();
         startupPhase = new StartupPhase();
         playerList = new ArrayList<>();

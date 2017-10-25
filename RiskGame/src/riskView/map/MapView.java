@@ -57,7 +57,7 @@ public class MapView extends java.awt.Frame {
 	String fileName;
 	private int index;
 	Object index1;
-	GameMap gameMap = new GameMap();
+	GameMap gameMap = GameMap.getInstance();
 	MapModel mapModel = new MapModel();
 
 	public MapView() {

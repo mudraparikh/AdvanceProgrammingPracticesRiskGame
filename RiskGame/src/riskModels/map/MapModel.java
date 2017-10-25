@@ -118,7 +118,7 @@ public class MapModel {
         boolean isMAPresent = false; //to check [MAP] is available in file or not
         boolean isContinentPresent = false;//to check [Continent] is available in file or not
         boolean isTerritoryPresent = false;//to check [Territory] is available in file or not
-        GameMap mapDetails = new GameMap();
+        GameMap mapDetails = GameMap.getInstance();
         try {
             File file = new File(filePath);
             System.out.println(file.exists());

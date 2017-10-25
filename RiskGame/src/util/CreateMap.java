@@ -105,7 +105,7 @@ public class CreateMap {
             System.out.println("Please Enter the Name of The Map that you want to create");
             Scanner scanMapFileName = new Scanner(System.in);
             String fileName = scanMapFileName.nextLine();
-            GameMap gameMap = new GameMap();
+            GameMap gameMap = GameMap.getInstance();
             HashMap<String, String> mapDetail = new HashMap<>(); //change to default image file
             mapDetail.put("image", "Canada.bmp");
             gameMap.setMapDetail(mapDetail);

@@ -19,6 +19,20 @@ public class GameMap {
     public boolean isCorrectMap = true;
     public String errorMessage;
     public HashMap<String, String> mapDetail = new HashMap<>();
+    private static GameMap gameMap;
+    /**
+     * This method will will return singleton instance for the GameMap class
+     * @return
+     */
+    public static GameMap getInstance() {
+    	if(null ==gameMap) {
+    		gameMap = new GameMap();
+    	}
+    	return gameMap;
+    }
+    private GameMap() {
+		//To Prevent Other classes from creating object.
+	}
 
     public boolean isCorrectMap() {
         return isCorrectMap;

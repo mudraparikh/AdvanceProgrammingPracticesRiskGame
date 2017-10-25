@@ -19,7 +19,7 @@ public class MapModelTest {
     @Before
     public void init() {
         mapObj = new MapModel();
-        gameMapObj = new GameMap();
+        gameMapObj = GameMap.getInstance();
         filePath=location.replaceAll("/bin", "/res");
         //filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
     }
