@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * @author mudraparikh
  */
 @SuppressWarnings("serial")
-public class MapView extends java.awt.Frame {
+public class EditMapView extends java.awt.Frame {
 
 	private JFileChooser filechooser = new JFileChooser();
 	private JDialog dialog = new JDialog();
@@ -60,7 +60,7 @@ public class MapView extends java.awt.Frame {
 	GameMap gameMap = GameMap.getInstance();
 	MapModel mapModel = new MapModel();
 
-	public MapView() {
+	public EditMapView() {
 		initMapComponents();
 	}
 	/**

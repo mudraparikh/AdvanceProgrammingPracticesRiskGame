@@ -82,7 +82,7 @@ public class Launcher extends java.awt.Frame {
         jButton3.setName("jButton3");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	MapView add = new MapView();
+            	EditMapView add = new EditMapView();
                 add.setVisible(true);
             }
         });
