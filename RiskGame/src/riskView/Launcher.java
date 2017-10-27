@@ -1,5 +1,7 @@
 package riskView;
 
+import riskControllers.PlayerCountController;
+
 /**
  * This class holds the method that gives the menu option to start game,create map and edit map.
  *
@@ -7,7 +9,7 @@ package riskView;
  */
 public class Launcher extends java.awt.Frame {
     
-    public static javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -53,12 +55,13 @@ public class Launcher extends java.awt.Frame {
         jPanel1.setBackground(new java.awt.Color(1, 1, 1));
         jPanel1.setName("jPanel1");
         
-        //On click the button creates an instance of the GamePlay class.
+        //On click the button creates an instance of the PlayerCount class.
         jButton1.setText("Start Game");
         jButton1.setName("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	GamePlay add = new GamePlay();
+            	PlayerCount add = new PlayerCount();
+            	add.addActionListeners(new PlayerCountController(add));
                 add.setVisible(true);
             }
         });

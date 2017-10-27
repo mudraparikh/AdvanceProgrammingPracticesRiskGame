@@ -13,7 +13,7 @@ import static util.RiskGameUtil.*;
  *
  */
 @SuppressWarnings("serial")
-public class GamePlay extends JDialog {
+public class PlayerCount extends JDialog {
     private JPanel playerCountPanel;
     private GridLayout playerCountLayout;
     private JLabel playerCountLabel;
@@ -24,7 +24,7 @@ public class GamePlay extends JDialog {
     private JButton sixPlayerBtn;
     private JButton backBtn;
 
-    public GamePlay(){
+    public PlayerCount(){
         setTitle("Risk Game");
 
         setPreferredSize(new Dimension(150, 280));
