@@ -35,6 +35,8 @@ public class GameView extends JDialog{
 	
 	private JLabel selectedLabel;
 	private JLabel targetLabel;
+	private JLabel continentLabel;
+	
 	
 	private JButton menuBtn;
 	private JButton turnInBtn;
@@ -117,7 +119,7 @@ public class GameView extends JDialog{
 		c.weighty = 0.5;
 		c.gridx = 2;
 		c.gridy = 0;
-		//add(countryInfoPanel(model.getBoard()));
+		add(countryInfoPanel());
 		
 		setLocationRelativeTo(null);
 		
@@ -172,15 +174,15 @@ private JPanel mapPanel() {
  * The panel to display the buttons for user to play the game.
 **/
 private JPanel actionPanel() {
+	
 	actionPanel = new JPanel();
-	
-	actionPanel.setPreferredSize(new Dimension(200, 675));
-	
+	actionPanel.setPreferredSize(new Dimension(175, 675));
 	actionLayout = new GridBagLayout();
 	actionPanel.setLayout(actionLayout);
 	
 	selectedLabel = new JLabel("Selected Territory:");
 	targetLabel = new JLabel("Adjacent Territory:");
+	continentLabel = new JLabel("Continents:");
 	
 	menuBtn = new JButton("Menu");
 	turnInBtn = new JButton("Turn In Cards");
@@ -195,6 +197,55 @@ private JPanel actionPanel() {
 	attackBtn.setActionCommand(attackBtnName);
 	fortifyBtn.setActionCommand(fortifyBtnName);
 	endTurnBtn.setActionCommand(endTurnBtnName);
+	
+	c = new GridBagConstraints();
+
+	c.fill = GridBagConstraints.BOTH;
+	c.insets = new Insets(5, 5, 5, 5);
+	c.weightx = 0.5;
+	c.weighty = 0.5;
+	c.gridx = 0;
+	c.gridy = 0;
+	actionPanel.add(reinforceBtn, c);
+	
+	c.fill = GridBagConstraints.BOTH;
+	c.insets = new Insets(5, 5, 5, 5);
+	c.weightx = 0.5;
+	c.weighty = 0.5;
+	c.gridx = 0;
+	c.gridy = 1;
+	actionPanel.add(attackBtn, c);
+	
+	c.fill = GridBagConstraints.BOTH;
+	c.insets = new Insets(5, 5, 5, 5);
+	c.weightx = 0.5;
+	c.weighty = 0.5;
+	c.gridx = 0;
+	c.gridy = 2;
+	actionPanel.add(fortifyBtn, c);
+	
+	c.fill = GridBagConstraints.BOTH;
+	c.insets = new Insets(5, 5, 5, 5);
+	c.weightx = 0.5;
+	c.weighty = 0.5;
+	c.gridx = 0;
+	c.gridy = 3;
+	actionPanel.add(endTurnBtn, c);
+	
+	return actionPanel;
+}
+/**
+ * The panel to display the list of continents, countries and their adjacent territories.
+**/
+private JPanel countryInfoPanel() {
+	countryInfoPanel = new JPanel();
+	countryInfoPanel.setPreferredSize(new Dimension(350, 675));
+	actionLayout = new GridBagLayout();
+	countryInfoPanel.setLayout(actionLayout);
+	
+	selectedLabel = new JLabel("Selected Territory:");
+	targetLabel = new JLabel("Adjacent Territory:");
+	continentLabel = new JLabel("Continents:");
 	
 	gameMap = GameMap.getInstance();
 	mapModel = new MapModel();
@@ -237,7 +288,7 @@ private JPanel actionPanel() {
 	c.weighty = 0.5;
 	c.gridx = 0;
 	c.gridy = 0;
-	actionPanel.add(continentScrollPane, c);
+	countryInfoPanel.add(selectedLabel, c);
 	
 	c.fill = GridBagConstraints.BOTH;
 	c.insets = new Insets(5, 5, 5, 5);
@@ -245,31 +296,31 @@ private JPanel actionPanel() {
 	c.weighty = 0.5;
 	c.gridx = 0;
 	c.gridy = 1;
-	actionPanel.add(countryScrollPane1, c);
-
+	countryInfoPanel.add(countryScrollPane1, c);
+	
 	c.fill = GridBagConstraints.BOTH;
 	c.insets = new Insets(5, 5, 5, 5);
 	c.weightx = 0.5;
 	c.weighty = 0.5;
 	c.gridx = 0;
 	c.gridy = 2;
-	actionPanel.add(countryScrollPane2, c);
-	
-	/*c.fill = GridBagConstraints.BOTH;
-	c.insets = new Insets(5, 5, 5, 5);
-	c.weightx = 0.5;
-	c.weighty = 0.5;
-	c.gridx = 0;
-	c.gridy = 4;
-	actionPanel.add(selectedLabel, c);
+	countryInfoPanel.add(targetLabel, c);
 	
 	c.fill = GridBagConstraints.BOTH;
 	c.insets = new Insets(5, 5, 5, 5);
 	c.weightx = 0.5;
-	c.weighty = 10;
+	c.weighty = 0.5;
+	c.gridx = 0;
+	c.gridy = 3;
+	countryInfoPanel.add(countryScrollPane2, c);
+	
+	c.fill = GridBagConstraints.BOTH;
+	c.insets = new Insets(5, 5, 5, 5);
+	c.weightx = 0.5;
+	c.weighty = 0.5;
 	c.gridx = 0;
 	c.gridy = 5;
-	actionPanel.add(countryAScrollPane, c);
+	countryInfoPanel.add(continentLabel, c);
 	
 	c.fill = GridBagConstraints.BOTH;
 	c.insets = new Insets(5, 5, 5, 5);
@@ -277,54 +328,7 @@ private JPanel actionPanel() {
 	c.weighty = 0.5;
 	c.gridx = 0;
 	c.gridy = 6;
-	actionPanel.add(reinforceBtn, c);
-	
-	c.fill = GridBagConstraints.BOTH;
-	c.insets = new Insets(5, 5, 5, 5);
-	c.weightx = 0.5;
-	c.weighty = 0.5;
-	c.gridx = 0;
-	c.gridy = 7;
-	actionPanel.add(targetLabel, c);
-	
-	c.fill = GridBagConstraints.BOTH;
-	c.insets = new Insets(5, 5, 5, 5);
-	c.weightx = 0.5;
-	c.weighty = 10;
-	c.gridx = 0;
-	c.gridy = 8;
-	actionPanel.add(countryBScrollPane, c);
-	
-	c.fill = GridBagConstraints.BOTH;
-	c.insets = new Insets(5, 5, 5, 5);
-	c.weightx = 0.5;
-	c.weighty = 0.5;
-	c.gridx = 0;
-	c.gridy = 9;
-	actionPanel.add(attackBtn, c);
-	
-	c.fill = GridBagConstraints.BOTH;
-	c.insets = new Insets(5, 5, 5, 5);
-	c.weightx = 0.5;
-	c.weighty = 0.5;
-	c.gridx = 0;
-	c.gridy = 10;
-	actionPanel.add(fortifyBtn, c);
-	
-	c.fill = GridBagConstraints.BOTH;
-	c.insets = new Insets(5, 5, 5, 5);
-	c.weightx = 0.5;
-	c.weighty = 0.5;
-	c.gridx = 0;
-	c.gridy = 11;
-	actionPanel.add(endTurnBtn, c);*/
-	return actionPanel;
-}
-/**
- * The panel to display the list of continents, countries and their adjacent territories.
-**/
-private JPanel CountrynfoPanel() {
+	countryInfoPanel.add(continentScrollPane, c);
 	return countryInfoPanel;
-	
 }
 }
