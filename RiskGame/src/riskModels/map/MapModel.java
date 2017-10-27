@@ -138,6 +138,7 @@ public class MapModel {
                 if (st.startsWith("[")) {
                     HashMap<String, String> mapDetail = new HashMap<>();
                     String id = st.substring(st.indexOf("[") + 1, st.indexOf("]"));
+                    // Parsing the [MAP] portion of the map file
                     if (id.equalsIgnoreCase("Map")) {
                         isMAPresent = true;
                         while ((maps = bufferReaderForFile.readLine()) != null && !maps.startsWith("[")) {
@@ -151,6 +152,7 @@ public class MapModel {
                         bufferReaderForFile.reset();
                         mapDetails.setMapDetail(mapDetail);
                     }
+                    //Parsing the [Continents] portion of the map file
                     if (id.equalsIgnoreCase("Continents")) {
                         isContinentPresent = true;
                         if (isMAPresent) {
@@ -160,7 +162,7 @@ public class MapModel {
                         }
 
                     }
-
+                    //Parsing the  [Territories] portion of the map file
                     if (id.equalsIgnoreCase("Territories")) {
                         isTerritoryPresent = true;
                         if (isMAPresent) {
@@ -206,16 +208,78 @@ public class MapModel {
             Map.Entry pair = (Map.Entry) it.next();
             Country country = (Country) pair.getKey();
             List<Country> neighbours = (List<Country>) pair.getValue();
+            // check if country all countries have at least one neighbor
             if (neighbours.isEmpty()) {
                 mapDetails.setCorrectMap(false);
                 mapDetails.setErrorMessage(country.getCountryName() + " does not have any neighbor nodes");
+                return mapDetails;
             }
+           // here  all countries have at least one neighbor , now check connectivity between them
+    		MapModel mapModel = new MapModel();
+    		for(Country country1 : mapDetails.getCountryAndNeighborsMap().keySet()){
+    			if(GameMap.getInstance().isCorrectMap) {
+       			for(Country country2 : mapDetails.getCountryAndNeighborsMap().keySet()){
+    				if(!country1.equals(country2)){
+    					if(mapModel.isConnected(country1, country2)==false){
+    						mapDetails.setCorrectMap(false);
+    						mapDetails.setErrorMessage("Disconnected Country Found"+country1.getCountryName() +" " +country2.getCountryName());
+    						break;
+    					}
+    				}
+    			}
+    		  }
+    		}
         }
         return mapDetails;
     }
 
-
     /**
+	 * Checks if it is connected.
+	 *
+	 * @param c1 the country  1
+	 * @param c2 the country 2
+	 * @param unwantedPair the unwanted pair
+	 * @return true, if is connected
+	 */
+	private boolean isConnected(Country c1, Country c2, List<Country> unwantedPair) {
+		// if provided countries are neighbor they are connected
+		if (isNeighbour(c1, c2))
+			return true;
+		// if they are not neighbor check if they are reachable to each other
+		if (unwantedPair == null)
+			unwantedPair = new ArrayList<>();
+		else if (unwantedPair.contains(c1))
+			return false;
+		unwantedPair.add(c1);
+
+		for (Country c : GameMap.getInstance().getCountryAndNeighborsMap().get(c1)) {
+			if (!unwantedPair.contains(c) && isConnected(c, c2, unwantedPair))
+				return true;
+		}
+
+		return false;
+	}
+	/**
+	 * Checks if it is connected.
+	 *
+	 * @param c1 the c 1
+	 * @param c2 the c 2
+	 * @return true, if is connected
+	 */
+	public boolean isConnected(Country c1, Country c2) {
+		return isConnected(c1, c2, new ArrayList<Country>());
+	}
+	/**
+	 * check if countries provided in argument are adjacent neighbors or not
+	 * @param c1  country 1
+	 * @param c2 country 2
+	 * @return true if countries  are direct adjacent else false
+	 */
+    private boolean isNeighbour(Country c1, Country c2) {
+    	return (GameMap.getInstance().getCountryAndNeighborsMap().get(c1).contains(c2));
+	}
+    
+	/**
      * This method will perform validation of provided input file
      *
      * @param file File class object is passed where input file is selected by user and is check for validation
