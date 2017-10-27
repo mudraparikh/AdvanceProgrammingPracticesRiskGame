@@ -15,6 +15,7 @@ import java.util.List;
 public class GameMap {
 
     public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
+    public HashMap<Continent, List<Country>> continentCountryMap = new HashMap<>();
     public List<Continent> continentList = new ArrayList<>();
     public boolean isCorrectMap = true;
     public String errorMessage;
@@ -22,7 +23,7 @@ public class GameMap {
     private static GameMap gameMap;
     /**
      * This method will will return singleton instance for the GameMap class
-     * @return
+     * @return single GameMap instance
      */
     public static GameMap getInstance() {
     	if(null ==gameMap) {
@@ -75,4 +76,10 @@ public class GameMap {
     public void setContinentList(List<Continent> continentList) {
         this.continentList = continentList;
     }
+	public HashMap<Continent, List<Country>> getContinentCountryMap() {
+		return continentCountryMap;
+	}
+	public void setContinentCountryMap(HashMap<Continent, List<Country>> continentCountryMap) {
+		this.continentCountryMap = continentCountryMap;
+	}
 }
