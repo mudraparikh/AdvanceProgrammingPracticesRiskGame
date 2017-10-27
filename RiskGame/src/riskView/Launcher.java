@@ -1,13 +1,11 @@
-package riskView.map;
-
-import java.awt.event.WindowEvent;
+package riskView;
 
 /**
  * This class holds the method that gives the menu option to start game,create map and edit map.
  *
  * @author mudraparikh
  */
-public class StartGame extends java.awt.Frame {
+public class Launcher extends java.awt.Frame {
     
     public static javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -16,9 +14,9 @@ public class StartGame extends java.awt.Frame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     /**
-     * This method calls the initMenuComponents method to initialize StartGame components.
+     * This method calls the initMenuComponents method to initialize Launcher components.
      */
-    public StartGame() {
+    public Launcher() {
         super("RISK Game");
         initMenuComponents();
         jButton1.setEnabled(true);
@@ -30,7 +28,7 @@ public class StartGame extends java.awt.Frame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StartGame().setVisible(true);
+                new Launcher().setVisible(true);
             }
         });
     }
@@ -55,12 +53,12 @@ public class StartGame extends java.awt.Frame {
         jPanel1.setBackground(new java.awt.Color(1, 1, 1));
         jPanel1.setName("jPanel1");
         
-        //On click the button creates an instance of the LaunchGame class.
+        //On click the button creates an instance of the GamePlay class.
         jButton1.setText("Start Game");
         jButton1.setName("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	LaunchGame add = new LaunchGame();
+            	GamePlay add = new GamePlay();
                 add.setVisible(true);
             }
         });

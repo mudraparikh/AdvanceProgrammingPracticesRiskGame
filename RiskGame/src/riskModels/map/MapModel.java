@@ -133,6 +133,7 @@ public class MapModel {
             }
             bufferReaderForFile = new BufferedReader(new FileReader(file));
             String st, maps;
+            List<Continent> listOfContinents;
             while ((st = bufferReaderForFile.readLine()) != null) {
                 if (st.startsWith("[")) {
                     HashMap<String, String> mapDetail = new HashMap<>();
@@ -153,7 +154,7 @@ public class MapModel {
                     if (id.equalsIgnoreCase("Continents")) {
                         isContinentPresent = true;
                         if (isMAPresent) {
-                            List<Continent> listOfContinents = MapModel.readContinents(bufferReaderForFile);
+                            listOfContinents = MapModel.readContinents(bufferReaderForFile);
                             mapDetails.setContinentList(listOfContinents);
                             System.out.println("Reading of Continents Completed");
                         }

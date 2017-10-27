@@ -1,4 +1,4 @@
-package riskView.map;
+package riskView;
 
 import riskModels.country.Country;
 import riskModels.gamedriver.StartupPhase;
