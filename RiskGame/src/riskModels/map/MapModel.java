@@ -440,7 +440,7 @@ public class MapModel {
         StringBuilder continents = new StringBuilder("[Continents]\n");
         System.out.println("this is the size of continents:" + graphMap.getContinentList().size());
         for (Continent continent : graphMap.getContinentList()) {
-            continents.append(continent.continentName).append("=").append(continent.numberOfTerritories).append("\n");
+            continents.append(continent.continentName).append("=").append(continent.controlValue).append("\n");
         }
         continents.append("\n");
 
