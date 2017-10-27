@@ -43,6 +43,10 @@ public class Player {
         this.colors = colors;
     }
 
+    public Player(List<Player> playerList){
+        this.playerList = playerList;
+    }
+
     public int getReinforcementArmies() {
         return reinforcementArmies;
     }
@@ -102,6 +106,7 @@ public class Player {
     public void addArmy(int n) {
         this.totalArmies+=n;
     }
+
     public void subArmy(int n) {
         this.totalArmies-=n;
     }

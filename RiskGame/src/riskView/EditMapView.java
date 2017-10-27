@@ -32,12 +32,12 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 /**
- * MapView class holds the property of editing map.
+ * EditMapView class holds the property of editing map.
  *
  * @author mudraparikh
  */
 @SuppressWarnings("serial")
-public class MapView extends java.awt.Frame {
+public class EditMapView extends java.awt.Frame {
 
 	private JFileChooser filechooser = new JFileChooser();
 	private JDialog dialog = new JDialog();
@@ -60,7 +60,7 @@ public class MapView extends java.awt.Frame {
 	GameMap gameMap = GameMap.getInstance();
 	MapModel mapModel = new MapModel();
 
-	public MapView() {
+	public EditMapView() {
 		initMapComponents();
 	}
 	/**
@@ -233,7 +233,7 @@ public class MapView extends java.awt.Frame {
 	}
 	
 	/**
-     * This initMapComponents is used to initialize the components usedin MapView class
+     * This initMapComponents is used to initialize the components usedin EditMapView class
      */
 	private void initMapComponents() {
 		label1.setText("Click on the Button to Add/Remove Continent/Country/Territory from Map  ");

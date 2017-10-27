@@ -77,12 +77,12 @@ public class Launcher extends java.awt.Frame {
             }
         });
         
-       //On click the button creates an instance of the MapView class.
+       //On click the button creates an instance of the EditMapView class.
         jButton3.setText("Edit Map");
         jButton3.setName("jButton3");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	MapView add = new MapView();
+            	EditMapView add = new EditMapView();
                 add.setVisible(true);
             }
         });
