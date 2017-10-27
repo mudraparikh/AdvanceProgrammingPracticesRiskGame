@@ -59,7 +59,6 @@ public class MapModel {
                     startPixel = Integer.parseInt(terrProperties[1]);
                     endPixel = Integer.parseInt(terrProperties[2]);
                     Country country = new Country(countryName, startPixel, endPixel, continentName);
-
                     for (int i = 4; i <= terrProperties.length - 1; i++) {
                         String neighbourCountryName = terrProperties[i];
                         Country neighbour = new Country(neighbourCountryName);
@@ -67,6 +66,7 @@ public class MapModel {
                     }
                     country.setNeighborNodes(neighbourNodes);
                     countryList.add(country);
+                   
                 }
 
             }
@@ -93,7 +93,6 @@ public class MapModel {
                     List<Integer> allContinents = new ArrayList<Integer>();
                     String[] ConProperties = Continents.split("=");
                     continents.setContinentName(ConProperties[0].trim());
-                    continents.setNumberOfTerritories(Integer.parseInt(ConProperties[1].trim()));
                     continents.setControlValue(Integer.parseInt(ConProperties[1].trim()));
                     continentsList.add(continents);
                     System.out.println(ConProperties[1]);
@@ -133,11 +132,12 @@ public class MapModel {
             }
             bufferReaderForFile = new BufferedReader(new FileReader(file));
             String st, maps;
-            List<Continent> listOfContinents;
+            List<Continent> listOfContinents = new ArrayList<>();
             while ((st = bufferReaderForFile.readLine()) != null) {
                 if (st.startsWith("[")) {
                     HashMap<String, String> mapDetail = new HashMap<>();
                     String id = st.substring(st.indexOf("[") + 1, st.indexOf("]"));
+                    // Parsing the [MAP] portion of the map file
                     if (id.equalsIgnoreCase("Map")) {
                         isMAPresent = true;
                         while ((maps = bufferReaderForFile.readLine()) != null && !maps.startsWith("[")) {
@@ -151,21 +151,30 @@ public class MapModel {
                         bufferReaderForFile.reset();
                         mapDetails.setMapDetail(mapDetail);
                     }
+                    //Parsing the [Continents] portion of the map file
                     if (id.equalsIgnoreCase("Continents")) {
                         isContinentPresent = true;
                         if (isMAPresent) {
                             listOfContinents = MapModel.readContinents(bufferReaderForFile);
-                            mapDetails.setContinentList(listOfContinents);
+                            mapDetails.setContinentList(listOfContinents); //we do not have number of territories under each continent yet.
                             System.out.println("Reading of Continents Completed");
                         }
 
                     }
-
+                    //Parsing the  [Territories] portion of the map file
                     if (id.equalsIgnoreCase("Territories")) {
                         isTerritoryPresent = true;
                         if (isMAPresent) {
                             List<Country> countryAndNeighbor = MapModel.readTerritories(bufferReaderForFile);
                             HashMap<Country, List<Country>> graphReadyMap = MapModel.assignContinentToNeighbors(countryAndNeighbor);
+                            HashMap<Continent, List<Country>> continentCountryMap=getContinentCountryMap(countryAndNeighbor,listOfContinents);
+                            List<Continent> updatedcontinentList = new ArrayList<>();// we need to assign number of territories to continent objects
+                            for(Continent continent: GameMap.getInstance().getContinentList()) {
+                            	//value of each key of continentCountryMap contains list of territories/country with in that continent
+                            	continent.setNumberOfTerritories(continentCountryMap.get(new Continent(continent.getContinentName())).size());
+                            	continent.setMemberCountriesList(continentCountryMap.get(new Continent(continent.getContinentName())));
+                            	updatedcontinentList.add(continent);
+                            }
                             System.out.println("Reading of Territories Completed");
                             for (Object o : graphReadyMap.entrySet()) {
                                 Map.Entry pair = (Map.Entry) o;
@@ -173,6 +182,8 @@ public class MapModel {
                                 List<Country> neighbours = (List<Country>) pair.getValue();
                             }
                             mapDetails.setCountryAndNeighborsMap(graphReadyMap);
+                            mapDetails.setContinentCountryMap(continentCountryMap);
+                            mapDetails.setContinentList(updatedcontinentList);
                         }
                     }
                 }
@@ -193,8 +204,31 @@ public class MapModel {
         return mapDetails;
 
     }
-
     /**
+     * This  method will prepare HashMap for continent and country objects 
+     * @param country list of country that we have got while parsing the  map file 
+     * @param listOfContinents listOfContinents that we have got while parsing the map file
+     * @return HashMap of continent->countries  objects
+     */
+    private static HashMap<Continent, List<Country>> getContinentCountryMap(List<Country> country, List<Continent> listOfContinents) {
+    	HashMap<Continent, List<Country>> continentCountryMap = new HashMap<>();
+    	for(Country c:country) {
+    	List<Country> countryList = new ArrayList<>();
+    	if(listOfContinents.contains(new Continent(c.getBelongsToContinent()))) {
+        	if(continentCountryMap.containsKey(new Continent(c.getBelongsToContinent()))) {
+        		continentCountryMap.get(new Continent(c.getBelongsToContinent())).add(c);
+        	}
+        	else {
+        		int indexOfContinent =listOfContinents.indexOf(new Continent(c.getBelongsToContinent()));
+        		countryList.add(c); // Avoid using Array.asList here as it gives fixed size list and will not allow to modify the list
+        		continentCountryMap.put(listOfContinents.get(indexOfContinent),countryList);
+        	}
+    	 }
+    	}
+    	return continentCountryMap;
+	}
+
+	/**
      * This method will do validation on the details we parsed from the .map file
      *
      * @param mapDetails mapDetails that we have parsed from .map file
@@ -206,16 +240,82 @@ public class MapModel {
             Map.Entry pair = (Map.Entry) it.next();
             Country country = (Country) pair.getKey();
             List<Country> neighbours = (List<Country>) pair.getValue();
+            // check if country all countries have at least one neighbor
             if (neighbours.isEmpty()) {
                 mapDetails.setCorrectMap(false);
                 mapDetails.setErrorMessage(country.getCountryName() + " does not have any neighbor nodes");
+                return mapDetails;
             }
+           // here  all countries have at least one neighbor , now check connectivity between them
+    		MapModel mapModel = new MapModel();
+    		for(Country country1 : mapDetails.getCountryAndNeighborsMap().keySet()){
+    			if(GameMap.getInstance().isCorrectMap) {
+       			for(Country country2 : mapDetails.getCountryAndNeighborsMap().keySet()){
+    				if(!country1.equals(country2)){
+    					if(mapModel.isConnected(country1, country2)==false){
+    						mapDetails.setCorrectMap(false);
+    						mapDetails.setErrorMessage("Disconnected Country Found"+country1.getCountryName() +" " +country2.getCountryName());
+    						break;
+    					}
+    				}
+    			}
+    		  }
+    		}
         }
         return mapDetails;
     }
 
-
     /**
+	 * Checks if it is connected.
+	 *
+	 * @param c1 the country  1
+	 * @param c2 the country 2
+	 * @param unwantedPair the unwanted pair
+	 * @return true, if is connected
+	 */
+	private boolean isConnected(Country c1, Country c2, List<Country> unwantedPair) {
+		// if provided countries are neighbor they are connected
+		if (isNeighbour(c1, c2))
+			return true;
+		// if they are not neighbor check if they are reachable to each other
+		if (unwantedPair == null)
+			unwantedPair = new ArrayList<>();
+		else if (unwantedPair.contains(c1))
+			return false;
+		unwantedPair.add(c1);
+
+		for (Country c : GameMap.getInstance().getCountryAndNeighborsMap().get(c1)) {
+			if (!unwantedPair.contains(c) && isConnected(c, c2, unwantedPair))
+				return true;
+		}
+
+		return false;
+	}
+	/**
+	 * Checks if it is connected.
+	 *
+	 * @param c1 the c 1
+	 * @param c2 the c 2
+	 * @return true, if is connected
+	 */
+	public boolean isConnected(Country c1, Country c2) {
+		return isConnected(c1, c2, new ArrayList<Country>());
+	}
+	/**
+	 * check if countries provided in argument are adjacent neighbors or not
+	 * @param c1  country 1
+	 * @param c2 country 2
+	 * @return true if countries  are direct adjacent else false
+	 */
+    private boolean isNeighbour(Country c1, Country c2) {
+    	if(GameMap.getInstance().getCountryAndNeighborsMap().get(c1)!=null) {
+    		return (GameMap.getInstance().getCountryAndNeighborsMap().get(c1).contains(c2));
+    	}
+		return false;
+    	
+	}
+    
+	/**
      * This method will perform validation of provided input file
      *
      * @param file File class object is passed where input file is selected by user and is check for validation
@@ -340,7 +440,7 @@ public class MapModel {
         StringBuilder continents = new StringBuilder("[Continents]\n");
         System.out.println("this is the size of continents:" + graphMap.getContinentList().size());
         for (Continent continent : graphMap.getContinentList()) {
-            continents.append(continent.continentName).append("=").append(continent.numberOfTerritories).append("\n");
+            continents.append(continent.continentName).append("=").append(continent.controlValue).append("\n");
         }
         continents.append("\n");
 

@@ -33,7 +33,11 @@ public class GamePlayAPI {
     public void createGameMapFromFile(File file){
         mapModel = new MapModel();
         gameMap = mapModel.readMapFile(file.getAbsolutePath());
-        if (!gameMap.isCorrectMap) System.exit(1);
+        if(!gameMap.isCorrectMap)
+        {
+        	System.out.print("Invalid Map File Selected   ");System.out.println(gameMap.getErrorMessage());
+        	System.exit(1);
+        }
     }
 
     public void initData(File selectedFile, int playerCount) {
