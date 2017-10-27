@@ -6,6 +6,7 @@ import java.io.File;
 
 public class FileSelectDialog extends JFileChooser {
 
+
     public FileSelectDialog(){
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Map FILES", "map");
         setFileFilter(filter);

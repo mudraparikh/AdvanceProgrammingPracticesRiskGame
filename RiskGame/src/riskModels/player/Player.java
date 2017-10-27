@@ -19,6 +19,16 @@ public class Player {
     public Card cards;
     public Color colors;
 
+    public List<Player> getPlayerList() {
+        return playerList;
+    }
+
+    public void setPlayerList(List<Player> playerList) {
+        this.playerList = playerList;
+    }
+
+    public List<Player> playerList;
+
     public Player(String name) {
         super();
         this.name = name;

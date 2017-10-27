@@ -14,6 +14,7 @@ public class FileSelectDialogController implements ActionListener {
     private FileSelectDialog fileSelectDialog;
     private File selectedFile;
     private int playerCount;
+    private GamePlayAPI model = new GamePlayAPI();
 
 
     public FileSelectDialogController(FileSelectDialog fileSelectDialog, int playerCount) {
@@ -28,6 +29,17 @@ public class FileSelectDialogController implements ActionListener {
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileSelectDialog.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            initData(selectedFile, playerCount);
+        }
+    }
+
+    private void initData(File selectedFile, int playerCount) {
+        if(selectedFile.getName().endsWith("map") && playerCount > 0){
+            model.createGameMapFromFile(selectedFile);
+        }
+        else {
+            System.out.println("Something went wrong ! ");
+            System.exit(1);
         }
     }
 }

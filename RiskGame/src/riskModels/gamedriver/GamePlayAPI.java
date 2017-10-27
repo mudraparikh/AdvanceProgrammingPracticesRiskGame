@@ -3,12 +3,16 @@ package riskModels.gamedriver;
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
+import riskModels.map.MapModel;
 import riskModels.player.Player;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static riskModels.map.GameMap.*;
 
 /**
  * This class contains the services for the Game Play.
@@ -17,8 +21,15 @@ import java.util.Map;
  */
 public class GamePlayAPI {
     public static int turn = 0;
+    private MapModel mapModel;
+    private GameMap gameMap;
 
     // Game APIs
+    public void createGameMapFromFile(File file){
+        mapModel = new MapModel();
+        gameMap = mapModel.readMapFile(file.getAbsolutePath());
+        if (!gameMap.isCorrectMap) System.exit(1);
+    }
 
     /**
      * This method will get the current player turn
