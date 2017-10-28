@@ -32,7 +32,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 /**
- * MapView class holds the property of editing map.
+ * EditMapView class holds the property of editing map.
  *
  * @author mudraparikh
  */
@@ -233,7 +233,7 @@ public class EditMapView extends java.awt.Frame {
 	}
 	
 	/**
-     * This initMapComponents is used to initialize the components usedin MapView class
+     * This initMapComponents is used to initialize the components usedin EditMapView class
      */
 	private void initMapComponents() {
 		label1.setText("Click on the Button to Add/Remove Continent/Country/Territory from Map  ");
