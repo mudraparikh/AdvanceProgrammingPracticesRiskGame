@@ -32,13 +32,11 @@ public class PlayerCountController implements ActionListener {
 
             //Open the MapFileChooseDialog box over here.
             //Instantiate the class over here and pass the value
-            /*System.out.println("Now Choose the map file from the Dialog box");
+            System.out.println("Now Choose the map file from the Dialog box");
             fileSelectDialog = new FileSelectDialog();
             fileSelectDialog.addActionListener(new FileSelectDialogController(fileSelectDialog, 3));
             fileSelectDialog.setVisible(true);
-            */
-        	GameView add = new GameView();
-        	add.setVisible(true);
+
         }
 
         else if (event.equals(fourPlayersBtnName)) {

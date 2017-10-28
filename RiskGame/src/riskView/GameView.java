@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 
@@ -82,12 +83,15 @@ public class GameView extends JDialog{
 	/**
 	 * Constructs the Risk game board.
 	 **/
-	public GameView() {		
+	public GameView() throws IOException {
 		
 		setTitle("Risk Game");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setResizable(false);
-		
+
+		//Get GameMapInstance
+		gameMap = GameMap.getInstance();
+
 		//  GridBagLayout allows a flexible sizing of components
 		mainLayout = new GridBagLayout();
 		setLayout(mainLayout);
@@ -210,10 +214,13 @@ public class GameView extends JDialog{
   /**
    * The panel for the map and load display as per users choice.
   **/
-private JPanel mapPanel() {
+private JPanel mapPanel() throws IOException {
 	mapPanel = new JPanel();
 	mapPanel.setLayout(new GridLayout(1, 1, 5, 5));
-	mapImageIcon = new ImageIcon("Map.jpg");
+	String imageFile = gameMap.getMapDetail().get("image");
+    Image image = ImageIO.read(new File(imageFile));
+    System.out.println(imageFile);
+    mapImageIcon = new ImageIcon(image);
 	mapScrollPane = new JScrollPane(new JLabel(mapImageIcon));
 	mapScrollPane.setPreferredSize(new Dimension(675, 690));
 	mapPanel.add(mapScrollPane);
@@ -321,7 +328,7 @@ private JPanel countryInfoPanel() {
 	targetLabel = new JLabel("Neighbouring Countries:");
 	continentLabel = new JLabel("Continents:");
 	
-	gameMap = GameMap.getInstance();
+
 	mapModel = new MapModel();
 	
 	countryDisplay1 = new DefaultListModel<>();
