@@ -97,20 +97,20 @@ public class GameView extends JDialog{
 		c.fill = GridBagConstraints.BOTH;
 		c.anchor = GridBagConstraints.LINE_START;
 		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
+		c.weightx = 8;
 		c.weighty = 0.5;
 		c.gridx = 0;
 		c.gridy = 0;
-		add(messagePanel());
+		add(mapPanel());
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.anchor = GridBagConstraints.CENTER;
 		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 8;
+		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.gridx = 1;
 		c.gridy = 0;
-		add(mapPanel());
+		add(messagePanel());
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.anchor = GridBagConstraints.LINE_END;
