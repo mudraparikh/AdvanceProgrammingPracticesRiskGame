@@ -35,7 +35,12 @@ public class Country {
         this.countryName = neighbourCountryName;
     }
 
-    /**
+    public Country(String countryName, String belongsToContinent) {
+   	 this.countryName = countryName;
+   	 this.belongsToContinent=belongsToContinent;
+	}
+
+	/**
      * Overriding equals method.
      * 
      */
