@@ -38,19 +38,22 @@ public class PlayerModel extends Observable{
 	 * @param playerList Current players list 
 	 * @return List of players
 	 */
-	public List<Player> getPlyaerWorldDomination(List<Player> playerList) {
-		int totalNumberOfCountries=GameMap.getInstance().getCountryAndNeighborsMap().keySet().size();
+	public Player getPlyaerWorldDomination(List<Player> playerList) {
+		double totalNumberOfCountries=GameMap.getInstance().getCountryAndNeighborsMap().keySet().size();
 		List<Player> updatedPlayerList = new ArrayList<>();
 		if(totalNumberOfCountries>0) {
 			for(Player player : playerList) {
-				double dominationOfPlayer = (player.getAssignedCountries().size()/totalNumberOfCountries)*100;
+				double dominationOfPlayer = player.getAssignedCountries().size()/totalNumberOfCountries;
+				dominationOfPlayer*=100;
 				player.setDomination(dominationOfPlayer);
 				updatedPlayerList.add(player);
 			}
 		}
+		Player player = new Player();
+		player.setPlayerList(updatedPlayerList);
 		setChanged();
-		notifyObservers();
-		return updatedPlayerList;
+		notifyObservers(Player.class);
+		return player;
 		
 	}
 }
