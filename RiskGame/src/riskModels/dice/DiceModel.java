@@ -38,7 +38,7 @@ public DiceModel gettheDiceResult(int numberOfDice) {
 	}
 	
 	int[] diceResult = new int[numberOfDice];
-	for(int counter=0;counter<=numberOfDice;counter++) {
+	for(int counter=0;counter<numberOfDice;counter++) {
 		Random random = new Random();
 		int result = random.nextInt(5) + 1; //this function will give results between 1-6 including both
 		diceResult[counter] = result;
