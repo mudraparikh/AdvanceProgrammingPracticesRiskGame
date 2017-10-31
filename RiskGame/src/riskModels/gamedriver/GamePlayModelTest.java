@@ -2,6 +2,7 @@ package riskModels.gamedriver;
 
 import org.junit.Before;
 import org.junit.Test;
+import riskModels.GamePlayModel;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
@@ -13,11 +14,11 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class GamePlayAPITest {
+public class GamePlayModelTest {
 
     private MapModel mapObj;
     private GameMap gameMapObj;
-    private GamePlayAPI gamePlay;
+    private GamePlayModel gamePlay;
     private StartupPhase startupPhase;
     private List<Player> playerList;
     private String filePath;
@@ -27,7 +28,7 @@ public class GamePlayAPITest {
     public void init() {
         mapObj = new MapModel();
         gameMapObj = GameMap.getInstance();
-        gamePlay = new GamePlayAPI();
+        gamePlay = new GamePlayModel();
         startupPhase = new StartupPhase();
         playerList = new ArrayList<>();
         filePath=location.replaceAll("/bin", "/res");

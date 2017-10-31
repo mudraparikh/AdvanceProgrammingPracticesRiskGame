@@ -1,9 +1,8 @@
 package riskControllers;
 
-import riskModels.gamedriver.GamePlayAPI;
+import riskModels.GamePlayModel;
 import riskView.FileSelectDialog;
 import riskView.GameView;
-import riskView.PlayerCount;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +15,7 @@ public class FileSelectDialogController implements ActionListener {
     private FileSelectDialog fileSelectDialog;
     private File selectedFile;
     private int playerCount;
-    private GamePlayAPI model = new GamePlayAPI();
+    private GamePlayModel model = new GamePlayModel();
     private GameView gameView;
 
 
