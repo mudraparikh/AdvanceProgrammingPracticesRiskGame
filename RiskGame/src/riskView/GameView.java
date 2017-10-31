@@ -32,6 +32,12 @@ public class GameView extends JDialog{
 	
 	private JScrollPane messageScrollPane;
 	private JScrollPane mapScrollPane;
+	private JScrollPane continentScrollPane;
+	private JScrollPane countryScrollPane1;
+	private JScrollPane countryScrollPane2;
+	private JScrollPane phaseViewPane;
+	private JScrollPane playerViewPane;
+	private JScrollPane dominationViewPane;
 	
 	private JLabel selectedLabel;
 	private JLabel targetLabel;
@@ -60,12 +66,6 @@ public class GameView extends JDialog{
 	private DefaultListModel<String> continentDisplay;
 	private DefaultListModel<String> countryDisplay1;
 	private DefaultListModel<String> countryDisplay2;
-	
-	private JScrollPane continentScrollPane;
-	private JScrollPane countryScrollPane1;
-	private JScrollPane countryScrollPane2;
-	private JScrollPane phaseViewPane;
-	private JScrollPane playerViewPane;
 
 	private GameMap gameMap;
 	private MapModel mapModel;
@@ -132,7 +132,7 @@ public class GameView extends JDialog{
 	private JPanel messagePanel() {
 	
 		messagePanel = new JPanel();
-		messagePanel.setPreferredSize(new Dimension(350,690));
+		messagePanel.setPreferredSize(new Dimension(400,690));
 		messageLayout = new GridBagLayout();
 		messagePanel.setLayout(messageLayout);
 		
@@ -148,7 +148,10 @@ public class GameView extends JDialog{
 		
 		turnInBtn = new JButton("Turn In Cards");
 		menuBtn = new JButton("Menu");
-		dominationLabel = new JLabel("Player Domaination %:");
+		reinforceBtn = new JButton("Reinforce Armies");
+		attackBtn = new JButton("Attack!");
+		fortifyBtn = new JButton("Fortify");
+		endTurnBtn = new JButton("End Turn");
 		
 		cardsList = new JList();
 		cardsList.setLayoutOrientation(JList.VERTICAL_WRAP);
@@ -158,15 +161,15 @@ public class GameView extends JDialog{
 		targetLabel = new JLabel("Adjacent Territory:");
 		continentLabel = new JLabel("Continents:");
 		
-		reinforceBtn = new JButton("Reinforce Armies");
-		attackBtn = new JButton("Attack!");
-		fortifyBtn = new JButton("Fortify");
-		endTurnBtn = new JButton("End Turn");
-		
 		reinforceBtn.setActionCommand(reinforceBtnName);
 		attackBtn.setActionCommand(attackBtnName);
 		fortifyBtn.setActionCommand(fortifyBtnName);
 		endTurnBtn.setActionCommand(endTurnBtnName);
+		
+		dominationLabel = new JLabel("Player Domaination %:");
+		//model.addObserver(dominationLabel);
+		dominationViewPane = new JScrollPane(dominationLabel);
+		messagePanel.add(dominationViewPane);
 		
 		phaseViewLabel = new JLabel("Phase View:");
 		//model.addObserver(phaseViewLabel);
@@ -202,7 +205,7 @@ public class GameView extends JDialog{
 		c.weighty = 10;
 		c.gridx = 0;
 		c.gridy = 2;
-		messagePanel.add(dominationLabel, c);
+		messagePanel.add(dominationViewPane, c);
 	
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
@@ -215,7 +218,7 @@ public class GameView extends JDialog{
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weightx = 0.5;
-		c.weighty = 10;
+		c.weighty = 16;
 		c.gridx = 0;
 		c.gridy = 4;
 		messagePanel.add(cardsList, c);
@@ -263,7 +266,7 @@ public class GameView extends JDialog{
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weightx = 0.5;
-		c.weighty = 24 ;
+		c.weighty = 18 ;
 		c.gridx = 1;
 		c.gridy = 4;
 		messagePanel.add(messageScrollPane, c);
@@ -287,7 +290,7 @@ private JPanel mapPanel() {
 **/
 private JPanel countryInfoPanel() {
 	countryInfoPanel = new JPanel();
-	countryInfoPanel.setPreferredSize(new Dimension(300,690));
+	countryInfoPanel.setPreferredSize(new Dimension(250,690));
 	actionLayout = new GridBagLayout();
 	countryInfoPanel.setLayout(actionLayout);
 	
