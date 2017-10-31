@@ -18,6 +18,7 @@ public class Player {
     public List<Country> assignedCountries;
     public Card cards;
     public Color colors;
+    public double domination; // player's domination in game based on number of countries out of total countries player own
 
     public List<Player> getPlayerList() {
         return playerList;
@@ -47,7 +48,11 @@ public class Player {
         this.playerList = playerList;
     }
 
-    public int getReinforcementArmies() {
+    public Player() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getReinforcementArmies() {
         return reinforcementArmies;
     }
 
@@ -110,6 +115,14 @@ public class Player {
     public void subArmy(int n) {
         this.totalArmies-=n;
     }
+
+	public double getDomination() {
+		return domination;
+	}
+
+	public void setDomination(double domination) {
+		this.domination = domination;
+	}
 
 }
 
