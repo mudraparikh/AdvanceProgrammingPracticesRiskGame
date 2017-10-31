@@ -29,7 +29,7 @@ public void setDiceResult(int[] diceResult) {
  * @param numberOfDice number of Dice User wants to roll
  * @return return diceModel object that will have dice roll result
  */
-public DiceModel gettheDiceResult(int numberOfDice) {
+public static DiceModel gettheDiceResult(int numberOfDice) {
 	DiceModel dicemodel = new DiceModel();
 	//check if we can roll the dice or not
 	if(numberOfDice<=0) {

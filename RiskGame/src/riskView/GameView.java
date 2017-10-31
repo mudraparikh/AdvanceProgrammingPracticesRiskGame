@@ -22,7 +22,7 @@ import riskModels.map.*;
  *
  */
 public class GameView extends JDialog{
-	private JPanel messagePanel;
+	public JPanel messagePanel;
 	private JPanel mapPanel;
 	private JPanel countryInfoPanel;
 	
@@ -43,7 +43,7 @@ public class GameView extends JDialog{
 	private JLabel selectedLabel;
 	private JLabel targetLabel;
 	private JLabel continentLabel;
-	private JLabel dominationLabel;
+	public JLabel dominationLabel;
 	private JLabel phaseViewLabel;
 	private JLabel playerViewLabel;
 	
@@ -154,6 +154,7 @@ public class GameView extends JDialog{
 		attackBtn = new JButton("Attack!");
 		fortifyBtn = new JButton("Fortify");
 		endTurnBtn = new JButton("End Turn");
+		
 		
 		cardsList = new JList();
 		cardsList.setLayoutOrientation(JList.VERTICAL_WRAP);

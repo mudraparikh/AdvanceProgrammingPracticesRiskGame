@@ -1,18 +1,16 @@
 package riskModels;
 
-import riskModels.continent.Continent;
+import java.awt.Color;
+import java.io.File;
+import java.util.*;
+import java.util.List;
+import java.util.Random;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskModels.player.Player;
-
-
-import java.awt.*;
-import java.io.File;
-import java.util.*;
-import java.util.List;
-
-import static riskModels.map.GameMap.*;
+import riskModels.player.PlayerModel;
+import riskView.PlayerView;
 
 /**
  * This class contains the services for the Game Play.
@@ -36,7 +34,10 @@ public class GamePlayModel {
     private ArrayList<String> list;
 
     // Game APIs
-
+    /**
+     * This method will create populate GameMap instance while reading file
+     * @param file .map file
+     */
     public void createGameMapFromFile(File file){
         mapModel = new MapModel();
         gameMap = mapModel.readMapFile(file.getAbsolutePath());
@@ -45,16 +46,27 @@ public class GamePlayModel {
         	System.out.print("Invalid Map File Selected   ");System.out.println(gameMap.getErrorMessage());
         	System.exit(1);
         }
+        mapModel.removeContinent(gameMap.getContinentList().get(0));
     }
-
+    /**
+     * This method will perform initialization for the game for example reading map,Assign country to players
+     * @param selectedFile .map file 
+     * @param playerCount number of players for the game
+     */
     public void initData(File selectedFile, int playerCount) {
         if(selectedFile.getName().endsWith("map") && playerCount > 0){
             createGameMapFromFile(selectedFile);
             initializePlayerData(playerCount);
+            attachModelAndObservers();
             this.playerCount = playerCount;
             setInitialArmies();
             allocateCountriesToPlayers();
             addInitialArmiesInRR();
+            PlayerModel playerModel = new PlayerModel();
+            PlayerView playerview = new PlayerView();
+            playerModel.addObserver(playerview);
+            playerModel.getPlyaerWorldDomination(player.getPlayerList()) ;
+           
             for (Country c : gameMap.getCountryAndNeighborsMap().keySet()){
                 System.out.println(c.getCountryName() + " "+ c.getCurrentArmiesDeployed());            }
         }
@@ -64,7 +76,13 @@ public class GamePlayModel {
         }
     }
 
-    private void addInitialArmiesInRR() {
+    private void attachModelAndObservers() {
+		PlayerModel playermodel = new PlayerModel();
+		PlayerView playerview = new PlayerView();
+		playermodel.addObserver(playerview);
+		
+	}
+	private void addInitialArmiesInRR() {
         int j = 0;
         int playersLeftForAssign = playerCount;
         while (playersLeftForAssign > 0) {
