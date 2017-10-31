@@ -2,6 +2,7 @@ package riskModels.gamedriver;
 
 import org.junit.Before;
 import org.junit.Test;
+import riskModels.GamePlayModel;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskModels.map.MapModelTest;
@@ -15,7 +16,7 @@ import static org.junit.Assert.*;
 public class StartupPhaseTest {
     private MapModel mapObj;
     private GameMap gameMapObj;
-    private GamePlayAPI gamePlay;
+    private GamePlayModel gamePlay;
     private StartupPhase startupPhase;
     private List<Player> playerList;
     private String filePath;
@@ -25,7 +26,7 @@ public class StartupPhaseTest {
     public void init() {
         mapObj = new MapModel();
         gameMapObj = GameMap.getInstance();
-        gamePlay = new GamePlayAPI();
+        gamePlay = new GamePlayModel();
         startupPhase = new StartupPhase();
         playerList = new ArrayList<>();
         filePath=location.replaceAll("/bin", "/res");

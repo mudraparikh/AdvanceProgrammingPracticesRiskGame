@@ -1,4 +1,4 @@
-package riskModels.gamedriver;
+package riskModels;
 
 import riskModels.continent.Continent;
 import riskModels.country.Country;
@@ -9,10 +9,8 @@ import riskModels.player.Player;
 
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import static riskModels.map.GameMap.*;
 
@@ -21,12 +19,21 @@ import static riskModels.map.GameMap.*;
  * All the Phases relevant actions and events are listed down.
  * @author Akshay
  */
-public class GamePlayAPI {
-    public static int turn = 0;
+public class GamePlayModel {
+
+    private boolean canTurnInCards;
+    private boolean canReinforce;
+    private boolean canAttack;
+    private boolean canFortify;
+
+    private int playerIndex;
     private MapModel mapModel;
     private GameMap gameMap;
-    Player player;
-    public int playerCount;
+    private List<Player> playerList;
+    private Player player;
+    private Player currentPlayer;
+    private int playerCount;
+    private ArrayList<String> list;
 
     // Game APIs
 
@@ -111,7 +118,7 @@ public class GamePlayAPI {
 
     public void initializePlayerData(int playerCount) {
         Color color[] = {Color.RED, Color.MAGENTA, Color.BLUE, Color.GREEN};
-        List<Player> playerList = new ArrayList<>();
+        playerList = new ArrayList<>();
         int i = 0;
         while (i < playerCount) {
             playerList.add(new Player("player" + i, color[i]));
@@ -119,5 +126,41 @@ public class GamePlayAPI {
         }
         player = new Player(playerList);
         player.setPlayerList(playerList);
+    }
+
+    public void nextPlayerTurn(){
+        if (playerList.size()>1){
+            //if at least one player remains
+            canReinforce = false;
+            canAttack = false;
+            canFortify = false;
+            playerIndex++;
+
+            if (playerIndex >= playerList.size()){
+                //Loop player index back to 0 when it exceeds the number of players
+                playerIndex = 0;
+            }
+            currentPlayer = playerList.get(playerIndex);
+        }
+    }
+
+    public void startGame(){
+        Collections.shuffle(playerList);
+        player.setPlayerList(playerList);
+        System.out.println("The order of turns:");
+        for (Player p: playerList){
+            System.out.println(p.getName());
+        }
+        System.out.println("All the players have been given the countries randomly and have assigned 1 initial armies from the total initial armies player gets.\n");
+        System.out.println("To begin: Start reinforcement phase by placing army in your designated country\n");
+        nextPlayerTurn();
+    }
+
+    public ArrayList<String> getSelectedCountryList(){
+        list = new ArrayList<>();
+        for(Country c: currentPlayer.getAssignedCountries()){
+            list.add(c.getCurrentArmiesDeployed() + " : "+c.getCountryName());
+        }
+        return list;
     }
 }

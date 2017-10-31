@@ -1,8 +1,7 @@
 package riskControllers;
 
-import riskModels.gamedriver.GamePlayAPI;
+import riskModels.GamePlayModel;
 import riskView.FileSelectDialog;
-import riskView.GameView;
 import riskView.PlayerCount;
 
 import static util.RiskGameUtil.*;
@@ -12,12 +11,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import java.awt.*;
 /**
  * This class maps the user's input to the data and methods in the model
  */
 public class PlayerCountController implements ActionListener {
-    private GamePlayAPI serviceLayer;
+    private GamePlayModel serviceLayer;
     private PlayerCount view;
     private FileSelectDialog fileSelectDialog;
     private JButton openbtn;

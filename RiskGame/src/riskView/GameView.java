@@ -9,10 +9,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 
-import riskControllers.*;
+import riskModels.GameListModel;
+import riskModels.GamePlayModel;
 import riskModels.country.*;
 import riskModels.map.*;
-import riskModels.gamedriver.*;
 
 
 /**
@@ -70,13 +70,14 @@ public class GameView extends JDialog{
 
 	private GameMap gameMap;
 	private MapModel mapModel;
+	private GamePlayModel serviceLayer;
+	private GameListModel countryAListModel;
+	private GameListModel countryBListModel;
 	
 	private JList cardsList;
-	private ListModel cardsListModel;
-	
-	private ImageIcon mapImageIcon;
-	private File mapFile;
-	private JTextArea printTextArea;
+
+    private ImageIcon mapImageIcon;
+    private JTextArea printTextArea;
 	private DefaultCaret caret;
 	
 
@@ -236,7 +237,7 @@ private JPanel actionPanel() {
 	actionLayout = new GridBagLayout();
 	actionPanel.setLayout(actionLayout);
 	
-	selectedLabel = new JLabel("Selected Territory:");
+	selectedLabel = new JLabel("Current Player Territory:");
 	targetLabel = new JLabel("Adjacent Territory:");
 	continentLabel = new JLabel("Continents:");
 	
@@ -251,6 +252,9 @@ private JPanel actionPanel() {
 	attackBtn.setActionCommand(attackBtnName);
 	fortifyBtn.setActionCommand(fortifyBtnName);
 	endTurnBtn.setActionCommand(endTurnBtnName);
+
+	countryAListModel = new GameListModel(serviceLayer, "selectedCountry");
+    countryBListModel = new GameListModel(serviceLayer, "neighboringCountry");
 	
 	phaseViewLabel = new JLabel("Phase View:");
 	//model.addObserver(phaseViewLabel);
