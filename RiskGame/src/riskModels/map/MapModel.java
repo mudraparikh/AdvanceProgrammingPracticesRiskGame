@@ -423,6 +423,35 @@ public class MapModel {
         }
         return null;
     }
+    /**
+     * This method will remove Continent from the map 
+     * @param continent
+     */
+    public void removeContinent(Continent continent) {
+    	System.out.println("Removing Continent Name"+continent.getContinentName());
+    	Set<Country> countries= GameMap.getInstance().getCountryAndNeighborsMap().keySet();
+    	List<Country> countryList = new ArrayList<>();
+    	MapModel mapmodel = new MapModel();
+    	for(Country c : countries) {
+    		Country countryTest = new Country(c.getCountryName(),c.getBelongsToContinent());
+    		countryList.add(countryTest);
+    	}
+    	for(Country c : countryList) {
+    		if(c.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())){
+    			mapmodel.removeCountry(c, GameMap.getInstance());
+    		}
+    	}
+    	GameMap.getInstance().getContinentList().remove(GameMap.getInstance().getContinentList().indexOf(new Continent(continent.getContinentName())));
+    	GameMap.getInstance().getContinentCountryMap().remove(new Continent(continent.getContinentName()));
+    	if(mapmodel.validateMap(GameMap.getInstance()).isCorrectMap) {
+    		mapmodel.writeMap(GameMap.getInstance(), "updated");
+    	}else {
+    		String errorMessage =GameMap.getInstance().getErrorMessage();
+    		GameMap.getInstance().setErrorMessage("Can not removecontinent  "+errorMessage);
+    		System.out.println(GameMap.getInstance().getErrorMessage());
+    	}
+    
+    }
 
     /**
      * This method will create .map file based on input provided from user
