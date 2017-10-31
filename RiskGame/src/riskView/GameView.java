@@ -89,7 +89,10 @@ public class GameView extends JDialog{
 		setTitle("Risk Game");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setResizable(false);
-		
+
+        gameMap = GameMap.getInstance();
+        mapModel = new MapModel();
+
 		//  GridBagLayout allows a flexible sizing of components
 		mainLayout = new GridBagLayout();
 		setLayout(mainLayout);
@@ -304,8 +307,8 @@ private JPanel countryInfoPanel() {
 	targetLabel = new JLabel("Neighbouring Countries:");
 	continentLabel = new JLabel("Continents:");
 	
-	gameMap = GameMap.getInstance();
-	mapModel = new MapModel();
+
+
 	
 	countryDisplay1 = new DefaultListModel<>();
 	countryList1 = new JList(countryDisplay1);

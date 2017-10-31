@@ -10,7 +10,6 @@ import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskModels.player.Player;
 import riskModels.player.PlayerModel;
-import riskView.PlayerView;
 
 /**
  * This class contains the services for the Game Play.
@@ -46,7 +45,7 @@ public class GamePlayModel {
         	System.out.print("Invalid Map File Selected   ");System.out.println(gameMap.getErrorMessage());
         	System.exit(1);
         }
-        mapModel.removeContinent(gameMap.getContinentList().get(0));
+
     }
     /**
      * This method will perform initialization for the game for example reading map,Assign country to players
@@ -63,12 +62,8 @@ public class GamePlayModel {
             allocateCountriesToPlayers();
             addInitialArmiesInRR();
             PlayerModel playerModel = new PlayerModel();
-            PlayerView playerview = new PlayerView();
-            playerModel.addObserver(playerview);
             playerModel.getPlyaerWorldDomination(player.getPlayerList()) ;
-           
-            for (Country c : gameMap.getCountryAndNeighborsMap().keySet()){
-                System.out.println(c.getCountryName() + " "+ c.getCurrentArmiesDeployed());            }
+
         }
         else {
             System.out.println("Something went wrong ! ");
@@ -78,8 +73,6 @@ public class GamePlayModel {
 
     private void attachModelAndObservers() {
 		PlayerModel playermodel = new PlayerModel();
-		PlayerView playerview = new PlayerView();
-		playermodel.addObserver(playerview);
 		
 	}
 	private void addInitialArmiesInRR() {
