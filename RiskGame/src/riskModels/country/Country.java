@@ -19,26 +19,48 @@ public class Country {
     public Player belongsToPlayer;
     public int currentArmiesDeployed;
 
+    /**
+     * This constructor will create country object based provided parameters
+     * @param countryName name of the country
+     * @param startPixel For UI purpose start pixel
+     * @param endPixel For UI purpose end pixel
+     * @param continentName name of the continent
+     */
     public Country(String countryName, int startPixel, int endPixel, String continentName) {
         this.countryName = countryName;
         this.startPixel = startPixel;
         this.endPixel = endPixel;
         this.belongsToContinent = continentName;
     }
-
+    /**
+     * This constructor will create country object based on provided player object and current deployed armies
+     * @param belongsToPlayer player object
+     * @param currentArmiesDeployed number of armies deployed to the country
+     */
     public Country(Player belongsToPlayer, int currentArmiesDeployed) {
         this.belongsToPlayer = belongsToPlayer;
         this.currentArmiesDeployed = currentArmiesDeployed;
     }
-
-    public Country(String neighbourCountryName) {
-        this.countryName = neighbourCountryName;
-    }
-
     /**
-     * Overriding equals method.
-     * 
+     * This constructor will create country object based on provided country name
+     * @param countryName name of the country
      */
+    public Country(String countryName) {
+        this.countryName = countryName;
+    }
+    /**
+     * This constructor will create country object based on country name and continent name , for non UI purpose
+     * @param countryName  Name of the country
+     * @param belongsToContinent Name of the continent where country belongs to .
+     */
+    public Country(String countryName, String belongsToContinent) {
+   	 this.countryName = countryName;
+   	 this.belongsToContinent=belongsToContinent;
+	}
+
+	/**
+	 * Over ride equals method in order to compare compare objects based on country name not country objects
+	 */
     @Override
     public boolean equals(Object o) {
         String countryName = ((Country) o).getCountryName();
@@ -53,11 +75,17 @@ public class Country {
     public int hashCode() {
         return this.countryName.hashCode();
     }
-
+    /**
+     * getter method for player who own the country
+     * @return player object
+     */
     public Player getBelongsToPlayer() {
         return belongsToPlayer;
     }
-
+    /**
+     * setter method to assign country to player
+     * @param belongsToPlayer player object
+     */
     public void setBelongsToPlayer(Player belongsToPlayer) {
         this.belongsToPlayer = belongsToPlayer;
     }
