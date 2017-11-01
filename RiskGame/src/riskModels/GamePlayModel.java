@@ -137,6 +137,7 @@ public class GamePlayModel {
         }
         player = new Player(playerList);
         player.setPlayerList(playerList);
+        GameMap.getInstance().setPlayerList(playerList);
     }
 
     public void nextPlayerTurn(){
