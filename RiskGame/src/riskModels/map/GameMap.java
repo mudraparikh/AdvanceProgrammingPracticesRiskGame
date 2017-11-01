@@ -1,11 +1,12 @@
 package riskModels.map;
 
-import riskModels.continent.Continent;
-import riskModels.country.Country;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import riskModels.continent.Continent;
+import riskModels.country.Country;
+import riskModels.player.Player;
 
 /**
  * This class holds the properties to create graph from map file
@@ -17,6 +18,7 @@ public class GameMap {
     public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
     public HashMap<Continent, List<Country>> continentCountryMap = new HashMap<>();
     public List<Continent> continentList = new ArrayList<>();
+    public List<Player> playerList = new ArrayList<>();
     public boolean isCorrectMap = true;
     public String errorMessage;
     public HashMap<String, String> mapDetail = new HashMap<>();
@@ -81,5 +83,11 @@ public class GameMap {
 	}
 	public void setContinentCountryMap(HashMap<Continent, List<Country>> continentCountryMap) {
 		this.continentCountryMap = continentCountryMap;
+	}
+	public List<Player> getPlayerList() {
+		return playerList;
+	}
+	public void setPlayerList(List<Player> playerList) {
+		this.playerList = playerList;
 	}
 }

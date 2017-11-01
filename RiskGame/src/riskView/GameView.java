@@ -1,19 +1,39 @@
 package riskView;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.text.DefaultCaret;
 
 import riskModels.GameListModel;
 import riskModels.GamePlayModel;
-import riskModels.country.*;
-import riskModels.map.*;
+import riskModels.country.Country;
+import riskModels.map.GameMap;
+import riskModels.map.MapModel;
+import riskModels.player.Player;
+import riskModels.player.PlayerModel;
 
 
 /**
@@ -36,15 +56,15 @@ public class GameView extends JDialog{
 	private JScrollPane continentScrollPane;
 	private JScrollPane countryScrollPane1;
 	private JScrollPane countryScrollPane2;
-	private JScrollPane phaseViewPane;
+	public static JScrollPane phaseViewPane;
 	private JScrollPane playerViewPane;
-	private JScrollPane dominationViewPane;
+	public static  JScrollPane dominationViewPane;
 	
 	private JLabel selectedLabel;
 	private JLabel targetLabel;
 	private JLabel continentLabel;
-	public JLabel dominationLabel;
-	private JLabel phaseViewLabel;
+	public static JLabel dominationLabel;
+	public static JLabel phaseViewLabel;
 	private JLabel playerViewLabel;
 	
 	private JButton menuBtn;
@@ -70,6 +90,7 @@ public class GameView extends JDialog{
 
 	private GameMap gameMap;
 	private MapModel mapModel;
+	public  PlayerModel playerModel= new PlayerModel();
 	private GamePlayModel serviceLayer;
 	private GameListModel countryAListModel;
 	private GameListModel countryBListModel;
@@ -92,7 +113,7 @@ public class GameView extends JDialog{
 
         gameMap = GameMap.getInstance();
         mapModel = new MapModel();
-
+        Player player = new Player();
 		//  GridBagLayout allows a flexible sizing of components
 		mainLayout = new GridBagLayout();
 		setLayout(mainLayout);
@@ -130,7 +151,9 @@ public class GameView extends JDialog{
 		
 		pack();
 	}
-	
+	public GameView(String update) {
+		
+	}
 	/**
 	 * The panel for the logger message display, card display and turn-in button.
 	 **/
@@ -172,15 +195,21 @@ public class GameView extends JDialog{
 		fortifyBtn.setActionCommand(fortifyBtnName);
 		endTurnBtn.setActionCommand(endTurnBtnName);
 		
-		dominationLabel = new JLabel("Player Domaination %:");
-		//model.addObserver(dominationLabel);
+		dominationLabel = new JLabel("");
+		
+		PlayerView playerView= new PlayerView();
+		
 		dominationViewPane = new JScrollPane(dominationLabel);
 		messagePanel.add(dominationViewPane);
+		playerModel.addObserver(playerView);
+		playerModel.getPlyaerWorldDomination(GameMap.getInstance().getPlayerList());
+		
 		
 		phaseViewLabel = new JLabel("Phase View:");
 		//model.addObserver(phaseViewLabel);
 		phaseViewPane = new JScrollPane(phaseViewLabel);
 		messagePanel.add(phaseViewPane);
+		playerModel.getPhaseDetails();
 		
 		playerViewLabel = new JLabel("Player View:");
 		//model.addObserver(playerViewLabel);
@@ -397,4 +426,5 @@ private JPanel countryInfoPanel() {
 
 	return countryInfoPanel;
 }
+
 }
