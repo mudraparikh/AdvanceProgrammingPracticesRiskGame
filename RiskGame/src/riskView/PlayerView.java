@@ -32,7 +32,7 @@ public class PlayerView implements Observer{
 		GameView.dominationLabel.setText(lable+"\n");
 		GameView.dominationViewPane = new JScrollPane(GameView.dominationLabel);
 		GameView.dominationViewPane.repaint();
-		System.out.println("in Player View"+lable);
+		System.out.println("in Player View\n"+lable);
 }
 	
 	

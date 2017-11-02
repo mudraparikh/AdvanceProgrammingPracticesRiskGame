@@ -73,4 +73,8 @@ public class PlayerModel extends Observable{
 		return player;
 		
 	}
+	public void getPhaseDetails() {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -469,5 +469,4 @@ private JPanel countryInfoPanel() {
 
 	return countryInfoPanel;
 }
-
 }
