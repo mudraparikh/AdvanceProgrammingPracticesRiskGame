@@ -16,7 +16,7 @@ import riskModels.player.PlayerModel;
  * All the Phases relevant actions and events are listed down.
  * @author Akshay
  */
-public class GamePlayModel {
+public class GamePlayModel extends Observable{
 
     private boolean canTurnInCards;
     private boolean canReinforce;
@@ -24,6 +24,8 @@ public class GamePlayModel {
     private boolean canFortify;
 
     private int playerIndex;
+    private int i;
+    private String countryASelection;
     private MapModel mapModel;
     private GameMap gameMap;
     private List<Player> playerList;
@@ -173,5 +175,43 @@ public class GamePlayModel {
             list.add(c.getCurrentArmiesDeployed() + " : "+c.getCountryName());
         }
         return list;
+    }
+
+    /**
+     * Receives information on which country is selected in countryAList.
+     * @param country String of the selected country
+     **/
+    public void setCountryASelection(String country) {
+        countryASelection = country;
+        setChanged();
+        notifyObservers("countryB");
+    }
+
+    /**
+     * Creates and returns the information for the countryBList in the GameView.
+     * @return a list of Strings to be displayed in the countryBList.
+     **/
+    protected ArrayList<String> getCountryBList() {
+
+        list = new ArrayList<String>();
+
+        for (i = 0; i < board.getCountries().size(); i++) {
+
+            if (board.checkAdjacency(countryASelection, board.getCountries().get(i).getName())) {
+                list.add(board.getCountries().get(i).getArmies() + "-" + board.getCountries().get(i).getName());
+            }
+        }
+        return list;
+    }
+
+    public boolean checkAdjacency(String countryA, String countryB) {
+        GameMap.getInstance().getCountryAndNeighborsMap().get(new Country("countryA"));
+        /*if (mapModel.getCountryObj(countryA, GameMap.getInstance()).getNeighborNodes().contains(mapModel.getCountryObj(countryB, GameMap.getInstance()))) {
+            isAdjacent = true;
+        } else {
+            isAdjacent = false;
+        }*/
+
+        return isAdjacent;
     }
 }
