@@ -193,25 +193,18 @@ public class GamePlayModel extends Observable{
      **/
     protected ArrayList<String> getCountryBList() {
 
-        list = new ArrayList<String>();
+        list = new ArrayList<>();
 
-        for (i = 0; i < board.getCountries().size(); i++) {
-
-            if (board.checkAdjacency(countryASelection, board.getCountries().get(i).getName())) {
-                list.add(board.getCountries().get(i).getArmies() + "-" + board.getCountries().get(i).getName());
+        for(Country c: gameMap.getCountryAndNeighborsMap().keySet()){
+            if (checkAdjacency(countryASelection, c.getCountryName())) {
+                list.add(c.getCurrentArmiesDeployed() + "-" + c.getCountryName());
             }
         }
         return list;
     }
 
     public boolean checkAdjacency(String countryA, String countryB) {
-        GameMap.getInstance().getCountryAndNeighborsMap().get(new Country("countryA"));
-        /*if (mapModel.getCountryObj(countryA, GameMap.getInstance()).getNeighborNodes().contains(mapModel.getCountryObj(countryB, GameMap.getInstance()))) {
-            isAdjacent = true;
-        } else {
-            isAdjacent = false;
-        }*/
+        return GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(countryA)).contains(new Country(countryB));
 
-        return isAdjacent;
     }
 }
