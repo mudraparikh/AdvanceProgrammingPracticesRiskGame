@@ -59,9 +59,6 @@ public class PlayerView implements Observer{
 		
 		
 	}
-	
-	
-	
 }
 
 	

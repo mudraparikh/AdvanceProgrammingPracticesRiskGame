@@ -89,5 +89,6 @@ public class PlayerModel extends Observable{
 		setChanged();
 		notifyObservers(Player.class);
 		return this.player;
+
 	}
 }

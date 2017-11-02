@@ -6,12 +6,12 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -45,6 +45,7 @@ public class GameView extends JDialog{
 	public JPanel messagePanel;
 	private JPanel mapPanel;
 	private JPanel countryInfoPanel;
+	private JPanel actionPanel;
 	
 	private GridBagLayout mainLayout;
 	private GridBagConstraints c;
@@ -146,6 +147,15 @@ public class GameView extends JDialog{
 		c.gridy = 0;
 		add(messagePanel());
 		
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.LINE_END;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridx = 3;
+		c.gridy = 0;
+		add(actionPanel());
+		
 		setLocationRelativeTo(null);
 		
 		pack();
@@ -154,12 +164,12 @@ public class GameView extends JDialog{
 		
 	}
 	/**
-	 * The panel for the logger message display, card display and turn-in button.
+	 * The panel for the logger message display and game play buttons.
 	 **/
 	private JPanel messagePanel() {
 	
 		messagePanel = new JPanel();
-		messagePanel.setPreferredSize(new Dimension(400,690));
+		messagePanel.setPreferredSize(new Dimension(200,690));
 		messageLayout = new GridBagLayout();
 		messagePanel.setLayout(messageLayout);
 		
@@ -173,13 +183,71 @@ public class GameView extends JDialog{
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		messageScrollPane = new JScrollPane(printTextArea);
 		
-		turnInBtn = new JButton("Turn In Cards");
-		menuBtn = new JButton("Menu");
 		reinforceBtn = new JButton("Reinforce Armies");
 		attackBtn = new JButton("Attack!");
 		fortifyBtn = new JButton("Fortify");
 		endTurnBtn = new JButton("End Turn");
+	
+		reinforceBtn.setActionCommand(reinforceBtnName);
+		attackBtn.setActionCommand(attackBtnName);
+		fortifyBtn.setActionCommand(fortifyBtnName);
+		endTurnBtn.setActionCommand(endTurnBtnName);
+
+		c = new GridBagConstraints();
+					
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridx = 0;
+		c.gridy = 0;
+		messagePanel.add(reinforceBtn, c);
 		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridx = 0;
+		c.gridy = 1;
+		messagePanel.add(attackBtn, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridx = 0;
+		c.gridy = 2;
+		messagePanel.add(fortifyBtn, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridx = 0;
+		c.gridy = 3;
+		messagePanel.add(endTurnBtn, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 18 ;
+		c.gridx = 0;
+		c.gridy = 4;
+		messagePanel.add(messageScrollPane, c);
+		return messagePanel;
+	}
+	
+	/**
+	 * The panel for the logger message display and game play buttons.
+	 **/
+	private JPanel actionPanel() {
+		actionPanel = new JPanel();
+		actionPanel.setPreferredSize(new Dimension(200,690));
+		messageLayout = new GridBagLayout();
+		actionPanel.setLayout(messageLayout);
+		
+		menuBtn = new JButton("Menu");
+		turnInBtn = new JButton("Turn In Cards");
 		
 		cardsList = new JList();
 		cardsList.setLayoutOrientation(JList.VERTICAL_WRAP);
@@ -189,21 +257,13 @@ public class GameView extends JDialog{
 		targetLabel = new JLabel("Adjacent Territory:");
 		continentLabel = new JLabel("Continents:");
 		
-		reinforceBtn.setActionCommand(reinforceBtnName);
-		attackBtn.setActionCommand(attackBtnName);
-		fortifyBtn.setActionCommand(fortifyBtnName);
-		endTurnBtn.setActionCommand(endTurnBtnName);
-		
 		dominationLabel = new JLabel("");
-		
 		PlayerView playerView= new PlayerView();
-		
 		dominationViewPane = new JScrollPane(dominationLabel);
 		messagePanel.add(dominationViewPane);
 		playerModel.addObserver(playerView);
 		playerModel.getPlyaerWorldDomination(GameMap.getInstance().getPlayerList());
 
-		
 		phaseViewLabel = new JLabel("Phase View:");
 		//model.addObserver(phaseViewLabel);
 		phaseViewPane = new JScrollPane(phaseViewLabel);
@@ -223,7 +283,7 @@ public class GameView extends JDialog{
 		c.weighty = 10;
 		c.gridx = 0;
 		c.gridy = 0;
-		messagePanel.add(playerViewPane, c);
+		actionPanel.add(playerViewPane, c);
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
@@ -231,7 +291,7 @@ public class GameView extends JDialog{
 		c.weighty = 10;
 		c.gridx = 0;
 		c.gridy = 1;
-		messagePanel.add(phaseViewPane, c);
+		actionPanel.add(phaseViewPane, c);
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
@@ -239,72 +299,33 @@ public class GameView extends JDialog{
 		c.weighty = 10;
 		c.gridx = 0;
 		c.gridy = 2;
-		messagePanel.add(dominationViewPane, c);
-	
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 10;
-		c.gridx = 0;
-		c.gridy = 3;
-		messagePanel.add(turnInBtn, c);
+		actionPanel.add(dominationViewPane, c);
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weightx = 0.5;
 		c.weighty = 16;
 		c.gridx = 0;
-		c.gridy = 4;
-		messagePanel.add(cardsList, c);
+		c.gridy = 3;
+		actionPanel.add(cardsList, c);
 
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.gridx = 0;
-		c.gridy = 5;
-		messagePanel.add(menuBtn, c);
-			
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 0.5;
-		c.gridx = 1;
-		c.gridy = 0;
-		messagePanel.add(reinforceBtn, c);
-		
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 0.5;
-		c.gridx = 1;
-		c.gridy = 1;
-		messagePanel.add(attackBtn, c);
-		
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 0.5;
-		c.gridx = 1;
-		c.gridy = 2;
-		messagePanel.add(fortifyBtn, c);
-		
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 0.5;
-		c.gridx = 1;
-		c.gridy = 3;
-		messagePanel.add(endTurnBtn, c);
-		
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 18 ;
-		c.gridx = 1;
 		c.gridy = 4;
-		messagePanel.add(messageScrollPane, c);
-		return messagePanel;
+		actionPanel.add(turnInBtn, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridx = 0;
+		c.gridy = 5;
+		actionPanel.add(menuBtn, c);
+		
+		return actionPanel;
 	}
   /**
    * The panel for the map and load display as per users choice.
@@ -349,7 +370,7 @@ private JPanel countryInfoPanel() {
 		countryDisplay1.addElement(c.getCountryName());
 	
 	countryDisplay2 = new DefaultListModel<>();
-	countryList2 = new JList(countryDisplay1);
+	countryList2 = new JList(countryDisplay2);
 	countryList2.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 	countryList2.setLayoutOrientation(JList.VERTICAL_WRAP);
 	countryList2.setVisibleRowCount(30);
@@ -371,7 +392,30 @@ private JPanel countryInfoPanel() {
 	continentScrollPane = new JScrollPane(continentList);
 	continentList.setVisible(true);
 	for (int i = 0; i < gameMap.getContinentList().size(); i++)
-      continentDisplay.addElement(gameMap.getContinentList().get(i).getContinentName());
+     continentDisplay.addElement(gameMap.getContinentList().get(i).getContinentName());
+	 continentList.addMouseListener(new MouseAdapter() {
+		public void mouseClicked(MouseEvent evt) {
+		 System.out.println("Selected continent"+continentList.getSelectedValue());
+		 countryDisplay1.removeAllElements();
+		 for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
+			 if(c.getBelongsToContinent().equalsIgnoreCase(continentList.getSelectedValue())) {
+				 countryDisplay1.addElement(c.getCountryName());
+			 }
+			
+		 }
+				
+		}
+	});
+	 countryList1.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+			 System.out.println("Selected country"+countryList1.getSelectedValue());
+			 countryDisplay2.removeAllElements();
+			 List<Country> neighbours=GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(countryList1.getSelectedValue()));
+			 for(Country country :neighbours) {
+				 countryDisplay2.addElement(country.getCountryName());
+			 }		
+			}
+		});
 	
 	c = new GridBagConstraints();
 	
