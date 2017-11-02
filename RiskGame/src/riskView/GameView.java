@@ -66,7 +66,6 @@ public class GameView extends JDialog{
 	public static JLabel dominationLabel;
 	public static JLabel phaseViewLabel;
 	private JLabel playerViewLabel;
-	
 	private JButton menuBtn;
 	private JButton turnInBtn;
 	private JButton reinforceBtn;
@@ -203,7 +202,7 @@ public class GameView extends JDialog{
 		messagePanel.add(dominationViewPane);
 		playerModel.addObserver(playerView);
 		playerModel.getPlyaerWorldDomination(GameMap.getInstance().getPlayerList());
-		
+
 		
 		phaseViewLabel = new JLabel("Phase View:");
 		//model.addObserver(phaseViewLabel);

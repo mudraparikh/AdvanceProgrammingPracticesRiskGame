@@ -22,6 +22,7 @@ public class PlayerModel extends Observable{
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
+
 	public String getUpdateMessage() {
 		return updateMessage;
 	}

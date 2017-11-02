@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import riskModels.player.Player;
 import riskModels.player.PlayerModel;
 
+
 /**
  * This class will handle display of  players' details 
  * @author prashantp95
@@ -57,7 +58,7 @@ public class PlayerView implements Observer{
 		}
 		
 		
-}
+	}
 	
 	
 	
