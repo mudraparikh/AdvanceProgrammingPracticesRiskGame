@@ -114,9 +114,13 @@ public class EditMapView extends java.awt.Frame {
 				if (continentList.getSelectedIndex() > 0) {
 					List<String> obj = continentList.getSelectedValuesList();
 					for (String string : obj) {
+						Continent continent = new Continent(string);
 						continentDisplay.removeElement(string);
+						mapModel.removeContinent(continent);
 					}
 				}
+				continentList.repaint();
+				mapModel.writeMap(gameMap, fileName);
 			}
 		});
 
