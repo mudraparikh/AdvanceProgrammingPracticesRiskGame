@@ -24,6 +24,7 @@ public class GameView extends JDialog{
 	private JPanel messagePanel;
 	private JPanel mapPanel;
 	private JPanel countryInfoPanel;
+	private JPanel actionPanel;
 	
 	private GridBagLayout mainLayout;
 	private GridBagConstraints c;
@@ -88,6 +89,9 @@ public class GameView extends JDialog{
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setResizable(false);
 		
+		gameMap = GameMap.getInstance();
+		mapModel = new MapModel();
+		
 		//  GridBagLayout allows a flexible sizing of components
 		mainLayout = new GridBagLayout();
 		setLayout(mainLayout);
@@ -121,18 +125,104 @@ public class GameView extends JDialog{
 		c.gridy = 0;
 		add(messagePanel());
 		
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.LINE_END;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridx = 3;
+		c.gridy = 0;
+		add(actionPanel());
+		
 		setLocationRelativeTo(null);
 		
 		pack();
 	}
 	
+	private JPanel actionPanel() {
+		actionPanel = new JPanel();
+		actionPanel.setPreferredSize(new Dimension(200,690));
+		messageLayout = new GridBagLayout();
+		actionPanel.setLayout(messageLayout);
+		
+		menuBtn = new JButton("Menu");
+		turnInBtn = new JButton("Turn In Cards");
+		
+		dominationLabel = new JLabel("Player Domaination %:");
+		//model.addObserver(dominationLabel);
+		dominationViewPane = new JScrollPane(dominationLabel);
+		actionPanel.add(dominationViewPane);
+		
+		phaseViewLabel = new JLabel("Phase View:");
+		//model.addObserver(phaseViewLabel);
+		phaseViewPane = new JScrollPane(phaseViewLabel);
+		actionPanel.add(phaseViewPane);
+		
+		playerViewLabel = new JLabel("Player View:");
+		//model.addObserver(playerViewLabel);
+		playerViewPane = new JScrollPane(playerViewLabel);
+		actionPanel.add(playerViewPane);
+		
+		c = new GridBagConstraints();
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 10;
+		c.gridx = 0;
+		c.gridy = 0;
+		actionPanel.add(playerViewPane, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 10;
+		c.gridx = 0;
+		c.gridy = 1;
+		actionPanel.add(phaseViewPane, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 10;
+		c.gridx = 0;
+		c.gridy = 2;
+		actionPanel.add(dominationViewPane, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 16;
+		c.gridx = 0;
+		c.gridy = 3;
+		actionPanel.add(cardsList, c);
+
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridx = 0;
+		c.gridy = 4;
+		actionPanel.add(turnInBtn, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(5, 5, 5, 5);
+		c.weightx = 0.5;
+		c.weighty = 0.5;
+		c.gridx = 0;
+		c.gridy = 5;
+		actionPanel.add(menuBtn, c);
+		
+		return actionPanel;
+	}
+
 	/**
 	 * The panel for the logger message display, card display and turn-in button.
 	 **/
 	private JPanel messagePanel() {
 	
 		messagePanel = new JPanel();
-		messagePanel.setPreferredSize(new Dimension(400,690));
+		messagePanel.setPreferredSize(new Dimension(200,690));
 		messageLayout = new GridBagLayout();
 		messagePanel.setLayout(messageLayout);
 		
@@ -146,8 +236,7 @@ public class GameView extends JDialog{
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		messageScrollPane = new JScrollPane(printTextArea);
 		
-		turnInBtn = new JButton("Turn In Cards");
-		menuBtn = new JButton("Menu");
+		
 		reinforceBtn = new JButton("Reinforce Armies");
 		attackBtn = new JButton("Attack!");
 		fortifyBtn = new JButton("Fortify");
@@ -166,76 +255,13 @@ public class GameView extends JDialog{
 		fortifyBtn.setActionCommand(fortifyBtnName);
 		endTurnBtn.setActionCommand(endTurnBtnName);
 		
-		dominationLabel = new JLabel("Player Domaination %:");
-		//model.addObserver(dominationLabel);
-		dominationViewPane = new JScrollPane(dominationLabel);
-		messagePanel.add(dominationViewPane);
-		
-		phaseViewLabel = new JLabel("Phase View:");
-		//model.addObserver(phaseViewLabel);
-		phaseViewPane = new JScrollPane(phaseViewLabel);
-		messagePanel.add(phaseViewPane);
-		
-		playerViewLabel = new JLabel("Player View:");
-		//model.addObserver(playerViewLabel);
-		playerViewPane = new JScrollPane(playerViewLabel);
-		messagePanel.add(playerViewPane);
-		
 		c = new GridBagConstraints();
-		
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 10;
-		c.gridx = 0;
-		c.gridy = 0;
-		messagePanel.add(playerViewPane, c);
-		
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 10;
-		c.gridx = 0;
-		c.gridy = 1;
-		messagePanel.add(phaseViewPane, c);
-		
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 10;
-		c.gridx = 0;
-		c.gridy = 2;
-		messagePanel.add(dominationViewPane, c);
-	
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 10;
-		c.gridx = 0;
-		c.gridy = 3;
-		messagePanel.add(turnInBtn, c);
-		
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 16;
-		c.gridx = 0;
-		c.gridy = 4;
-		messagePanel.add(cardsList, c);
-
+					
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.gridx = 0;
-		c.gridy = 5;
-		messagePanel.add(menuBtn, c);
-			
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 0.5;
-		c.gridx = 1;
 		c.gridy = 0;
 		messagePanel.add(reinforceBtn, c);
 		
@@ -243,7 +269,7 @@ public class GameView extends JDialog{
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weightx = 0.5;
 		c.weighty = 0.5;
-		c.gridx = 1;
+		c.gridx = 0;
 		c.gridy = 1;
 		messagePanel.add(attackBtn, c);
 		
@@ -251,7 +277,7 @@ public class GameView extends JDialog{
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weightx = 0.5;
 		c.weighty = 0.5;
-		c.gridx = 1;
+		c.gridx = 0;
 		c.gridy = 2;
 		messagePanel.add(fortifyBtn, c);
 		
@@ -259,7 +285,7 @@ public class GameView extends JDialog{
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weightx = 0.5;
 		c.weighty = 0.5;
-		c.gridx = 1;
+		c.gridx = 0;
 		c.gridy = 3;
 		messagePanel.add(endTurnBtn, c);
 		
@@ -267,7 +293,7 @@ public class GameView extends JDialog{
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weightx = 0.5;
 		c.weighty = 18 ;
-		c.gridx = 1;
+		c.gridx = 0;
 		c.gridy = 4;
 		messagePanel.add(messageScrollPane, c);
 		return messagePanel;
@@ -297,9 +323,6 @@ private JPanel countryInfoPanel() {
 	selectedLabel = new JLabel("Selected Country:");
 	targetLabel = new JLabel("Neighbouring Countries:");
 	continentLabel = new JLabel("Continents:");
-	
-	gameMap = GameMap.getInstance();
-	mapModel = new MapModel();
 	
 	countryDisplay1 = new DefaultListModel<>();
 	countryList1 = new JList(countryDisplay1);
