@@ -54,6 +54,10 @@ public class GameMap {
 
     }
 
+    /**
+     * getter method to get the selected map details
+     * @return mapDetails Complete details of selected map
+     */
     public HashMap<String, String> getMapDetail() {
         return mapDetail;
     }
@@ -63,6 +67,10 @@ public class GameMap {
 
     }
 
+    /**
+     * getter method to get the informations of neighboring countries
+     * @return countryAndNeighborsMap list of neighboring countries details
+     */
     public HashMap<Country, List<Country>> getCountryAndNeighborsMap() {
         return countryAndNeighborsMap;
     }
@@ -71,6 +79,10 @@ public class GameMap {
         this.countryAndNeighborsMap = countryAndNeighborsMap;
     }
 
+    /**
+     * getter method to get list of continents in the selected map
+     * @return continentList list of continents in the map
+     */
     public List<Continent> getContinentList() {
         return continentList;
     }
