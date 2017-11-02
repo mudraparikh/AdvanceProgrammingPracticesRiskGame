@@ -1,5 +1,6 @@
 package riskView;
 
+import riskControllers.GameListController;
 import riskModels.GameListModel;
 import riskModels.GamePlayModel;
 import riskModels.country.Country;
@@ -8,8 +9,10 @@ import riskModels.map.MapModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -93,6 +96,7 @@ public class GameView extends JDialog {
 
         gameMap = GameMap.getInstance();
         mapModel = new MapModel();
+        serviceLayer = new GamePlayModel();
 
         //  GridBagLayout allows a flexible sizing of components
         mainLayout = new GridBagLayout();
@@ -401,6 +405,17 @@ public class GameView extends JDialog {
         countryInfoPanel.add(countryScrollPane2, c);
 
         return countryInfoPanel;
+    }
+
+    /**
+     * Adds the action listeners for the buttons and lists.
+     *
+     * @param evt Event performed which passed to the controller
+     */
+    public void addActionListeners(GameListController evt) {
+
+        System.out.println("List selected");
+        countryAList.addListSelectionListener(evt);
     }
 
     /**

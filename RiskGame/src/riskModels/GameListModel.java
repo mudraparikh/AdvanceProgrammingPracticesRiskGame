@@ -23,6 +23,7 @@ public class GameListModel extends DefaultListModel implements Observer {
     public void update(Observable observable, Object obj) {
 
         display = (String)obj;
+        System.out.println(display);
         if (Objects.equals(type, "countryA") && Objects.equals(type, display)){
             removeAllElements();
             for (i = 0; i < model.getSelectedCountryList().size(); i++) {

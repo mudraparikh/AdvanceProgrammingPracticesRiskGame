@@ -183,6 +183,7 @@ public class GamePlayModel extends Observable{
      **/
     public void setCountryASelection(String country) {
         countryASelection = country;
+        System.out.println("186"+ countryASelection);
         setChanged();
         notifyObservers("countryB");
     }
