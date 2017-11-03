@@ -40,7 +40,7 @@ import riskModels.player.PlayerModel;
  * This class will load the game board 
  * @author mudraparikh
  *
- */
+ **/
 public class GameView extends JDialog{
 	public JPanel messagePanel;
 	private JPanel mapPanel;
@@ -58,15 +58,12 @@ public class GameView extends JDialog{
 	private JScrollPane countryScrollPane1;
 	private JScrollPane countryScrollPane2;
 	public static JScrollPane phaseViewPane;
-	private JScrollPane playerViewPane;
 	public static  JScrollPane dominationViewPane;
 	
 	private JLabel selectedLabel;
 	private JLabel targetLabel;
 	private JLabel continentLabel;
-	public static JLabel dominationLabel;
-	public static JLabel phaseViewLabel;
-	private JLabel playerViewLabel;
+	
 	private JButton menuBtn;
 	private JButton turnInBtn;
 	private JButton reinforceBtn;
@@ -84,6 +81,7 @@ public class GameView extends JDialog{
 	private JList<String> continentList;
 	private JList<String> countryList1;
 	private JList countryList2;
+	private JList cardsList;
 	private DefaultListModel<String> continentDisplay;
 	private DefaultListModel<String> countryDisplay1;
 	private DefaultListModel<String> countryDisplay2;
@@ -95,16 +93,18 @@ public class GameView extends JDialog{
 	private GameListModel countryAListModel;
 	private GameListModel countryBListModel;
 	
-	private JList cardsList;
+	private JTextArea printTextArea;
+	public static JTextArea dominationTextArea;
+	public static JTextArea phaseViewTextArea;
 
     private ImageIcon mapImageIcon;
-    private JTextArea printTextArea;
+    
 	private DefaultCaret caret;
 	
 
-	/**
+	/*
 	 * Constructs the Risk game board.
-	 **/
+	 */
 	public GameView() throws IOException {
 		
 		setTitle("Risk Game");
@@ -163,9 +163,9 @@ public class GameView extends JDialog{
 	public GameView(String update) {
 		
 	}
-	/**
+	/*
 	 * The panel for the logger message display and game play buttons.
-	 **/
+	 */
 	private JPanel messagePanel() {
 	
 		messagePanel = new JPanel();
@@ -175,7 +175,6 @@ public class GameView extends JDialog{
 		
 		printTextArea = new JTextArea();
 		System.out.println(printTextArea);
-		//System.setOut(new PrintStream(new TextAreaOutputStream(printTextArea)));
 		printTextArea.setFocusable(false);
 		printTextArea.setLineWrap(true);
 		printTextArea.setWrapStyleWord(true);
@@ -237,9 +236,9 @@ public class GameView extends JDialog{
 		return messagePanel;
 	}
 	
-	/**
+	/*
 	 * The panel for the logger message display and game play buttons.
-	 **/
+	 */
 	private JPanel actionPanel() {
 		actionPanel = new JPanel();
 		actionPanel.setPreferredSize(new Dimension(200,690));
@@ -257,23 +256,25 @@ public class GameView extends JDialog{
 		targetLabel = new JLabel("Adjacent Territory:");
 		continentLabel = new JLabel("Continents:");
 		
-		dominationLabel = new JLabel("");
+		dominationTextArea = new JTextArea();
+		System.out.println(dominationTextArea);
+		dominationTextArea.setFocusable(false);
+		dominationTextArea.setLineWrap(true);
+		dominationTextArea.setWrapStyleWord(true);
+		dominationViewPane = new JScrollPane(dominationTextArea);
+		actionPanel.add(dominationViewPane);
 		PlayerView playerView= new PlayerView();
-		dominationViewPane = new JScrollPane(dominationLabel);
-		messagePanel.add(dominationViewPane);
 		playerModel.addObserver(playerView);
 		playerModel.getPlyaerWorldDomination(GameMap.getInstance().getPlayerList());
-
-		phaseViewLabel = new JLabel("Phase View:");
-		//model.addObserver(phaseViewLabel);
-		phaseViewPane = new JScrollPane(phaseViewLabel);
-		messagePanel.add(phaseViewPane);
-		playerModel.getPhaseDetails();
 		
-		playerViewLabel = new JLabel("Player View:");
-		//model.addObserver(playerViewLabel);
-		playerViewPane = new JScrollPane(playerViewLabel);
-		messagePanel.add(playerViewPane);
+		phaseViewTextArea = new JTextArea();
+		System.out.println(phaseViewTextArea);
+		phaseViewTextArea.setFocusable(false);
+		phaseViewTextArea.setLineWrap(true);
+		phaseViewTextArea.setWrapStyleWord(true);
+		phaseViewPane = new JScrollPane(phaseViewTextArea);
+		actionPanel.add(phaseViewPane);
+		playerModel.getPhaseDetails();
 		
 		c = new GridBagConstraints();
 		
@@ -283,7 +284,7 @@ public class GameView extends JDialog{
 		c.weighty = 10;
 		c.gridx = 0;
 		c.gridy = 0;
-		actionPanel.add(playerViewPane, c);
+		actionPanel.add(dominationViewPane, c);
 		
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
@@ -296,17 +297,9 @@ public class GameView extends JDialog{
 		c.fill = GridBagConstraints.BOTH;
 		c.insets = new Insets(5, 5, 5, 5);
 		c.weightx = 0.5;
-		c.weighty = 10;
+		c.weighty = 25;
 		c.gridx = 0;
 		c.gridy = 2;
-		actionPanel.add(dominationViewPane, c);
-		
-		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(5, 5, 5, 5);
-		c.weightx = 0.5;
-		c.weighty = 16;
-		c.gridx = 0;
-		c.gridy = 3;
 		actionPanel.add(cardsList, c);
 
 		c.fill = GridBagConstraints.BOTH;
@@ -314,7 +307,7 @@ public class GameView extends JDialog{
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.gridx = 0;
-		c.gridy = 4;
+		c.gridy = 3;
 		actionPanel.add(turnInBtn, c);
 		
 		c.fill = GridBagConstraints.BOTH;
@@ -322,14 +315,14 @@ public class GameView extends JDialog{
 		c.weightx = 0.5;
 		c.weighty = 0.5;
 		c.gridx = 0;
-		c.gridy = 5;
+		c.gridy = 4;
 		actionPanel.add(menuBtn, c);
 		
 		return actionPanel;
 	}
-  /**
+  /*
    * The panel for the map and load display as per users choice.
-  **/
+  */
 private JPanel mapPanel() throws IOException {
 	mapPanel = new JPanel();
 	mapPanel.setLayout(new GridLayout(1, 1, 5, 5));
@@ -343,9 +336,9 @@ private JPanel mapPanel() throws IOException {
 	return mapPanel;
 }
 
-/**
+/*
  * The panel to display the list of continents, countries and their adjacent territories.
-**/
+*/
 private JPanel countryInfoPanel() {
 	countryInfoPanel = new JPanel();
 	countryInfoPanel.setPreferredSize(new Dimension(250,690));
@@ -397,6 +390,7 @@ private JPanel countryInfoPanel() {
 		public void mouseClicked(MouseEvent evt) {
 		 System.out.println("Selected continent"+continentList.getSelectedValue());
 		 countryDisplay1.removeAllElements();
+		 countryDisplay2.removeAllElements();
 		 for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
 			 if(c.getBelongsToContinent().equalsIgnoreCase(continentList.getSelectedValue())) {
 				 countryDisplay1.addElement(c.getCountryName());
@@ -469,5 +463,4 @@ private JPanel countryInfoPanel() {
 
 	return countryInfoPanel;
 }
-
 }

@@ -35,8 +35,8 @@ public class PlayerView implements Observer{
 				lable+=(String.valueOf(play.getDomination())+"%"+"\n");
 			}
 			//GameView.dominationLabel = new JLabel(lable+"\n");
-			GameView.dominationLabel.setText(lable+"\n");
-			GameView.dominationViewPane = new JScrollPane(GameView.dominationLabel);
+			GameView.dominationTextArea.setText(lable+"\n");
+			GameView.dominationViewPane = new JScrollPane(GameView.dominationTextArea);
 			GameView.dominationViewPane.repaint();
 			System.out.println("in Player View"+lable);
 		}
@@ -51,8 +51,8 @@ public class PlayerView implements Observer{
 			 lable+="  ||  "+"\n";
 			 
 		 }
-		   	GameView.phaseViewLabel.setText(lable+"\n");
-			GameView.phaseViewPane = new JScrollPane(GameView.phaseViewLabel);
+		   	GameView.phaseViewTextArea.setText(lable+"\n");
+			GameView.phaseViewPane = new JScrollPane(GameView.phaseViewTextArea);
 			GameView.phaseViewPane.repaint();
 		 System.out.println(lable);
 		}
