@@ -93,7 +93,7 @@ public class GameView extends JDialog{
 	private GameListModel countryAListModel;
 	private GameListModel countryBListModel;
 	
-	private JTextArea printTextArea;
+	private static JTextArea printTextArea;
 	public static JTextArea dominationTextArea;
 	public static JTextArea phaseViewTextArea;
 
@@ -462,5 +462,15 @@ private JPanel countryInfoPanel() {
 	countryInfoPanel.add(countryScrollPane2, c);
 
 	return countryInfoPanel;
+}
+/**
+ * This method will display updated logs in main window of the game 
+ * @param logDetail log message that you want to add.
+ */
+public static void displayLog(String logDetail) {
+	String existingDetails = printTextArea.getText();
+	StringBuilder stringBuid = new StringBuilder(existingDetails);
+	printTextArea.setText("\n"+stringBuid.append(logDetail)+"\n");
+	
 }
 }
