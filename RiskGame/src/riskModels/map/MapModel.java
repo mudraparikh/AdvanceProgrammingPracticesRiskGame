@@ -413,7 +413,7 @@ public class MapModel {
      * @param gameMap GameMap class object from which intended country need to be return
      * @return country object
      */
-    public Country getCountryObj(String countryName, GameMap gameMap){
+    public static Country getCountryObj(String countryName, GameMap gameMap){
         for (Map.Entry<Country, List<Country>> pair : gameMap.getCountryAndNeighborsMap().entrySet()) {
             // get country object
             Country keyCountry = pair.getKey();

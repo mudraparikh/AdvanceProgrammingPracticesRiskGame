@@ -29,6 +29,7 @@ import javax.swing.text.DefaultCaret;
 
 import riskModels.GameListModel;
 import riskModels.GamePlayModel;
+import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
@@ -43,7 +44,7 @@ import riskModels.player.PlayerModel;
  **/
 public class GameView extends JDialog{
 	public JPanel messagePanel;
-	private JPanel mapPanel;
+	private static JPanel mapPanel;
 	private JPanel countryInfoPanel;
 	private JPanel actionPanel;
 	
@@ -53,7 +54,7 @@ public class GameView extends JDialog{
 	private GridBagLayout actionLayout;
 	
 	private JScrollPane messageScrollPane;
-	private JScrollPane mapScrollPane;
+	private static JScrollPane mapScrollPane;
 	private JScrollPane continentScrollPane;
 	private JScrollPane countryScrollPane1;
 	private JScrollPane countryScrollPane2;
@@ -94,12 +95,13 @@ public class GameView extends JDialog{
 	private GameListModel countryBListModel;
 	
 	private static JTextArea printTextArea;
+	private static JTextArea printTextAreaFor;
 	public static JTextArea dominationTextArea;
 	public static JTextArea phaseViewTextArea;
 
     private ImageIcon mapImageIcon;
     
-	private DefaultCaret caret;
+	private static DefaultCaret caret;
 	
 
 	/*
@@ -323,16 +325,38 @@ public class GameView extends JDialog{
   /*
    * The panel for the map and load display as per users choice.
   */
-private JPanel mapPanel() throws IOException {
+static JPanel mapPanel() throws IOException {
 	mapPanel = new JPanel();
 	mapPanel.setLayout(new GridLayout(1, 1, 5, 5));
-	String imageFile = gameMap.getMapDetail().get("image");
-    Image image = ImageIO.read(new File(imageFile));
-    System.out.println(imageFile);
-    mapImageIcon = new ImageIcon(image);
-	mapScrollPane = new JScrollPane(new JLabel(mapImageIcon));
+    printTextAreaFor = new JTextArea();
+	System.out.println(printTextAreaFor);
+	printTextAreaFor.setFocusable(false);
+	printTextAreaFor.setLineWrap(true);
+	printTextAreaFor.setWrapStyleWord(true);
+	caret = (DefaultCaret)printTextAreaFor.getCaret();
+	caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+	
+	StringBuilder stringBuilder = new StringBuilder();
+	for(Continent continent: GameMap.getInstance().getContinentList()) {
+		stringBuilder.append("----------------------------");
+		stringBuilder.append(continent.getContinentName());
+		stringBuilder.append("----------------------------"+"\n");
+		for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet())
+		{
+			if(country.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
+				stringBuilder.append(country.getCountryName()+"  ");
+				stringBuilder.append("Armies"+"  "+country.getCurrentArmiesDeployed()+"  ");
+				stringBuilder.append(country.getBelongsToPlayer().getName()+"\n");
+			}
+		}
+	
+	}
+	
+	printTextAreaFor.setText(stringBuilder.toString());
+	mapScrollPane = new JScrollPane(printTextAreaFor);
 	mapScrollPane.setPreferredSize(new Dimension(675, 690));
 	mapPanel.add(mapScrollPane);
+	mapScrollPane.repaint();
 	return mapPanel;
 }
 
@@ -403,10 +427,13 @@ private JPanel countryInfoPanel() {
 	 countryList1.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
 			 System.out.println("Selected country"+countryList1.getSelectedValue());
+			 Country selectedCountry = MapModel.getCountryObj(countryList1.getSelectedValue().trim(), GameMap.getInstance());
+			 GameView.displayLog("Selected country "+selectedCountry.getCountryName()+"\n"+"number of Armies"+selectedCountry.getCurrentArmiesDeployed()+"\n"+selectedCountry.getBelongsToPlayer().getName());
 			 countryDisplay2.removeAllElements();
 			 List<Country> neighbours=GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(countryList1.getSelectedValue()));
 			 for(Country country :neighbours) {
 				 countryDisplay2.addElement(country.getCountryName());
+				 
 			 }		
 			}
 		});
