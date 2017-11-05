@@ -34,7 +34,7 @@ public class FileSelectDialogController implements ActionListener {
             model.initData(selectedFile, playerCount);
             try {
                 gameView = new GameView();
-                //gameView.addActionListeners(new GameListController());
+                gameView.addActionListeners(new GamePlayController(model, gameView));
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -28,33 +28,31 @@ public class PlayerView implements Observer{
 
 		PlayerModel p = (PlayerModel)arg0;
 		if(p.getUpdateMessage().equalsIgnoreCase("Domination")) {
-			String lable="";
+			StringBuilder s= new StringBuilder();
 			
 			for(Player play:p.getPlayer().getPlayerList()) {
-				lable+=play.getName()+" "+"\n";
-				lable+=(String.valueOf(play.getDomination())+"%"+"\n");
+				s.append(play.getName()).append(" ").append("\n");
+				s.append(String.valueOf(play.getDomination())).append("%").append("\n");
 			}
 			//GameView.dominationLabel = new JLabel(lable+"\n");
-			GameView.dominationTextArea.setText(lable+"\n");
+			GameView.dominationTextArea.setText(s+"\n");
 			GameView.dominationViewPane = new JScrollPane(GameView.dominationTextArea);
 			GameView.dominationViewPane.repaint();
-			System.out.println("in Player View"+lable);
 		}
 		if(p.getUpdateMessage().equalsIgnoreCase("Phase")) {
-			String lable="";
+			StringBuilder lable= new StringBuilder();
 		 for(Player player:p.getPlayer().getPlayerList())
 		 {
-			 lable+= player.getName()+"\n";
-			 lable+= "Total Armies: "+player.getTotalArmies()+"\n";
-			 lable+= "Reinforcement Armies"+player.getReinforcementArmies()+"\n";
-			 lable+= "Countries Owned"+player.getAssignedCountries().size()+"\n";
-			 lable+="  ||  "+"\n";
+			 lable.append(player.getName()).append("\n");
+			 lable.append("Total Armies: ").append(player.getTotalArmies()).append("\n");
+			 lable.append("Reinforcement Armies").append(player.getReinforcementArmies()).append("\n");
+			 lable.append("Countries Owned").append(player.getAssignedCountries().size()).append("\n");
+			 lable.append("  ||  " + "\n");
 			 
 		 }
 		   	GameView.phaseViewTextArea.setText(lable+"\n");
 			GameView.phaseViewPane = new JScrollPane(GameView.phaseViewTextArea);
 			GameView.phaseViewPane.repaint();
-		 System.out.println(lable);
 		}
 		
 		

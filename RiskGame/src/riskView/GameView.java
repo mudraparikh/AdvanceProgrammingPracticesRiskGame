@@ -1,7 +1,5 @@
 package riskView;
 
-import riskModels.GameListModel;
-import riskModels.GamePlayModel;
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
@@ -12,6 +10,7 @@ import riskModels.player.PlayerModel;
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -22,7 +21,7 @@ import java.util.List;
 /**
  * This class will load the game board
  *
- * @author mudraparikh
+ * @author mudraparikh and akshay shah
  */
 public class GameView extends JDialog {
     public static JScrollPane phaseViewPane;
@@ -55,12 +54,12 @@ public class GameView extends JDialog {
     private JButton attackBtn;
     private JButton fortifyBtn;
     private JButton endTurnBtn;
-    private String menuBtnName;
-    private String turnInBtnName;
-    private String reinforceBtnName;
-    private String attackBtnName;
-    private String fortifyBtnName;
-    private String endTurnBtnName;
+    private String menuBtnName = "menuBtn";
+    private String reinforceBtnName = "reinforceBtn";
+    private String attackBtnName = "attackBtn";
+    private String fortifyBtnName = "fortifyBtn";
+    private String turnInBtnName = "turnInBtn";
+    private String endTurnBtnName = "endTurnBtn";
     private JList<String> continentList;
     private JList<String> countryList1;
     private JList countryList2;
@@ -70,10 +69,6 @@ public class GameView extends JDialog {
     private DefaultListModel<String> countryDisplay2;
     private GameMap gameMap;
     private MapModel mapModel;
-    private GamePlayModel serviceLayer;
-    private GameListModel countryAListModel;
-    private GameListModel countryBListModel;
-    private ImageIcon mapImageIcon;
 
 
     /**
@@ -146,8 +141,8 @@ public class GameView extends JDialog {
      */
     public static void displayLog(String logDetail) {
         String existingDetails = printTextArea.getText();
-        StringBuilder stringBuid = new StringBuilder(existingDetails);
-        printTextArea.setText("\n" + stringBuid.append(logDetail) + "\n");
+        StringBuilder stringBuilder = new StringBuilder(existingDetails);
+        printTextArea.setText("\n" + stringBuilder.append(logDetail) + "\n");
 
     }
 
@@ -253,7 +248,7 @@ public class GameView extends JDialog {
         actionPanel.add(dominationViewPane);
         PlayerView playerView = new PlayerView();
         playerModel.addObserver(playerView);
-        playerModel.getPlyaerWorldDomination(GameMap.getInstance().getPlayerList());
+        playerModel.getPlayerWorldDomination(GameMap.getInstance().getPlayerList());
 
         phaseViewTextArea = new JTextArea();
         System.out.println(phaseViewTextArea);
@@ -316,7 +311,6 @@ public class GameView extends JDialog {
         mapPanel = new JPanel();
         mapPanel.setLayout(new GridLayout(1, 1, 5, 5));
         printTextAreaFor = new JTextArea();
-        System.out.println(printTextAreaFor);
         printTextAreaFor.setFocusable(false);
         printTextAreaFor.setLineWrap(true);
         printTextAreaFor.setWrapStyleWord(true);
@@ -410,9 +404,11 @@ public class GameView extends JDialog {
         });
         countryList1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                System.out.println("Selected country" + countryList1.getSelectedValue());
+                //System.out.println("Selected country" + countryList1.getSelectedValue());
                 Country selectedCountry = MapModel.getCountryObj(countryList1.getSelectedValue().trim(), GameMap.getInstance());
-                GameView.displayLog("Selected country " + selectedCountry.getCountryName() + "\n" + "number of Armies" + selectedCountry.getCurrentArmiesDeployed() + "\n" + selectedCountry.getBelongsToPlayer().getName());
+                if (selectedCountry != null) {
+                    GameView.displayLog("Selected country " + selectedCountry.getCountryName() + "\n" + "number of Armies" + selectedCountry.getCurrentArmiesDeployed() + "\n" + selectedCountry.getBelongsToPlayer().getName());
+                }
                 countryDisplay2.removeAllElements();
                 List<Country> neighbours = GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(countryList1.getSelectedValue()));
                 for (Country country : neighbours) {
@@ -473,5 +469,33 @@ public class GameView extends JDialog {
         countryInfoPanel.add(countryScrollPane2, c);
 
         return countryInfoPanel;
+    }
+    /**
+     * Adds the action listeners for the buttons and lists.
+     **/
+    public void addActionListeners(ActionListener evt1) {
+
+        menuBtn.addActionListener(evt1);
+        turnInBtn.addActionListener(evt1);
+        reinforceBtn.addActionListener(evt1);
+        attackBtn.addActionListener(evt1);
+        fortifyBtn.addActionListener(evt1);
+        endTurnBtn.addActionListener(evt1);
+    }
+
+    /**
+     * Passes countryA for the model.
+     * @return the String of the selected value in country A list.
+     **/
+    public String getCountryA() {
+        return countryList1.getSelectedValue();
+    }
+
+    /**
+     * Passes countryB for the model.
+     * @return the String of the selected value in country B list.
+     **/
+    public String getCountryB() {
+        return countryList2.getSelectedValue().toString();
     }
 }

@@ -54,7 +54,7 @@ public class PlayerModel extends Observable{
 	 * @param playerList Current players list 
 	 * @return List of players
 	 */
-	public Player getPlyaerWorldDomination(List<Player> playerList) {
+	public Player getPlayerWorldDomination(List<Player> playerList) {
 		double totalNumberOfCountries=GameMap.getInstance().getCountryAndNeighborsMap().keySet().size();
 		List<Player> updatedPlayerList = new ArrayList<>();
 		DecimalFormat df = new DecimalFormat("#.##");
