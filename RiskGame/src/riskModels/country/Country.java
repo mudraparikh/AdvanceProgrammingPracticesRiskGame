@@ -68,20 +68,22 @@ public class Country {
     }
 
     /**
-     * Overiding hashcode method.
+     * Overriding hashCode method.
      * 
      */
     @Override
     public int hashCode() {
         return this.countryName.hashCode();
     }
+    
     /**
      * getter method for player who own the country
-     * @return player object
+     * @return belongsToPlayer owner of the country (player object)
      */
     public Player getBelongsToPlayer() {
         return belongsToPlayer;
     }
+    
     /**
      * setter method to assign country to player
      * @param belongsToPlayer player object

@@ -19,10 +19,10 @@ public class GameListController implements ListSelectionListener {
     @Override
     public void valueChanged(ListSelectionEvent listSelectionEvent) {
         System.out.println("Value changed method called !");
-        if (!listSelectionEvent.getValueIsAdjusting()) {
+        /*if (!listSelectionEvent.getValueIsAdjusting()) {
             if (gameView.getCountryAIndex() != -1) {
                 gamePlayModel.setCountryASelection(gameView.getCountryA().replaceAll("[0-9]", "").replaceAll("\\-", ""));
             }
-        }
+        }*/
     }
 }
