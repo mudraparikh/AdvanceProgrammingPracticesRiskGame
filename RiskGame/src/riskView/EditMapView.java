@@ -81,9 +81,13 @@ public class EditMapView extends java.awt.Frame {
 	GameMap gameMap = GameMap.getInstance();
 	MapModel mapModel = new MapModel();
 
+	/**
+	 * Constructor
+	 */
 	public EditMapView() {
 		initMapComponents();
 	}
+	
 	/**
      * This continent method is used to edit map by "Add" or "Remove" functionality Continents from a Map
      */
@@ -173,10 +177,10 @@ public class EditMapView extends java.awt.Frame {
 		labelCountry.setText("Enter Country name :");
 		button2.setText("OK");
 		
-		/**
-	     * The following loops display the list of continents and the countries
-	     * by accessing the values from the gameMap object of the gameMap class
-	     */
+		/*
+	    The following loops display the list of continents and the countries
+	    by accessing the values from the gameMap object of the gameMap class
+	    */ 
 		for (int i = 0; i < gameMap.getContinentList().size(); i++)
 			continentDisplay1.addElement(gameMap.getContinentList().get(i).getContinentName());
 
@@ -252,7 +256,7 @@ public class EditMapView extends java.awt.Frame {
 	}
 	
 	/**
-     * This initMapComponents is used to initialize the components usedin EditMapView class
+     * This initMapComponents is used to initialize the components used in EditMapView class
      */
 	private void initMapComponents() {
 		label1.setText("Click on the Button to Add/Remove Continent/Country/Territory from Map  ");

@@ -15,6 +15,7 @@ public class Launcher extends java.awt.Frame {
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    
     /**
      * This method calls the initMenuComponents method to initialize Launcher components.
      */
@@ -24,6 +25,7 @@ public class Launcher extends java.awt.Frame {
         jButton1.setEnabled(true);
         setLocationRelativeTo(null);
     }
+    
     /**
      * This main method creates an instance of the startGame.
      * @param args[] arguments  to run main method
@@ -36,6 +38,9 @@ public class Launcher extends java.awt.Frame {
         });
     }
 
+    /**
+     * This method is used to generate buttons 
+     */
     private void initMenuComponents() {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
