@@ -78,7 +78,7 @@ public class Country {
     
     /**
      * getter method for player who own the country
-     * @return player object
+     * @return belongsToPlayer owner of the country (player object)
      */
     public Player getBelongsToPlayer() {
         return belongsToPlayer;

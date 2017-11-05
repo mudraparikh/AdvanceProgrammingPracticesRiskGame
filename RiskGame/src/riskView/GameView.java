@@ -100,11 +100,7 @@ public class GameView extends JDialog{
     private ImageIcon mapImageIcon;
     private JTextArea printTextArea;
 	private DefaultCaret caret;
-	
 
-	/**
-	 * Constructs the Risk game board.
-	 **/
 	public GameView() throws IOException {
 		
 		setTitle("Risk Game");

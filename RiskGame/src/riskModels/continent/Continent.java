@@ -52,7 +52,10 @@ public class Continent {
     public int hashCode() {
         return this.continentName.hashCode();
     }
-
+	/**
+	 * This method will return continent name
+	 * @return name of the continent (String format)
+	 */
     public String getContinentName() {
         return continentName;
     }
