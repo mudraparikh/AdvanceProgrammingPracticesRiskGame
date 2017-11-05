@@ -2,6 +2,8 @@ package riskModels.dice;
 
 import java.util.Random;
 
+import riskView.GameView;
+
 public class DiceModel {
 int numberofDice; //number of Dice user wants to roll 
 int[] diceResult; //the dice result example : first dice roll result will be stored in diceResult[0]
@@ -36,7 +38,7 @@ public static DiceModel gettheDiceResult(int numberOfDice) {
 		dicemodel.setDiceRolled(false);
 		return dicemodel;
 	}
-	
+	GameView.displayLog("Dice Rolling");
 	int[] diceResult = new int[numberOfDice];
 	for(int counter=0;counter<numberOfDice;counter++) {
 		Random random = new Random();
