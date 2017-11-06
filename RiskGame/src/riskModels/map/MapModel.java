@@ -307,7 +307,7 @@ public class MapModel {
 	 * @param c2 country 2
 	 * @return true if countries  are direct adjacent else false
 	 */
-    private boolean isNeighbour(Country c1, Country c2) {
+    public boolean isNeighbour(Country c1, Country c2) {
     	if(GameMap.getInstance().getCountryAndNeighborsMap().get(c1)!=null) {
     		return (GameMap.getInstance().getCountryAndNeighborsMap().get(c1).contains(c2));
     	}
