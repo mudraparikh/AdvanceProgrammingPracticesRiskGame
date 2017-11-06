@@ -4,16 +4,14 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -95,7 +93,7 @@ public class GameView extends JDialog{
 	private GameListModel countryBListModel;
 	
 	private static JTextArea printTextArea;
-	private static JTextArea printTextAreaFor;
+	private static JTextArea TextAreaForMapPanel;
 	public static JTextArea dominationTextArea;
 	public static JTextArea phaseViewTextArea;
 
@@ -338,12 +336,12 @@ public class GameView extends JDialog{
 static JPanel mapPanel() throws IOException {
 	mapPanel = new JPanel();
 	mapPanel.setLayout(new GridLayout(1, 1, 5, 5));
-    printTextAreaFor = new JTextArea();
-	System.out.println(printTextAreaFor);
-	printTextAreaFor.setFocusable(false);
-	printTextAreaFor.setLineWrap(true);
-	printTextAreaFor.setWrapStyleWord(true);
-	caret = (DefaultCaret)printTextAreaFor.getCaret();
+    TextAreaForMapPanel = new JTextArea();
+	System.out.println(TextAreaForMapPanel);
+	TextAreaForMapPanel.setFocusable(false);
+	TextAreaForMapPanel.setLineWrap(true);
+	TextAreaForMapPanel.setWrapStyleWord(true);
+	caret = (DefaultCaret)TextAreaForMapPanel.getCaret();
 	caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 	
 	StringBuilder stringBuilder = new StringBuilder();
@@ -362,8 +360,8 @@ static JPanel mapPanel() throws IOException {
 	
 	}
 	
-	printTextAreaFor.setText(stringBuilder.toString());
-	mapScrollPane = new JScrollPane(printTextAreaFor);
+	TextAreaForMapPanel.setText(stringBuilder.toString());
+	mapScrollPane = new JScrollPane(TextAreaForMapPanel);
 	mapScrollPane.setPreferredSize(new Dimension(675, 690));
 	mapPanel.add(mapScrollPane);
 	mapScrollPane.repaint();
@@ -430,9 +428,7 @@ private JPanel countryInfoPanel() {
 			 if(c.getBelongsToContinent().equalsIgnoreCase(continentList.getSelectedValue())) {
 				 countryDisplay1.addElement(c.getCountryName());
 			 }
-			
-		 }
-				
+		  }
 		}
 	});
 	 countryList1.addMouseListener(new MouseAdapter() {
@@ -510,5 +506,28 @@ public static void displayLog(String logDetail) {
 	StringBuilder stringBuid = new StringBuilder(existingDetails);
 	printTextArea.setText("\n"+stringBuid.append(logDetail)+"\n");
 	
+}
+/**
+ * This method will update view for the map panel . 
+ * Map Panel holds the details of the continent ,Country , Number of Armies and Owner information
+ */
+public static void updateMapPanel() {
+	StringBuilder stringBuilder = new StringBuilder();
+	for(Continent continent: GameMap.getInstance().getContinentList()) {
+		stringBuilder.append("----------------------------");
+		stringBuilder.append(continent.getContinentName());
+		stringBuilder.append("----------------------------"+"\n");
+		for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet())
+		{
+			if(country.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
+				stringBuilder.append(country.getCountryName()+"  ");
+				stringBuilder.append("Armies"+"  "+country.getCurrentArmiesDeployed()+"  ");
+				stringBuilder.append(country.getBelongsToPlayer().getName()+"\n");
+			}
+		}
+	
+	}
+	Date date = new Date();
+	TextAreaForMapPanel.setText(stringBuilder.toString()+"\n Updated:"+date.toString());
 }
 }
