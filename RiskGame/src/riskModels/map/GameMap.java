@@ -51,7 +51,7 @@ public class GameMap {
 
     /** 
      * setter method checks is the map is correct and then assigns map 
-     * @param isCorrectMap
+     * @param isCorrectMap boolean value
      */
     public void setCorrectMap(boolean isCorrectMap) {
         this.isCorrectMap = isCorrectMap;

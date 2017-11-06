@@ -4,25 +4,61 @@ import java.util.Random;
 
 import riskView.GameView;
 
+/**
+ * Dice Model class that will hold the properties of dices
+ * 
+ * @author prashantp95
+ *
+ */
 public class DiceModel {
 int numberofDice; //number of Dice user wants to roll 
 int[] diceResult; //the dice result example : first dice roll result will be stored in diceResult[0]
 boolean isDiceRolled; // check if dice rolled  
+
+/**
+ * getter method says whether dice has been rolled or not
+ * @return true if dice is rolled; otherwise false
+ */
 public boolean isDiceRolled() {
 	return isDiceRolled;
 }
+
+/**
+ * setter method to assign true or false for dice rolled
+ * @param isDiceRolled boolean value
+ */
 public void setDiceRolled(boolean isDiceRolled) {
 	this.isDiceRolled = isDiceRolled;
 }
+
+/**
+ * getter method gives info of how many dices has to be rolled
+ * @return value of number of dices
+ */
 public int getNumberofDice() {
 	return numberofDice;
 }
+
+/**
+ * setter method assigns how many dices have to be rolled
+ * @param numberofDice count of dices rolled
+ */
 public void setNumberofDice(int numberofDice) {
 	this.numberofDice = numberofDice;
 }
+
+/**
+ * getter method give the result of played dice
+ * @return value of the dice
+ */
 public int[] getDiceResult() {
 	return diceResult;
 }
+
+/**
+ * setter method assigns the value of dices result
+ * @param diceResult value obtained after dices rolled
+ */
 public void setDiceResult(int[] diceResult) {
 	this.diceResult = diceResult;
 }

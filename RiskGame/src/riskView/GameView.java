@@ -102,10 +102,10 @@ public class GameView extends JDialog{
     private ImageIcon mapImageIcon; 
 	private static DefaultCaret caret;
 	
-
-	/*
-	 * Constructs the Risk game board.
-	 */
+/**
+ * this method Constructs the Risk game board.
+ * @throws IOException when we have input  output problems
+ */
 	public GameView() throws IOException {
 		
 		setTitle("Risk Game");
@@ -161,11 +161,18 @@ public class GameView extends JDialog{
 		
 		pack();
 	}
+	
+	/**
+	 * constructor method 
+	 * @param update string object  
+	 */
 	public GameView(String update) {
 		
 	}
-	/*
-	 * The panel for the logger message display and game play buttons.
+	
+	/**
+	 * This method messagePanel for the logger message display and game play buttons.
+	 * @return string of logger message 
 	 */
 	private JPanel messagePanel() {
 	
@@ -237,8 +244,9 @@ public class GameView extends JDialog{
 		return messagePanel;
 	}
 	
-	/*
-	 * The panel for the logger message display and game play buttons.
+	/**
+	 * this method actionPanel for the logger message display and game play buttons.
+	 * @return action Panel info
 	 */
 	private JPanel actionPanel() {
 		actionPanel = new JPanel();
@@ -321,9 +329,12 @@ public class GameView extends JDialog{
 		
 		return actionPanel;
 	}
-  /*
-   * The panel for the map and load display as per users choice.
-  */
+	
+/**
+ * This method map panel for the map and load display as per users choice.
+ * @return value of map panel
+ * @throws IOException when we have input output problems
+ */
 static JPanel mapPanel() throws IOException {
 	mapPanel = new JPanel();
 	mapPanel.setLayout(new GridLayout(1, 1, 5, 5));
@@ -359,9 +370,10 @@ static JPanel mapPanel() throws IOException {
 	return mapPanel;
 }
 
-/*
- * The panel to display the list of continents, countries and their adjacent territories.
-*/
+	/**
+	 * The panel to display the list of continents, countries and their adjacent territories.
+	 * @return countryInfoPanel countries object
+	 */
 private JPanel countryInfoPanel() {
 	countryInfoPanel = new JPanel();
 	countryInfoPanel.setPreferredSize(new Dimension(250,690));

@@ -52,6 +52,7 @@ public class Continent {
     public int hashCode() {
         return this.continentName.hashCode();
     }
+    
 	/**
 	 * This method will return continent name
 	 * @return name of the continent (String format)
@@ -60,6 +61,10 @@ public class Continent {
         return continentName;
     }
 
+    /**
+     * setter method assigns the continent name
+     * @param continentName continent object
+     */
     public void setContinentName(String continentName) {
         this.continentName = continentName;
     }
@@ -72,22 +77,42 @@ public class Continent {
         return memberCountriesList;
     }
 
+    /**
+     * setter method assigns countries list to the player
+     * @param memberCountriesList individual player countries list
+     */
     public void setMemberCountriesList(List<Country> memberCountriesList) {
         this.memberCountriesList = memberCountriesList;
     }
 
+    /**
+     * getter method gives total value of territories assigned to the player
+     * @return value of total number of territories assigned to the player
+     */
     public int getNumberOfTerritories() {
         return numberOfTerritories;
     }
 
+    /**
+     * setter method assigns number of territories to the player
+     * @param numberOfTerritories count for individual player
+     */
     public void setNumberOfTerritories(int numberOfTerritories) {
         this.numberOfTerritories = numberOfTerritories;
     }
 
+    /**
+     * getter method gives the control value 
+     * @return value of control value
+     */
     public int getControlValue() {
         return controlValue;
     }
 
+    /**
+     * setter method assigns control value
+     * @param controlValue player object
+     */
     public void setControlValue(int controlValue) {
         this.controlValue = controlValue;
     }
@@ -100,6 +125,10 @@ public class Continent {
         return color;
     }
 
+    /**
+     * setter method to assign color to the continent
+     * @param color for the continent
+     */
     public void setColor(Color color) {
         this.color = color;
     }

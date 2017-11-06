@@ -425,7 +425,7 @@ public class MapModel {
     }
     /**
      * This method will remove Continent from the map 
-     * @param continent
+     * @param continent name of the continent
      */
     public void removeContinent(Continent continent) {
     	System.out.println("Removing Continent Name"+continent.getContinentName());
