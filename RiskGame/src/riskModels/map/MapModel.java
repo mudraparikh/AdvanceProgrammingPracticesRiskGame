@@ -1,11 +1,24 @@
 package riskModels.map;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import riskModels.continent.Continent;
 import riskModels.country.Country;
+import riskModels.player.Player;
+import riskView.GameView;
 import util.RiskGameUtil;
-
-import java.io.*;
-import java.util.*;
 
 /**
  * This class will perform operation related to MapObj created from MapFile
@@ -452,8 +465,119 @@ public class MapModel {
     	}
     
     }
-
     /**
+     * This method will update number Of Armies in GameMap singleton object.
+     * This method will also update the number of Armies at all places where given country acting as a neighbor 
+     * @param countryName name of the country where you want to update number of armies
+     * @param updatedNumberOfArmies updated number of armies
+     */
+    public static void updateArmiesDeployed(String countryName,int updatedNumberOfArmies) {
+    	
+    	List<Country> countryList=GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(countryName));
+    	List<Country> countryToBeUpdated = new ArrayList<>();;
+    	Country keyCountry =null;
+    	// find given country from hashmap and update armies where given country is acting as key in hashmap
+    	for(Country country:GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+    		if(country.getCountryName().equalsIgnoreCase(countryName)) {
+    			 keyCountry = country;
+    			 keyCountry.setCurrentArmiesDeployed(updatedNumberOfArmies);
+    		}
+    	}
+    	
+    	//keycountry is found ,now update it in the hashmap
+    	
+    	if(keyCountry!=null) {
+    		GameMap.getInstance().getCountryAndNeighborsMap().remove(keyCountry);
+    		GameMap.getInstance().getCountryAndNeighborsMap().put(keyCountry, countryList);
+    	
+    		//Get the other country keys where given country is acting as neighbor .store in the list
+    		
+    		for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+    			if(!country.getCountryName().equalsIgnoreCase(keyCountry.getCountryName())) {
+    				List<Country> neighbors=GameMap.getInstance().getCountryAndNeighborsMap().get(country);
+    				for(Country neighbor: neighbors) {
+    					if(neighbor.getCountryName().equalsIgnoreCase(countryName)) {
+    						System.out.println(neighbor.getCountryName()+"Neighbor Armies" +neighbor.getCurrentArmiesDeployed());
+    						countryToBeUpdated.add(country); //list obtained
+    					}
+    				}
+    			}
+    		}
+    	}
+    	// now update numberof Armies where given country acting as neighbor
+    	HashMap<Country,List<Country>> updatedMap = new HashMap<>();
+    	for(int i=0;i<countryToBeUpdated.size();i++) {
+    		List<Country> updatedNeighborList = new ArrayList<>();
+    		for(Country country : GameMap.getInstance().getCountryAndNeighborsMap().get(countryToBeUpdated.get(i))) {
+    			if(country.getCountryName().equals(countryName)) {
+    				country.setCurrentArmiesDeployed(updatedNumberOfArmies);
+    			}
+    			updatedNeighborList.add(country); // updated the number of armies where given country acting as neighbor
+    		}
+    		updatedMap.put(countryToBeUpdated.get(i), updatedNeighborList); 
+    	}
+    	
+    	// update the GameMap singleton object now
+    	for (Map.Entry<Country, List<Country>> pair : updatedMap.entrySet()) {
+            Country country = pair.getKey();
+            List<Country> neighbor = pair.getValue();
+            GameMap.getInstance().getCountryAndNeighborsMap().remove(country);
+            GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbor);
+         }
+    	GameView.updateMapPanel();
+    }
+    /**
+     * This method will update Country owner in GameMap singleton object.
+     * This method will also update the Country Owner at all places where given country acting as a neighbor 
+     * @param countryName name of the country where you update owner
+     * @param player new owner 
+     */
+    public static void updateOwnerInMapPanel(String countryName,Player player) {
+    	// TODO Make some reusable components to do updates in GameMap Singleton object
+    	Country keyCountry = MapModel.getCountryObj(countryName, GameMap.getInstance());
+    	List<Country> countryToBeUpdated = new ArrayList<>();
+    	// find given country from hashmap and update owner where given country is acting as key in hashmap
+    	List<Country> neighbors = GameMap.getInstance().getCountryAndNeighborsMap().get(keyCountry);
+    	keyCountry.setBelongsToPlayer(player);
+    	//keycountry is found ,now update it in the hashmap
+    	GameMap.getInstance().getCountryAndNeighborsMap().remove(keyCountry);
+    	GameMap.getInstance().getCountryAndNeighborsMap().put(keyCountry, neighbors);
+    	
+    	for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+			if(!country.getCountryName().equalsIgnoreCase(keyCountry.getCountryName())) {
+				List<Country> neighbor=GameMap.getInstance().getCountryAndNeighborsMap().get(country);
+				for(Country neighborCountry: neighbors) {
+					if(neighborCountry.getCountryName().equalsIgnoreCase(countryName)) {
+						System.out.println(neighborCountry.getBelongsToPlayer().getName()+"Neighbor Armies" +neighborCountry.getCurrentArmiesDeployed());
+						countryToBeUpdated.add(country); //list obtained
+					}
+				}
+			}
+		}
+    	// now update numberof Armies where given country acting as neighbor
+    	HashMap<Country,List<Country>> updatedMap = new HashMap<>();
+    	for(int i=0;i<countryToBeUpdated.size();i++) {
+    		List<Country> updatedNeighborList = new ArrayList<>();
+    		for(Country country : GameMap.getInstance().getCountryAndNeighborsMap().get(countryToBeUpdated.get(i))) {
+    			if(country.getCountryName().equals(countryName)) {
+    				country.setBelongsToPlayer(player);
+    			}
+    			updatedNeighborList.add(country); // updated the number of armies where given country acting as neighbor
+    		}
+    		updatedMap.put(countryToBeUpdated.get(i), updatedNeighborList); 
+    	}
+    	// update the GameMap singleton object now
+    	for (Map.Entry<Country, List<Country>> pair : updatedMap.entrySet()) {
+            Country country = pair.getKey();
+            List<Country> neighbor = pair.getValue();
+            GameMap.getInstance().getCountryAndNeighborsMap().remove(country);
+            GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbor);
+         }
+    	GameView.updateMapPanel();
+    }
+
+
+	/**
      * This method will create .map file based on input provided from user
      *
      * @param graphMap Details provided from the user
