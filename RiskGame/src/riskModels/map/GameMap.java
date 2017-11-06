@@ -157,7 +157,7 @@ public class GameMap {
 
     /**
      *
-     * @param continentName
+     * @param continentName Name of the continent.
      * @return Countries in the continent
      */
     public List<Country> getCountriesByContinent(String continentName) {
@@ -168,5 +168,15 @@ public class GameMap {
             }
         }
         return continentCountry;
+    }
+
+    /**
+     * Gets the list of countries in the map
+     * @return Countries in the map
+     */
+    public List<Country> getCountries(){
+        List<Country> countries = new ArrayList<>();
+        countries.addAll(getCountryAndNeighborsMap().keySet());
+        return countries;
     }
 }

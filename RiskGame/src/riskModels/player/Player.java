@@ -1,6 +1,7 @@
 package riskModels.player;
 
 import riskModels.cards.Card;
+import riskModels.cards.Hand;
 import riskModels.country.Country;
 
 import java.awt.*;
@@ -18,6 +19,8 @@ public class Player {
     public List<Country> assignedCountries;
     public Card cards;
     public Color colors;
+    private int turnInCount;
+    private Hand hand;
     public double domination; // player's domination in game based on number of countries out of total countries player own
 
     public List<Player> getPlayerList() {
@@ -30,18 +33,14 @@ public class Player {
 
     public List<Player> playerList;
 
-    public Player(String name) {
-        super();
-        this.name = name;
-        assignedCountries = new ArrayList<>();
-        cards = new Card();
-    }
-
     public Player(String name, Color colors) {
         super();
         this.name = name;
         assignedCountries = new ArrayList<>();
         this.colors = colors;
+        hand = new Hand();
+
+        turnInCount = 0;
     }
 
     public Player(List<Player> playerList){
@@ -68,14 +67,6 @@ public class Player {
         this.name = name;
     }
 
-    public String getAlias() {
-        return alias;
-    }
-
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
     public int getTotalArmies() {
         return totalArmies;
     }
@@ -90,22 +81,6 @@ public class Player {
 
     public void setAssignedCountries(List<Country> assignedCountries) {
         this.assignedCountries = assignedCountries;
-    }
-
-    public Card getCards() {
-        return cards;
-    }
-
-    public void setCards(Card cards) {
-        this.cards = cards;
-    }
-
-    public Color getColors() {
-        return colors;
-    }
-
-    public void setColors(Color colors) {
-        this.colors = colors;
     }
 
     public void addArmy(int n) {
@@ -124,5 +99,41 @@ public class Player {
 		this.domination = domination;
 	}
 
+    /**
+     * Adds a risk card to the players hand
+     **/
+    public void addRiskCard(Card riskCard) {
+
+        hand.add(riskCard);
+    }
+
+    /**
+     * Removed a set of risk cards from the players hand to reflect risk cards being turned in
+     **/
+    public void removeCards(int[] cardsTurnedInIndex) {
+
+        hand.removeCardsFromHand(cardsTurnedInIndex[0], cardsTurnedInIndex[1], cardsTurnedInIndex[2]);
+    }
+
+    public int getTurnInCount() {
+
+        turnInCount++;
+        return turnInCount;
+    }
+
+    public ArrayList<Card> getHand() {
+
+        return hand.getCards();
+    }
+
+    public Hand getHandObject() {
+
+        return hand;
+    }
+
+    public boolean mustTurnInCards() {
+
+        return hand.mustTurnInCards();
+    }
 }
 

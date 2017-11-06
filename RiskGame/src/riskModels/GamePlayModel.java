@@ -1,5 +1,6 @@
 package riskModels;
 
+import riskModels.cards.Deck;
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.dice.Dice;
@@ -31,6 +32,7 @@ public class GamePlayModel extends Observable {
     private boolean hasCountryCaptured;
 
     private int playerIndex = 0;
+    private int i;
     private MapModel mapModel;
     private GameMap gameMap;
     private List<Player> playerList;
@@ -48,6 +50,7 @@ public class GamePlayModel extends Observable {
     private Country countryA;
     private Country countryB;
     private Dice dice;
+    private Deck deck;
 
 
     // Game APIs
@@ -77,6 +80,9 @@ public class GamePlayModel extends Observable {
     public void initData(File selectedFile, int playerCount) {
         if (selectedFile.getName().endsWith("map") && playerCount > 0) {
             createGameMapFromFile(selectedFile);
+            // Creates deck
+            System.out.println("Populating deck...");
+            deck = new Deck((ArrayList<Country>) gameMap.getCountries());
             initializePlayerData(playerCount);
             attachModelAndObservers();
             this.playerCount = playerCount;
@@ -478,6 +484,22 @@ public class GamePlayModel extends Observable {
         GameView.displayLog("To begin: Start reinforcement phase by placing army in your designated country\n");
         nextPlayerTurn();
     }
+
+    /**
+     * Creates and returns the information for the cardsList in the BoardView.
+     * @return a list of Strings to be displayed in the cardsList.
+     **/
+    protected ArrayList<String> getCardsList() {
+
+        list = new ArrayList<String>();
+
+        for (i = 0; i < currentPlayer.getHand().size(); i++) {
+
+            list.add(currentPlayer.getHand().get(i).getName());
+        }
+        return list;
+    }
+
 
     public ArrayList<String> getSelectedCountryList() {
         list = new ArrayList<>();

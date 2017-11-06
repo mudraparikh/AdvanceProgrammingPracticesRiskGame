@@ -1,5 +1,7 @@
 package riskView;
 
+import riskModels.GameListModel;
+import riskModels.GamePlayModel;
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
@@ -68,6 +70,8 @@ public class GameView extends JDialog {
     private DefaultListModel<String> countryDisplay2;
     private GameMap gameMap;
     private MapModel mapModel;
+    private GamePlayModel model;
+    private GameListModel cardsListModel;
 
 
     /**
@@ -226,6 +230,11 @@ public class GameView extends JDialog {
 
         menuBtn = new JButton("Menu");
         turnInBtn = new JButton("Turn In Cards");
+        cardsListModel = new GameListModel(model,"cards");
+
+
+
+        //model.addObserver((GameListModel)cardsListModel);
 
         cardsList = new JList();
         cardsList.setLayoutOrientation(JList.VERTICAL_WRAP);
