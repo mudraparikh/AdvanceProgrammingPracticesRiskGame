@@ -4,7 +4,6 @@ import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
-import riskModels.player.Player;
 import riskModels.player.PlayerModel;
 
 import javax.swing.*;
@@ -82,8 +81,6 @@ public class GameView extends JDialog {
 
         gameMap = GameMap.getInstance();
         mapModel = new MapModel();
-        Player player = new Player();
-        //  GridBagLayout allows a flexible sizing of components
         mainLayout = new GridBagLayout();
         setLayout(mainLayout);
 
@@ -157,7 +154,6 @@ public class GameView extends JDialog {
         messagePanel.setLayout(messageLayout);
 
         printTextArea = new JTextArea();
-        System.out.println(printTextArea);
         printTextArea.setFocusable(false);
         printTextArea.setLineWrap(true);
         printTextArea.setWrapStyleWord(true);
@@ -308,6 +304,7 @@ public class GameView extends JDialog {
      * The panel for the map and load display as per users choice.
     */
     public JPanel mapPanel() throws IOException {
+        System.out.println("Map Panel called!!!");
         mapPanel = new JPanel();
         mapPanel.setLayout(new GridLayout(1, 1, 5, 5));
         printTextAreaFor = new JTextArea();
@@ -325,18 +322,19 @@ public class GameView extends JDialog {
             for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
                 if (country.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
                     stringBuilder.append(country.getCountryName() + "  ");
-                    stringBuilder.append("Armies" + "  " + country.getCurrentArmiesDeployed() + "  ");
+                    stringBuilder.append(" - " + country.getCurrentArmiesDeployed() + " - ");
                     stringBuilder.append(country.getBelongsToPlayer().getName() + "\n");
                 }
             }
 
         }
-
+        System.out.println(stringBuilder.toString());
         printTextAreaFor.setText(stringBuilder.toString());
         mapScrollPane = new JScrollPane(printTextAreaFor);
         mapScrollPane.setPreferredSize(new Dimension(675, 690));
-        mapPanel.add(mapScrollPane);
+        mapScrollPane.revalidate();
         mapScrollPane.repaint();
+        mapPanel.add(mapScrollPane);
         return mapPanel;
     }
 
@@ -470,6 +468,7 @@ public class GameView extends JDialog {
 
         return countryInfoPanel;
     }
+
     /**
      * Adds the action listeners for the buttons and lists.
      **/
@@ -485,6 +484,7 @@ public class GameView extends JDialog {
 
     /**
      * Passes countryA for the model.
+     *
      * @return the String of the selected value in country A list.
      **/
     public String getCountryA() {
@@ -493,6 +493,7 @@ public class GameView extends JDialog {
 
     /**
      * Passes countryB for the model.
+     *
      * @return the String of the selected value in country B list.
      **/
     public String getCountryB() {
