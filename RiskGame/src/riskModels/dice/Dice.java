@@ -29,7 +29,6 @@ public class Dice {
             dicemodel.setDiceRolled(false);
             return dicemodel;
         }
-        GameView.displayLog("Dice Rolling");
         int[] diceResult = new int[numberOfDice];
         for (int counter = 0; counter < numberOfDice; counter++) {
             Random random = new Random();

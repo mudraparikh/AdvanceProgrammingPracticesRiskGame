@@ -61,7 +61,7 @@ public class GameView extends JDialog {
     private String endTurnBtnName = "endTurnBtn";
     private JList<String> continentList;
     private JList<String> countryList1;
-    private JList countryList2;
+    private JList<String> countryList2;
     private JList cardsList;
     private DefaultListModel<String> continentDisplay;
     private DefaultListModel<String> countryDisplay1;
@@ -304,7 +304,6 @@ public class GameView extends JDialog {
      * The panel for the map and load display as per users choice.
     */
     public JPanel mapPanel() throws IOException {
-        System.out.println("Map Panel called!!!");
         mapPanel = new JPanel();
         mapPanel.setLayout(new GridLayout(1, 1, 5, 5));
         printTextAreaFor = new JTextArea();
@@ -328,7 +327,6 @@ public class GameView extends JDialog {
             }
 
         }
-        System.out.println(stringBuilder.toString());
         printTextAreaFor.setText(stringBuilder.toString());
         mapScrollPane = new JScrollPane(printTextAreaFor);
         mapScrollPane.setPreferredSize(new Dimension(675, 690));
@@ -353,7 +351,7 @@ public class GameView extends JDialog {
 
 
         countryDisplay1 = new DefaultListModel<>();
-        countryList1 = new JList(countryDisplay1);
+        countryList1 = new JList<>(countryDisplay1);
         countryList1.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         countryList1.setLayoutOrientation(JList.VERTICAL_WRAP);
         countryList1.setVisibleRowCount(30);
@@ -363,7 +361,7 @@ public class GameView extends JDialog {
             countryDisplay1.addElement(c.getCountryName());
 
         countryDisplay2 = new DefaultListModel<>();
-        countryList2 = new JList(countryDisplay2);
+        countryList2 = new JList<>(countryDisplay2);
         countryList2.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         countryList2.setLayoutOrientation(JList.VERTICAL_WRAP);
         countryList2.setVisibleRowCount(30);
@@ -378,7 +376,7 @@ public class GameView extends JDialog {
         }
 
         continentDisplay = new DefaultListModel<>();
-        continentList = new JList(continentDisplay);
+        continentList = new JList<>(continentDisplay);
         continentList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         continentList.setLayoutOrientation(JList.VERTICAL_WRAP);
         continentList.setVisibleRowCount(50);

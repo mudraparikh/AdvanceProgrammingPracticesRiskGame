@@ -29,6 +29,7 @@ public class GamePlayModel extends Observable {
     private boolean canReinforce;
     private boolean canAttack;
     private boolean canFortify;
+    private boolean hasCountryCaptured;
 
     private int playerIndex = 0;
     private MapModel mapModel;
@@ -38,8 +39,6 @@ public class GamePlayModel extends Observable {
     private Player currentPlayer;
     private int currentPlayerReinforceArmies;
     private int playerCount;
-    private int attackerArmies;
-    private int defenderArmies;
     private int attackerLosses;
     private int defenderLosses;
     private int attackerDice;
@@ -50,6 +49,7 @@ public class GamePlayModel extends Observable {
     private Country countryA;
     private Country countryB;
     private Dice dice;
+
 
     // Game APIs
 
@@ -202,8 +202,8 @@ public class GamePlayModel extends Observable {
                                 GameView.displayLog("You do not have any armies left to reinforce");
                             }
                         }
-                        gameView.mapPanel().revalidate();
-                        gameView.mapPanel().repaint();
+                        gameView.revalidate();
+                        gameView.repaint();
 
                     } else if (currentPlayer.getTotalArmies() == 0) {
                         canAttack = true;
@@ -213,8 +213,6 @@ public class GamePlayModel extends Observable {
 
                 } catch (NumberFormatException e) {
                     GameView.displayLog("System Error or Exception is thrown for reinforce method");
-                } catch (IOException e) {
-                    GameView.displayLog("Something went wrong repainting the Map Panel");
                 }
             }
         }
@@ -231,17 +229,14 @@ public class GamePlayModel extends Observable {
      * @param country2 is a String of the point B country.
      **/
     public void attack(String country1, String country2, GameView gameView) {
-        System.out.println(country1);
-        System.out.println(country2);
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
-        System.out.println(canAttack);
         if (canAttack) {
 
             assert countryB != null;
             if (countryA.getCurrentArmiesDeployed() > 1) {
                 //Check if at-least 2 armies are there on the attacking country.
-                if (!currentPlayer.equals(countryB.getBelongsToPlayer())) {
+                if (!currentPlayer.equals(countryB.getBelongsToPlayer()) && currentPlayer.equals(countryA.getBelongsToPlayer())) {
                     // Check if another country is occupied by an opponent and not by the currentPlayer.
                     if (checkAdjacency(country1, country2)) {
                         // Check if countryA is adjacent to countryB
@@ -264,42 +259,39 @@ public class GamePlayModel extends Observable {
                                     countryA.getBelongsToPlayer().getName() + ", is attacking " + country1 + " from " + country2 + "! How many dice will you roll?",
                                     "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
                                     selectOptions[0]);
-
-                            if (attackerDice < 1 || attackerDice > 3 || attackerDice >= countryA.getCurrentArmiesDeployed()) {
-                                throw new IllegalArgumentException();
-                            }
-
                         } catch (NumberFormatException e) {
                             // Error: attacker inputs non-integer
-                            System.out.println("Please pass integer. We are attacking !");
+                           GameView.displayLog("Please pass integer. We are attacking !");
 
                         } catch (IllegalArgumentException e) {
                             // Error: attacker inputs invalid number of dice
-                            System.out.println("Roll 1,2 or 3 dice. You must have at least one more army in your country than the number of dice you roll.");
+                            GameView.displayLog("Roll 1,2 or 3 dice. You must have at least one more army in your country than the number of dice you roll.");
                         }
 
                         attackerRolls = dice.rollDice(attackerDice).getDiceResult();
                         try {
                             // Defender chooses how many dice to roll after attacker
-                            defenderDice = Integer.parseInt(JOptionPane.showInputDialog(countryB.getBelongsToPlayer().getName() + ", you are defending " + country2 + " from " + countryA.getBelongsToPlayer().getName() + "! How many dice will you roll?"));
-
-                            if (defenderDice < 1 || defenderDice > 2 || defenderDice > countryB.getCurrentArmiesDeployed()) {
-                                throw new IllegalArgumentException();
+                            Integer[] selectOptions = new Integer[getMaxNumberOfDicesForDefender(countryB)];
+                            for (int i = 0; i < getMaxNumberOfDicesForDefender(countryB); i++) {
+                                selectOptions[i] = i + 1;
                             }
-
+                            defenderDice = (Integer) JOptionPane.showInputDialog(gameView,
+                                    countryB.getBelongsToPlayer().getName() + ", you are defending " + country2 + " from " + countryA.getBelongsToPlayer().getName() + "! How many dice will you roll?",
+                                    "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
+                                    selectOptions[0]);
                         } catch (NumberFormatException e) {
                             // Error: defender inputs non-integer
-                            System.out.println("Please enter integer only. You are defending ! ");
+                            GameView.displayLog("Please enter integer only. You are defending ! ");
 
                         } catch (IllegalArgumentException e) {
                             // Error: defender inputs invalid number of dice
-                            System.out.println("Roll either 1 or 2 dice. To roll 2 dice, you must have at least 2 armies on your country.");
+                            GameView.displayLog("Roll either 1 or 2 dice. To roll 2 dice, you must have at least 2 armies on your country.");
                         }
                         defenderRolls = dice.rollDice(defenderDice).getDiceResult();
                         // Rolls arrays have been ordered in descending order. Index 0 = highest pair
                         if (attackerRolls[0] > defenderRolls[0]) {
                             defenderLosses++;
-                        } else if (attackerRolls[0] < defenderRolls[0]) {
+                        } else if (attackerRolls[0] < defenderRolls[0] || attackerRolls[0] == defenderRolls[0]) {
                             attackerLosses++;
                         }
                         // Index 1 = second highest pair
@@ -308,14 +300,19 @@ public class GamePlayModel extends Observable {
                             if (attackerRolls[1] > defenderRolls[1]) {
                                 defenderLosses++;
 
-                            } else if (attackerRolls[1] < defenderRolls[1]) {
+                            } else if (attackerRolls[1] < defenderRolls[1] || attackerRolls[1] == defenderRolls[1]) {
                                 attackerLosses++;
                             }
                         }
                         // Calculate losses
-                        GameView.displayLog("<COMBAT REPORT>");
+                        GameView.displayLog("\n\n<COMBAT REPORT>");
                         countryA.subtractArmy(attackerLosses);
                         countryB.subtractArmy(defenderLosses);
+                        GameView.displayLog("Attacker Losses : "+attackerLosses+" army.");
+                        GameView.displayLog("Defender Losses : "+defenderLosses+ " army.");
+                        GameView.displayLog(countryA.getCountryName()+ "has now "+ countryA.getCurrentArmiesDeployed());
+                        GameView.displayLog(countryB.getCountryName()+ "has now "+ countryB.getCurrentArmiesDeployed());
+                        GameView.displayLog("\n\n");
 
                         // If defending country loses all armies
                         if (countryB.getCurrentArmiesDeployed() < 1) {
@@ -350,13 +347,20 @@ public class GamePlayModel extends Observable {
                                 countryA.subtractArmy(moveArmies);
                                 countryB.addArmy(moveArmies);
                             }
+                            hasCountryCaptured = true;
                         }
                         canReinforce = false;
 
                         //Current Player cannot continue attack phase if none of his countries that have an adjacent country
                         //controlled by another player is containing more than one army
                         //TODO: check this condition.
-
+                        for (Country c : currentPlayer.getAssignedCountries()){
+                            canAttack = false;
+                            if (c.getCurrentArmiesDeployed() > 1){
+                                canAttack = true;
+                                break;
+                            }
+                        }
 
                     } else {
                         GameView.displayLog(country1 + " is not the neighbor of " + country2 + ".");
@@ -370,6 +374,10 @@ public class GamePlayModel extends Observable {
         } else {
             GameView.displayLog("Can not attack right now.");
         }
+    }
+
+    private int getMaxNumberOfDicesForDefender(Country country) {
+        return country.getCurrentArmiesDeployed() >= 2?2:1;
     }
 
     /**
@@ -396,10 +404,12 @@ public class GamePlayModel extends Observable {
             canReinforce = true;
             canAttack = false;
             canFortify = false;
+            hasCountryCaptured = false;
             currentPlayer = playerList.get(playerIndex % playerList.size());
             currentPlayerReinforceArmies = getReinforcementArmyForPlayer(currentPlayer);
             currentPlayer.addArmy(currentPlayerReinforceArmies);
             playerIndex++;
+            GameView.displayLog("\n\n==="+currentPlayer.getName()+" turn's start===");
         }
     }
 
