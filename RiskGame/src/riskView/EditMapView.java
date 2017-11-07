@@ -39,66 +39,43 @@ import java.util.Map.Entry;
 @SuppressWarnings("serial")
 public class EditMapView extends java.awt.Frame {
 
-	
-	private JLabel label = new JLabel();
-	private JLabel label1 = new JLabel();
-	private JLabel label2 = new JLabel();
-	private JLabel labelContinent = new JLabel();
-	private JLabel labelCountry = new JLabel();
-	
-	private JButton btn_continent = new JButton();
-	private JButton btn_country = new JButton();
-	private JButton button1 = new JButton();
-	private JButton button2 = new JButton();
-	//private JButton button3 = new JButton();
-	private JButton addButton = new JButton();
-	private JButton removeButton = new JButton();
-	
-	private JList<String> continentList, continentList1, countryList, countryList2;
-	
-	private DefaultListModel<String> continentDisplay = new DefaultListModel<>();
-	private DefaultListModel<String> continentDisplay1 = new DefaultListModel<>();
-	private DefaultListModel<String> countryDisplay = new DefaultListModel<>();
-	
-	private JFrame frame = new JFrame();
-	private JFrame frameContinent = new JFrame();
-	private JFrame frameCountry = new JFrame();
-	
-	
-	private JScrollPane pane = new JScrollPane();
-	private JScrollPane pane2 = new JScrollPane();
-	private JScrollPane pane3 = new JScrollPane();
-	
-	private JTextField textContinent = new JTextField();
-	private JTextField textCountry = new JTextField();
-	
 	private JFileChooser filechooser = new JFileChooser();
 	private JDialog dialog = new JDialog();
-	
+	private JLabel label = new JLabel();
+	private JLabel label1 = new JLabel();
+	private JButton btn_continent = new JButton();
+	private JButton btn_country = new JButton();
+	private JList<String> continentList,continentList1, countryList;
+	private DefaultListModel<String> continentDisplay = new DefaultListModel<>()
+			,continentDisplay1 = new DefaultListModel<>(), countryDisplay = new DefaultListModel<>();
+	private JFrame frame = new JFrame();
+	private JFrame frameContinent, frameCountry;
+	private JLabel labelContinent, labelCountry;
+	private JTextField textContinent, textCountry;
+	private JButton button1, button2, button3;
+	private JScrollPane pane;
 	String fileName;
 	private int index;
 	Object index1;
 	GameMap gameMap = GameMap.getInstance();
 	MapModel mapModel = new MapModel();
 
-	/**
-	 * Constructor
-	 */
 	public EditMapView() {
 		initMapComponents();
 	}
-	
 	/**
      * This continent method is used to edit map by "Add" or "Remove" functionality Continents from a Map
      */
+
 	private void continent() {
-		
 		continentList = new JList(continentDisplay);
-		pane.add(continentList);
-		addButton.setText("Add Continent");
-		removeButton.setText("Remove Continent");
-		labelContinent.setText("Enter Continent name :");
-		button1.setText("OK");
+		pane = new JScrollPane(continentList);
+		JButton addButton = new JButton("Add Continent");
+		JButton removeButton = new JButton("Remove Continent");
+		JLabel labelContinent = new JLabel("Enter Continent name :");
+		JFrame frameContinent = new JFrame();
+		JTextField textContinent = new JTextField();
+		JButton button1 = new JButton("OK");
 
 		for (int i = 0; i < gameMap.getContinentList().size(); i++)
 			continentDisplay.addElement(gameMap.getContinentList().get(i).getContinentName());
@@ -139,6 +116,7 @@ public class EditMapView extends java.awt.Frame {
 					for (String string : obj) {
 						Continent continent = new Continent(string);
 						continentDisplay.removeElement(string);
+						mapModel.removeContinent(continent);
 					}
 				}
 				continentList.repaint();
@@ -162,27 +140,29 @@ public class EditMapView extends java.awt.Frame {
 
 	private void country() {
 		countryList = new JList(countryDisplay);
-		countryList2 = new JList(countryDisplay);
-		pane.add(countryList);
-		pane3.add(countryList2);
+		JList countryList2 = new JList(countryDisplay);
+		JScrollPane pane = new JScrollPane(countryList);
+		JScrollPane pane3 = new JScrollPane(countryList2);
 
 		for(int i=0; i<continentDisplay.size(); i++)
 			continentDisplay1.addElement(continentDisplay.get(i));
 				
 		continentList1 = new JList(continentDisplay1);
-		pane2.add(continentList1);
-		label2.setText("Click on the respective button to perform tasks");
-		addButton.setText("Add Country");
-		removeButton.setText("Remove Country");
-		labelCountry.setText("Enter Country name :");
-		button2.setText("OK");
+		JScrollPane pane2 = new JScrollPane(continentList1);
+		JLabel label2 = new JLabel("Click on the respective button to perform tasks");
+		JButton addButton = new JButton("Add Country");
+		JButton removeButton = new JButton("Remove Country");
+		JLabel labelCountry = new JLabel("Enter Country name :");
+		JFrame frameCountry = new JFrame();
+		JTextField textCountry = new JTextField();
+		JButton button2 = new JButton("OK");
 		
-		/*
-	    The following loops display the list of continents and the countries
-	    by accessing the values from the gameMap object of the gameMap class
-	    */ 
+		/**
+	     * The following loops display the list of continents and the countries
+	     * by accessing the values from the gameMap object of the gameMap class
+	     */
 		for (int i = 0; i < gameMap.getContinentList().size(); i++)
-			continentDisplay1.addElement(gameMap.getContinentList().get(i).getContinentName());
+			continentDisplay.addElement(gameMap.getContinentList().get(i).getContinentName());
 
 		for (Map.Entry<Country, List<Country>> e : gameMap.getCountryAndNeighborsMap().entrySet()) {
 			countryDisplay.addElement(e.getKey().getCountryName());
@@ -238,6 +218,7 @@ public class EditMapView extends java.awt.Frame {
 						if(mapModel.getCountryObj(string, gameMap) !=null){
 						    mapModel.removeCountry(mapModel.getCountryObj(string, gameMap), gameMap);
                         };
+
 					}
 				}
 				countryList.repaint();
@@ -256,7 +237,7 @@ public class EditMapView extends java.awt.Frame {
 	}
 	
 	/**
-     * This initMapComponents is used to initialize the components used in EditMapView class
+     * This initMapComponents is used to initialize the components usedin EditMapView class
      */
 	private void initMapComponents() {
 		label1.setText("Click on the Button to Add/Remove Continent/Country/Territory from Map  ");
