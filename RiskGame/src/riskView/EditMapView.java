@@ -111,7 +111,7 @@ public class EditMapView extends java.awt.Frame {
 		//This button performs the remove continent operation on the map to be edited.
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (continentList.getSelectedIndex() > 0) {
+				if (continentList.getSelectedIndex() >= 0) {
 					List<String> obj = continentList.getSelectedValuesList();
 					for (String string : obj) {
 						Continent continent = new Continent(string);
@@ -120,7 +120,6 @@ public class EditMapView extends java.awt.Frame {
 					}
 				}
 				continentList.repaint();
-				mapModel.writeMap(gameMap, fileName);
 			}
 		});
 
