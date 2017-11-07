@@ -95,7 +95,6 @@ public class MapModel {
                     continents.setContinentName(ConProperties[0].trim());
                     continents.setControlValue(Integer.parseInt(ConProperties[1].trim()));
                     continentsList.add(continents);
-                    System.out.println(ConProperties[1]);
                 }
                 bufferReaderForFile.mark(0);
             }
@@ -121,9 +120,6 @@ public class MapModel {
         GameMap mapDetails = GameMap.getInstance();
         try {
             File file = new File(filePath);
-            System.out.println(file.exists());
-            System.out.println(new File(".").getAbsoluteFile());
-            System.out.println(System.getProperty("user.dir"));
             String validationMessage = validateFile(file);
             if (!validationMessage.equalsIgnoreCase("Valid File")) {
                 mapDetails.setCorrectMap(false);
@@ -142,7 +138,6 @@ public class MapModel {
                         isMAPresent = true;
                         while ((maps = bufferReaderForFile.readLine()) != null && !maps.startsWith("[")) {
                             if (RiskGameUtil.checkNullString(maps)) {
-                                System.out.println(maps);
                                 String[] mapsEntry = maps.split("=");
                                 mapDetail.put(mapsEntry[0], mapsEntry[1]);
                                 bufferReaderForFile.mark(0);
@@ -252,9 +247,9 @@ public class MapModel {
     			if(GameMap.getInstance().isCorrectMap) {
        			for(Country country2 : mapDetails.getCountryAndNeighborsMap().keySet()){
     				if(!country1.equals(country2)){
-    					if(mapModel.isConnected(country1, country2)==false){
+    					if(!mapModel.isConnected(country1, country2)){
     						mapDetails.setCorrectMap(false);
-    						mapDetails.setErrorMessage("Disconnected Country Found"+country1.getCountryName() +" " +country2.getCountryName());
+    						mapDetails.setErrorMessage("Disconnected Country Found "+country1.getCountryName() +" " +country2.getCountryName());
     						break;
     					}
     				}
@@ -310,12 +305,9 @@ public class MapModel {
 	 * @return true if countries  are direct adjacent else false
 	 */
     public boolean isNeighbour(Country c1, Country c2) {
-    	if(GameMap.getInstance().getCountryAndNeighborsMap().get(c1)!=null) {
-    		return (GameMap.getInstance().getCountryAndNeighborsMap().get(c1).contains(c2));
-    	}
-		return false;
-    	
-	}
+        return GameMap.getInstance().getCountryAndNeighborsMap().get(c1) != null && (GameMap.getInstance().getCountryAndNeighborsMap().get(c1).contains(c2));
+
+    }
     
 	/**
      * This method will perform validation of provided input file
@@ -449,7 +441,7 @@ public class MapModel {
     		mapmodel.writeMap(GameMap.getInstance(), "updated");
     	}else {
     		String errorMessage =GameMap.getInstance().getErrorMessage();
-    		GameMap.getInstance().setErrorMessage("Can not removecontinent  "+errorMessage);
+    		GameMap.getInstance().setErrorMessage("Can not remove continent  "+errorMessage);
     		System.out.println(GameMap.getInstance().getErrorMessage());
     	}
     
@@ -504,8 +496,7 @@ public class MapModel {
 
         String result = maps + continents.toString() + territories;
 
-        String dotMapFile = filename;
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(dotMapFile)))) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename)))) {
             out.print(result);
             out.close();
         } catch (Exception e) {

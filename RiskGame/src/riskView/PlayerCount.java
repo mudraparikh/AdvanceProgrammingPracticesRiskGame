@@ -24,6 +24,9 @@ public class PlayerCount extends JDialog {
     private JButton sixPlayerBtn;
     private JButton backBtn;
 
+    /**
+     * this constructor helps to set title,window size,default close operation
+     */
     public PlayerCount(){
         setTitle("Risk Game");
 

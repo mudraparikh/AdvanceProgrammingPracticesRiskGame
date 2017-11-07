@@ -424,6 +424,8 @@ public class GamePlayModel extends Observable {
                 } else {
                     GameView.displayLog("You cannot relocate armies right now.");
                 }
+            } else{
+                GameView.displayLog("You should be owner of both the country. Please select countries which you are an occupant and has more than 1 army.");
             }
         }
     }
@@ -561,7 +563,7 @@ public class GamePlayModel extends Observable {
      * @return the countries conquered by the player.
      */
     public List<Country> getCountriesConqueredBy(Player p) {
-        return p.getAssignedCountries();
+        return p.assignedCountries;
     }
 
     /**

@@ -41,7 +41,7 @@ public class GamePlayController implements ActionListener {
                 break;
             case "attackBtn":
                 //System.out.println("User pressed attackButton.");
-                model.attack(view.getCountryA().replaceAll("[0-9]", "").replaceAll("\\-", ""), view.getCountryB().replaceAll("[0-9]", "").replaceAll("\\-", ""), view);
+                model.attack(view.getCountryA().trim().replaceAll("[0-9]", "").replaceAll("\\-", ""), view.getCountryB().trim().replaceAll("[0-9]", "").replaceAll("\\-", ""), view);
 
                 break;
             case "fortifyBtn":

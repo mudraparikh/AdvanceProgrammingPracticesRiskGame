@@ -51,7 +51,7 @@ public class GameMap {
 
     /** 
      * setter method checks is the map is correct and then assigns map 
-     * @param isCorrectMap
+     * @param isCorrectMap boolean value
      */
     public void setCorrectMap(boolean isCorrectMap) {
         this.isCorrectMap = isCorrectMap;
@@ -163,7 +163,7 @@ public class GameMap {
     public List<Country> getCountriesByContinent(String continentName) {
         List<Country> continentCountry= new ArrayList<>();
         for(Country c: getCountryAndNeighborsMap().keySet()){
-            if(c.getBelongsToContinent().equals(continentName)){
+            if(c.getBelongsToContinent().equalsIgnoreCase(continentName)){
                 continentCountry.add(c);
             }
         }

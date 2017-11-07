@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +22,7 @@ import java.util.List;
 /**
  * This class will load the game board
  *
- * @author mudraparikh and akshay shah
+ * @author mudra parikh and akshay shah
  */
 public class GameView extends JDialog {
     public static JScrollPane phaseViewPane;
@@ -130,10 +129,6 @@ public class GameView extends JDialog {
         setLocationRelativeTo(null);
 
         pack();
-    }
-
-    public GameView(String update) {
-
     }
 
     /**
@@ -328,14 +323,13 @@ public class GameView extends JDialog {
             stringBuilder.append("----------------------------" + "\n");
             for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
                 if (country.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
-                    stringBuilder.append(country.getCountryName() + "  ");
-                    stringBuilder.append(" - " + country.getCurrentArmiesDeployed() + " - ");
-                    stringBuilder.append(country.getBelongsToPlayer().getName() + "\n");
+                    stringBuilder.append(country.getCountryName());
+                    stringBuilder.append(" - ").append(country.getCurrentArmiesDeployed()).append(" - ");
+                    stringBuilder.append(country.getBelongsToPlayer().getName()).append("\n");
                 }
             }
 
         }
-        System.out.println(stringBuilder.toString());
         TextAreaForMapPanel.setText(stringBuilder.toString());
         mapScrollPane = new JScrollPane(TextAreaForMapPanel);
         mapScrollPane.setPreferredSize(new Dimension(675, 690));
@@ -366,8 +360,6 @@ public class GameView extends JDialog {
         countryList1.setVisibleRowCount(30);
         countryScrollPane1 = new JScrollPane(countryList1);
         countryList1.setVisible(true);
-        for (Country c : gameMap.getCountryAndNeighborsMap().keySet())
-            countryDisplay1.addElement(c.getCountryName());
 
         countryDisplay2 = new DefaultListModel<>();
         countryList2 = new JList<>(countryDisplay2);
@@ -376,13 +368,6 @@ public class GameView extends JDialog {
         countryList2.setVisibleRowCount(30);
         countryScrollPane2 = new JScrollPane(countryList2);
         countryList2.setVisible(true);
-        for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
-            List<Country> neighborCountries = new ArrayList<>();
-            neighborCountries = c.getNeighborNodes();
-            for (Country nCountry : neighborCountries) {
-                countryDisplay2.addElement(nCountry.getCountryName());
-            }
-        }
 
         continentDisplay = new DefaultListModel<>();
         continentList = new JList<>(continentDisplay);
@@ -395,7 +380,6 @@ public class GameView extends JDialog {
             continentDisplay.addElement(gameMap.getContinentList().get(i).getContinentName());
         continentList.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                System.out.println("Selected continent" + continentList.getSelectedValue());
                 countryDisplay1.removeAllElements();
                 countryDisplay2.removeAllElements();
                 for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
@@ -409,10 +393,9 @@ public class GameView extends JDialog {
         });
         countryList1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                //System.out.println("Selected country" + countryList1.getSelectedValue());
                 Country selectedCountry = MapModel.getCountryObj(countryList1.getSelectedValue().trim(), GameMap.getInstance());
                 if (selectedCountry != null) {
-                    GameView.displayLog("Selected country " + selectedCountry.getCountryName() + "\n" + "number of Armies" + selectedCountry.getCurrentArmiesDeployed() + "\n" + selectedCountry.getBelongsToPlayer().getName());
+                    GameView.displayLog(selectedCountry.getCountryName() + "has " + selectedCountry.getCurrentArmiesDeployed() + " armies, occupant is " + selectedCountry.getBelongsToPlayer().getName());
                 }
                 countryDisplay2.removeAllElements();
                 List<Country> neighbours = GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(countryList1.getSelectedValue()));
@@ -504,7 +487,7 @@ public class GameView extends JDialog {
      * @return the String of the selected value in country B list.
      **/
     public String getCountryB() {
-        return countryList2.getSelectedValue().toString();
+        return countryList2.getSelectedValue();
     }
 
     /**
@@ -516,14 +499,12 @@ public class GameView extends JDialog {
         for(Continent continent: GameMap.getInstance().getContinentList()) {
             stringBuilder.append("----------------------------");
             stringBuilder.append(continent.getContinentName());
-            stringBuilder.append("----------------------------"+"\n");
-            for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet())
-            {
-                if(country.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
-                    stringBuilder.append(country.getCountryName()+"  ");
-                    stringBuilder.append("Armies"+"  "+country.getCurrentArmiesDeployed()+"  ");
-                    stringBuilder.append(country.getBelongsToPlayer().getName()+"\n");
-
+            stringBuilder.append("----------------------------" + "\n");
+            for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+                if (country.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
+                    stringBuilder.append(country.getCountryName());
+                    stringBuilder.append(" - ").append(country.getCurrentArmiesDeployed()).append(" - ");
+                    stringBuilder.append(country.getBelongsToPlayer().getName()).append("\n");
                 }
             }
 

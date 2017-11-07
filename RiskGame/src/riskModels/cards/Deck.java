@@ -39,8 +39,8 @@ public class Deck {
 
         for (i = 0; i < countries.size(); i++) {
             // Add new cards to deck
-            deck.add(new Card(typesArray[i / 14], countries.get(i)));
-            System.out.println("Added new card to deck: " + deck.get(i).getName());
+//            deck.add(new Card(typesArray[i % countries.size()], countries.get(i)));
+            //System.out.println("Added new card to deck: " + deck.get(i).getName());
         }
         Collections.shuffle(deck);
     }

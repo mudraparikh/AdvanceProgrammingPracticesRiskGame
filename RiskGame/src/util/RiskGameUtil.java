@@ -15,11 +15,12 @@ public class RiskGameUtil {
     public static String fivePlayersBtnName = "fivePlayersBtn";
     public static String sixPlayersBtnName = "sixPlayersBtn";
     public static String backBtnName = "backBtn";
+    
     /**
      * to check null or empty string
      * input String , output boolean(true/false)
      *
-     * @param name: String to be check.
+     * @param name String to be check.
      * @return true or false based on validation
      */
     public static boolean checkNullString(String name) {
