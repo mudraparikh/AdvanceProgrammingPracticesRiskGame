@@ -283,11 +283,13 @@ public class MapModel {
 		else if (unwantedPair.contains(c1))
 			return false;
 		unwantedPair.add(c1);
+        if(GameMap.getInstance().getCountryAndNeighborsMap().get(c1) !=null){
+            for (Country c : GameMap.getInstance().getCountryAndNeighborsMap().get(c1)) {
+                if (!unwantedPair.contains(c) && isConnected(c, c2, unwantedPair))
+                    return true;
+            }
+        }
 
-		for (Country c : GameMap.getInstance().getCountryAndNeighborsMap().get(c1)) {
-			if (!unwantedPair.contains(c) && isConnected(c, c2, unwantedPair))
-				return true;
-		}
 
 		return false;
 	}
