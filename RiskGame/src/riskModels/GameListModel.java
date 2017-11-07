@@ -23,8 +23,25 @@ public class GameListModel extends DefaultListModel implements Observer {
     public void update(Observable observable, Object obj) {
 
         display = (String)obj;
-        if (Objects.equals(type, "selectedCountry") && Objects.equals(type, display)){
+        System.out.println(display);
+        if (Objects.equals(type, "countryA") && Objects.equals(type, display)){
             removeAllElements();
+            for (i = 0; i < model.getSelectedCountryList().size(); i++) {
+
+                addElement(model.getSelectedCountryList().get(i));
+            }
+        }else if (Objects.equals(type, "countryB") && Objects.equals(type, display)) {
+
+            // System.out.println("Notified country B list.");
+
+            removeAllElements();
+
+            for (i = 0; i < model.getCountryBList().size(); i++) {
+
+                addElement(model.getCountryBList().get(i));
+            }
+        } else {
+
         }
     }
 }

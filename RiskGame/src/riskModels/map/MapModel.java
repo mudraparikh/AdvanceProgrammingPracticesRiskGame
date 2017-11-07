@@ -1,24 +1,11 @@
 package riskModels.map;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import riskModels.continent.Continent;
 import riskModels.country.Country;
-import riskModels.player.Player;
-import riskView.GameView;
 import util.RiskGameUtil;
+
+import java.io.*;
+import java.util.*;
 
 /**
  * This class will perform operation related to MapObj created from MapFile
@@ -69,8 +56,8 @@ public class MapModel {
                     String[] terrProperties = Territories.split(",");
                     countryName = terrProperties[0];
                     continentName = terrProperties[3];
-                    startPixel = Integer.parseInt(terrProperties[1]);
-                    endPixel = Integer.parseInt(terrProperties[2]);
+                    startPixel = Integer.parseInt(terrProperties[1].trim());
+                    endPixel = Integer.parseInt(terrProperties[2].trim());
                     Country country = new Country(countryName, startPixel, endPixel, continentName);
                     for (int i = 4; i <= terrProperties.length - 1; i++) {
                         String neighbourCountryName = terrProperties[i];
@@ -108,7 +95,6 @@ public class MapModel {
                     continents.setContinentName(ConProperties[0].trim());
                     continents.setControlValue(Integer.parseInt(ConProperties[1].trim()));
                     continentsList.add(continents);
-                    System.out.println(ConProperties[1]);
                 }
                 bufferReaderForFile.mark(0);
             }
@@ -134,9 +120,6 @@ public class MapModel {
         GameMap mapDetails = GameMap.getInstance();
         try {
             File file = new File(filePath);
-            System.out.println(file.exists());
-            System.out.println(new File(".").getAbsoluteFile());
-            System.out.println(System.getProperty("user.dir"));
             String validationMessage = validateFile(file);
             if (!validationMessage.equalsIgnoreCase("Valid File")) {
                 mapDetails.setCorrectMap(false);
@@ -155,7 +138,6 @@ public class MapModel {
                         isMAPresent = true;
                         while ((maps = bufferReaderForFile.readLine()) != null && !maps.startsWith("[")) {
                             if (RiskGameUtil.checkNullString(maps)) {
-                                System.out.println(maps);
                                 String[] mapsEntry = maps.split("=");
                                 mapDetail.put(mapsEntry[0], mapsEntry[1]);
                                 bufferReaderForFile.mark(0);
@@ -184,7 +166,7 @@ public class MapModel {
                             List<Continent> updatedcontinentList = new ArrayList<>();// we need to assign number of territories to continent objects
                             for(Continent continent: GameMap.getInstance().getContinentList()) {
                             	//value of each key of continentCountryMap contains list of territories/country with in that continent
-                            	continent.setNumberOfTerritories(continentCountryMap.get(new Continent(continent.getContinentName())).size());
+                            	//continent.setNumberOfTerritories(continentCountryMap.get(new Continent(continent.getContinentName())).size());
                             	continent.setMemberCountriesList(continentCountryMap.get(new Continent(continent.getContinentName())));
                             	updatedcontinentList.add(continent);
                             }
@@ -265,9 +247,9 @@ public class MapModel {
     			if(GameMap.getInstance().isCorrectMap) {
        			for(Country country2 : mapDetails.getCountryAndNeighborsMap().keySet()){
     				if(!country1.equals(country2)){
-    					if(mapModel.isConnected(country1, country2)==false){
+    					if(!mapModel.isConnected(country1, country2)){
     						mapDetails.setCorrectMap(false);
-    						mapDetails.setErrorMessage("Disconnected Country Found"+country1.getCountryName() +" " +country2.getCountryName());
+    						mapDetails.setErrorMessage("Disconnected Country Found "+country1.getCountryName() +" " +country2.getCountryName());
     						break;
     					}
     				}
@@ -296,11 +278,13 @@ public class MapModel {
 		else if (unwantedPair.contains(c1))
 			return false;
 		unwantedPair.add(c1);
+        if(GameMap.getInstance().getCountryAndNeighborsMap().get(c1) !=null){
+            for (Country c : GameMap.getInstance().getCountryAndNeighborsMap().get(c1)) {
+                if (!unwantedPair.contains(c) && isConnected(c, c2, unwantedPair))
+                    return true;
+            }
+        }
 
-		for (Country c : GameMap.getInstance().getCountryAndNeighborsMap().get(c1)) {
-			if (!unwantedPair.contains(c) && isConnected(c, c2, unwantedPair))
-				return true;
-		}
 
 		return false;
 	}
@@ -320,13 +304,10 @@ public class MapModel {
 	 * @param c2 country 2
 	 * @return true if countries  are direct adjacent else false
 	 */
-    private boolean isNeighbour(Country c1, Country c2) {
-    	if(GameMap.getInstance().getCountryAndNeighborsMap().get(c1)!=null) {
-    		return (GameMap.getInstance().getCountryAndNeighborsMap().get(c1).contains(c2));
-    	}
-		return false;
-    	
-	}
+    public boolean isNeighbour(Country c1, Country c2) {
+        return GameMap.getInstance().getCountryAndNeighborsMap().get(c1) != null && (GameMap.getInstance().getCountryAndNeighborsMap().get(c1).contains(c2));
+
+    }
     
 	/**
      * This method will perform validation of provided input file
@@ -438,7 +419,7 @@ public class MapModel {
     }
     /**
      * This method will remove Continent from the map 
-     * @param continent name of the continent
+     * @param continent
      */
     public void removeContinent(Continent continent) {
     	System.out.println("Removing Continent Name"+continent.getContinentName());
@@ -460,124 +441,13 @@ public class MapModel {
     		mapmodel.writeMap(GameMap.getInstance(), "updated");
     	}else {
     		String errorMessage =GameMap.getInstance().getErrorMessage();
-    		GameMap.getInstance().setErrorMessage("Can not removecontinent  "+errorMessage);
+    		GameMap.getInstance().setErrorMessage("Can not remove continent  "+errorMessage);
     		System.out.println(GameMap.getInstance().getErrorMessage());
     	}
     
     }
-    /**
-     * This method will update number Of Armies in GameMap singleton object.
-     * This method will also update the number of Armies at all places where given country acting as a neighbor 
-     * @param countryName name of the country where you want to update number of armies
-     * @param updatedNumberOfArmies updated number of armies
-     */
-    public static void updateArmiesDeployed(String countryName,int updatedNumberOfArmies) {
-    	
-    	List<Country> countryList=GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(countryName));
-    	List<Country> countryToBeUpdated = new ArrayList<>();;
-    	Country keyCountry =null;
-    	// find given country from hashmap and update armies where given country is acting as key in hashmap
-    	for(Country country:GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
-    		if(country.getCountryName().equalsIgnoreCase(countryName)) {
-    			 keyCountry = country;
-    			 keyCountry.setCurrentArmiesDeployed(updatedNumberOfArmies);
-    		}
-    	}
-    	
-    	//keycountry is found ,now update it in the hashmap
-    	
-    	if(keyCountry!=null) {
-    		GameMap.getInstance().getCountryAndNeighborsMap().remove(keyCountry);
-    		GameMap.getInstance().getCountryAndNeighborsMap().put(keyCountry, countryList);
-    	
-    		//Get the other country keys where given country is acting as neighbor .store in the list
-    		
-    		for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
-    			if(!country.getCountryName().equalsIgnoreCase(keyCountry.getCountryName())) {
-    				List<Country> neighbors=GameMap.getInstance().getCountryAndNeighborsMap().get(country);
-    				for(Country neighbor: neighbors) {
-    					if(neighbor.getCountryName().equalsIgnoreCase(countryName)) {
-    						System.out.println(neighbor.getCountryName()+"Neighbor Armies" +neighbor.getCurrentArmiesDeployed());
-    						countryToBeUpdated.add(country); //list obtained
-    					}
-    				}
-    			}
-    		}
-    	}
-    	// now update numberof Armies where given country acting as neighbor
-    	HashMap<Country,List<Country>> updatedMap = new HashMap<>();
-    	for(int i=0;i<countryToBeUpdated.size();i++) {
-    		List<Country> updatedNeighborList = new ArrayList<>();
-    		for(Country country : GameMap.getInstance().getCountryAndNeighborsMap().get(countryToBeUpdated.get(i))) {
-    			if(country.getCountryName().equals(countryName)) {
-    				country.setCurrentArmiesDeployed(updatedNumberOfArmies);
-    			}
-    			updatedNeighborList.add(country); // updated the number of armies where given country acting as neighbor
-    		}
-    		updatedMap.put(countryToBeUpdated.get(i), updatedNeighborList); 
-    	}
-    	
-    	// update the GameMap singleton object now
-    	for (Map.Entry<Country, List<Country>> pair : updatedMap.entrySet()) {
-            Country country = pair.getKey();
-            List<Country> neighbor = pair.getValue();
-            GameMap.getInstance().getCountryAndNeighborsMap().remove(country);
-            GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbor);
-         }
-    	GameView.updateMapPanel();
-    }
-    /**
-     * This method will update Country owner in GameMap singleton object.
-     * This method will also update the Country Owner at all places where given country acting as a neighbor 
-     * @param countryName name of the country where you update owner
-     * @param player new owner 
-     */
-    public static void updateOwnerInMapPanel(String countryName,Player player) {
-    	// TODO Make some reusable components to do updates in GameMap Singleton object
-    	Country keyCountry = MapModel.getCountryObj(countryName, GameMap.getInstance());
-    	List<Country> countryToBeUpdated = new ArrayList<>();
-    	// find given country from hashmap and update owner where given country is acting as key in hashmap
-    	List<Country> neighbors = GameMap.getInstance().getCountryAndNeighborsMap().get(keyCountry);
-    	keyCountry.setBelongsToPlayer(player);
-    	//keycountry is found ,now update it in the hashmap
-    	GameMap.getInstance().getCountryAndNeighborsMap().remove(keyCountry);
-    	GameMap.getInstance().getCountryAndNeighborsMap().put(keyCountry, neighbors);
-    	
-    	for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
-			if(!country.getCountryName().equalsIgnoreCase(keyCountry.getCountryName())) {
-				List<Country> neighbor=GameMap.getInstance().getCountryAndNeighborsMap().get(country);
-				for(Country neighborCountry: neighbors) {
-					if(neighborCountry.getCountryName().equalsIgnoreCase(countryName)) {
-						System.out.println(neighborCountry.getBelongsToPlayer().getName()+"Neighbor Armies" +neighborCountry.getCurrentArmiesDeployed());
-						countryToBeUpdated.add(country); //list obtained
-					}
-				}
-			}
-		}
-    	// now update numberof Armies where given country acting as neighbor
-    	HashMap<Country,List<Country>> updatedMap = new HashMap<>();
-    	for(int i=0;i<countryToBeUpdated.size();i++) {
-    		List<Country> updatedNeighborList = new ArrayList<>();
-    		for(Country country : GameMap.getInstance().getCountryAndNeighborsMap().get(countryToBeUpdated.get(i))) {
-    			if(country.getCountryName().equals(countryName)) {
-    				country.setBelongsToPlayer(player);
-    			}
-    			updatedNeighborList.add(country); // updated the number of armies where given country acting as neighbor
-    		}
-    		updatedMap.put(countryToBeUpdated.get(i), updatedNeighborList); 
-    	}
-    	// update the GameMap singleton object now
-    	for (Map.Entry<Country, List<Country>> pair : updatedMap.entrySet()) {
-            Country country = pair.getKey();
-            List<Country> neighbor = pair.getValue();
-            GameMap.getInstance().getCountryAndNeighborsMap().remove(country);
-            GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbor);
-         }
-    	GameView.updateMapPanel();
-    }
 
-
-	/**
+    /**
      * This method will create .map file based on input provided from user
      *
      * @param graphMap Details provided from the user
@@ -626,8 +496,7 @@ public class MapModel {
 
         String result = maps + continents.toString() + territories;
 
-        String dotMapFile = filename;
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(dotMapFile)))) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(filename)))) {
             out.print(result);
             out.close();
         } catch (Exception e) {

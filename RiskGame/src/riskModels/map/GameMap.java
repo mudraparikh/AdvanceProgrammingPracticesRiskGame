@@ -154,4 +154,29 @@ public class GameMap {
 	public void setPlayerList(List<Player> playerList) {
 		this.playerList = playerList;
 	}
+
+    /**
+     *
+     * @param continentName Name of the continent.
+     * @return Countries in the continent
+     */
+    public List<Country> getCountriesByContinent(String continentName) {
+        List<Country> continentCountry= new ArrayList<>();
+        for(Country c: getCountryAndNeighborsMap().keySet()){
+            if(c.getBelongsToContinent().equalsIgnoreCase(continentName)){
+                continentCountry.add(c);
+            }
+        }
+        return continentCountry;
+    }
+
+    /**
+     * Gets the list of countries in the map
+     * @return Countries in the map
+     */
+    public List<Country> getCountries(){
+        List<Country> countries = new ArrayList<>();
+        countries.addAll(getCountryAndNeighborsMap().keySet());
+        return countries;
+    }
 }
