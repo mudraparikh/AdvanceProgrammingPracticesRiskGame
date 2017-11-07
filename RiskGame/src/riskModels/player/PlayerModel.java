@@ -60,7 +60,7 @@ public class PlayerModel extends Observable{
 		DecimalFormat df = new DecimalFormat("#.##");
 		if(totalNumberOfCountries>0) {
 			for(Player player : playerList) {
-				double dominationOfPlayer = player.getAssignedCountries().size()/totalNumberOfCountries;
+				double dominationOfPlayer = player.assignedCountries.size()/totalNumberOfCountries;
 				dominationOfPlayer*=100;
 				player.setDomination(Double.valueOf(df.format(dominationOfPlayer)));
 				updatedPlayerList.add(player);

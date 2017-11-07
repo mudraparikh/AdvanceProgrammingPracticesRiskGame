@@ -56,8 +56,8 @@ public class MapModel {
                     String[] terrProperties = Territories.split(",");
                     countryName = terrProperties[0];
                     continentName = terrProperties[3];
-                    startPixel = Integer.parseInt(terrProperties[1]);
-                    endPixel = Integer.parseInt(terrProperties[2]);
+                    startPixel = Integer.parseInt(terrProperties[1].trim());
+                    endPixel = Integer.parseInt(terrProperties[2].trim());
                     Country country = new Country(countryName, startPixel, endPixel, continentName);
                     for (int i = 4; i <= terrProperties.length - 1; i++) {
                         String neighbourCountryName = terrProperties[i];
@@ -171,7 +171,7 @@ public class MapModel {
                             List<Continent> updatedcontinentList = new ArrayList<>();// we need to assign number of territories to continent objects
                             for(Continent continent: GameMap.getInstance().getContinentList()) {
                             	//value of each key of continentCountryMap contains list of territories/country with in that continent
-                            	continent.setNumberOfTerritories(continentCountryMap.get(new Continent(continent.getContinentName())).size());
+                            	//continent.setNumberOfTerritories(continentCountryMap.get(new Continent(continent.getContinentName())).size());
                             	continent.setMemberCountriesList(continentCountryMap.get(new Continent(continent.getContinentName())));
                             	updatedcontinentList.add(continent);
                             }

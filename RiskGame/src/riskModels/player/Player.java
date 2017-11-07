@@ -1,5 +1,6 @@
 package riskModels.player;
 
+import riskModels.GamePlayModel;
 import riskModels.cards.Card;
 import riskModels.cards.Hand;
 import riskModels.country.Country;

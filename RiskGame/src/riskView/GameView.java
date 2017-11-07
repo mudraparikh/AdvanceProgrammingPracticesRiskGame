@@ -16,6 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,7 +33,7 @@ public class GameView extends JDialog {
     private static JPanel mapPanel;
     private static JScrollPane mapScrollPane;
     private static JTextArea printTextArea;
-    private static JTextArea printTextAreaFor;
+    private static JTextArea TextAreaForMapPanel;
     private static DefaultCaret caret;
     public JPanel messagePanel;
     public PlayerModel playerModel = new PlayerModel();
@@ -245,7 +246,6 @@ public class GameView extends JDialog {
         continentLabel = new JLabel("Continents:");
 
         dominationTextArea = new JTextArea();
-        System.out.println(dominationTextArea);
         dominationTextArea.setFocusable(false);
         dominationTextArea.setLineWrap(true);
         dominationTextArea.setWrapStyleWord(true);
@@ -256,7 +256,6 @@ public class GameView extends JDialog {
         playerModel.getPlayerWorldDomination(GameMap.getInstance().getPlayerList());
 
         phaseViewTextArea = new JTextArea();
-        System.out.println(phaseViewTextArea);
         phaseViewTextArea.setFocusable(false);
         phaseViewTextArea.setLineWrap(true);
         phaseViewTextArea.setWrapStyleWord(true);
@@ -315,11 +314,11 @@ public class GameView extends JDialog {
     public JPanel mapPanel() throws IOException {
         mapPanel = new JPanel();
         mapPanel.setLayout(new GridLayout(1, 1, 5, 5));
-        printTextAreaFor = new JTextArea();
-        printTextAreaFor.setFocusable(false);
-        printTextAreaFor.setLineWrap(true);
-        printTextAreaFor.setWrapStyleWord(true);
-        caret = (DefaultCaret) printTextAreaFor.getCaret();
+        TextAreaForMapPanel = new JTextArea();
+        TextAreaForMapPanel.setFocusable(false);
+        TextAreaForMapPanel.setLineWrap(true);
+        TextAreaForMapPanel.setWrapStyleWord(true);
+        caret = (DefaultCaret) TextAreaForMapPanel.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -336,8 +335,9 @@ public class GameView extends JDialog {
             }
 
         }
-        printTextAreaFor.setText(stringBuilder.toString());
-        mapScrollPane = new JScrollPane(printTextAreaFor);
+        System.out.println(stringBuilder.toString());
+        TextAreaForMapPanel.setText(stringBuilder.toString());
+        mapScrollPane = new JScrollPane(TextAreaForMapPanel);
         mapScrollPane.setPreferredSize(new Dimension(675, 690));
         mapScrollPane.revalidate();
         mapScrollPane.repaint();
@@ -505,5 +505,34 @@ public class GameView extends JDialog {
      **/
     public String getCountryB() {
         return countryList2.getSelectedValue().toString();
+    }
+
+    /**
+     * This method will update view for the map panel .
+     * Map Panel holds the details of the continent ,Country , Number of Armies and Owner information
+     */
+    public static void updateMapPanel() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Continent continent: GameMap.getInstance().getContinentList()) {
+            stringBuilder.append("----------------------------");
+            stringBuilder.append(continent.getContinentName());
+            stringBuilder.append("----------------------------"+"\n");
+            for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet())
+            {
+                if(country.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
+                    stringBuilder.append(country.getCountryName()+"  ");
+                    stringBuilder.append("Armies"+"  "+country.getCurrentArmiesDeployed()+"  ");
+                    stringBuilder.append(country.getBelongsToPlayer().getName()+"\n");
+
+                }
+            }
+
+        }
+        Date date = new Date();
+        TextAreaForMapPanel.setText(stringBuilder.toString()+"\n Updated:"+date.toString());
+    }
+
+    public static void showDomination(StringBuilder dominationDetails) {
+        dominationTextArea.setText(dominationDetails.toString());
     }
 }

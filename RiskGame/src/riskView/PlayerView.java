@@ -28,17 +28,15 @@ public class PlayerView implements Observer{
 
 		PlayerModel p = (PlayerModel)arg0;
 		if(p.getUpdateMessage().equalsIgnoreCase("Domination")) {
-			StringBuilder s= new StringBuilder();
+			StringBuilder dominationDetails= new StringBuilder();
 			
 			for(Player play:p.getPlayer().getPlayerList()) {
-				s.append(play.getName()).append(" ").append("\n");
-				s.append(String.valueOf(play.getDomination())).append("%").append("\n");
+                dominationDetails.append(play.getName()).append(" ").append("\n");
+                dominationDetails.append(String.valueOf(play.getDomination())).append("%").append("\n");
 			}
 			//GameView.dominationLabel = new JLabel(lable+"\n");
-			GameView.dominationTextArea.setText(s+"\n");
-			GameView.dominationViewPane = new JScrollPane(GameView.dominationTextArea);
-			GameView.dominationViewPane.repaint();
-		}
+            GameView.showDomination(dominationDetails);
+        }
 		if(p.getUpdateMessage().equalsIgnoreCase("Phase")) {
 			StringBuilder lable= new StringBuilder();
 		 for(Player player:p.getPlayer().getPlayerList())

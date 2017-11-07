@@ -9,6 +9,7 @@ import riskModels.map.MapModel;
 import riskModels.player.Player;
 import riskModels.player.PlayerModel;
 import riskView.GameView;
+import riskView.PlayerView;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicIconFactory;
@@ -207,8 +208,7 @@ public class GamePlayModel extends Observable {
                                 GameView.displayLog("You do not have any armies left to reinforce");
                             }
                         }
-                        gameView.revalidate();
-                        gameView.repaint();
+                        GameView.updateMapPanel();
 
                     } else if (currentPlayer.getTotalArmies() == 0) {
                         canAttack = true;
@@ -341,7 +341,7 @@ public class GamePlayModel extends Observable {
                             //in the conquered country which is greater or equal than the number of dice that was used in the attack that
                             //resulted in conquering the country
                             ArrayList<Integer> selectOptions = new ArrayList<>();
-                            for (int i = attackerDice; i < countryA.getCurrentArmiesDeployed() - 1; i++) {
+                            for (int i = attackerDice; i <= countryA.getCurrentArmiesDeployed() - 1; i++) {
                                 selectOptions.add(i + 1);
                             }
                             int moveArmies = (Integer) JOptionPane.showInputDialog(gameView,
@@ -353,9 +353,13 @@ public class GamePlayModel extends Observable {
                                 countryB.addArmy(moveArmies);
                             }
                             hasCountryCaptured = true;
+                            PlayerView playerView = new PlayerView();
+                            PlayerModel playerModel = new PlayerModel();
+                            playerModel.addObserver(playerView);
+                            playerModel.getPlayerWorldDomination(playerList);
                         }
                         canReinforce = false;
-
+                        GameView.updateMapPanel();
                         //Current Player cannot continue attack phase if none of his countries that have an adjacent country
                         //controlled by another player is containing more than one army
                         //TODO: check this condition.
@@ -388,7 +392,7 @@ public class GamePlayModel extends Observable {
      * @param country1 is a String of the point A country.
      * @param country2 is a String of the point B country.
      **/
-    protected void fortify(String country1, String country2, GameView gameView) {
+    public void fortify(String country1, String country2, GameView gameView) {
 
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
