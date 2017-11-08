@@ -105,7 +105,10 @@ public class GamePlayModel extends Observable {
         }
     }
 
-    private void addInitialArmiesInRR() {
+    /**
+     * This method will add initial armies to the country of the player in round robin fashion
+     */
+    public void addInitialArmiesInRR() {
         int j = 0;
         int playersLeftForAssign = playerCount;
         while (playersLeftForAssign > 0) {
@@ -123,7 +126,10 @@ public class GamePlayModel extends Observable {
 
     }
 
-    private void allocateCountriesToPlayers() {
+    /**
+     * This method will allocate the countries to players
+     */
+    public void allocateCountriesToPlayers() {
         int j = 0;
         for (Country country : gameMap.getCountryAndNeighborsMap().keySet()) {
             Player p = player.getPlayerList().get(j % playerCount);
@@ -136,13 +142,20 @@ public class GamePlayModel extends Observable {
 
     }
 
-    private void setInitialArmies() {
+    /**
+     * This will set the total number of armies for the player during the start-up phase
+     */
+    public void setInitialArmies() {
         for (Player p : player.getPlayerList()) {
             p.setTotalArmies(getInitialArmyCount());
         }
     }
 
-    private int getInitialArmyCount() {
+    /**
+     * This method will calculate the initial total armies based upon the number of players
+     * @return number of armies based on number of players
+     */
+    public int getInitialArmyCount() {
         switch (playerCount) {
             case 3:
                 return 35;
@@ -157,6 +170,10 @@ public class GamePlayModel extends Observable {
         }
     }
 
+    /**
+     * Will create the players object based on the number of player selected from the player count dialog box
+     * @param playerCount Number of players selected from the dialog box
+     */
     public void initializePlayerData(int playerCount) {
         Color color[] = {Color.RED, Color.MAGENTA, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK};
         String playersName[] = {"John", "Alexa", "Penny", "Sheldon", "Amy", "Raj"};
@@ -469,6 +486,10 @@ public class GamePlayModel extends Observable {
         }
     }
 
+    /**
+     * This will assign the Card if attacker has captured atleast one country in the
+     * attack phase based upon the <code>hasCountryCaptured</code> variable boolean
+     */
     public void checkHasCountryCaptured() {
         if (hasCountryCaptured) {
             currentPlayer.addRiskCard(deck.draw());
@@ -478,6 +499,10 @@ public class GamePlayModel extends Observable {
         hasCountryCaptured = false;
     }
 
+    /**
+     * This will end the player's turn and assign the card if player decided to skip Foritification phase.
+     * @param model <code>GamePlayModel.class</code>
+     */
     public void endPlayerTurn(GamePlayModel model) {
         if (canEndTurn) {
             checkHasCountryCaptured();
@@ -487,14 +512,27 @@ public class GamePlayModel extends Observable {
         }
     }
 
-    private void moveArmyFromTo(Country countryA, Country countryB, int armies) {
+    /**
+     * Move the army from one country to another.
+     * Usually is called when fortification phase
+     * @param countryA Country from which army is to be moved
+     * @param countryB Country to which army is to be added
+     * @param armies the number of armies to allocate
+     */
+    public void moveArmyFromTo(Country countryA, Country countryB, int armies) {
         // Decrements armies in country A and increments armies in country B
         GameView.displayLog(currentPlayer.getName() + " has chosen to fortify " + countryB.getCountryName() + " with " + armies + " armies from " + countryA.getCountryName() + ".");
         countryA.subtractArmy(armies);
         countryB.addArmy(armies);
     }
 
-    private int getMaxNumberOfDicesForDefender(Country country) {
+    /**
+     * gets the max number of dices for defender country based upon the no. of armies present in
+     * the country at that time
+     * @param country Defender's defending country
+     * @return total number of dices to be used
+     */
+    public int getMaxNumberOfDicesForDefender(Country country) {
         return country.getCurrentArmiesDeployed() >= 2 ? 2 : 1;
     }
 
@@ -505,7 +543,7 @@ public class GamePlayModel extends Observable {
      * @param country Country object to calculate the number of dice according to the armies in it.
      * @return max number of dices which can be rolled.
      */
-    private int getMaxNumberOfDices(Country country) {
+    public int getMaxNumberOfDices(Country country) {
         int dices = 1;
         if (country.getCurrentArmiesDeployed() > 3) {
             dices = 3;
@@ -515,7 +553,11 @@ public class GamePlayModel extends Observable {
         return dices;
     }
 
-
+    /**
+     * Reset all the boolean values and set <code>currentPlayer</code> value to next player.
+     * It will also calculate the total reinforcement armies needed.
+     * @param model <code>GamePlayModel.class</code> object to passed for Card View Observable
+     */
     public void nextPlayerTurn(GamePlayModel model) {
         if (playerList.size() > 1) {
             //if at least one player remains
@@ -546,11 +588,19 @@ public class GamePlayModel extends Observable {
         }
     }
 
+    /**
+     * WIll notify all the observers for any card exchanges
+     */
     public void showCard() {
         setChanged();
         notifyObservers();
     }
 
+    /**
+     * Starts the Game.
+     * Shuffles the players.
+     * @param model
+     */
     public void startGame(GamePlayModel model) {
         Collections.shuffle(playerList);
         player.setPlayerList(playerList);
