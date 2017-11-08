@@ -1,7 +1,5 @@
 package riskModels.player;
 
-import riskModels.continent.Continent;
-import riskModels.country.Country;
 import riskModels.map.GameMap;
 
 import java.text.DecimalFormat;
@@ -35,34 +33,11 @@ public class PlayerModel extends Observable {
     }
 
     /**
-     * This method will return list of continent where player has at least one country
-     *
-     * @param player object of player
-     * @return list of continent objects
-     */
-    public List<Continent> getContinentOfPlayer(Player player) {
-
-        List<Country> countriesOfPlayer = player.getAssignedCountries();
-        List<Continent> continentList = new ArrayList<>(); //List of Continent for the player
-        if (countriesOfPlayer != null && !countriesOfPlayer.isEmpty()) {
-            for (Country country : countriesOfPlayer) {
-                //we have country,now find the continent details
-                int indexOfContinent = GameMap.getInstance().getContinentList().indexOf(new Continent(country.getBelongsToContinent()));
-                Continent continent = GameMap.getInstance().getContinentList().get(indexOfContinent);
-                continentList.add(continent);
-            }
-        }
-        return continentList;
-
-    }
-
-    /**
      * After Adding domination attribute for each player , this method will return list of player
      *
      * @param playerList Current players list
-     * @return List of players
      */
-    public Player getPlayerWorldDomination(List<Player> playerList) {
+    public void getPlayerWorldDomination(List<Player> playerList) {
         double totalNumberOfCountries = GameMap.getInstance().getCountryAndNeighborsMap().keySet().size();
         List<Player> updatedPlayerList = new ArrayList<>();
         DecimalFormat df = new DecimalFormat("#.##");
@@ -86,17 +61,15 @@ public class PlayerModel extends Observable {
             lable.concat(play.getName());
             lable.concat(String.valueOf(play.getDomination()) + "\n");
         }
-        return player;
 
     }
 
-    public Player getPhaseDetails() {
+    public void getPhaseDetails() {
         List<Player> playerList = GameMap.getInstance().getPlayerList();
         this.player.setPlayerList(playerList);
         this.updateMessage = "Phase";
         setChanged();
         notifyObservers(Player.class);
-        return this.player;
 
     }
 }

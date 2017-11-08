@@ -201,16 +201,10 @@ public class GamePlayModel extends Observable {
             if (currentPlayer.equals(countryA.getBelongsToPlayer())) {
                 GameView.displayLog(currentPlayer.name + " gets " + currentPlayerReinforceArmies + " armies");
                 try {
-                    Integer[] selectOptions = new Integer[currentPlayer.getTotalArmies()];
-                    for (int i = 0; i < currentPlayer.getTotalArmies(); i++) {
-                        selectOptions[i] = i + 1;
-                    }
                     if (currentPlayer.getTotalArmies() > 0) {
                         // Player inputs how many armies to reinforce selected country
-                        Integer armies = (Integer) JOptionPane.showInputDialog(gameView,
-                                "How many armies do you wish to send to reinforce " + countryA.getCountryName() + "?",
-                                "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
-                                selectOptions[0]);
+                        Integer armies = showReinforceArmiesDialogBox(gameView);
+
                         // Subtracts player armies and adds armies to country
                         if (armies != null) {
                             currentPlayer.subArmy(armies);
@@ -237,6 +231,18 @@ public class GamePlayModel extends Observable {
                 }
             }
         }
+    }
+
+    private Integer showReinforceArmiesDialogBox(GameView gameView) {
+        Integer[] selectOptions = new Integer[currentPlayer.getTotalArmies()];
+        for (int i = 0; i < currentPlayer.getTotalArmies(); i++) {
+            selectOptions[i] = i + 1;
+        }
+        return (Integer) JOptionPane.showInputDialog(gameView,
+                "How many armies do you wish to send to reinforce " + countryA.getCountryName() + "?",
+                "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
+                selectOptions[0]);
+
     }
 
 

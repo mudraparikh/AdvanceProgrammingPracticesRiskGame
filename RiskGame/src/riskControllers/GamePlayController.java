@@ -1,6 +1,7 @@
 package riskControllers;
 
 import riskModels.GamePlayModel;
+import riskModels.player.Player;
 import riskView.GameView;
 
 import java.awt.event.ActionEvent;
@@ -10,10 +11,12 @@ public class GamePlayController implements ActionListener {
 
     private GamePlayModel model;
     private GameView view;
+    private Player playerModel;
 
     public GamePlayController(GamePlayModel model, GameView gameView) {
         this.model = model;
         this.view = gameView;
+        this.playerModel = new Player();
         model.startGame(model);
     }
 
@@ -33,7 +36,7 @@ public class GamePlayController implements ActionListener {
                 break;
             case "reinforceBtn":
                 //System.out.println("User pressed reinforceButton.");view.getSelectedComboBox();
-                if (view.getCountryA() != null && view.getCountryB() != null) {
+                if (view.getCountryA() != null) {
                     model.reinforce(view.getCountryA().replaceAll("[0-9]", "").replaceAll("\\-", ""), view);
                 } else {
                     GameView.displayLog("Please make sure that country is selected from the list !");

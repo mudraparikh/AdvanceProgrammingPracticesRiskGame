@@ -33,7 +33,6 @@ public class Player {
         assignedCountries = new ArrayList<>();
         this.colors = colors;
         hand = new Hand();
-
         turnInCount = 0;
     }
 

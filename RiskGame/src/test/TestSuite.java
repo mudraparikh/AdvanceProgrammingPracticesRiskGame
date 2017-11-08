@@ -1,3 +1,4 @@
+/*
 package test;
 
 import org.junit.runner.RunWith;
@@ -10,4 +11,4 @@ import riskModels.map.MapModelTest;
 @Suite.SuiteClasses({GamePlayModelTest.class, MapModelTest.class, StartupPhaseTest.class})
 public class TestSuite {
     //nothing
-}
+}*/
