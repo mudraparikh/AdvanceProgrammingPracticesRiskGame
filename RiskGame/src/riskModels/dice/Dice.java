@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Dice {
     int numberOfDice; //number of Dice user wants to roll
-    int[] diceResult; //the dice result example : first dice roll result will be stored in diceResult[0]
+    Integer[] diceResult; //the dice result example : first dice roll result will be stored in diceResult[0]
     boolean isDiceRolled; // check if dice rolled
 
     /**
@@ -25,15 +25,14 @@ public class Dice {
             dicemodel.setDiceRolled(false);
             return dicemodel;
         }
-        int[] diceResult = new int[numberOfDice];
+        Integer[] diceResult = new Integer[numberOfDice];
         for (int counter = 0; counter < numberOfDice; counter++) {
             Random random = new Random();
             int result = random.nextInt(5) + 1; //this function will give results between 1-6 including both
             diceResult[counter] = result;
         }
-        //So
-        Arrays.sort(diceResult);
-        Collections.reverse(Arrays.asList(diceResult));
+        //Sorting
+        Arrays.sort(diceResult,Collections.reverseOrder());
         dicemodel.setDiceRolled(true);
         dicemodel.setDiceResult(diceResult);
         dicemodel.setNumberOfDice(numberOfDice);
@@ -57,11 +56,11 @@ public class Dice {
         this.numberOfDice = numberOfDice;
     }
 
-    public int[] getDiceResult() {
+    public Integer[] getDiceResult() {
         return diceResult;
     }
 
-    public void setDiceResult(int[] diceResult) {
+    public void setDiceResult(Integer[] diceResult) {
         this.diceResult = diceResult;
     }
 }

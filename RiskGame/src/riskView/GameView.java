@@ -171,12 +171,9 @@ public class GameView extends JDialog {
     }
 
     public static void updateCardView(String[] cardArray) {
-
-        //Todo : make cards input dialog and change it to text !
-        GameView.displayLog("view called for cards");
-        for(int i=0; i<= cardArray.length ;i++)
-        {
-        cardListDisplay.addElement(cardArray[i]);
+        cardListDisplay.removeAllElements();
+        for (String aCardArray : cardArray) {
+            cardListDisplay.addElement(aCardArray);
         }
     }
 
@@ -268,7 +265,7 @@ public class GameView extends JDialog {
 
         cardListDisplay = new DefaultListModel<>();
         cardsList = new JList<>(cardListDisplay);
-        cardsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        cardsList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         cardsList.setLayoutOrientation(JList.VERTICAL_WRAP);
         cardListPane = new JScrollPane(cardsList);
         cardsList.setVisibleRowCount(10);

@@ -48,8 +48,8 @@ public class Player extends Observable {
 
     public double domination; // player's domination in game based on number of countries out of total countries player own
 
-    public int[] attackerRolls;
-    public int[] defenderRolls;
+    public Integer[] attackerRolls;
+    public Integer[] defenderRolls;
 
     public MapModel mapModel;
     public GameMap gameMap;
@@ -426,7 +426,7 @@ public class Player extends Observable {
                         GameView.displayLog("You do not have any armies left to reinforce");
                     }
 
-                } catch (NumberFormatException e) {
+                } catch (Exception e) {
                     GameView.displayLog("System Error or Exception is thrown for reinforce method");
                 }
             }
@@ -442,7 +442,6 @@ public class Player extends Observable {
                 "How many armies do you wish to send to reinforce " + countryA.getCountryName() + "?",
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
                 selectOptions[0]);
-
     }
 
 
@@ -621,7 +620,7 @@ public class Player extends Observable {
 
         ArrayList<Integer> selectOptions = new ArrayList<>();
         for (int i = attackerDice; i <= countryA.getCurrentArmiesDeployed() - 1; i++) {
-            selectOptions.add(i + 1);
+            selectOptions.add(i);
         }
         return (Integer) JOptionPane.showInputDialog(gameView,
                 "How many armies do you wish to move?",
@@ -655,7 +654,7 @@ public class Player extends Observable {
 
         if (canFortify) {
 
-            if (currentPlayer.equals(countryA.getBelongsToPlayer()) && currentPlayer.equals(countryB.getBelongsToPlayer())) {
+            if (currentPlayer.equals(countryA.getBelongsToPlayer()) && currentPlayer.equals(countryB.getBelongsToPlayer()) && countryA.getCurrentArmiesDeployed() > 1) {
                 // Check player owns countryA and countryB
                 if (mapModel.isConnected(countryA, countryB)) {
                     // Check if countryA and countryB are adjacent
@@ -681,7 +680,7 @@ public class Player extends Observable {
                     GameView.displayLog("You cannot relocate armies right now.");
                 }
             } else {
-                GameView.displayLog("You should be owner of both the country. Please select countries which you are an occupant and has more than 1 army.");
+                GameView.displayLog("You should be owner of both the country. Please select \"from \" country has more than 1 army.");
             }
         }
     }
@@ -702,8 +701,13 @@ public class Player extends Observable {
                 }*/
                     turnInCount = currentPlayer.getTurnInCount();
                     // Increments armies according to how many turn-ins have occurred
+                    currentPlayer.addArmy(5 * turnInCount);
                     currentPlayerReinforceArmies += (5 * turnInCount);
                     currentPlayer.removeCards(cardsToRemove);
+                    canReinforce = true;
+                    canTurnInCards = false;
+                    canAttack = false;
+                    canFortify = false;
                     setChanged();
                     notifyObservers("cards");
 
@@ -724,6 +728,8 @@ public class Player extends Observable {
      */
     public void checkHasCountryCaptured() {
         if (hasCountryCaptured) {
+            GameView.displayLog("You captured atleast one country in your attack phase.");
+            GameView.displayLog("You get a card");
             currentPlayer.addRiskCard(deck.draw());
             setChanged();
             notifyObservers(Player.class);
@@ -803,17 +809,17 @@ public class Player extends Observable {
             currentPlayerReinforceArmies = getReinforcementArmyForPlayer(currentPlayer);
             currentPlayer.addArmy(currentPlayerReinforceArmies);
             playerIndex++;
-            GameView.displayLog("\n\n===" + currentPlayer.getName() + " turn's start===");
             updatePhaseDetails("\n\n===" + currentPlayer.getName() + " turn's start===");
             if (currentPlayer.mustTurnInCards()) {
                 // While player has 5 or more cards
                 GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
+                canTurnInCards = true;
+                canReinforce = false;
                 // Player model = new Player();
                 CardView cardview = new CardView(model, "cards");
                 model.addObserver(cardview);
                 model.showCard();
-                canTurnInCards = true;
-                canReinforce = false;
+
             } else {
                 canReinforce = true;
             }
