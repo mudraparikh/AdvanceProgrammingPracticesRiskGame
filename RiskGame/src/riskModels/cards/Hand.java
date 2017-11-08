@@ -13,9 +13,9 @@ public class Hand {
 
     private ArrayList<Card> hand;
 
-    /**
-     * No-arg constructor. Instantiate Deck.
-     **/
+   /**
+    * No-arg constructor. Instantiate Deck.
+    */
     public Hand() {
 
         hand = new ArrayList<Card>();
@@ -29,9 +29,12 @@ public class Hand {
         hand.add(card);
     }
 
-    /**
-     * Removes the cards at the given indices from the hand
-     **/
+   /**
+    * Removes the cards at the given indices from the hand
+    * @param index1 card turned in index 1
+    * @param index2 card turned in index 2
+    * @param index3 card turned in index 3
+    */
     public void removeCardsFromHand(int index1, int index2, int index3) {
 
         if (canTurnInCards(index1, index2, index3)) {
@@ -44,9 +47,13 @@ public class Hand {
         }
     }
 
-    /**
-     * returns true if the player can turn in cards
-     **/
+   /**
+    * returns true if the player can turn in cards
+    * @param index1 card turned in index 1
+    * @param index2 card turned in index 2
+    * @param index3 card turned in index 3
+    * @return true if the player can turn in cards, otherwise false
+    */
     public boolean canTurnInCards(int index1, int index2, int index3) {
 
         condition = false;
@@ -65,18 +72,20 @@ public class Hand {
         return condition;
     }
 
-    /**
-     * Returns true if the player must turn in cards
-     **/
+   /**
+    * getter method which returns true if the player must turn in cards
+    * @return true if the player must turn in cards,otherwise false
+    */
     public boolean mustTurnInCards() {
 
         condition = hand.size() >= 5;
         return condition;
     }
 
-    /**
-     * Returns the hand
-     **/
+   /**
+    * getter method returns the hand
+    * @return hand player object
+    */
     public ArrayList<Card> getCards() {
         return hand;
     }
