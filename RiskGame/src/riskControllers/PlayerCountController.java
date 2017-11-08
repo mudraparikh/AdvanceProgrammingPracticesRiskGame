@@ -19,10 +19,17 @@ public class PlayerCountController implements ActionListener {
     private FileSelectDialog fileSelectDialog;
     private JButton openbtn;
 
+    /**
+     * setter method assigns view 
+     * @param view player count object
+     */
     public PlayerCountController(PlayerCount view) {
         this.view = view;
     }
 
+    /**
+     * overriding action performed method passing number of players selected to the model
+     */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String event = actionEvent.getActionCommand();

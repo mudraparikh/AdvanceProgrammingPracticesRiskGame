@@ -184,11 +184,11 @@ public class GamePlayModel extends Observable {
         GameMap.getInstance().setPlayerList(playerList);
     }
 
-    /**
-     * Handles placing reinforcements.
-     *
-     * @param country is a String of the country in which the reinforcements will be placed
-     **/
+   /**
+    * Handles placing reinforcements.
+    * @param country is a String of the country in which the reinforcements will be placed
+    * @param gameView has the details to load the game board
+    */
     public void reinforce(String country, GameView gameView) {
 
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
@@ -248,8 +248,9 @@ public class GamePlayModel extends Observable {
      * opposing players in order to lower the number of armies in a territory to 0 in order
      * to occupy it.
      *
-     * @param country1 is a String of the point A country.
-     * @param country2 is a String of the point B country.
+     * @param country1 is a String of the point A country
+     * @param country2 is a String of the point B country
+     * @param gameView has the details to load the game board
      **/
     public void attack(String country1, String country2, GameView gameView) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
@@ -415,9 +416,11 @@ public class GamePlayModel extends Observable {
      * Fortifying allows the player to move armies from one country to another occupied
      * country once per turn.
      *
-     * @param country1 is a String of the point A country.
-     * @param country2 is a String of the point B country.
-     **/
+     * @param country1 is a String of the point A country
+     * @param country2 is a String of the point B country
+     * @param gameView has the details to load game board
+     * @param model its a player object
+     */
     public void fortify(String country1, String country2, GameView gameView, Player model) {
 
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
@@ -598,11 +601,11 @@ public class GamePlayModel extends Observable {
         notifyObservers();
     }
 
-    /**
-     * Starts the Game.
-     * Shuffles the players.
-     * @param model
-     */
+   /**
+    * Starts the Game.
+    * Shuffles the players.
+    * @param model its a player object
+    */
     public void startGame(Player model) {
         Collections.shuffle(playerList);
         player.setPlayerList(playerList);

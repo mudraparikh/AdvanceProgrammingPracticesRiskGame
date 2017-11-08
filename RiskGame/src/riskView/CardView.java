@@ -7,15 +7,28 @@ import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * 
+ * @author hnath
+ *
+ */
 public class CardView extends DefaultListModel implements Observer {
 
     private Player model;
 
+    /**
+     * setter method assigns player object model
+     * @param model player object
+     * @param type type of the card
+     */
     public CardView(Player model, String type) {
         super();
         this.model = model;
     }
 
+    /**
+     * overriding update method for getting the current state of the objects
+     */
     @Override
     public void update(Observable observable, Object obj) {
         GameView.displayLog("Refreshing...");

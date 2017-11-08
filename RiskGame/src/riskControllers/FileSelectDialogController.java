@@ -11,6 +11,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This class maps the user's input to the data and methods in the model
+ * @author hnath
+ *
+ */
 public class FileSelectDialogController implements ActionListener {
 
     private FileSelectDialog fileSelectDialog;
@@ -19,13 +24,20 @@ public class FileSelectDialogController implements ActionListener {
     private Player model = new Player();
     private GameView gameView;
 
-
+/**
+ * setter method assigns select file and the player count
+ * @param fileSelectDialog map file selected
+ * @param playerCount number of players selected
+ */
     public FileSelectDialogController(FileSelectDialog fileSelectDialog, int playerCount) {
         this.fileSelectDialog = fileSelectDialog;
         this.playerCount = playerCount;
         actionPerformed(null);
     }
 
+    /**
+     * overrides action performed method taking fileSelectDialog and creates file object and sends to the model
+     */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         int result = fileSelectDialog.showOpenDialog(fileSelectDialog);

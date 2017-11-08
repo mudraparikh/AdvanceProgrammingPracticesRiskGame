@@ -72,10 +72,10 @@ public class GameView extends JDialog {
     private GameMap gameMap;
     private Player model;
 
-
-    /**
-     * Constructs the Risk game board.
-     **/
+/**
+ * Constructs the Risk game board.
+ * @throws IOException when there is problem in giving input & output
+ */
     public GameView() throws IOException {
 
         setTitle("Risk Game");
@@ -142,10 +142,10 @@ public class GameView extends JDialog {
 
     }
 
-    /**
-     * This method will update view for the map panel .
-     * Map Panel holds the details of the continent ,Country , Number of Armies and Owner information
-     */
+   /**
+    * This method will update view for the map panel .
+    * Map Panel holds the details of the continent ,Country , Number of Armies and Owner information
+    */
     public static void updateMapPanel() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Continent continent : GameMap.getInstance().getContinentList()) {
@@ -498,9 +498,10 @@ public class GameView extends JDialog {
         return countryInfoPanel;
     }
 
-    /**
-     * Adds the action listeners for the buttons and lists.
-     **/
+  /**
+   * Adds the action listeners for the buttons and lists.
+   * @param evt1 action listener variable
+   */
     public void addActionListeners(ActionListener evt1) {
 
         menuBtn.addActionListener(evt1);

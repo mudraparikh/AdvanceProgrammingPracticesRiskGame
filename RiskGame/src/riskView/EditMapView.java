@@ -49,7 +49,6 @@ public class EditMapView extends java.awt.Frame {
     /**
      * This continent method is used to edit map by "Add" or "Remove" functionality Continents from a Map
      */
-
     private void continent(){
         continentList = new JList(continentDisplay);
         pane = new JScrollPane(continentList);
@@ -92,9 +91,9 @@ public class EditMapView extends java.awt.Frame {
         frame1.add(removeButton, BorderLayout.CENTER);
     }
 
-    /**
-     * This country method is used to edit map by "Add" or "Remove" functionality country from a Map
-     */
+   /**
+    * This country method is used to edit map by "Add" or "Remove" functionality country from a Map
+    */
 
     private void country() {
         countryList = new JList(countryDisplay);
