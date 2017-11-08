@@ -23,10 +23,11 @@ public class Deck {
 
     private Card drawCard;
 
-    /**
-     * Creates all cards, one for each territory. Each card has either
+   /**
+    *  Creates all cards, one for each territory. Each card has either
      * a type of Infantry, Cavalry, or Artillery.
-     **/
+    * @param countries list of country names
+    */
     public Deck(ArrayList<Country> countries) {
 
         Collections.shuffle(countries);
@@ -46,7 +47,8 @@ public class Deck {
 
     /**
      * Removes a card from the deck and return it
-     **/
+     * @return card object
+     */
     public Card draw() {
 
         drawCard = deck.get(0);
@@ -55,17 +57,18 @@ public class Deck {
         return drawCard;
     }
 
-    /**
-     * Add a card to the deck
-     **/
+   /**
+    * Add a card to the deck
+    * @param card name of the card which is to be added to deck
+    */
     public void add(Card card) {
 
         deck.add(card);
     }
 
-    /**
-     * Shuffle the deck of cards
-     **/
+   /**
+    * Shuffle the deck of cards
+    */
     public void shuffle() {
 
         Collections.shuffle(deck);
