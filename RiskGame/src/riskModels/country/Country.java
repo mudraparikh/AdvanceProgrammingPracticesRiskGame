@@ -100,64 +100,125 @@ public class Country {
         this.belongsToPlayer = belongsToPlayer;
     }
 
+    /**
+     * getter method give number of current armies deployed
+     * @return numerator of how many current armies deployed
+     */
     public int getCurrentArmiesDeployed() {
         return currentArmiesDeployed;
     }
 
+    /**
+     * setter method to assign value of current armies deployed
+     * @param currentArmiesDeployed numerator of how many current armies deployed
+     */
     public void setCurrentArmiesDeployed(int currentArmiesDeployed) {
         this.currentArmiesDeployed = currentArmiesDeployed;
     }
 
+    /**
+     * getter method gives the name of the country
+     * @return string country object
+     */
     public String getCountryName() {
         return countryName;
     }
 
+    /**
+     * setter method assigns country name 
+     * @param countryName name of the country
+     */
     public void setCountryName(String countryName) {
         this.countryName = countryName;
     }
 
+    /**
+     * getter method gives the starting pixel of the country
+     * @return value of starting pixel
+     */
     public int getStartPixel() {
         return startPixel;
     }
 
+    /**
+     * setter method assigns starting pixel to the country
+     * @param startPixel value of pixel
+     */
     public void setStartPixel(int startPixel) {
         this.startPixel = startPixel;
     }
 
+    /**
+     * getter method gives the ending pixel of the country
+     * @return value of ending pixel
+     */
     public int getEndPixel() {
         return endPixel;
     }
 
+    /**
+     * setter method assigns ending pixel to the country
+     * @param endPixel value of pixel
+     */
     public void setEndPixel(int endPixel) {
         this.endPixel = endPixel;
     }
 
+    /**
+     * getter method gives details of country to continent it belongs to
+     * @return name of the continent the country belongs to
+     */
     public String getBelongsToContinent() {
         return belongsToContinent;
     }
 
+    /**
+     * setter method assigns details of country to continent it belongs to
+     * @param belongsToContinent country object
+     */
     public void setBelongsToContinent(String belongsToContinent) {
         this.belongsToContinent = belongsToContinent;
     }
 
+    /**
+     * getter method gives details of neighbor countries 
+     * @return list of neighbor countries
+     */
     public List<Country> getNeighborNodes() {
         return neighborNodes;
     }
 
+    /**
+     * setter method assigns details of neighbor countries
+     * @param neighborNodes list of neighbor countries
+     */
     public void setNeighborNodes(List<Country> neighborNodes) {
         this.neighborNodes = neighborNodes;
     }
 
+    /**
+     * this method assigns number of armies to the country
+     * @param n value of armies to be added
+     */
     public void addArmy(int n) {
         currentArmiesDeployed += n;
         // update UI
     }
 
+    /**
+     * this method assigns number of armies to be removed from the country
+     * @param n value of the armies to be removed
+     */
     public void subtractArmy(int n) {
         currentArmiesDeployed -= n;
         // update UI
     }
 
+    /**
+     * this method assigns player and number of armies to the player
+     * @param player name of the player
+     * @param noOfArmy value of the player
+     */
     public void setPlayer(Player player, int noOfArmy) {
         this.belongsToPlayer = player;
         this.currentArmiesDeployed = noOfArmy;
