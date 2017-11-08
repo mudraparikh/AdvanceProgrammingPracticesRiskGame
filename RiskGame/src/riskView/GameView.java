@@ -1,6 +1,6 @@
 package riskView;
 
-import riskModels.GameListModel;
+import riskModels.CardView;
 import riskModels.GamePlayModel;
 import riskModels.continent.Continent;
 import riskModels.country.Country;
@@ -64,14 +64,13 @@ public class GameView extends JDialog {
     private JList<String> continentList;
     private JList<String> countryList1;
     private JList<String> countryList2;
-    private JList cardsList;
+    public  JList cardsList;
     private DefaultListModel<String> continentDisplay;
     private DefaultListModel<String> countryDisplay1;
     private DefaultListModel<String> countryDisplay2;
+    public  DefaultListModel<String> cardListDefault;
     private GameMap gameMap;
-    private MapModel mapModel;
     private GamePlayModel model;
-    private GameListModel cardsListModel;
 
 
     /**
@@ -84,7 +83,7 @@ public class GameView extends JDialog {
         setResizable(false);
 
         gameMap = GameMap.getInstance();
-        mapModel = new MapModel();
+        model = new GamePlayModel();
         mainLayout = new GridBagLayout();
         setLayout(mainLayout);
 
@@ -226,19 +225,16 @@ public class GameView extends JDialog {
 
         menuBtn = new JButton("Menu");
         turnInBtn = new JButton("Turn In Cards");
-        cardsListModel = new GameListModel(model,"cards");
+        turnInBtn.setActionCommand(turnInBtnName);
+        CardView cardsListModel = new CardView(model, "cards");
 
-
-
-        //model.addObserver((GameListModel)cardsListModel);
-
-        cardsList = new JList();
+        //model.addObserver((CardView)cardsListModel);
+        cardListDefault = new DefaultListModel<>();
+        cardsList = new JList<>(cardsListModel);
+        cardsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         cardsList.setLayoutOrientation(JList.VERTICAL_WRAP);
-        cardsList.setVisibleRowCount(6);
-
-        selectedLabel = new JLabel("Selected Territory:");
-        targetLabel = new JLabel("Adjacent Territory:");
-        continentLabel = new JLabel("Continents:");
+        cardsList.setVisibleRowCount(30);
+        cardsList.setVisible(true);
 
         dominationTextArea = new JTextArea();
         dominationTextArea.setFocusable(false);
@@ -406,6 +402,15 @@ public class GameView extends JDialog {
             }
         });
 
+        countryList2.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                Country selectedCountry = MapModel.getCountryObj(countryList2.getSelectedValue().trim(), GameMap.getInstance());
+                if (selectedCountry != null) {
+                    GameView.displayLog(selectedCountry.getCountryName() + " has " + selectedCountry.getCurrentArmiesDeployed() + " armies, occupant is " + selectedCountry.getBelongsToPlayer().getName());
+                }
+            }
+        });
+
         c = new GridBagConstraints();
 
         c.fill = GridBagConstraints.BOTH;
@@ -473,6 +478,14 @@ public class GameView extends JDialog {
     }
 
     /**
+     * Passes the indices of the cards to remove from the current player's hand.
+     * @return the array of selected indices in the cards list.
+     **/
+    public int[] getCardsToRemove() {
+        return cardsList.getSelectedIndices();
+    }
+
+    /**
      * Passes countryA for the model.
      *
      * @return the String of the selected value in country A list.
@@ -515,5 +528,12 @@ public class GameView extends JDialog {
 
     public static void showDomination(StringBuilder dominationDetails) {
         dominationTextArea.setText(dominationDetails.toString());
+    }
+
+    public static void updateCardView(String[] cardArray) {
+
+        //Todo : make cards input dialog and change it to text !
+        GameView.displayLog("view called for cards");
+
     }
 }

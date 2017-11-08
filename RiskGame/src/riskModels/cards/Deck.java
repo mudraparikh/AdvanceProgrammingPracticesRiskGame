@@ -1,10 +1,7 @@
 package riskModels.cards;
-import riskModels.cards.Card;
 import riskModels.country.Country;
 
-import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Collections;
 
 /**
@@ -39,8 +36,8 @@ public class Deck {
 
         for (i = 0; i < countries.size(); i++) {
             // Add new cards to deck
-//            deck.add(new Card(typesArray[i % countries.size()], countries.get(i)));
-            //System.out.println("Added new card to deck: " + deck.get(i).getName());
+           deck.add(new Card(typesArray[i % 3], countries.get(i)));
+           System.out.println("Added new card to deck: " + deck.get(i).getName());
         }
         Collections.shuffle(deck);
     }
