@@ -70,43 +70,14 @@ public class EditMapView extends java.awt.Frame {
 	private void continent() {
 		continentList = new JList(continentDisplay);
 		pane = new JScrollPane(continentList);
-		JButton addButton = new JButton("Add Continent");
 		JButton removeButton = new JButton("Remove Continent");
-		JLabel labelContinent = new JLabel("Enter Continent name :");
 		JFrame frameContinent = new JFrame();
 		JTextField textContinent = new JTextField();
 		JButton button1 = new JButton("OK");
 
-		for (int i = 0; i < gameMap.getContinentList().size(); i++)
+	for (int i = 0; i < gameMap.getContinentList().size(); i++)
 			continentDisplay.addElement(gameMap.getContinentList().get(i).getContinentName());
 		
-		//This button performs the add continent operation on the map to be edited.
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameContinent.setTitle("Add Continent");
-				frameContinent.setVisible(true);
-				frameContinent.setSize(250, 150);
-				frameContinent.setLocationRelativeTo(null);
-				frameContinent.add(labelContinent, BorderLayout.PAGE_START);
-				frameContinent.add(textContinent, BorderLayout.CENTER);
-				frameContinent.add(button1, BorderLayout.PAGE_END);
-				
-		//Changes made on the GUI to edit map will be saved to the .map file	
-				button1.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						frameContinent.setTitle("Add Continent");
-						frameContinent.setVisible(true);
-						frameContinent.setSize(250, 150);
-						frameContinent.setLocationRelativeTo(null);
-						frameContinent.add(labelContinent, BorderLayout.PAGE_START);
-						frameContinent.add(textContinent, BorderLayout.CENTER);
-						frameContinent.add(button1, BorderLayout.PAGE_END);
-						continentDisplay.addElement(textContinent.getText());
-						pane.repaint();
-					}
-				});
-			}
-		});
 		
 		//This button performs the remove continent operation on the map to be edited.
 		removeButton.addActionListener(new ActionListener() {
@@ -120,16 +91,16 @@ public class EditMapView extends java.awt.Frame {
 					}
 				}
 				continentList.repaint();
+				mapModel.writeMap(gameMap, fileName);
 			}
 		});
 
 		JFrame frame1 = new JFrame();
-		frame1.setTitle("Add or Remove Continent");
+		frame1.setTitle("Remove Continent");
 		frame1.setVisible(true);
 		frame1.setSize(450, 300);
 		frame1.setLocationRelativeTo(null);
 		frame1.add(pane, BorderLayout.NORTH);
-		frame1.add(addButton, BorderLayout.WEST);
 		frame1.add(removeButton, BorderLayout.CENTER);
 	}
 
