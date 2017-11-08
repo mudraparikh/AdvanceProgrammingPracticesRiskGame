@@ -8,14 +8,14 @@ import riskControllers.PlayerCountController;
  * @author mudraparikh
  */
 public class Launcher extends java.awt.Frame {
-    
+
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    
+
     /**
      * This method calls the initMenuComponents method to initialize Launcher components.
      */
@@ -25,9 +25,10 @@ public class Launcher extends java.awt.Frame {
         jButton1.setEnabled(true);
         setLocationRelativeTo(null);
     }
-    
+
     /**
      * This main method creates an instance of the startGame.
+     *
      * @param args[] arguments  to run main method
      */
     public static void main(String args[]) {
@@ -39,7 +40,7 @@ public class Launcher extends java.awt.Frame {
     }
 
     /**
-     * This method is used to generate buttons 
+     * This method is used to generate buttons
      */
     private void initMenuComponents() {
         jPanel1 = new javax.swing.JPanel();
@@ -51,44 +52,44 @@ public class Launcher extends java.awt.Frame {
 
         setBackground(new java.awt.Color(1, 1, 1));
         addWindowListener(new java.awt.event.WindowAdapter() {
-        	
-        	//Method to terminate and close the program window.
+
+            //Method to terminate and close the program window.
             public void windowClosing(java.awt.event.WindowEvent evt) {
-            	System.exit(0);
+                System.exit(0);
             }
         });
 
         jPanel1.setBackground(new java.awt.Color(1, 1, 1));
         jPanel1.setName("jPanel1");
-        
+
         //On click the button creates an instance of the PlayerCount class.
         jButton1.setText("Start Game");
         jButton1.setName("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	PlayerCount add = new PlayerCount();
-            	add.addActionListeners(new PlayerCountController(add));
+                PlayerCount add = new PlayerCount();
+                add.addActionListeners(new PlayerCountController(add));
                 add.setVisible(true);
             }
         });
-        
+
         //On click the button creates an instance of the CreateMap class.
         jButton2.setText("Create Map");
         jButton2.setName("jButton2");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	util.CreateMap add = new util.CreateMap();
+                util.CreateMap add = new util.CreateMap();
                 add.main(null);
                 System.exit(0);
             }
         });
-        
-       //On click the button creates an instance of the EditMapView class.
+
+        //On click the button creates an instance of the EditMapView class.
         jButton3.setText("Edit Map");
         jButton3.setName("jButton3");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	EditMapView add = new EditMapView();
+                EditMapView add = new EditMapView();
                 add.setVisible(true);
             }
         });
@@ -97,7 +98,7 @@ public class Launcher extends java.awt.Frame {
         jButton4.setName("jButton4");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	System.exit(0);
+                System.exit(0);
             }
         });
 

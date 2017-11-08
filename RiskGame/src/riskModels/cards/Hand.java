@@ -1,8 +1,10 @@
 package riskModels.cards;
+
 import java.util.ArrayList;
 
 /**
  * Allows the creation of Risk Hand objects used to handle the cards held by a player.
+ *
  * @author Akshay Shah
  **/
 public class Hand {
@@ -26,6 +28,7 @@ public class Hand {
 
         hand.add(card);
     }
+
     /**
      * Removes the cards at the given indices from the hand
      **/

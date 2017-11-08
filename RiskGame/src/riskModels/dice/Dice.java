@@ -1,7 +1,5 @@
 package riskModels.dice;
 
-import riskView.GameView;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
@@ -12,12 +10,10 @@ public class Dice {
     boolean isDiceRolled; // check if dice rolled
 
     /**
-     *
      * Returns result of Dice roll stored into object of values between 1 and 6 representing the
      * outcome of rolling the dice.  The number of values in the array should be
      * between 1 and 3, depending on the number of dice rolled by the player.  The
      * number of dice rolled by the player is specified by the argument numberOfDice
-     *
      *
      * @param numberOfDice number of Dice User wants to roll
      * @return return diceModel object that will have dice roll result

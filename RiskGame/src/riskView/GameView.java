@@ -1,6 +1,5 @@
 package riskView;
 
-import riskModels.CardView;
 import riskModels.GamePlayModel;
 import riskModels.continent.Continent;
 import riskModels.country.Country;
@@ -36,6 +35,8 @@ public class GameView extends JDialog {
     private static DefaultCaret caret;
     public JPanel messagePanel;
     public PlayerModel playerModel = new PlayerModel();
+    public JList cardsList;
+    public DefaultListModel<String> cardListDefault;
     private JPanel countryInfoPanel;
     private JPanel actionPanel;
     private GridBagLayout mainLayout;
@@ -64,11 +65,9 @@ public class GameView extends JDialog {
     private JList<String> continentList;
     private JList<String> countryList1;
     private JList<String> countryList2;
-    public  JList cardsList;
     private DefaultListModel<String> continentDisplay;
     private DefaultListModel<String> countryDisplay1;
     private DefaultListModel<String> countryDisplay2;
-    public  DefaultListModel<String> cardListDefault;
     private GameMap gameMap;
     private GamePlayModel model;
 
@@ -139,6 +138,40 @@ public class GameView extends JDialog {
         String existingDetails = printTextArea.getText();
         StringBuilder stringBuilder = new StringBuilder(existingDetails);
         printTextArea.setText("\n" + stringBuilder.append(logDetail) + "\n");
+
+    }
+
+    /**
+     * This method will update view for the map panel .
+     * Map Panel holds the details of the continent ,Country , Number of Armies and Owner information
+     */
+    public static void updateMapPanel() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Continent continent : GameMap.getInstance().getContinentList()) {
+            stringBuilder.append("----------------------------");
+            stringBuilder.append(continent.getContinentName());
+            stringBuilder.append("----------------------------" + "\n");
+            for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+                if (country.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
+                    stringBuilder.append(country.getCountryName());
+                    stringBuilder.append(" - ").append(country.getCurrentArmiesDeployed()).append(" - ");
+                    stringBuilder.append(country.getBelongsToPlayer().getName()).append("\n");
+                }
+            }
+
+        }
+        Date date = new Date();
+        TextAreaForMapPanel.setText(stringBuilder.toString() + "\n Updated:" + date.toString());
+    }
+
+    public static void showDomination(StringBuilder dominationDetails) {
+        dominationTextArea.setText(dominationDetails.toString());
+    }
+
+    public static void updateCardView(String[] cardArray) {
+
+        //Todo : make cards input dialog and change it to text !
+        GameView.displayLog("view called for cards");
 
     }
 
@@ -479,6 +512,7 @@ public class GameView extends JDialog {
 
     /**
      * Passes the indices of the cards to remove from the current player's hand.
+     *
      * @return the array of selected indices in the cards list.
      **/
     public int[] getCardsToRemove() {
@@ -501,39 +535,5 @@ public class GameView extends JDialog {
      **/
     public String getCountryB() {
         return countryList2.getSelectedValue();
-    }
-
-    /**
-     * This method will update view for the map panel .
-     * Map Panel holds the details of the continent ,Country , Number of Armies and Owner information
-     */
-    public static void updateMapPanel() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(Continent continent: GameMap.getInstance().getContinentList()) {
-            stringBuilder.append("----------------------------");
-            stringBuilder.append(continent.getContinentName());
-            stringBuilder.append("----------------------------" + "\n");
-            for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
-                if (country.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
-                    stringBuilder.append(country.getCountryName());
-                    stringBuilder.append(" - ").append(country.getCurrentArmiesDeployed()).append(" - ");
-                    stringBuilder.append(country.getBelongsToPlayer().getName()).append("\n");
-                }
-            }
-
-        }
-        Date date = new Date();
-        TextAreaForMapPanel.setText(stringBuilder.toString()+"\n Updated:"+date.toString());
-    }
-
-    public static void showDomination(StringBuilder dominationDetails) {
-        dominationTextArea.setText(dominationDetails.toString());
-    }
-
-    public static void updateCardView(String[] cardArray) {
-
-        //Todo : make cards input dialog and change it to text !
-        GameView.displayLog("view called for cards");
-
     }
 }

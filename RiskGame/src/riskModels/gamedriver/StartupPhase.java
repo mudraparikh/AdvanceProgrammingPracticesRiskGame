@@ -5,12 +5,14 @@ import riskModels.map.GameMap;
 import riskModels.player.Player;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class initialises the Players data and assign countries with armies.
  * Basically, all the necessary setup/startup requirements are met before actually playing the game.
+ *
  * @author Akshay
  */
 public class StartupPhase {
@@ -38,7 +40,7 @@ public class StartupPhase {
     }
 
     public void assignInitialArmiesToPlayers(int numberOfPlayers, List<Player> playerList) {
-        for (Player p:playerList){
+        for (Player p : playerList) {
             p.setTotalArmies(getInitialArmy(numberOfPlayers));
         }
     }
@@ -65,17 +67,22 @@ public class StartupPhase {
             }
         }
     }
+
     public int getInitialArmy(int numberOfPlayers) {
         switch (numberOfPlayers) {
-            case 2: return 40;
-            case 3: return 35;
-            case 4: return 30;
-            default: return 10;
+            case 2:
+                return 40;
+            case 3:
+                return 35;
+            case 4:
+                return 30;
+            default:
+                return 10;
         }
     }
 
     public void addArmies(Player player, Country country, int addAmount) {
-        if(country.currentArmiesDeployed==0 || player.getAssignedCountries().contains(country)) {
+        if (country.currentArmiesDeployed == 0 || player.getAssignedCountries().contains(country)) {
             player.addArmy(addAmount);
             country.addArmy(addAmount);
         }

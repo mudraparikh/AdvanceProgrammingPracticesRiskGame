@@ -1,4 +1,5 @@
 package riskModels.cards;
+
 import riskModels.country.Country;
 
 import java.util.ArrayList;
@@ -6,6 +7,7 @@ import java.util.Collections;
 
 /**
  * Allows the creation of the Risk deck containing the 42 Risk cards.
+ *
  * @author Akshay Shah
  **/
 public class Deck {
@@ -25,19 +27,19 @@ public class Deck {
      * Creates all cards, one for each territory. Each card has either
      * a type of Infantry, Cavalry, or Artillery.
      **/
-    public Deck (ArrayList<Country> countries) {
+    public Deck(ArrayList<Country> countries) {
 
         Collections.shuffle(countries);
 
         //Types of cards
-        typesArray = new String[]{ "Infantry", "Cavalry", "Artillery" };
+        typesArray = new String[]{"Infantry", "Cavalry", "Artillery"};
 
         deck = new ArrayList<Card>();
 
         for (i = 0; i < countries.size(); i++) {
             // Add new cards to deck
-           deck.add(new Card(typesArray[i % 3], countries.get(i)));
-           System.out.println("Added new card to deck: " + deck.get(i).getName());
+            deck.add(new Card(typesArray[i % 3], countries.get(i)));
+            System.out.println("Added new card to deck: " + deck.get(i).getName());
         }
         Collections.shuffle(deck);
     }

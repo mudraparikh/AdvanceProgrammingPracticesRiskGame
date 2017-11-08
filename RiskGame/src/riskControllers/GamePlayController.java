@@ -33,27 +33,27 @@ public class GamePlayController implements ActionListener {
                 break;
             case "reinforceBtn":
                 //System.out.println("User pressed reinforceButton.");view.getSelectedComboBox();
-                if (view.getCountryA() !=null  && view.getCountryB() !=null) {
+                if (view.getCountryA() != null && view.getCountryB() != null) {
                     model.reinforce(view.getCountryA().replaceAll("[0-9]", "").replaceAll("\\-", ""), view);
-                }else {
+                } else {
                     GameView.displayLog("Please make sure that country is selected from the list !");
                 }
 
                 break;
             case "attackBtn":
                 //System.out.println("User pressed attackButton.");
-                if (view.getCountryA() !=null  && view.getCountryB() !=null){
+                if (view.getCountryA() != null && view.getCountryB() != null) {
                     model.attack(view.getCountryA().trim().replaceAll("[0-9]", "").replaceAll("\\-", ""), view.getCountryB().trim().replaceAll("[0-9]", "").replaceAll("\\-", ""), view);
-                }else {
+                } else {
                     GameView.displayLog("Please make sure that country is selected from both the list !");
                 }
 
                 break;
             case "fortifyBtn":
                 //System.out.println("User pressed fortifyButton.");
-                if (view.getCountryA() !=null  && view.getCountryB() !=null){
+                if (view.getCountryA() != null && view.getCountryB() != null) {
                     model.fortify(view.getCountryA().replaceAll("[0-9]", "").replaceAll("\\-", ""), view.getCountryB().replaceAll("[0-9]", "").replaceAll("\\-", ""), view, model);
-                }else {
+                } else {
                     GameView.displayLog("Please make sure that country is selected from both the list !");
                 }
 

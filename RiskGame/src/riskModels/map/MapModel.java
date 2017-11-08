@@ -9,7 +9,8 @@ import java.util.*;
 
 /**
  * This class will perform operation related to MapObj created from MapFile
- * @author  Akshay and Prashant
+ *
+ * @author Akshay and Prashant
  * @version 1.0
  */
 public class MapModel {
@@ -66,7 +67,7 @@ public class MapModel {
                     }
                     country.setNeighborNodes(neighbourNodes);
                     countryList.add(country);
-                   
+
                 }
 
             }
@@ -107,9 +108,51 @@ public class MapModel {
     }
 
     /**
+     * This  method will prepare HashMap for continent and country objects
+     *
+     * @param country          list of country that we have got while parsing the  map file
+     * @param listOfContinents listOfContinents that we have got while parsing the map file
+     * @return HashMap of continent->countries  objects
+     */
+    private static HashMap<Continent, List<Country>> getContinentCountryMap(List<Country> country, List<Continent> listOfContinents) {
+        HashMap<Continent, List<Country>> continentCountryMap = new HashMap<>();
+        for (Country c : country) {
+            List<Country> countryList = new ArrayList<>();
+            if (listOfContinents.contains(new Continent(c.getBelongsToContinent()))) {
+                if (continentCountryMap.containsKey(new Continent(c.getBelongsToContinent()))) {
+                    continentCountryMap.get(new Continent(c.getBelongsToContinent())).add(c);
+                } else {
+                    int indexOfContinent = listOfContinents.indexOf(new Continent(c.getBelongsToContinent()));
+                    countryList.add(c); // Avoid using Array.asList here as it gives fixed size list and will not allow to modify the list
+                    continentCountryMap.put(listOfContinents.get(indexOfContinent), countryList);
+                }
+            }
+        }
+        return continentCountryMap;
+    }
+
+    /**
+     * This method finds the country from the gameMap object and returns the country object if present
+     *
+     * @param countryName pass the name of the country to find from the gameMap as a string
+     * @param gameMap     GameMap class object from which intended country need to be return
+     * @return country object
+     */
+    public static Country getCountryObj(String countryName, GameMap gameMap) {
+        for (Map.Entry<Country, List<Country>> pair : gameMap.getCountryAndNeighborsMap().entrySet()) {
+            // get country object
+            Country keyCountry = pair.getKey();
+            if (keyCountry.getCountryName().equalsIgnoreCase(countryName)) {
+                return keyCountry;
+            }
+        }
+        return null;
+    }
+
+    /**
      * This method will read the mapfile and provide data to creategraph
      *
-     * @param filePath path of .map file 
+     * @param filePath path of .map file
      * @return Function will return the map details obj
      */
     public GameMap readMapFile(String filePath) {
@@ -162,13 +205,13 @@ public class MapModel {
                         if (isMAPresent) {
                             List<Country> countryAndNeighbor = MapModel.readTerritories(bufferReaderForFile);
                             HashMap<Country, List<Country>> graphReadyMap = MapModel.assignContinentToNeighbors(countryAndNeighbor);
-                            HashMap<Continent, List<Country>> continentCountryMap=getContinentCountryMap(countryAndNeighbor,listOfContinents);
+                            HashMap<Continent, List<Country>> continentCountryMap = getContinentCountryMap(countryAndNeighbor, listOfContinents);
                             List<Continent> updatedcontinentList = new ArrayList<>();// we need to assign number of territories to continent objects
-                            for(Continent continent: GameMap.getInstance().getContinentList()) {
-                            	//value of each key of continentCountryMap contains list of territories/country with in that continent
-                            	//continent.setNumberOfTerritories(continentCountryMap.get(new Continent(continent.getContinentName())).size());
-                            	continent.setMemberCountriesList(continentCountryMap.get(new Continent(continent.getContinentName())));
-                            	updatedcontinentList.add(continent);
+                            for (Continent continent : GameMap.getInstance().getContinentList()) {
+                                //value of each key of continentCountryMap contains list of territories/country with in that continent
+                                //continent.setNumberOfTerritories(continentCountryMap.get(new Continent(continent.getContinentName())).size());
+                                continent.setMemberCountriesList(continentCountryMap.get(new Continent(continent.getContinentName())));
+                                updatedcontinentList.add(continent);
                             }
                             System.out.println("Reading of Territories Completed");
                             for (Object o : graphReadyMap.entrySet()) {
@@ -199,31 +242,8 @@ public class MapModel {
         return mapDetails;
 
     }
-    /**
-     * This  method will prepare HashMap for continent and country objects 
-     * @param country list of country that we have got while parsing the  map file 
-     * @param listOfContinents listOfContinents that we have got while parsing the map file
-     * @return HashMap of continent->countries  objects
-     */
-    private static HashMap<Continent, List<Country>> getContinentCountryMap(List<Country> country, List<Continent> listOfContinents) {
-    	HashMap<Continent, List<Country>> continentCountryMap = new HashMap<>();
-    	for(Country c:country) {
-    	List<Country> countryList = new ArrayList<>();
-    	if(listOfContinents.contains(new Continent(c.getBelongsToContinent()))) {
-        	if(continentCountryMap.containsKey(new Continent(c.getBelongsToContinent()))) {
-        		continentCountryMap.get(new Continent(c.getBelongsToContinent())).add(c);
-        	}
-        	else {
-        		int indexOfContinent =listOfContinents.indexOf(new Continent(c.getBelongsToContinent()));
-        		countryList.add(c); // Avoid using Array.asList here as it gives fixed size list and will not allow to modify the list
-        		continentCountryMap.put(listOfContinents.get(indexOfContinent),countryList);
-        	}
-    	 }
-    	}
-    	return continentCountryMap;
-	}
 
-	/**
+    /**
      * This method will do validation on the details we parsed from the .map file
      *
      * @param mapDetails mapDetails that we have parsed from .map file
@@ -241,44 +261,44 @@ public class MapModel {
                 mapDetails.setErrorMessage(country.getCountryName() + " does not have any neighbor nodes");
                 return mapDetails;
             }
-           // here  all countries have at least one neighbor , now check connectivity between them
-    		MapModel mapModel = new MapModel();
-    		for(Country country1 : mapDetails.getCountryAndNeighborsMap().keySet()){
-    			if(GameMap.getInstance().isCorrectMap) {
-       			for(Country country2 : mapDetails.getCountryAndNeighborsMap().keySet()){
-    				if(!country1.equals(country2)){
-    					if(!mapModel.isConnected(country1, country2)){
-    						mapDetails.setCorrectMap(false);
-    						mapDetails.setErrorMessage("Disconnected Country Found "+country1.getCountryName() +" " +country2.getCountryName());
-    						break;
-    					}
-    				}
-    			}
-    		  }
-    		}
+            // here  all countries have at least one neighbor , now check connectivity between them
+            MapModel mapModel = new MapModel();
+            for (Country country1 : mapDetails.getCountryAndNeighborsMap().keySet()) {
+                if (GameMap.getInstance().isCorrectMap) {
+                    for (Country country2 : mapDetails.getCountryAndNeighborsMap().keySet()) {
+                        if (!country1.equals(country2)) {
+                            if (!mapModel.isConnected(country1, country2)) {
+                                mapDetails.setCorrectMap(false);
+                                mapDetails.setErrorMessage("Disconnected Country Found " + country1.getCountryName() + " " + country2.getCountryName());
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
         return mapDetails;
     }
 
     /**
-	 * Checks if it is connected.
-	 *
-	 * @param c1 the country  1
-	 * @param c2 the country 2
-	 * @param unwantedPair the unwanted pair
-	 * @return true, if is connected
-	 */
-	private boolean isConnected(Country c1, Country c2, List<Country> unwantedPair) {
-		// if provided countries are neighbor they are connected
-		if (isNeighbour(c1, c2))
-			return true;
-		// if they are not neighbor check if they are reachable to each other
-		if (unwantedPair == null)
-			unwantedPair = new ArrayList<>();
-		else if (unwantedPair.contains(c1))
-			return false;
-		unwantedPair.add(c1);
-        if(GameMap.getInstance().getCountryAndNeighborsMap().get(c1) !=null){
+     * Checks if it is connected.
+     *
+     * @param c1           the country  1
+     * @param c2           the country 2
+     * @param unwantedPair the unwanted pair
+     * @return true, if is connected
+     */
+    private boolean isConnected(Country c1, Country c2, List<Country> unwantedPair) {
+        // if provided countries are neighbor they are connected
+        if (isNeighbour(c1, c2))
+            return true;
+        // if they are not neighbor check if they are reachable to each other
+        if (unwantedPair == null)
+            unwantedPair = new ArrayList<>();
+        else if (unwantedPair.contains(c1))
+            return false;
+        unwantedPair.add(c1);
+        if (GameMap.getInstance().getCountryAndNeighborsMap().get(c1) != null) {
             for (Country c : GameMap.getInstance().getCountryAndNeighborsMap().get(c1)) {
                 if (!unwantedPair.contains(c) && isConnected(c, c2, unwantedPair))
                     return true;
@@ -286,30 +306,33 @@ public class MapModel {
         }
 
 
-		return false;
-	}
-	/**
-	 * Checks if it is connected.
-	 *
-	 * @param c1 the c 1
-	 * @param c2 the c 2
-	 * @return true, if is connected
-	 */
-	public boolean isConnected(Country c1, Country c2) {
-		return isConnected(c1, c2, new ArrayList<Country>());
-	}
-	/**
-	 * check if countries provided in argument are adjacent neighbors or not
-	 * @param c1  country 1
-	 * @param c2 country 2
-	 * @return true if countries  are direct adjacent else false
-	 */
+        return false;
+    }
+
+    /**
+     * Checks if it is connected.
+     *
+     * @param c1 the c 1
+     * @param c2 the c 2
+     * @return true, if is connected
+     */
+    public boolean isConnected(Country c1, Country c2) {
+        return isConnected(c1, c2, new ArrayList<Country>());
+    }
+
+    /**
+     * check if countries provided in argument are adjacent neighbors or not
+     *
+     * @param c1 country 1
+     * @param c2 country 2
+     * @return true if countries  are direct adjacent else false
+     */
     public boolean isNeighbour(Country c1, Country c2) {
         return GameMap.getInstance().getCountryAndNeighborsMap().get(c1) != null && (GameMap.getInstance().getCountryAndNeighborsMap().get(c1).contains(c2));
 
     }
-    
-	/**
+
+    /**
      * This method will perform validation of provided input file
      *
      * @param file File class object is passed where input file is selected by user and is check for validation
@@ -402,53 +425,38 @@ public class MapModel {
     }
 
     /**
-     * This method finds the country from the gameMap object and returns the country object if present
-     * @param countryName pass the name of the country to find from the gameMap as a string
-     * @param gameMap GameMap class object from which intended country need to be return
-     * @return country object
-     */
-    public static Country getCountryObj(String countryName, GameMap gameMap){
-        for (Map.Entry<Country, List<Country>> pair : gameMap.getCountryAndNeighborsMap().entrySet()) {
-            // get country object
-            Country keyCountry = pair.getKey();
-            if (keyCountry.getCountryName().equalsIgnoreCase(countryName)) {
-                return keyCountry;
-            }
-        }
-        return null;
-    }
-    /**
-     * This method will remove Continent from the map 
+     * This method will remove Continent from the map
+     *
      * @param continent
      */
     public void removeContinent(Continent continent) {
-    	System.out.println("Removing Continent Name"+continent.getContinentName());
-    	Set<Country> countries= GameMap.getInstance().getCountryAndNeighborsMap().keySet();
-    	List<Country> countryList = new ArrayList<>();
-    	MapModel mapmodel = new MapModel();
-    	for(Country c : countries) {
-    		Country countryTest = new Country(c.getCountryName(),c.getBelongsToContinent());
-    		countryList.add(countryTest);
-    	}
-    	for(Country c : countryList) {
-    		if(c.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())){
-    			mapmodel.removeCountry(c, GameMap.getInstance());
-    		}
-    	}
+        System.out.println("Removing Continent Name" + continent.getContinentName());
+        Set<Country> countries = GameMap.getInstance().getCountryAndNeighborsMap().keySet();
+        List<Country> countryList = new ArrayList<>();
+        MapModel mapmodel = new MapModel();
+        for (Country c : countries) {
+            Country countryTest = new Country(c.getCountryName(), c.getBelongsToContinent());
+            countryList.add(countryTest);
+        }
+        for (Country c : countryList) {
+            if (c.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
+                mapmodel.removeCountry(c, GameMap.getInstance());
+            }
+        }
 
-    	Continent continentToBeRemoved = GameMap.getInstance().getContinentList().get(GameMap.getInstance().getContinentList().indexOf(new Continent(continent.getContinentName())));
-    	GameMap.getInstance().getContinentList().remove(GameMap.getInstance().getContinentList().indexOf(new Continent(continent.getContinentName())));
-    	GameMap.getInstance().getContinentCountryMap().remove(new Continent(continent.getContinentName()));
-    	if(mapmodel.validateMap(GameMap.getInstance()).isCorrectMap) {
-    		mapmodel.writeMap(GameMap.getInstance(), "updated");
-    	}else {
-    		String errorMessage =GameMap.getInstance().getErrorMessage();
+        Continent continentToBeRemoved = GameMap.getInstance().getContinentList().get(GameMap.getInstance().getContinentList().indexOf(new Continent(continent.getContinentName())));
+        GameMap.getInstance().getContinentList().remove(GameMap.getInstance().getContinentList().indexOf(new Continent(continent.getContinentName())));
+        GameMap.getInstance().getContinentCountryMap().remove(new Continent(continent.getContinentName()));
+        if (mapmodel.validateMap(GameMap.getInstance()).isCorrectMap) {
+            mapmodel.writeMap(GameMap.getInstance(), "updated");
+        } else {
+            String errorMessage = GameMap.getInstance().getErrorMessage();
             GameMap.getInstance().getContinentList().add(continentToBeRemoved);
-           // GameMap.getInstance().getContinentCountryMap().add(new Continent(continent.getContinentName()));
-    		GameMap.getInstance().setErrorMessage("Can not remove continent  "+errorMessage);
-    		System.out.println(GameMap.getInstance().getErrorMessage());
-    	}
-    
+            // GameMap.getInstance().getContinentCountryMap().add(new Continent(continent.getContinentName()));
+            GameMap.getInstance().setErrorMessage("Can not remove continent  " + errorMessage);
+            System.out.println(GameMap.getInstance().getErrorMessage());
+        }
+
     }
 
     /**

@@ -4,12 +4,11 @@ import riskModels.GamePlayModel;
 import riskView.FileSelectDialog;
 import riskView.PlayerCount;
 
-import static util.RiskGameUtil.*;
-
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
+import static util.RiskGameUtil.*;
 
 /**
  * This class maps the user's input to the data and methods in the model
@@ -20,9 +19,10 @@ public class PlayerCountController implements ActionListener {
     private FileSelectDialog fileSelectDialog;
     private JButton openbtn;
 
-    public PlayerCountController(PlayerCount view){
+    public PlayerCountController(PlayerCount view) {
         this.view = view;
     }
+
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String event = actionEvent.getActionCommand();
@@ -35,9 +35,7 @@ public class PlayerCountController implements ActionListener {
             fileSelectDialog.addActionListener(new FileSelectDialogController(fileSelectDialog, 3));
             fileSelectDialog.setVisible(true);
 
-        }
-
-        else if (event.equals(fourPlayersBtnName)) {
+        } else if (event.equals(fourPlayersBtnName)) {
 
             //Open the MapFileChooseDialog box over here.
             //Instantiate the class over here and pass the value
@@ -45,35 +43,23 @@ public class PlayerCountController implements ActionListener {
             fileSelectDialog = new FileSelectDialog();
             fileSelectDialog.addActionListener(new FileSelectDialogController(fileSelectDialog, 4));
             fileSelectDialog.setVisible(true);
-        }
-
-        else if (event.equals(fivePlayersBtnName))
-        {
+        } else if (event.equals(fivePlayersBtnName)) {
             //Open the MapFileChooseDialog box over here.
             //Instantiate the class over here and pass the value
             System.out.println("Now Choose the map file from the Dialog box");
             fileSelectDialog = new FileSelectDialog();
             fileSelectDialog.addActionListener(new FileSelectDialogController(fileSelectDialog, 5));
             fileSelectDialog.setVisible(true);
-        }
-
-        else if (event.equals(sixPlayersBtnName))
-        {
+        } else if (event.equals(sixPlayersBtnName)) {
             //Open the MapFileChooseDialog box over here.
             //Instantiate the class over here and pass the value
             System.out.println("Now Choose the map file from the Dialog box");
             fileSelectDialog = new FileSelectDialog();
             fileSelectDialog.addActionListener(new FileSelectDialogController(fileSelectDialog, 6));
             fileSelectDialog.setVisible(true);
-        }
-
-        else if (event.equals(backBtnName))
-        {
+        } else if (event.equals(backBtnName)) {
             view.dispose();
-        }
-
-        else
-        {
+        } else {
             System.out.println("Error: " + actionEvent + " actionEvent not found!");
         }
     }

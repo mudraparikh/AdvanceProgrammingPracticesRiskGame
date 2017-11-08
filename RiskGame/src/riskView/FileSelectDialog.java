@@ -11,10 +11,10 @@ import java.io.File;
  */
 public class FileSelectDialog extends JFileChooser {
 
-/**
- * This constructor allows to select the map file and load the file location
- */
-    public FileSelectDialog(){
+    /**
+     * This constructor allows to select the map file and load the file location
+     */
+    public FileSelectDialog() {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Map FILES", "map");
         setFileFilter(filter);
         setDialogTitle("Select a map file");

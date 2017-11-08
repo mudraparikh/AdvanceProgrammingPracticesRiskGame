@@ -15,7 +15,7 @@ public class RiskGameUtil {
     public static String fivePlayersBtnName = "fivePlayersBtn";
     public static String sixPlayersBtnName = "sixPlayersBtn";
     public static String backBtnName = "backBtn";
-    
+
     /**
      * to check null or empty string
      * input String , output boolean(true/false)

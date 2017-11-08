@@ -8,9 +8,9 @@ import static util.RiskGameUtil.*;
 
 /**
  * This class will get map details from model and display the map with number of players
+ *
  * @author hnath
  * @author mudraparikh
- *
  */
 @SuppressWarnings("serial")
 public class PlayerCount extends JDialog {
@@ -27,7 +27,7 @@ public class PlayerCount extends JDialog {
     /**
      * this constructor helps to set title,window size,default close operation
      */
-    public PlayerCount(){
+    public PlayerCount() {
         setTitle("Risk Game");
 
         setPreferredSize(new Dimension(150, 280));
@@ -43,6 +43,7 @@ public class PlayerCount extends JDialog {
 
     /**
      * The Player selection panel
+     *
      * @return JPanel of the player selection
      */
     public JPanel playerCountPanel() {
@@ -57,7 +58,7 @@ public class PlayerCount extends JDialog {
         fourPlayerBtn = new JButton("4");
         fivePlayerBtn = new JButton("5");
         sixPlayerBtn = new JButton("6");
-        backBtn = new JButton ("Back");
+        backBtn = new JButton("Back");
 
         threePlayerBtn.setActionCommand(threePlayersBtnName);
         fourPlayerBtn.setActionCommand(fourPlayersBtnName);
@@ -78,7 +79,7 @@ public class PlayerCount extends JDialog {
     /**
      * Adds the action listeners;
      */
-    protected void addActionListeners(ActionListener event){
+    protected void addActionListeners(ActionListener event) {
         threePlayerBtn.addActionListener(event);
         fourPlayerBtn.addActionListener(event);
         fivePlayerBtn.addActionListener(event);

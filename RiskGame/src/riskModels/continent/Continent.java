@@ -18,9 +18,10 @@ public class Continent {
     public int numberOfTerritories;
     public Color color;
     public int controlValue;
-    
+
     /**
      * This constructor will create continent object based provided continent name
+     *
      * @param continentName name of the continent
      */
     public Continent(String continentName) {
@@ -32,12 +33,12 @@ public class Continent {
      * default constructor
      */
     public Continent() {
-      
+
     }
 
     /**
-	 * Over ride equals method in order to compare compare objects based on continent name not continent objects
-	 */
+     * Over ride equals method in order to compare compare objects based on continent name not continent objects
+     */
     @Override
     public boolean equals(Object continentObject) {
         String continentName = ((Continent) continentObject).getContinentName();
@@ -46,23 +47,24 @@ public class Continent {
 
     /**
      * Overriding hashCode method.
-     * 
      */
     @Override
     public int hashCode() {
         return this.continentName.hashCode();
     }
-    
-	/**
-	 * This method will return continent name
-	 * @return name of the continent (String format)
-	 */
+
+    /**
+     * This method will return continent name
+     *
+     * @return name of the continent (String format)
+     */
     public String getContinentName() {
         return continentName;
     }
 
     /**
      * setter method assigns the continent name
+     *
      * @param continentName continent object
      */
     public void setContinentName(String continentName) {
@@ -71,6 +73,7 @@ public class Continent {
 
     /**
      * getter method to get the list of the countries belong to that particular continent
+     *
      * @return memberCountriesList list of countries
      */
     public List<Country> getMemberCountriesList() {
@@ -79,6 +82,7 @@ public class Continent {
 
     /**
      * setter method assigns countries list to the player
+     *
      * @param memberCountriesList individual player countries list
      */
     public void setMemberCountriesList(List<Country> memberCountriesList) {
@@ -87,6 +91,7 @@ public class Continent {
 
     /**
      * getter method gives total value of territories assigned to the player
+     *
      * @return value of total number of territories assigned to the player
      */
     public int getNumberOfTerritories() {
@@ -95,6 +100,7 @@ public class Continent {
 
     /**
      * setter method assigns number of territories to the player
+     *
      * @param numberOfTerritories count for individual player
      */
     public void setNumberOfTerritories(int numberOfTerritories) {
@@ -102,7 +108,8 @@ public class Continent {
     }
 
     /**
-     * getter method gives the control value 
+     * getter method gives the control value
+     *
      * @return value of control value
      */
     public int getControlValue() {
@@ -111,14 +118,16 @@ public class Continent {
 
     /**
      * setter method assigns control value
+     *
      * @param controlValue player object
      */
     public void setControlValue(int controlValue) {
         this.controlValue = controlValue;
     }
-    
+
     /**
      * getter method for player who own the continent
+     *
      * @return color color of the continent player occupied
      */
     public Color getColor() {
@@ -127,6 +136,7 @@ public class Continent {
 
     /**
      * setter method to assign color to the continent
+     *
      * @param color for the continent
      */
     public void setColor(Color color) {

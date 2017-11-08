@@ -9,6 +9,7 @@ import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskModels.player.Player;
 import riskModels.player.PlayerModel;
+import riskView.CardView;
 import riskView.GameView;
 import riskView.PlayerView;
 
@@ -331,8 +332,8 @@ public class GamePlayModel extends Observable {
                                 GameView.displayLog(countryB.getBelongsToPlayer().getName() + "has no countries left, player looses the game and is eliminated");
 
                                 //Attacker will get all the cards of the defender as defender has lost all of it's countries
-                                List<Card> listOfDefenderCards =  countryB.getBelongsToPlayer().getHand();
-                                for (Card card : listOfDefenderCards )
+                                List<Card> listOfDefenderCards = countryB.getBelongsToPlayer().getHand();
+                                for (Card card : listOfDefenderCards)
                                     countryA.getBelongsToPlayer().addRiskCard(card);
 
                                 playerList.remove(countryB.getBelongsToPlayer());
@@ -430,7 +431,7 @@ public class GamePlayModel extends Observable {
                 } else {
                     GameView.displayLog("You cannot relocate armies right now.");
                 }
-            } else{
+            } else {
                 GameView.displayLog("You should be owner of both the country. Please select countries which you are an occupant and has more than 1 army.");
             }
         }
@@ -445,7 +446,7 @@ public class GamePlayModel extends Observable {
 
         if (canTurnInCards) {
             if (cardsToRemove.length == 3) {
-                if(currentPlayer.getHandObject().canTurnInCards(cardsToRemove[0], cardsToRemove[1], cardsToRemove[2])){
+                if (currentPlayer.getHandObject().canTurnInCards(cardsToRemove[0], cardsToRemove[1], cardsToRemove[2])) {
                     /* if (currentPlayer.getHand().get(cardsToRemove[0]).getCountry().getBelongsToPlayer().equals(currentPlayer) || currentPlayer.getHand().get(cardsToRemove[1]).getCountry().getBelongsToPlayer().equals(currentPlayer) || currentPlayer.getHand().get(cardsToRemove[2]).getCountry().getBelongsToPlayer().equals(currentPlayer)) {
                     // Checks if player owns a country on the cards to remove
                     currentPlayerReinforceArmies+=2;
@@ -457,7 +458,7 @@ public class GamePlayModel extends Observable {
                     setChanged();
                     notifyObservers("cards");
 
-                }  else {
+                } else {
                     GameView.displayLog("You must trade in three cards of the same type or one of each three types.");
                 }
             } else {
@@ -469,7 +470,7 @@ public class GamePlayModel extends Observable {
     }
 
     public void checkHasCountryCaptured() {
-        if(hasCountryCaptured){
+        if (hasCountryCaptured) {
             currentPlayer.addRiskCard(deck.draw());
             setChanged();
             notifyObservers(GamePlayModel.class);
@@ -477,11 +478,11 @@ public class GamePlayModel extends Observable {
         hasCountryCaptured = false;
     }
 
-    public void endPlayerTurn(GamePlayModel model){
-        if(canEndTurn){
+    public void endPlayerTurn(GamePlayModel model) {
+        if (canEndTurn) {
             checkHasCountryCaptured();
             nextPlayerTurn(model);
-        }else {
+        } else {
             GameView.displayLog("You cannot end turn without playing reinforcement phase, atleast !");
         }
     }
@@ -532,13 +533,13 @@ public class GamePlayModel extends Observable {
             if (currentPlayer.mustTurnInCards()) {
                 // While player has 5 or more cards
                 GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
-               // GamePlayModel model = new GamePlayModel();
-                CardView cardview = new CardView(model,"cards");
+                // GamePlayModel model = new GamePlayModel();
+                CardView cardview = new CardView(model, "cards");
                 model.addObserver(cardview);
                 model.showCard();
                 canTurnInCards = true;
                 canReinforce = false;
-            }else {
+            } else {
                 canReinforce = true;
             }
 
@@ -546,8 +547,6 @@ public class GamePlayModel extends Observable {
     }
 
     public void showCard() {
-        System.out.print("Show card is callaed");
-
         setChanged();
         notifyObservers();
     }
@@ -570,7 +569,7 @@ public class GamePlayModel extends Observable {
      *
      * @return a list of Strings to be displayed in the cardsList.
      **/
-    protected ArrayList<String> getCardsList() {
+    public ArrayList<String> getCardsList() {
 
         list = new ArrayList<String>();
 
@@ -581,31 +580,6 @@ public class GamePlayModel extends Observable {
         return list;
     }
 
-
-    public ArrayList<String> getSelectedCountryList() {
-        list = new ArrayList<>();
-        for (Country c : currentPlayer.getAssignedCountries()) {
-            list.add(c.getCurrentArmiesDeployed() + " : " + c.getCountryName());
-        }
-        return list;
-    }
-
-    /**
-     * Creates and returns the information for the countryBList in the GameView.
-     *
-     * @return a list of Strings to be displayed in the countryBList.
-     **/
-    protected ArrayList<String> getCountryBList() {
-
-        list = new ArrayList<>();
-
-       /* for (Country c : gameMap.getCountryAndNeighborsMap().keySet()) {
-            if (checkAdjacency(countryASelection, c.getCountryName())) {
-                list.add(c.getCurrentArmiesDeployed() + "-" + c.getCountryName());
-            }
-        }*/
-        return list;
-    }
 
     /**
      * Getting the reinforcement army for player.
