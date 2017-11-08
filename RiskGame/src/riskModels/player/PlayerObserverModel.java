@@ -12,7 +12,7 @@ import java.util.Observable;
  *
  * @author prashantp95
  */
-public class PlayerModel extends Observable {
+public class PlayerObserverModel extends Observable {
     Player player = new Player();
     String updateMessage = "";
 

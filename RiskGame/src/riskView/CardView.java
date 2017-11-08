@@ -1,6 +1,7 @@
 package riskView;
 
-import riskModels.GamePlayModel;
+import riskModels.player.GamePlayModel;
+import riskModels.player.Player;
 
 import javax.swing.*;
 import java.util.Observable;
@@ -8,9 +9,9 @@ import java.util.Observer;
 
 public class CardView extends DefaultListModel implements Observer {
 
-    private GamePlayModel model;
+    private Player model;
 
-    public CardView(GamePlayModel model, String type) {
+    public CardView(Player model, String type) {
         super();
         this.model = model;
     }
@@ -19,7 +20,7 @@ public class CardView extends DefaultListModel implements Observer {
     public void update(Observable observable, Object obj) {
         GameView.displayLog("Refreshing...");
 
-        model = (GamePlayModel) observable;
+        model = (Player) observable;
         String cardArray[] = new String[model.getCardsList().size()];
         int i;
         for (i = 0; i < model.getCardsList().size(); i++) {

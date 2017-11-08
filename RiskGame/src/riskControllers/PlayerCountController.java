@@ -1,6 +1,6 @@
 package riskControllers;
 
-import riskModels.GamePlayModel;
+import riskModels.player.GamePlayModel;
 import riskView.FileSelectDialog;
 import riskView.PlayerCount;
 

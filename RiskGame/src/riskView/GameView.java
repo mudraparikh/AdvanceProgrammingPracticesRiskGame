@@ -1,11 +1,12 @@
 package riskView;
 
-import riskModels.GamePlayModel;
+import riskModels.player.GamePlayModel;
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
-import riskModels.player.PlayerModel;
+import riskModels.player.Player;
+import riskModels.player.PlayerObserverModel;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -34,7 +35,7 @@ public class GameView extends JDialog {
     private static JTextArea TextAreaForMapPanel;
     private static DefaultCaret caret;
     public JPanel messagePanel;
-    public PlayerModel playerModel = new PlayerModel();
+    public PlayerObserverModel playerModel = new PlayerObserverModel();
     public JList cardsList;
     public DefaultListModel<String> cardListDefault;
     private JPanel countryInfoPanel;
@@ -69,7 +70,7 @@ public class GameView extends JDialog {
     private DefaultListModel<String> countryDisplay1;
     private DefaultListModel<String> countryDisplay2;
     private GameMap gameMap;
-    private GamePlayModel model;
+    private Player model;
 
 
     /**
@@ -82,7 +83,7 @@ public class GameView extends JDialog {
         setResizable(false);
 
         gameMap = GameMap.getInstance();
-        model = new GamePlayModel();
+        model = new Player();
         mainLayout = new GridBagLayout();
         setLayout(mainLayout);
 

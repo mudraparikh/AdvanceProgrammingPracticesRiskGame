@@ -1,6 +1,7 @@
 package riskControllers;
 
-import riskModels.GamePlayModel;
+import riskModels.player.GamePlayModel;
+import riskModels.player.Player;
 import riskView.FileSelectDialog;
 import riskView.GameView;
 
@@ -15,7 +16,7 @@ public class FileSelectDialogController implements ActionListener {
     private FileSelectDialog fileSelectDialog;
     private File selectedFile;
     private int playerCount;
-    private GamePlayModel model = new GamePlayModel();
+    private Player model = new Player();
     private GameView gameView;
 
 

@@ -1,4 +1,4 @@
-package riskModels;
+package riskModels.player;
 
 import riskModels.cards.Card;
 import riskModels.cards.Deck;
@@ -7,15 +7,12 @@ import riskModels.country.Country;
 import riskModels.dice.Dice;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
-import riskModels.player.Player;
-import riskModels.player.PlayerModel;
 import riskView.CardView;
 import riskView.GameView;
 import riskView.PlayerView;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicIconFactory;
-import java.awt.*;
 import java.io.File;
 import java.util.*;
 import java.util.List;
@@ -91,7 +88,7 @@ public class GamePlayModel extends Observable {
             setInitialArmies();
             allocateCountriesToPlayers();
             addInitialArmiesInRR();
-            PlayerModel playerModel = new PlayerModel();
+            PlayerObserverModel playerModel = new PlayerObserverModel();
             playerModel.getPlayerWorldDomination(player.getPlayerList());
             canTurnInCards = false;
             canReinforce = true;
@@ -175,12 +172,11 @@ public class GamePlayModel extends Observable {
      * @param playerCount Number of players selected from the dialog box
      */
     public void initializePlayerData(int playerCount) {
-        Color color[] = {Color.RED, Color.MAGENTA, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK};
         String playersName[] = {"John", "Alexa", "Penny", "Sheldon", "Amy", "Raj"};
         playerList = new ArrayList<>();
         int i = 0;
         while (i < playerCount) {
-            playerList.add(new Player(playersName[i], color[i]));
+            playerList.add(new Player(playersName[i]));
             i++;
         }
         player = new Player(playerList);
@@ -383,7 +379,7 @@ public class GamePlayModel extends Observable {
                             }
                             hasCountryCaptured = true;
                             PlayerView playerView = new PlayerView();
-                            PlayerModel playerModel = new PlayerModel();
+                            PlayerObserverModel playerModel = new PlayerObserverModel();
                             playerModel.addObserver(playerView);
                             playerModel.getPlayerWorldDomination(playerList);
                         }
@@ -422,7 +418,7 @@ public class GamePlayModel extends Observable {
      * @param country1 is a String of the point A country.
      * @param country2 is a String of the point B country.
      **/
-    public void fortify(String country1, String country2, GameView gameView, GamePlayModel model) {
+    public void fortify(String country1, String country2, GameView gameView, Player model) {
 
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
@@ -509,7 +505,7 @@ public class GamePlayModel extends Observable {
      * This will end the player's turn and assign the card if player decided to skip Foritification phase.
      * @param model <code>GamePlayModel.class</code>
      */
-    public void endPlayerTurn(GamePlayModel model) {
+    public void endPlayerTurn(Player model) {
         if (canEndTurn) {
             checkHasCountryCaptured();
             nextPlayerTurn(model);
@@ -564,7 +560,7 @@ public class GamePlayModel extends Observable {
      * It will also calculate the total reinforcement armies needed.
      * @param model <code>GamePlayModel.class</code> object to passed for Card View Observable
      */
-    public void nextPlayerTurn(GamePlayModel model) {
+    public void nextPlayerTurn(Player model) {
         if (playerList.size() > 1) {
             //if at least one player remains
             canReinforce = false;
@@ -607,7 +603,7 @@ public class GamePlayModel extends Observable {
      * Shuffles the players.
      * @param model
      */
-    public void startGame(GamePlayModel model) {
+    public void startGame(Player model) {
         Collections.shuffle(playerList);
         player.setPlayerList(playerList);
         GameMap.getInstance().setPlayerList(playerList);

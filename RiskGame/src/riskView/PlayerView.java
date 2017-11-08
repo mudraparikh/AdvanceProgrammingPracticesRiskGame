@@ -1,7 +1,7 @@
 package riskView;
 
 import riskModels.player.Player;
-import riskModels.player.PlayerModel;
+import riskModels.player.PlayerObserverModel;
 
 import javax.swing.*;
 import java.util.Observable;
@@ -19,7 +19,7 @@ public class PlayerView implements Observer {
     public void update(Observable arg0, Object arg1) {
         // TODO Auto-generated method stub
 
-        PlayerModel p = (PlayerModel) arg0;
+        PlayerObserverModel p = (PlayerObserverModel) arg0;
         if (p.getUpdateMessage().equalsIgnoreCase("Domination")) {
             StringBuilder dominationDetails = new StringBuilder();
 

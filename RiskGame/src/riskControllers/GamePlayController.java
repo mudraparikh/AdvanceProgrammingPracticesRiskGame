@@ -1,6 +1,6 @@
 package riskControllers;
 
-import riskModels.GamePlayModel;
+import riskModels.player.GamePlayModel;
 import riskModels.player.Player;
 import riskView.GameView;
 
@@ -9,14 +9,12 @@ import java.awt.event.ActionListener;
 
 public class GamePlayController implements ActionListener {
 
-    private GamePlayModel model;
+    private Player model;
     private GameView view;
-    private Player playerModel;
 
-    public GamePlayController(GamePlayModel model, GameView gameView) {
+    public GamePlayController(Player model, GameView gameView) {
         this.model = model;
         this.view = gameView;
-        this.playerModel = new Player();
         model.startGame(model);
     }
 
