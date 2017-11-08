@@ -31,18 +31,7 @@ public class PlayerView implements Observer {
             GameView.showDomination(dominationDetails);
         }
         if (p.getUpdateMessage().equalsIgnoreCase("Phase")) {
-            StringBuilder lable = new StringBuilder();
-            for (Player player : p.getPlayer().getPlayerList()) {
-                lable.append(player.getName()).append("\n");
-                lable.append("Total Armies: ").append(player.getTotalArmies()).append("\n");
-                lable.append("Reinforcement Armies").append(player.getReinforcementArmies()).append("\n");
-                lable.append("Countries Owned").append(player.getAssignedCountries().size()).append("\n");
-                lable.append("  ||  " + "\n");
-
-            }
-            GameView.phaseViewTextArea.setText(lable + "\n");
-            GameView.phaseViewPane = new JScrollPane(GameView.phaseViewTextArea);
-            GameView.phaseViewPane.repaint();
+           GameView.updatePanelOfPhaseDetails(p.getPhaseDetailMessage());
         }
 
 
