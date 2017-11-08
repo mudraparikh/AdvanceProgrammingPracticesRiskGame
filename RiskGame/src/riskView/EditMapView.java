@@ -50,7 +50,7 @@ public class EditMapView extends java.awt.Frame {
      * This continent method is used to edit map by "Add" or "Remove" functionality Continents from a Map
      */
 
-    private void continent() {
+    private void continent(){
         continentList = new JList(continentDisplay);
         pane = new JScrollPane(continentList);
         JButton removeButton = new JButton("Remove Continent");
@@ -70,11 +70,16 @@ public class EditMapView extends java.awt.Frame {
                     for (String string : obj) {
                         Continent continent = new Continent(string);
                         continentDisplay.removeElement(string);
-                        mapModel.removeContinent(continent);
+                        mapModel.removeContinent(continent,fileName);
+                        if(GameMap.getInstance().isCorrectMap) {
+                        	JOptionPane.showMessageDialog(null, string+" Continent removed from the Map");	
+                        }else {
+                        	JOptionPane.showMessageDialog(null,GameMap.getInstance().getErrorMessage().toString());
+                        }
                     }
                 }
                 continentList.repaint();
-                mapModel.writeMap(gameMap, fileName);
+               // mapModel.writeMap(gameMap, fileName);
             }
         });
 
@@ -115,7 +120,7 @@ public class EditMapView extends java.awt.Frame {
          * by accessing the values from the gameMap object of the gameMap class
          */
         for (int i = 0; i < gameMap.getContinentList().size(); i++)
-            continentDisplay.addElement(gameMap.getContinentList().get(i).getContinentName());
+            continentDisplay1.addElement(gameMap.getContinentList().get(i).getContinentName());
 
         for (Map.Entry<Country, List<Country>> e : gameMap.getCountryAndNeighborsMap().entrySet()) {
             countryDisplay.addElement(e.getKey().getCountryName());
@@ -155,9 +160,18 @@ public class EditMapView extends java.awt.Frame {
                                 }
                             }
                         }
+                        
                     }
                     mapModel.addCountry(country, gameMap, countries);
-                    mapModel.writeMap(gameMap, fileName);
+                    mapModel.validateMap(gameMap);
+                    if(gameMap.isCorrectMap) {
+                    	mapModel.writeMap(gameMap, fileName);
+                    	JOptionPane.showMessageDialog(null, "Added Country " + textCountry.getText() + " in " + continents+ " Continent" );
+                    }else {
+                    	JOptionPane.showMessageDialog(null,GameMap.getInstance().getErrorMessage().toString());
+                    	mapModel.removeCountry(country, gameMap);
+                    }
+                    
                 }
             }
         });
@@ -171,8 +185,11 @@ public class EditMapView extends java.awt.Frame {
                         if (mapModel.getCountryObj(string, gameMap) != null) {
                             mapModel.removeCountry(mapModel.getCountryObj(string, gameMap), gameMap);
                         }
-                        ;
-
+                        if(GameMap.getInstance().isCorrectMap) {
+                        	JOptionPane.showMessageDialog(null,string + " Country removed from the Map");	
+                        }else {
+                        	JOptionPane.showMessageDialog(null,GameMap.getInstance().getErrorMessage().toString());
+                        }
                     }
                 }
                 countryList.repaint();

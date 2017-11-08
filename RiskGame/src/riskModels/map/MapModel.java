@@ -428,8 +428,9 @@ public class MapModel {
      * This method will remove Continent from the map
      *
      * @param continent
+     * @param fileName 
      */
-    public void removeContinent(Continent continent) {
+    public void removeContinent(Continent continent, String fileName) {
         System.out.println("Removing Continent Name" + continent.getContinentName());
         Set<Country> countries = GameMap.getInstance().getCountryAndNeighborsMap().keySet();
         List<Country> countryList = new ArrayList<>();
@@ -448,7 +449,7 @@ public class MapModel {
         GameMap.getInstance().getContinentList().remove(GameMap.getInstance().getContinentList().indexOf(new Continent(continent.getContinentName())));
         GameMap.getInstance().getContinentCountryMap().remove(new Continent(continent.getContinentName()));
         if (mapmodel.validateMap(GameMap.getInstance()).isCorrectMap) {
-            mapmodel.writeMap(GameMap.getInstance(), "updated");
+            mapmodel.writeMap(GameMap.getInstance(), fileName);
         } else {
             String errorMessage = GameMap.getInstance().getErrorMessage();
             GameMap.getInstance().getContinentList().add(continentToBeRemoved);
