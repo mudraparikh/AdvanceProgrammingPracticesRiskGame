@@ -435,12 +435,16 @@ public class MapModel {
     			mapmodel.removeCountry(c, GameMap.getInstance());
     		}
     	}
+
+    	Continent continentToBeRemoved = GameMap.getInstance().getContinentList().get(GameMap.getInstance().getContinentList().indexOf(new Continent(continent.getContinentName())));
     	GameMap.getInstance().getContinentList().remove(GameMap.getInstance().getContinentList().indexOf(new Continent(continent.getContinentName())));
     	GameMap.getInstance().getContinentCountryMap().remove(new Continent(continent.getContinentName()));
     	if(mapmodel.validateMap(GameMap.getInstance()).isCorrectMap) {
     		mapmodel.writeMap(GameMap.getInstance(), "updated");
     	}else {
     		String errorMessage =GameMap.getInstance().getErrorMessage();
+            GameMap.getInstance().getContinentList().add(continentToBeRemoved);
+           // GameMap.getInstance().getContinentCountryMap().add(new Continent(continent.getContinentName()));
     		GameMap.getInstance().setErrorMessage("Can not remove continent  "+errorMessage);
     		System.out.println(GameMap.getInstance().getErrorMessage());
     	}
