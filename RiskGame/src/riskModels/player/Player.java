@@ -470,7 +470,7 @@ public class Player extends Observable {
                             for (int i = 0; i < getMaxNumberOfDices(countryA); i++) {
                                 selectOptions[i] = i + 1;
                             }
-
+                            
                             attackerDice = (Integer) JOptionPane.showInputDialog(gameView,
                                     countryA.getBelongsToPlayer().getName() + ", is attacking " + country1 + " from " + country2 + "! How many dice will you roll?",
                                     "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
@@ -491,6 +491,7 @@ public class Player extends Observable {
                             for (int i = 0; i < getMaxNumberOfDicesForDefender(countryB); i++) {
                                 selectOptions[i] = i + 1;
                             }
+                            
                             defenderDice = (Integer) JOptionPane.showInputDialog(gameView,
                                     countryB.getBelongsToPlayer().getName() + ", you are defending " + country2 + " from " + countryA.getBelongsToPlayer().getName() + "! How many dice will you roll?",
                                     "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
@@ -767,6 +768,7 @@ public class Player extends Observable {
             currentPlayer.addArmy(currentPlayerReinforceArmies);
             playerIndex++;
             GameView.displayLog("\n\n===" + currentPlayer.getName() + " turn's start===");
+            updatePhaseDetails("\n\n===" + currentPlayer.getName() + " turn's start===");
             if (currentPlayer.mustTurnInCards()) {
                 // While player has 5 or more cards
                 GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
@@ -806,10 +808,20 @@ public class Player extends Observable {
         }
         GameView.displayLog("All the players have been given the countries randomly and have assigned 1 initial armies from the total initial armies player gets.\n");
         GameView.displayLog("To begin: Start reinforcement phase by placing army in your designated country\n");
+        updatePhaseDetails("Reinforcement Phase");
+        
         nextPlayerTurn(model);
     }
 
-    /**
+    private static void updatePhaseDetails(String messageToUpdate) {
+    	PlayerObserverModel obsModel = new PlayerObserverModel();
+        PlayerView playerView = new PlayerView();
+        obsModel.addObserver(playerView);
+        obsModel.showPhaseDetails(messageToUpdate);
+		
+	}
+
+	/**
      * Creates and returns the information for the cardsList in the BoardView.
      *
      * @return a list of Strings to be displayed in the cardsList.

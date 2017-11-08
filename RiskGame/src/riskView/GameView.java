@@ -286,7 +286,7 @@ public class GameView extends JDialog {
         phaseViewTextArea.setWrapStyleWord(true);
         phaseViewPane = new JScrollPane(phaseViewTextArea);
         actionPanel.add(phaseViewPane);
-        playerModel.getPhaseDetails();
+        playerModel.setPhaseDetailMessage("");;
 
         c = new GridBagConstraints();
 
@@ -537,4 +537,9 @@ public class GameView extends JDialog {
     public String getCountryB() {
         return countryList2.getSelectedValue();
     }
+
+	public static void updatePanelOfPhaseDetails(String phaseDetailMessage) {
+		  GameView.phaseViewTextArea.setText(phaseDetailMessage);
+		
+	}
 }

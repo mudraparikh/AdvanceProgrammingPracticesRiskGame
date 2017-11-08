@@ -15,6 +15,7 @@ import java.util.Observable;
 public class PlayerObserverModel extends Observable {
     Player player = new Player();
     String updateMessage = "";
+    String phaseDetailMessage="";
 
     public Player getPlayer() {
         return player;
@@ -31,8 +32,17 @@ public class PlayerObserverModel extends Observable {
     public void setUpdateMessage(String updateMessage) {
         this.updateMessage = updateMessage;
     }
+    
 
-    /**
+    public String getPhaseDetailMessage() {
+		return phaseDetailMessage;
+	}
+
+	public void setPhaseDetailMessage(String phaseDetailMessage) {
+		this.phaseDetailMessage = phaseDetailMessage;
+	}
+
+	/**
      * After Adding domination attribute for each player , this method will return list of player
      *
      * @param playerList Current players list
@@ -64,10 +74,10 @@ public class PlayerObserverModel extends Observable {
 
     }
 
-    public void getPhaseDetails() {
-        List<Player> playerList = GameMap.getInstance().getPlayerList();
-        this.player.setPlayerList(playerList);
+    public void showPhaseDetails(String messageForPhase) {
+        
         this.updateMessage = "Phase";
+        this.phaseDetailMessage = messageForPhase;
         setChanged();
         notifyObservers(Player.class);
 
