@@ -1,6 +1,5 @@
 package riskView;
 
-import riskModels.player.GamePlayModel;
 import riskModels.player.Player;
 
 import javax.swing.*;

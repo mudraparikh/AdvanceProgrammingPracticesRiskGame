@@ -1,6 +1,5 @@
 package riskView;
 
-import riskModels.player.GamePlayModel;
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
