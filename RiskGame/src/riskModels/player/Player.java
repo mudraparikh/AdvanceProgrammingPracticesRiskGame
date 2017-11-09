@@ -333,12 +333,13 @@ public class Player extends Observable {
      */
     public void allocateCountriesToPlayers() {
         int j = 0;
-        for (Country country : gameMap.getCountryAndNeighborsMap().keySet()) {
+        for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
             Player p = player.getPlayerList().get(j % playerCount);
             p.assignedCountries.add(country);
             country.setBelongsToPlayer(p);
             country.addArmy(1);
             p.subArmy(1);
+            System.out.println("Player:"+p.getName()+" got "+country.getCountryName()+" with "+country.getCurrentArmiesDeployed()+" armies");
             j++;
         }
 
@@ -538,7 +539,7 @@ public class Player extends Observable {
         }
     }
 
-    private void compareDiceResultsAndCalculateLosses(){
+    public void compareDiceResultsAndCalculateLosses(){
         // Calculate losses
         if (attackerRolls[0] > defenderRolls[0]) {
             defenderLosses++;
@@ -572,7 +573,7 @@ public class Player extends Observable {
         }
     }
 
-    private boolean isAttackValid(Player currentPlayer, Country countryA, Country countryB){
+    protected boolean isAttackValid(Player currentPlayer, Country countryA, Country countryB){
         if (countryA.getCurrentArmiesDeployed() > 1) {
             //Check if at-least 2 armies are there on the attacking country.
             if (!currentPlayer.equals(countryB.getBelongsToPlayer()) && currentPlayer.equals(countryA.getBelongsToPlayer())) {
@@ -591,7 +592,7 @@ public class Player extends Observable {
         return false;
     }
 
-    private void defendingPlayerLostCountry(Country countryA, Country countryB, GameView gameView){
+    public void defendingPlayerLostCountry(Country countryA, Country countryB, GameView gameView){
         // Remove country from defender's list of occupied territories and adds to attacker's list
         countryB.getBelongsToPlayer().assignedCountries.remove(countryB);
         countryA.getBelongsToPlayer().assignedCountries.add(countryB);
@@ -629,7 +630,7 @@ public class Player extends Observable {
         playerList.remove(countryB.getBelongsToPlayer());
     }
 
-    private int showDefenderDiceDialogBox(GameView gameView) {
+    protected int showDefenderDiceDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDicesForDefender(countryB)];
         for (int i = 0; i < getMaxNumberOfDicesForDefender(countryB); i++) {
             selectOptions[i] = i + 1;
@@ -641,7 +642,7 @@ public class Player extends Observable {
                 selectOptions[0]);
     }
 
-    private int showMoveArmiesToCaptureCountryDialogBox(GameView gameView) {
+    protected int showMoveArmiesToCaptureCountryDialogBox(GameView gameView) {
 
         ArrayList<Integer> selectOptions = new ArrayList<>();
         for (int i = attackerDice; i <= countryA.getCurrentArmiesDeployed() - 1; i++) {
@@ -653,7 +654,7 @@ public class Player extends Observable {
                 selectOptions.get(0));
     }
 
-    private int showAttackerDiceDialogBox(GameView gameView) {
+    protected int showAttackerDiceDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDices(countryA)];
         for (int i = 0; i < getMaxNumberOfDices(countryA); i++) {
             selectOptions[i] = i + 1;
