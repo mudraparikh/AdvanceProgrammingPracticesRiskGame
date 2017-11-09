@@ -92,7 +92,6 @@ public class Player extends Observable {
      * default constructor
      */
     public Player() {
-        // TODO Auto-generated constructor stub
     }
 
     /**
@@ -286,6 +285,8 @@ public class Player extends Observable {
             // Creates deck
             System.out.println("Populating deck...");
             deck = new Deck((ArrayList<Country>) gameMap.getCountries());
+
+            //Initiailizing Player data
             initializePlayerData(playerCount);
             this.playerCount = playerCount;
             setInitialArmies();
@@ -450,161 +451,182 @@ public class Player extends Observable {
      * Attacking allows the player to engage in battles, with outcomes decided by RNG, with
      * opposing players in order to lower the number of armies in a territory to 0 in order
      * to occupy it.
-     *
-     * @param country1 is a String of the point A country.
+     *  @param country1 is a String of the point A country.
      * @param country2 is a String of the point B country.
+     * @param model
      **/
-    public void attack(String country1, String country2, GameView gameView) {
+    public void attack(String country1, String country2, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
-        if (canAttack) {
+        if (canAttack && isAttackValid(currentPlayer, countryA, countryB)) {
+            updatePhaseDetails("Repaint");
+            updatePhaseDetails("==Attack Phase==");
+            dice = new Dice();
 
-            assert countryB != null;
-            if (countryA.getCurrentArmiesDeployed() > 1) {
-                //Check if at-least 2 armies are there on the attacking country.
-                if (!currentPlayer.equals(countryB.getBelongsToPlayer()) && currentPlayer.equals(countryA.getBelongsToPlayer())) {
-                    // Check if another country is occupied by an opponent and not by the currentPlayer.
-                    if (mapModel.isNeighbour(countryA, countryB)) {
-                        // Check if countryA is adjacent to countryB
-                    	updatePhaseDetails("Repaint");
-                    	updatePhaseDetails("==Attack Phase==");
-                        dice = new Dice();
-
-                        // Set default values
-                        attackerLosses = 0;
-                        defenderLosses = 0;
-                        attackerDice = 1;
-                        defenderDice = 1;
-                        try {
-                            // Attacker chooses how many dice to roll
-                            attackerDice = showAttackerDiceDialogBox(gameView);
-                        } catch (IllegalArgumentException e) {
-                            // Error: attacker inputs invalid number of dice
-                            GameView.displayLog("Roll 1,2 or 3 dice. You must have at least one more army in your country than the number of dice you roll.");
-                        }
-
-                        try {
-                            // Defender chooses how many dice to roll after attacker
-                            defenderDice = showDefenderDiceDialogBox(gameView);
-                        } catch (IllegalArgumentException e) {
-                            // Error: defender inputs invalid number of dice
-                            GameView.displayLog("Roll either 1 or 2 dice. To roll 2 dice, you must have at least 2 armies on your country.");
-                        }
-                        attackerRolls = dice.rollDice(attackerDice).getDiceResult();
-                        defenderRolls = dice.rollDice(defenderDice).getDiceResult();
-
-                        for (int attackerRoll : attackerRolls) {
-                            GameView.displayLog(" " + attackerRoll + " ");
-                        }
-
-                        for (int defenderRoll: defenderRolls){
-                            GameView.displayLog(" "+defenderRoll+ " ");
-                        }
-                        // Rolls arrays have been ordered in descending order. Index 0 = highest pair
-                        if (attackerRolls[0] > defenderRolls[0]) {
-                            defenderLosses++;
-                        } else if (attackerRolls[0] < defenderRolls[0] || attackerRolls[0] == defenderRolls[0]) {
-                            attackerLosses++;
-                        }
-                        // Index 1 = second highest pair
-                        if (attackerDice > 1 && defenderDice > 1) {
-
-                            if (attackerRolls[1] > defenderRolls[1]) {
-                                defenderLosses++;
-
-                            } else if (attackerRolls[1] < defenderRolls[1] || attackerRolls[1] == defenderRolls[1]) {
-                                attackerLosses++;
-                            }
-                        }
-                        // Calculate losses
-                        GameView.displayLog("\n\n<COMBAT REPORT>");
-                        countryA.subtractArmy(attackerLosses);
-                        countryB.subtractArmy(defenderLosses);
-                        GameView.displayLog("Attacker Losses : " + attackerLosses + " army.");
-                        GameView.displayLog("Defender Losses : " + defenderLosses + " army.");
-                        GameView.displayLog(countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
-                        GameView.displayLog(countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
-                        GameView.displayLog("\n\n");
-                        updatePhaseDetails("Attacker Losses : \" + attackerLosses + \" army."+"\n"+"Defender Losses : " + defenderLosses + " army.");
-                        // If defending country loses all armies
-                        if (countryB.getCurrentArmiesDeployed() < 1) {
-
-                            GameView.displayLog(countryA.getBelongsToPlayer().getName() + " has defeated all of " + countryB.getBelongsToPlayer().getName() + "'s armies in " + country2 + " and has occupied the country!");
-                            
-                            // Remove country from defender's list of occupied territories and adds to attacker's list
-                            countryB.getBelongsToPlayer().assignedCountries.remove(countryB);
-                            countryA.getBelongsToPlayer().assignedCountries.add(countryB);
-
-                            // Check if defender is eliminated from game
-                            if (countryB.getBelongsToPlayer().getAssignedCountries().size() == 0) {
-                                GameView.displayLog(countryB.getBelongsToPlayer().getName() + "has no countries left, player looses the game and is eliminated");
-
-                                //Attacker will get all the cards of the defender as defender has lost all of it's countries
-                                List<Card> listOfDefenderCards = countryB.getBelongsToPlayer().getHand();
-                                for (Card card : listOfDefenderCards)
-                                    countryA.getBelongsToPlayer().addRiskCard(card);
-
-                                playerList.remove(countryB.getBelongsToPlayer());
-
-                            }
-
-                            // Set country player to attacker
-                            countryB.setBelongsToPlayer(countryA.getBelongsToPlayer());
-
-                            //The attacking player must then place a number of armies
-                            //in the conquered country which is greater or equal than the number of dice that was used in the attack that
-                            //resulted in conquering the country
-                            int moveArmies = showMoveArmiesToCaptureCountryDialogBox(gameView);
-                            if (moveArmies > 0) {
-                                countryA.subtractArmy(moveArmies);
-                                countryB.addArmy(moveArmies);
-                            }
-                            hasCountryCaptured = true;
-                            if(currentPlayer.assignedCountries.size() == GameMap.getInstance().getCountries().size()){
-                                hasPlayerWon = true;
-                            }
-                            PlayerView playerView = new PlayerView();
-                            PlayerObserverModel playerModel = new PlayerObserverModel();
-                            playerModel.addObserver(playerView);
-                            playerModel.getPlayerWorldDomination(playerList);
-                        }
-                        if(hasPlayerWon){
-                            GameView.displayLog(""+currentPlayer.getName()+" has won the game ! Congratulations ! ");
-                            updatePhaseDetails(currentPlayer.getName()+"Won");
-                            canAttack = false;
-                            canReinforce = false;
-                            canEndTurn = false;
-                            canFortify = false;
-                            canTurnInCards = false;
-                        }
-                        else{
-                            canReinforce = false;
-                            canEndTurn = true;
-                            GameView.updateMapPanel();
-                            //Current Player cannot continue attack phase if none of his countries that have an adjacent country
-                            //controlled by another player is containing more than one army
-                            //TODO: check this condition.
-                            for (Country c : currentPlayer.getAssignedCountries()) {
-                                canAttack = false;
-                                if (c.getCurrentArmiesDeployed() > 1) {
-                                    canAttack = true;
-                                    break;
-                                }
-                            }
-                        }
-
-                    } else {
-                        GameView.displayLog(country1 + " is not the neighbor of " + country2 + ".");
-                    }
-                } else {
-                    GameView.displayLog("You cannot attack your own country.");
-                }
-            } else {
-                GameView.displayLog("You must have more than 1 army on " + country1 + " if you wish to attack from it.");
+            // Set default values
+            attackerLosses = 0;
+            defenderLosses = 0;
+            attackerDice = 1;
+            defenderDice = 1;
+            try {
+                // Attacker chooses how many dice to roll
+                attackerDice = showAttackerDiceDialogBox(gameView);
+            } catch (IllegalArgumentException e) {
+                // Error: attacker inputs invalid number of dice
+                GameView.displayLog("Roll 1,2 or 3 dice. You must have at least one more army in your country than the number of dice you roll.");
             }
+
+            try {
+                // Defender chooses how many dice to roll after attacker
+                defenderDice = showDefenderDiceDialogBox(gameView);
+            } catch (IllegalArgumentException e) {
+                // Error: defender inputs invalid number of dice
+                GameView.displayLog("Roll either 1 or 2 dice. To roll 2 dice, you must have at least 2 armies on your country.");
+            }
+            attackerRolls = Dice.rollDice(attackerDice).getDiceResult();
+            defenderRolls = Dice.rollDice(defenderDice).getDiceResult();
+
+            for (int attackerRoll : attackerRolls) {
+                GameView.displayLog(" " + attackerRoll + " ");
+            }
+
+            for (int defenderRoll: defenderRolls){
+                GameView.displayLog(" "+defenderRoll+ " ");
+            }
+            // Rolls arrays have been ordered in descending order. Index 0 = highest pair
+            compareDiceResultsAndCalculateLosses();
+
+            GameView.displayLog("\n\n<COMBAT REPORT>");
+            countryA.subtractArmy(attackerLosses);
+            countryB.subtractArmy(defenderLosses);
+            GameView.displayLog("Attacker Losses : " + attackerLosses + " army.");
+            GameView.displayLog("Defender Losses : " + defenderLosses + " army.");
+            GameView.displayLog(countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
+            GameView.displayLog(countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
+            GameView.displayLog("\n\n");
+            updatePhaseDetails("Attacker Losses : \" + attackerLosses + \" army."+"\n"+"Defender Losses : " + defenderLosses + " army.");
+
+            // If defending country loses all armies
+            if (countryB.getCurrentArmiesDeployed() < 1) {
+
+                GameView.displayLog(countryA.getBelongsToPlayer().getName() + " has defeated all of " + countryB.getBelongsToPlayer().getName() + "'s armies in " + country2 + " and has occupied the country!");
+                defendingPlayerLostCountry(countryA, countryB, gameView);
+            }
+
+            //If player conquered all the country and have won the game
+            if(currentPlayer.assignedCountries.size() == GameMap.getInstance().getCountries().size()){
+                hasPlayerWon = true;
+                GameView.displayLog(""+currentPlayer.getName()+" has won the game ! Congratulations ! ");
+                updatePhaseDetails(currentPlayer.getName()+"Won");
+                canAttack = false;
+                canReinforce = false;
+                canEndTurn = false;
+                canFortify = false;
+                canTurnInCards = false;
+            }
+            else{
+                canReinforce = false;
+                canEndTurn = true;
+
+                //Current Player cannot continue attack phase if none of his countries that have an adjacent country
+                //controlled by another player is containing more than one army
+                checkPlayerTurnCanContinue(currentPlayer, model);
+            }
+            GameView.updateMapPanel();
         } else {
             GameView.displayLog("Can not attack right now.");
         }
+    }
+
+    private void compareDiceResultsAndCalculateLosses(){
+        // Calculate losses
+        if (attackerRolls[0] > defenderRolls[0]) {
+            defenderLosses++;
+        } else if (attackerRolls[0] < defenderRolls[0] || Objects.equals(attackerRolls[0], defenderRolls[0])) {
+            attackerLosses++;
+        }
+        // Index 1 = second highest pair
+        if (attackerDice > 1 && defenderDice > 1) {
+
+            if (attackerRolls[1] > defenderRolls[1]) {
+                defenderLosses++;
+
+            } else if (attackerRolls[1] < defenderRolls[1] || Objects.equals(attackerRolls[1], defenderRolls[1])) {
+                attackerLosses++;
+            }
+        }
+    }
+
+    private void checkPlayerTurnCanContinue(Player currentPlayer, Player model) {
+        for (Country c : currentPlayer.getAssignedCountries()) {
+            canAttack = false;
+            canFortify = false;
+            if (c.getCurrentArmiesDeployed() > 1) {
+                canAttack = true;
+                canFortify = true;
+                break;
+            }
+        }
+        if(!canAttack && !canFortify){
+            nextPlayerTurn(model);
+        }
+    }
+
+    private boolean isAttackValid(Player currentPlayer, Country countryA, Country countryB){
+        if (countryA.getCurrentArmiesDeployed() > 1) {
+            //Check if at-least 2 armies are there on the attacking country.
+            if (!currentPlayer.equals(countryB.getBelongsToPlayer()) && currentPlayer.equals(countryA.getBelongsToPlayer())) {
+                // Check if another country is occupied by an opponent and not by the currentPlayer.
+                if (mapModel.isNeighbour(countryA, countryB)) {
+                    return true;
+                } else{
+                    GameView.displayLog(countryA.getCountryName() + " is not the neighbor of " + countryB.getCountryName() + ".");
+                }
+            } else {
+                GameView.displayLog("You cannot attack your own country.");
+            }
+        } else {
+            GameView.displayLog("You must have more than 1 army on " + countryA.getCountryName() + " if you wish to attack from it.");
+        }
+        return false;
+    }
+
+    private void defendingPlayerLostCountry(Country countryA, Country countryB, GameView gameView){
+        // Remove country from defender's list of occupied territories and adds to attacker's list
+        countryB.getBelongsToPlayer().assignedCountries.remove(countryB);
+        countryA.getBelongsToPlayer().assignedCountries.add(countryB);
+
+        // Check if defender is eliminated from game
+        if (countryB.getBelongsToPlayer().getAssignedCountries().size() == 0) {
+            playerLostRule(countryA, countryB);
+        }
+        // Set country player to attacker
+        countryB.setBelongsToPlayer(countryA.getBelongsToPlayer());
+
+        //The attacking player must then place a number of armies
+        //in the conquered country which is greater or equal than the number of dice that was used in the attack that
+        //resulted in conquering the country
+        int moveArmies = showMoveArmiesToCaptureCountryDialogBox(gameView);
+        if (moveArmies > 0) {
+            countryA.subtractArmy(moveArmies);
+            countryB.addArmy(moveArmies);
+        }
+        hasCountryCaptured = true;
+        PlayerView playerView = new PlayerView();
+        PlayerObserverModel playerModel = new PlayerObserverModel();
+        playerModel.addObserver(playerView);
+        playerModel.getPlayerWorldDomination(playerList);
+    }
+
+    private void playerLostRule(Country countryA, Country countryB){
+        GameView.displayLog(countryB.getBelongsToPlayer().getName() + "has no countries left, player looses the game and is eliminated");
+
+        //Attacker will get all the cards of the defender as defender has lost all of it's countries
+        List<Card> listOfDefenderCards = countryB.getBelongsToPlayer().getHand();
+        for (Card card : listOfDefenderCards)
+            countryA.getBelongsToPlayer().addRiskCard(card);
+
+        playerList.remove(countryB.getBelongsToPlayer());
     }
 
     private int showDefenderDiceDialogBox(GameView gameView) {
@@ -656,7 +678,7 @@ public class Player extends Observable {
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
 
         if (canFortify) {
-
+            canAttack = false;
             if (currentPlayer.equals(countryA.getBelongsToPlayer()) && currentPlayer.equals(countryB.getBelongsToPlayer()) && countryA.getCurrentArmiesDeployed() > 1) {
                 // Check player owns countryA and countryB
                 if (mapModel.isConnected(countryA, countryB)) {
@@ -675,6 +697,7 @@ public class Player extends Observable {
 
                         moveArmyFromTo(countryA, countryB, armies);
                         checkHasCountryCaptured();
+                        canAttack = false;
                         nextPlayerTurn(model);
 
                     } catch (NumberFormatException e) {
@@ -842,7 +865,7 @@ public class Player extends Observable {
     /**
      * Starts the Game.
      * Shuffles the players.
-     * @param model
+     * @param model Player Class model
      */
     public void startGame(Player model) {
         Collections.shuffle(playerList);
@@ -877,7 +900,7 @@ public class Player extends Observable {
      **/
     public ArrayList<String> getCardsList() {
 
-        list = new ArrayList<String>();
+        list = new ArrayList<>();
 
         for (i = 0; i < currentPlayer.getHandObject().getCards().size(); i++) {
 
@@ -895,7 +918,7 @@ public class Player extends Observable {
      */
     public int getReinforcementArmyForPlayer(Player p) {
 
-        int countArmy = 0;
+        int countArmy;
         int countriesConquered = getCountriesConqueredBy(p).size();
         if (countriesConquered <= 11 && countriesConquered > 0) {
             countArmy = 3;

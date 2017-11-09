@@ -19,7 +19,7 @@ public class Deck {
 
     private String[] typesArray;
 
-    private ArrayList<Card> deck;
+    public ArrayList<Card> deck;
 
     private Card drawCard;
 

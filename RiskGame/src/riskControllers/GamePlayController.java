@@ -43,7 +43,7 @@ public class GamePlayController implements ActionListener {
             case "attackBtn":
                 //System.out.println("User pressed attackButton.");
                 if (view.getCountryA() != null && view.getCountryB() != null) {
-                    model.attack(view.getCountryA().trim().replaceAll("[0-9]", "").replaceAll("\\-", ""), view.getCountryB().trim().replaceAll("[0-9]", "").replaceAll("\\-", ""), view);
+                    model.attack(view.getCountryA().trim().replaceAll("[0-9]", "").replaceAll("\\-", ""), view.getCountryB().trim().replaceAll("[0-9]", "").replaceAll("\\-", ""), view, model);
                 } else {
                     GameView.displayLog("Please make sure that country is selected from both the list !");
                 }
