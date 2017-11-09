@@ -6,17 +6,30 @@ import riskView.GameView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class maps the user's input to the data and methods in the model
+ * @author hnath
+ *
+ */
 public class GamePlayController implements ActionListener {
 
     private Player model;
     private GameView view;
 
+    /**
+     * setter method assigns model and gameView to the controller
+     * @param model player object
+     * @param gameView game view object
+     */
     public GamePlayController(Player model, GameView gameView) {
         this.model = model;
         this.view = gameView;
         model.startGame(model);
     }
 
+    /**
+     * overriding action performed method takes the user actions(buttons clicked) and maps to model
+     */
     @Override
     public void actionPerformed(ActionEvent evt) {
         String actionEvent = evt.getActionCommand();

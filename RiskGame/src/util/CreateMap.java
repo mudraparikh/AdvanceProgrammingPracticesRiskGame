@@ -15,6 +15,10 @@ import java.util.Map.Entry;
  */
 public class CreateMap {
 
+	/**
+	 * this is the main method to launch the game with no arguments
+	 * @param args argument to run main method
+	 */
     public static void main(String args[]) {
 
         System.out.println("How many continent do you want?");

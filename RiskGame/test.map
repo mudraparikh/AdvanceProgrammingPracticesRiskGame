@@ -1,0 +1,9 @@
+[Map]
+image=Canada.bmp
+
+[Continents]
+c0=1
+c1=1
+
+[Territories]
+1,55,70,c0,0,2

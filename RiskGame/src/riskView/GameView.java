@@ -73,10 +73,10 @@ public class GameView extends JDialog {
     private GameMap gameMap;
     private Player model;
 
-
-    /**
-     * Constructs the Risk game board.
-     **/
+/**
+ * Constructs the Risk game board.
+ * @throws IOException when there is problem in giving input or output
+ */
     public GameView() throws IOException {
 
         setTitle("Risk Game");
@@ -148,11 +148,11 @@ public class GameView extends JDialog {
     public void clearLog() {
 		printTextArea.setText("");
 	}
-
-    /**
-     * This method will update view for the map panel.
-     * Map Panel holds the details of the continent ,Country , Number of Armies and Owner information
-     */
+    
+   /**
+    * This method will update view for the map panel .
+    * Map Panel holds the details of the continent ,Country , Number of Armies and Owner information
+    */
     public static void updateMapPanel() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Continent continent : GameMap.getInstance().getContinentList()) {
@@ -171,18 +171,18 @@ public class GameView extends JDialog {
         Date date = new Date();
         TextAreaForMapPanel.setText(stringBuilder.toString() + "\n Updated:" + date.toString());
     }
-    
+
     /**
-     * This method will set text for the Domination view pane.
-     * @param dominationDetails
+     * this method shows which player's domination
+     * @param dominationDetails details of whose domination
      */
     public static void showDomination(StringBuilder dominationDetails) {
         dominationTextArea.setText(dominationDetails.toString());
     }
-    
+
     /**
-     * This method will update the card view pane.s
-     * @param cardArray
+     * this method updates the card view 
+     * @param cardArray list of cards to be updated
      */
     public static void updateCardView(String[] cardArray) {
         cardListDisplay.removeAllElements();
@@ -191,9 +191,10 @@ public class GameView extends JDialog {
         }
     }
 
-    /*
-     * The panel for the logger message display and game play buttons.
-     */
+  /**
+   * The panel for the logger message display and game play buttons.
+   * @return JPanel message
+   */
     private JPanel messagePanel() {
 
         messagePanel = new JPanel();
@@ -263,8 +264,9 @@ public class GameView extends JDialog {
         return messagePanel;
     }
 
-    /*
+    /**
      * The panel for the logger message display and game play buttons.
+     * @return message from JPanel
      */
     private JPanel actionPanel() {
         actionPanel = new JPanel();
@@ -349,8 +351,10 @@ public class GameView extends JDialog {
         return actionPanel;
     }
 
-    /*
-     * The panel for the map and load display as per users choice.
+   /**
+    * The panel for the map and load display as per users choice.
+    * @return map display
+    * @throws IOException when the is problem in input and output
     */
     public JPanel mapPanel() throws IOException {
         mapPanel = new JPanel();
@@ -385,8 +389,9 @@ public class GameView extends JDialog {
         return mapPanel;
     }
 
-    /*
-     * The panel to display the list of continents, countries and their adjacent territories.
+   /**
+    * The panel to display the list of continents, countries and their adjacent territories.
+    * @return list of all continents ,countries and adjacent territories
     */
     private JPanel countryInfoPanel() {
         countryInfoPanel = new JPanel();
@@ -512,9 +517,10 @@ public class GameView extends JDialog {
         return countryInfoPanel;
     }
 
-    /**
-     * Adds the action listeners for the buttons and lists.
-     **/
+  /**
+   * Adds the action listeners for the buttons and lists.
+   * @param evt1 action listener variable
+   */
     public void addActionListeners(ActionListener evt1) {
 
         clearLogBtn.addActionListener(evt1);
@@ -552,6 +558,10 @@ public class GameView extends JDialog {
         return countryList2.getSelectedValue();
     }
 
+    /**
+     * this method updates the panel's phase details
+     * @param phaseDetailMessage has the details of the phase panel
+     */
 	public static void updatePanelOfPhaseDetails(String phaseDetailMessage) {
 		String updatedPhaseDetail="";
 		if(!phaseDetailMessage.equalsIgnoreCase("Repaint")) {
