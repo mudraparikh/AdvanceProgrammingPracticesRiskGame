@@ -23,7 +23,7 @@ public class Dice {
      * @param numberOfDice number of Dice User wants to roll
      * @return return diceModel object that will have dice roll result
      */
-    public Dice rollDice(int numberOfDice) {
+    public static Dice rollDice(int numberOfDice) {
         Dice dicemodel = new Dice();
         //check if we can roll the dice or not
         if (numberOfDice <= 0) {
@@ -77,27 +77,21 @@ public class Dice {
         this.numberOfDice = numberOfDice;
     }
 
-<<<<<<< HEAD
     /**
      * getter method gives the result of rolled dices
      * @return value of the result
      */
-    public int[] getDiceResult() {
-=======
+
     public Integer[] getDiceResult() {
->>>>>>> branch 'master' of https://github.com/prashantp995/AdvanceProgrammingPracticesRiskGame.git
         return diceResult;
     }
 
-<<<<<<< HEAD
+
     /**
      * setter method assigns the result of rolled dices
      * @param diceResult value of result of rolled dices
      */
-    public void setDiceResult(int[] diceResult) {
-=======
     public void setDiceResult(Integer[] diceResult) {
->>>>>>> branch 'master' of https://github.com/prashantp995/AdvanceProgrammingPracticesRiskGame.git
         this.diceResult = diceResult;
     }
 }

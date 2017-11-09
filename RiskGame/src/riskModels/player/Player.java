@@ -456,16 +456,12 @@ public class Player extends Observable {
         }
     }
 
-<<<<<<< HEAD
     /**
      * this method shows the reinforcement armies dialog box
      * @param gameView has the details to load game board
      * @return option to select how many armies to reinforce
      */
     private Integer showReinforceArmiesDialogBox(GameView gameView) {
-=======
-    public Integer showReinforceArmiesDialogBox(GameView gameView) {
->>>>>>> branch 'master' of https://github.com/prashantp995/AdvanceProgrammingPracticesRiskGame.git
         Integer[] selectOptions = new Integer[currentPlayer.getTotalArmies()];
         for (int i = 0; i < currentPlayer.getTotalArmies(); i++) {
             selectOptions[i] = i + 1;
@@ -499,7 +495,8 @@ public class Player extends Observable {
                     // Check if another country is occupied by an opponent and not by the currentPlayer.
                     if (mapModel.isNeighbour(countryA, countryB)) {
                         // Check if countryA is adjacent to countryB
-
+                    	updatePhaseDetails("Repaint");
+                    	updatePhaseDetails("==Attack Phase==");
                         dice = new Dice();
 
                         // Set default values
@@ -557,12 +554,12 @@ public class Player extends Observable {
                         GameView.displayLog(countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
                         GameView.displayLog(countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
                         GameView.displayLog("\n\n");
-
+                        updatePhaseDetails("Attacker Losses : \" + attackerLosses + \" army."+"\n"+"Defender Losses : " + defenderLosses + " army.");
                         // If defending country loses all armies
                         if (countryB.getCurrentArmiesDeployed() < 1) {
 
                             GameView.displayLog(countryA.getBelongsToPlayer().getName() + " has defeated all of " + countryB.getBelongsToPlayer().getName() + "'s armies in " + country2 + " and has occupied the country!");
-
+                            
                             // Remove country from defender's list of occupied territories and adds to attacker's list
                             countryB.getBelongsToPlayer().assignedCountries.remove(countryB);
                             countryA.getBelongsToPlayer().assignedCountries.add(countryB);
@@ -602,6 +599,7 @@ public class Player extends Observable {
                         }
                         if(hasPlayerWon){
                             GameView.displayLog(""+currentPlayer.getName()+" has won the game ! Congratulations ! ");
+                            updatePhaseDetails(currentPlayer.getName()+"Won");
                             canAttack = false;
                             canReinforce = false;
                             canEndTurn = false;
@@ -643,6 +641,7 @@ public class Player extends Observable {
         for (int i = 0; i < getMaxNumberOfDicesForDefender(countryB); i++) {
             selectOptions[i] = i + 1;
         }
+        updatePhaseDetails(countryB.getBelongsToPlayer().getName()+" is Defending ");
         return (Integer) JOptionPane.showInputDialog(gameView,
                 countryB.getBelongsToPlayer().getName() + ", you are defending " + countryB.getCountryName() + " from " + countryA.getBelongsToPlayer().getName() + "! How many dice will you roll?",
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
@@ -696,6 +695,7 @@ public class Player extends Observable {
                     // If current player is Human
                     try {
                         // Player inputs how many armies to move from country A to country B
+                    	updatePhaseDetails("===Fortification phase====");
                         Integer[] optionArmies = new Integer[countryA.getCurrentArmiesDeployed() - 1];
 
                         for (int i = 0; i < optionArmies.length; i++) {
@@ -883,22 +883,17 @@ public class Player extends Observable {
         for (Player p : playerList) {
             GameView.displayLog(p.getName());
         }
-        GameView.displayLog("All the players have been given the countries randomly and have assigned 1 initial armies from the total initial armies player gets.\n");
+        updatePhaseDetails("Start up Phase \n");
+        updatePhaseDetails("All the players have been given the countries randomly and have assigned 1 initial armies from the total initial armies player gets.\n");
         GameView.displayLog("To begin: Start reinforcement phase by placing army in your designated country\n");
-        updatePhaseDetails("Reinforcement Phase");
-        
         nextPlayerTurn(model);
     }
 
-<<<<<<< HEAD
     /**
-     * this method updates the phase details when it get the message to update
-     * @param messageToUpdate string meassage to update the phase details
+     * This method will act as driver method to call observer method to update phase details 
+     * @param messageToUpdate message that you want to append to in Phase View, pass "Repaint" to remove all existing text in Phase view 
      */
-    private static void updatePhaseDetails(String messageToUpdate) {
-=======
     public static void updatePhaseDetails(String messageToUpdate) {
->>>>>>> branch 'master' of https://github.com/prashantp995/AdvanceProgrammingPracticesRiskGame.git
     	PlayerObserverModel obsModel = new PlayerObserverModel();
         PlayerView playerView = new PlayerView();
         obsModel.addObserver(playerView);

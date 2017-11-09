@@ -557,10 +557,10 @@ public class GameView extends JDialog {
      */
 	public static void updatePanelOfPhaseDetails(String phaseDetailMessage) {
 		String updatedPhaseDetail="";
-		if(!phaseDetailMessage.equalsIgnoreCase("repaint")) {
+		if(!phaseDetailMessage.equalsIgnoreCase("Repaint")) {
 				updatedPhaseDetail = GameView.phaseViewTextArea.getText()+phaseDetailMessage;
 		}
 		  
-		  GameView.phaseViewTextArea.setText(phaseDetailMessage);
+		  GameView.phaseViewTextArea.setText(updatedPhaseDetail);
 	}
 }
