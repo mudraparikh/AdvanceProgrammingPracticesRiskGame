@@ -107,7 +107,7 @@ public class EditMapView extends java.awt.Frame {
         for (int i = 0; i < continentDisplay.size(); i++)
             continentDisplay1.addElement(continentDisplay.get(i));
 
-        continentList1 = new JList(continentDisplay1);
+        continentList1 = new JList(continentDisplay1);        
         JScrollPane pane2 = new JScrollPane(continentList1);
         JLabel label2 = new JLabel("Click on the respective button to perform tasks");
         JButton addButton = new JButton("Add Country");

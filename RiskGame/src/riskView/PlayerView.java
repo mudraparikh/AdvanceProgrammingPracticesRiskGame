@@ -3,7 +3,6 @@ package riskView;
 import riskModels.player.Player;
 import riskModels.player.PlayerObserverModel;
 
-import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
 

@@ -1,6 +1,5 @@
 package riskView;
 
-import riskModels.player.GamePlayModel;
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
@@ -22,11 +21,12 @@ import java.util.List;
 /**
  * This class will load the game board
  *
- * @author mudra parikh and akshay shah
+ * @author mudraparikh and akshay shah
  */
 public class GameView extends JDialog {
     public static JScrollPane phaseViewPane;
     public static JScrollPane dominationViewPane;
+    public static JScrollPane cardListPane;
     public static JTextArea dominationTextArea;
     public static JTextArea phaseViewTextArea;
     private static JPanel mapPanel;
@@ -69,6 +69,7 @@ public class GameView extends JDialog {
     private DefaultListModel<String> continentDisplay;
     private DefaultListModel<String> countryDisplay1;
     private DefaultListModel<String> countryDisplay2;
+    public  static DefaultListModel<String> cardListDisplay;
     private GameMap gameMap;
     private Player model;
 
@@ -178,10 +179,10 @@ public class GameView extends JDialog {
      * @param cardArray list of cards to be updated
      */
     public static void updateCardView(String[] cardArray) {
-
-        //Todo : make cards input dialog and change it to text !
-        GameView.displayLog("view called for cards");
-
+        cardListDisplay.removeAllElements();
+        for (String aCardArray : cardArray) {
+            cardListDisplay.addElement(aCardArray);
+        }
     }
 
   /**
@@ -272,12 +273,12 @@ public class GameView extends JDialog {
         turnInBtn.setActionCommand(turnInBtnName);
         CardView cardsListModel = new CardView(model, "cards");
 
-        //model.addObserver((CardView)cardsListModel);
-        cardListDefault = new DefaultListModel<>();
-        cardsList = new JList<>(cardsListModel);
-        cardsList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        cardListDisplay = new DefaultListModel<>();
+        cardsList = new JList<>(cardListDisplay);
+        cardsList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         cardsList.setLayoutOrientation(JList.VERTICAL_WRAP);
-        cardsList.setVisibleRowCount(30);
+        cardListPane = new JScrollPane(cardsList);
+        cardsList.setVisibleRowCount(10);
         cardsList.setVisible(true);
 
         dominationTextArea = new JTextArea();
@@ -319,10 +320,10 @@ public class GameView extends JDialog {
         c.fill = GridBagConstraints.BOTH;
         c.insets = new Insets(5, 5, 5, 5);
         c.weightx = 0.5;
-        c.weighty = 25;
+        c.weighty = 10;
         c.gridx = 0;
         c.gridy = 2;
-        actionPanel.add(cardsList, c);
+        actionPanel.add(cardListPane, c);
 
         c.fill = GridBagConstraints.BOTH;
         c.insets = new Insets(5, 5, 5, 5);
@@ -429,9 +430,7 @@ public class GameView extends JDialog {
                     if (c.getBelongsToContinent().equalsIgnoreCase(continentList.getSelectedValue())) {
                         countryDisplay1.addElement(c.getCountryName());
                     }
-
                 }
-
             }
         });
         countryList1.addMouseListener(new MouseAdapter() {
@@ -557,7 +556,11 @@ public class GameView extends JDialog {
      * @param phaseDetailMessage has the details of the phase panel
      */
 	public static void updatePanelOfPhaseDetails(String phaseDetailMessage) {
+		String updatedPhaseDetail="";
+		if(!phaseDetailMessage.equalsIgnoreCase("repaint")) {
+				updatedPhaseDetail = GameView.phaseViewTextArea.getText()+phaseDetailMessage;
+		}
+		  
 		  GameView.phaseViewTextArea.setText(phaseDetailMessage);
-		
 	}
 }
