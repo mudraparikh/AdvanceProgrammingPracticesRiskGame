@@ -21,7 +21,7 @@ public class Dice {
     public static Dice rollDice(int numberOfDice) {
         Dice dicemodel = new Dice();
         //check if we can roll the dice or not
-        if (numberOfDice <= 0) {
+        if (numberOfDice <= 0 || numberOfDice > 3) {
             dicemodel.setDiceRolled(false);
             return dicemodel;
         }
