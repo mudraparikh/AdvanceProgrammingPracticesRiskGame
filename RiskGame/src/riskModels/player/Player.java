@@ -944,7 +944,6 @@ public class Player extends Observable {
      * Starts the Game.
      * Shuffles the players.
      * @param model Player Class model
-     * @param model player object
      */
     public void startGame(Player model) {
         Collections.shuffle(playerList);

@@ -29,7 +29,7 @@ public class Launcher extends java.awt.Frame {
     /**
      * This main method creates an instance of the startGame.
      *
-     * @param args[] arguments  to run main method
+     * @param args arguments  to run main method
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
