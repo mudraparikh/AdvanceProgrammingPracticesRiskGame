@@ -7,7 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
- * 
+ * Create CardView class with Observer pattern
  * @author hnath
  *
  */
