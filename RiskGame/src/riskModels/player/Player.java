@@ -582,12 +582,18 @@ public class Player extends Observable {
             GameView.displayLog("Can not attack right now.");
         }
     }
-
+    /**
+     * This method will update attacker's and defender's country with recent armies based on Dice Result
+     * @param attackerLosses number of Armies attacker lost
+     * @param defenderLosses number of Armies defender lost
+     */
     protected void updateArmiesBasedOnDiceResult(int attackerLosses, int defenderLosses) {
         countryA.subtractArmy(attackerLosses);
         countryB.subtractArmy(defenderLosses);
     }
-
+    /**
+     * This method will compare attacker's and defender's dice result and calculate the loss of armies based on results
+     */
     public void compareDiceResultsAndCalculateLosses(){
         // Calculate losses
         if (attackerRolls[0] > defenderRolls[0]) {
@@ -621,7 +627,13 @@ public class Player extends Observable {
             nextPlayerTurn(model);
         }
     }
-
+    /**
+     * This method will check if attacker can attack to selected defender's country
+     * @param currentPlayer attacker 
+     * @param countryA attacker's country
+     * @param countryB defender's country 
+     * @return true if attacker can attack else false
+     */
     protected boolean isAttackValid(Player currentPlayer, Country countryA, Country countryB){
         if (countryA.getCurrentArmiesDeployed() > 1) {
             //Check if at-least 2 armies are there on the attacking country.
@@ -640,7 +652,12 @@ public class Player extends Observable {
         }
         return false;
     }
-
+    /**
+     * This method will perform operation after defender has lost army , for example assign defender's country to attacker.
+	 * @param countryA attacker's country.
+	 * @param countryB defender's country that he/she lost.
+	 * @param gameView Current GameView Object.
+	 */
     public void defendingPlayerLostCountry(Country countryA, Country countryB, GameView gameView){
         // Remove country from defender's list of occupied territories and adds to attacker's list
         countryB.getBelongsToPlayer().assignedCountries.remove(countryB);
@@ -679,7 +696,11 @@ public class Player extends Observable {
 
         playerList.remove(countryB.getBelongsToPlayer());
     }
-
+    /**
+     * This will take input for defender to choose number of dice he/she wants to roll 
+     * @param Current GameView Object
+     * @return number of dice that defender decided to roll 
+     */
     protected int showDefenderDiceDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDicesForDefender(countryB)];
         for (int i = 0; i < getMaxNumberOfDicesForDefender(countryB); i++) {
@@ -691,7 +712,11 @@ public class Player extends Observable {
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
                 selectOptions[0]);
     }
-
+    /**
+     * This method will take input for attacker to choose number of armies he/she wants to move
+     * @param Current GameView Object
+     * @return  number of armies attacker decided to move
+     */
     protected int showMoveArmiesToCaptureCountryDialogBox(GameView gameView) {
 
         ArrayList<Integer> selectOptions = new ArrayList<>();
@@ -703,7 +728,11 @@ public class Player extends Observable {
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions.toArray(),
                 selectOptions.get(0));
     }
-
+	/**
+	 *  This will take input for attacker to choose number of dice he/she wants to roll
+	 * @param gameView Main game view object
+	 * @return number of dice that attacker decided to roll 
+	 */
     protected int showAttackerDiceDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDices(countryA)];
         for (int i = 0; i < getMaxNumberOfDices(countryA); i++) {
@@ -755,7 +784,11 @@ public class Player extends Observable {
             }
         }
     }
-
+    /**
+     * This method will take input for  player to choose number of armies he/she wants to move during fortification
+     * @param gameView  Current GameView Object
+     * @return number of armies player decide to move during fortification.
+     */
     protected int showFortificationArmyMoveDialog(GameView gameView) {
         Integer[] optionArmies = new Integer[countryA.getCurrentArmiesDeployed() - 1];
         for (int i = 0; i < optionArmies.length; i++) {
@@ -765,7 +798,10 @@ public class Player extends Observable {
                 JOptionPane.YES_OPTION, BasicIconFactory.getMenuArrowIcon(), optionArmies, 1);
 
     }
-
+    /**
+     * This method will check if the fortification is valid/possible or not 
+     * @return true if possible else false
+     */
     public boolean isFortifyValid(){
         boolean isValid;
         for (Country c : currentPlayer.assignedCountries){
