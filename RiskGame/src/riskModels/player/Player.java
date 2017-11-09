@@ -538,7 +538,6 @@ public class Player extends Observable {
             }
             // Rolls arrays have been ordered in descending order. Index 0 = highest pair
             compareDiceResultsAndCalculateLosses();
-
             GameView.displayLog("\n\n<COMBAT REPORT>");
 
             updateArmiesBasedOnDiceResult(attackerLosses, defenderLosses);
@@ -548,7 +547,7 @@ public class Player extends Observable {
             GameView.displayLog(countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
             GameView.displayLog(countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
             GameView.displayLog("\n\n");
-            updatePhaseDetails("<Dice Result>");
+            updatePhaseDetails("<Based On Dice Results> \n");
             updatePhaseDetails("Attacker Losses : " + attackerLosses + " army."+"\n"+"Defender Losses : " + defenderLosses + " army.");
 
             // If defending country loses all armies
@@ -738,6 +737,7 @@ public class Player extends Observable {
         for (int i = 0; i < getMaxNumberOfDices(countryA); i++) {
             selectOptions[i] = i + 1;
         }
+        updatePhaseDetails(countryA.getBelongsToPlayer().getName()+" is Attacking");
         return (Integer) JOptionPane.showInputDialog(gameView,
                 countryA.getBelongsToPlayer().getName() + ", is attacking " + countryB.getCountryName() + " from " + countryA.getCountryName() + "! How many dice will you roll?",
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
@@ -950,7 +950,7 @@ public class Player extends Observable {
             currentPlayer.addArmy(currentPlayerReinforceArmies);
             playerIndex++;
             updatePhaseDetails("\n\n===" + currentPlayer.getName() + " is playing ===");
-            updatePhaseDetails("Reinforcement Phase Begins");
+            updatePhaseDetails("Reinforcement Phase Begins \n");
             if (currentPlayer.mustTurnInCards()) {
                 // While player has 5 or more cards
                 GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
