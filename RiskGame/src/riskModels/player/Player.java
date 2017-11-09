@@ -511,8 +511,9 @@ public class Player extends Observable {
             compareDiceResultsAndCalculateLosses();
 
             GameView.displayLog("\n\n<COMBAT REPORT>");
-            countryA.subtractArmy(attackerLosses);
-            countryB.subtractArmy(defenderLosses);
+
+            updateArmiesBasedOnDiceResult(attackerLosses, defenderLosses);
+
             GameView.displayLog("Attacker Losses : " + attackerLosses + " army.");
             GameView.displayLog("Defender Losses : " + defenderLosses + " army.");
             GameView.displayLog(countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
@@ -551,6 +552,11 @@ public class Player extends Observable {
         } else {
             GameView.displayLog("Can not attack right now.");
         }
+    }
+
+    protected void updateArmiesBasedOnDiceResult(int attackerLosses, int defenderLosses) {
+        countryA.subtractArmy(attackerLosses);
+        countryB.subtractArmy(defenderLosses);
     }
 
     public void compareDiceResultsAndCalculateLosses(){
@@ -700,11 +706,13 @@ public class Player extends Observable {
             // If current player is Human
             try {
                 // Player inputs how many armies to move from country A to country B
+                updatePhaseDetails("Repaint");
                 updatePhaseDetails("===Fortification phase===");
 
                 int armies = showFortificationArmyMoveDialog(gameView);
 
                 moveArmyFromTo(countryA, countryB, armies);
+                GameView.updateMapPanel();
                 updatePhaseDetails("You moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
                 checkHasCountryCaptured();
                 canAttack = false;

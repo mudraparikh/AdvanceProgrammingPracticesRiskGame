@@ -33,9 +33,9 @@ public class PlayerTest extends Player {
     public void setUp() throws Exception {
         mapModel = new MapModel();
         filePath = location.replaceAll("/bin", "/res");
-        File f = new File(filePath+"London.map");
-        gameMap = mapModel.readMapFile("C:\\Users\\prashantp95\\git\\AdvanceProgrammingPracticesRiskGame\\phaseView\\RiskGame\\res\\London.map");
-        
+        File f = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/London.map");
+        gameMap = mapModel.readMapFile("/home/akshay/AdvanceProgrammingPracticesRiskGame/London.map");
+        createGameMapFromFile(f);
     }
 
     @Test
@@ -135,7 +135,7 @@ public class PlayerTest extends Player {
     }
 
     @Test
-    public void testPlayerLostRule() throws IOException {
+    public void testGameWon() throws IOException {
 
         initializePlayerData(3);
         playerCount = 3;
@@ -160,25 +160,23 @@ public class PlayerTest extends Player {
         defender.assignedCountries.add(countryToAssignDefender);
         
         for(Country country :attacker.assignedCountries ) {
-        	System.out.println(country.getCountryName()+"----->"+country.getBelongsToPlayer().getName());
-        	List<Country> neighbors = GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(country.getCountryName()));
+            List<Country> neighbors = GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(country.getCountryName()));
         	GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbors);
         }
         for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet() ) {
         	if(country.getCountryName().equalsIgnoreCase(defender.assignedCountries.get(0).getCountryName())) {
         		country.setBelongsToPlayer(defender);
-        		country.setCurrentArmiesDeployed(2);
+        		country.setCurrentArmiesDeployed(1);
         		List<Country> neighbors = GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(country.getCountryName()));
             	GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbors);
         	}
-        	System.out.println(country.getCountryName()+"----->"+country.getBelongsToPlayer().getName());
-        	
         }
        GameView gameView = new GameView();
        currentPlayer=attacker;
        canAttack=true;
        mapModel = new MapModel();
        attack(attacker.assignedCountries.get(0).getCountryName(),countryToAssignDefender.getCountryName(),gameView,attacker);
+       assertTrue(hasPlayerWon);
     }
 
     @Override
@@ -186,12 +184,26 @@ public class PlayerTest extends Player {
         return 1;
     }
     
-    
+    @Override
+    protected int showAttackerDiceDialogBox(GameView gameView){
+        return 1;
+    }
+
+    @Override
+    protected int showDefenderDiceDialogBox(GameView gameView) {
+        return 1;
+    }
+
     @Override
     protected boolean isAttackValid(Player p, Country c, Country c1) {
     	return true;    	
     }
 
+    @Override
+    protected void updateArmiesBasedOnDiceResult(int attackerLosses,int defenderLosses){
+        countryA.subtractArmy(attackerLosses);
+        countryB.subtractArmy(defenderLosses);
+    }
 
 
 }
