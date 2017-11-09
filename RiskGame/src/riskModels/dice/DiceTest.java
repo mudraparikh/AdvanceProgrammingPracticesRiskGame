@@ -13,9 +13,7 @@ public class DiceTest {
 
     @Test
     public void testDiceResultMoreThanThree() throws Exception{
-    	Dice d = new Dice();
-    	d.rollDice(3);
-    	assertFalse(d.rollDice(6).isDiceRolled);
+        assertFalse(Dice.rollDice(6).isDiceRolled);
     }
 
     @Test
