@@ -40,6 +40,12 @@ public class MapModelTest {
         gameMapObj = mapObj.readMapFile(filePath + "no_neighbours.map");
         assertFalse(gameMapObj.isCorrectMap());
     }
+    
+    @Test
+    public void testDisconnectedMap() throws Exception{
+    	gameMapObj = mapObj.readMapFile(filePath + "disconnectedTest.map");
+    	assertFalse(gameMapObj.isCorrectMap());
+    }
 
     @Test
     public void testBlankMap() throws Exception {

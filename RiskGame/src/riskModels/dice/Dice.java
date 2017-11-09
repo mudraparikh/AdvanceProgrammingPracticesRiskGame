@@ -18,7 +18,7 @@ public class Dice {
      * @param numberOfDice number of Dice User wants to roll
      * @return return diceModel object that will have dice roll result
      */
-    public Dice rollDice(int numberOfDice) {
+    public static Dice rollDice(int numberOfDice) {
         Dice dicemodel = new Dice();
         //check if we can roll the dice or not
         if (numberOfDice <= 0) {
