@@ -636,6 +636,12 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * this method shows the defender Dice Dialog Box 
+     * 
+     * @param gameView has the details to start game board
+     * @return options to be selected
+     */
     private int showDefenderDiceDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDicesForDefender(countryB)];
         for (int i = 0; i < getMaxNumberOfDicesForDefender(countryB); i++) {
@@ -648,6 +654,12 @@ public class Player extends Observable {
                 selectOptions[0]);
     }
 
+    /**
+     * this method shows move armies to capture country dialog box
+     * 
+     * @param gameView has details to start game board
+     * @return options to select how many armies to be moved
+     */
     private int showMoveArmiesToCaptureCountryDialogBox(GameView gameView) {
 
         ArrayList<Integer> selectOptions = new ArrayList<>();
@@ -660,6 +672,12 @@ public class Player extends Observable {
                 selectOptions.get(0));
     }
 
+    /**
+     * this method shows attacker dice dialog box
+     * 
+     * @param gameView has details to start game board
+     * @return options to be selected
+     */
     private int showAttackerDiceDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDices(countryA)];
         for (int i = 0; i < getMaxNumberOfDices(countryA); i++) {
