@@ -51,13 +51,13 @@ public class GameView extends JDialog {
     private JLabel selectedLabel;
     private JLabel targetLabel;
     private JLabel continentLabel;
-    private JButton menuBtn;
+    private JButton clearLogBtn;
     private JButton turnInBtn;
     private JButton reinforceBtn;
     private JButton attackBtn;
     private JButton fortifyBtn;
     private JButton endTurnBtn;
-    private String menuBtnName = "menuBtn";
+    private String clearLogName = "clearLogBtn";
     private String reinforceBtnName = "reinforceBtn";
     private String attackBtnName = "attackBtn";
     private String fortifyBtnName = "fortifyBtn";
@@ -132,19 +132,25 @@ public class GameView extends JDialog {
     }
 
     /**
-     * This method will display updated logs in main window of the game
+     * This method will display updated logs in logger window of the game
      *
      * @param logDetail log message that you want to add.
      */
     public static void displayLog(String logDetail) {
         String existingDetails = printTextArea.getText();
         StringBuilder stringBuilder = new StringBuilder(existingDetails);
-        printTextArea.setText("\n" + stringBuilder.append(logDetail) + "\n");
-
+        printTextArea.setText(stringBuilder.append(logDetail) + "\n");
     }
+    
+    /**
+     * This method will clear logs in logger window of the game
+     */
+    public void clearLog() {
+		printTextArea.setText("");
+	}
 
     /**
-     * This method will update view for the map panel .
+     * This method will update view for the map panel.
      * Map Panel holds the details of the continent ,Country , Number of Armies and Owner information
      */
     public static void updateMapPanel() {
@@ -165,11 +171,19 @@ public class GameView extends JDialog {
         Date date = new Date();
         TextAreaForMapPanel.setText(stringBuilder.toString() + "\n Updated:" + date.toString());
     }
-
+    
+    /**
+     * This method will set text for the Domination view pane.
+     * @param dominationDetails
+     */
     public static void showDomination(StringBuilder dominationDetails) {
         dominationTextArea.setText(dominationDetails.toString());
     }
-
+    
+    /**
+     * This method will update the card view pane.s
+     * @param cardArray
+     */
     public static void updateCardView(String[] cardArray) {
         cardListDisplay.removeAllElements();
         for (String aCardArray : cardArray) {
@@ -258,7 +272,8 @@ public class GameView extends JDialog {
         messageLayout = new GridBagLayout();
         actionPanel.setLayout(messageLayout);
 
-        menuBtn = new JButton("Menu");
+        clearLogBtn = new JButton("clear Logs");
+        clearLogBtn.setActionCommand(clearLogName);
         turnInBtn = new JButton("Turn In Cards");
         turnInBtn.setActionCommand(turnInBtnName);
         CardView cardsListModel = new CardView(model, "cards");
@@ -329,7 +344,7 @@ public class GameView extends JDialog {
         c.weighty = 0.5;
         c.gridx = 0;
         c.gridy = 4;
-        actionPanel.add(menuBtn, c);
+        actionPanel.add(clearLogBtn, c);
 
         return actionPanel;
     }
@@ -502,7 +517,7 @@ public class GameView extends JDialog {
      **/
     public void addActionListeners(ActionListener evt1) {
 
-        menuBtn.addActionListener(evt1);
+        clearLogBtn.addActionListener(evt1);
         turnInBtn.addActionListener(evt1);
         reinforceBtn.addActionListener(evt1);
         attackBtn.addActionListener(evt1);
