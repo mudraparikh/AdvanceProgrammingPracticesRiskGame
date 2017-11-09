@@ -1,3 +1,4 @@
+
 package riskModels.player;
 
 import org.junit.Before;
@@ -8,8 +9,6 @@ import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskView.GameView;
 
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicIconFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,12 +42,12 @@ public class PlayerTest extends Player {
     @Test
     public void testInitialisePlayerData(){
         initializePlayerData(6);
-        assertEquals("John", model.getPlayerList().get(0).getName());
-        assertEquals("Alexa", model.getPlayerList().get(1).getName());
-        assertEquals("Penny", model.getPlayerList().get(2).getName());
-        assertEquals("Sheldon", model.getPlayerList().get(3).getName());
-        assertEquals("Amy", model.getPlayerList().get(4).getName());
-        assertEquals("Raj", model.getPlayerList().get(5).getName());
+        assertEquals("John", getPlayerList().get(0).getName());
+        assertEquals("Alexa", getPlayerList().get(1).getName());
+        assertEquals("Penny", getPlayerList().get(2).getName());
+        assertEquals("Sheldon",getPlayerList().get(3).getName());
+        assertEquals("Amy", getPlayerList().get(4).getName());
+        assertEquals("Raj", getPlayerList().get(5).getName());
     }
 
     @Test
@@ -65,6 +64,14 @@ public class PlayerTest extends Player {
         assertTrue(isAttackValid(player, attackerCountry, defendingCountry));
     }
 
+    @Test
+    public void testInitialArmy() {
+        initializePlayerData(6);
+        playerCount = 6;
+        setInitialArmies();
+        playerList.get(0);
+        assertEquals(20,playerList.get(0).totalArmies);
+    }
     @Test
     public void testCompareDiceResultsAndCalculateLosses(){
         attackerDice = 3;
