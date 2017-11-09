@@ -51,16 +51,16 @@ public class PlayerTest extends Player {
     }
 
     @Test
-    public void testIsAttackPhase(){
+    public void testIsAttackPhase() throws IOException {
         initializePlayerData(6);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
         addInitialArmiesInRR();
-
         Player player = getPlayerList().get(0);
         Country attackerCountry = player.assignedCountries.get(0);
         Country defendingCountry = attackerCountry.getNeighborNodes().get(0);
+        gameView = new GameView();
         assertTrue(isAttackValid(player, attackerCountry, defendingCountry));
     }
 

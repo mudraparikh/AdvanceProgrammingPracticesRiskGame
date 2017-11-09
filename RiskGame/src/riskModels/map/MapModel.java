@@ -2,6 +2,7 @@ package riskModels.map;
 
 import riskModels.continent.Continent;
 import riskModels.country.Country;
+import riskModels.player.Player;
 import util.RiskGameUtil;
 
 import java.io.*;
@@ -329,7 +330,43 @@ public class MapModel {
      */
     public boolean isNeighbour(Country c1, Country c2) {
         return GameMap.getInstance().getCountryAndNeighborsMap().get(c1) != null && (GameMap.getInstance().getCountryAndNeighborsMap().get(c1).contains(c2));
+    }
 
+    /**
+     * Checks if it is connected.
+     *
+     * @param c1 country 1
+     * @param c2 country 2
+     * @param p player for which it's countries are connected to each other or not
+     * @return true, if is connected
+     */
+
+    public boolean isConnected(Country c1, Country c2, Player p) {
+        return isConnected(c1, c2, p, null);
+    }
+
+    /**
+     * Checks if it is connected.
+     * @param c1 country 1
+     * @param c2 country 2
+     * @param p player for which it's countries are connected to each other or not
+     * @param unwantedPair the unwanted pair
+     * @return true, if is connected
+     */
+
+    private boolean isConnected(Country c1, Country c2, Player p, List<Country> unwantedPair) {
+        if (isNeighbour(c1, c2) && c1.getBelongsToPlayer().equals(c2.getBelongsToPlayer()))
+            return true;
+        if (unwantedPair == null)
+            unwantedPair = new ArrayList<>();
+        else if (unwantedPair.contains(c1))
+            return false;
+        unwantedPair.add(c1);
+        for (Country c : GameMap.getInstance().getCountryAndNeighborsMap().get(c1)) {
+            if (!unwantedPair.contains(c) && isConnected(c, c2, p, unwantedPair))
+                return true;
+        }
+        return false;
     }
 
     /**
