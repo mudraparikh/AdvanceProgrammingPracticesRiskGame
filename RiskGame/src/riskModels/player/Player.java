@@ -583,13 +583,19 @@ public class Player extends Observable {
         }
     }
 
-
-   
+    /**
+     * This method updates armies based on the dice result by assigning attackers and defenders losses
+     * @param attackerLosses value of attacker losses that has to be subtracted from army
+     * @param defenderLosses value of defender losses that has to be subtracted from army
+     */
     protected void updateArmiesBasedOnDiceResult(int attackerLosses, int defenderLosses) {
         countryA.subtractArmy(attackerLosses);
         countryB.subtractArmy(defenderLosses);
     }
 
+    /**
+     * this method compares dice result and calculates the players losses
+     */
     public void compareDiceResultsAndCalculateLosses(){
         // Calculate losses
         if (attackerRolls[0] > defenderRolls[0]) {
@@ -609,6 +615,11 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * this method checks which players turn has to be continued
+     * @param currentPlayer name of the player
+     * @param model  players object
+     */
     private void checkPlayerTurnCanContinue(Player currentPlayer, Player model) {
         for (Country c : currentPlayer.getAssignedCountries()) {
             canAttack = false;
@@ -624,6 +635,13 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * this method checks the attack is valid or not
+     * @param currentPlayer name of the player
+     * @param countryA name of the attacker country 
+     * @param countryB name of the country
+     * @return false if current armies deployed are less than 1
+     */
     protected boolean isAttackValid(Player currentPlayer, Country countryA, Country countryB){
         if (countryA.getCurrentArmiesDeployed() > 1) {
             //Check if at-least 2 armies are there on the attacking country.
@@ -643,6 +661,12 @@ public class Player extends Observable {
         return false;
     }
 
+    /**
+     * This method performs actions that has to be done after one country is defended
+     * @param countryA name of the attacker country
+     * @param countryB name of the defender country
+     * @param gameView has the details to start game board
+     */
     public void defendingPlayerLostCountry(Country countryA, Country countryB, GameView gameView){
         // Remove country from defender's list of occupied territories and adds to attacker's list
         countryB.getBelongsToPlayer().assignedCountries.remove(countryB);
@@ -671,6 +695,13 @@ public class Player extends Observable {
         playerModel.getPlayerWorldDomination(playerList);
     }
 
+    /**
+     * This method checks one of the player lost rule
+     * if has no countries left, player looses the game and is eliminated
+     *  
+     * @param countryA name of the attacker country
+     * @param countryB name of the defender country
+     */
     private void playerLostRule(Country countryA, Country countryB){
         GameView.displayLog(countryB.getBelongsToPlayer().getName() + "has no countries left, player looses the game and is eliminated");
 
@@ -682,6 +713,12 @@ public class Player extends Observable {
         playerList.remove(countryB.getBelongsToPlayer());
     }
 
+    /**
+     * This method shows the defender dice dialog box
+     * 
+     * @param gameView has the details to start game board
+     * @return options of country names to be defending
+     */
     protected int showDefenderDiceDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDicesForDefender(countryB)];
         for (int i = 0; i < getMaxNumberOfDicesForDefender(countryB); i++) {
