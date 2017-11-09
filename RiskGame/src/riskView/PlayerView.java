@@ -14,6 +14,9 @@ import java.util.Observer;
  */
 public class PlayerView implements Observer {
 
+	/**
+	 * overriding update method for getting the current state of the objects
+	 */
     @Override
     public void update(Observable arg0, Object arg1) {
         // TODO Auto-generated method stub

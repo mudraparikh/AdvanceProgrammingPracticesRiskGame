@@ -590,6 +590,7 @@ public class Player extends Observable {
         countryA.subtractArmy(attackerLosses);
         countryB.subtractArmy(defenderLosses);
     }
+  
     /**
      * This method will compare attacker's and defender's dice result and calculate the loss of armies based on results
      */
@@ -612,6 +613,11 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * this method checks which players turn has to be continued
+     * @param currentPlayer name of the player
+     * @param model  players object
+     */
     private void checkPlayerTurnCanContinue(Player currentPlayer, Player model) {
         for (Country c : currentPlayer.getAssignedCountries()) {
             canAttack = false;
@@ -626,6 +632,7 @@ public class Player extends Observable {
             nextPlayerTurn(model);
         }
     }
+  
     /**
      * This method will check if attacker can attack to selected defender's country
      * @param currentPlayer attacker 
@@ -651,6 +658,7 @@ public class Player extends Observable {
         }
         return false;
     }
+  
     /**
      * This method will perform operation after defender has lost army , for example assign defender's country to attacker.
 	 * @param countryA attacker's country.
@@ -685,6 +693,13 @@ public class Player extends Observable {
         playerModel.getPlayerWorldDomination(playerList);
     }
 
+    /**
+     * This method checks one of the player lost rule
+     * if has no countries left, player looses the game and is eliminated
+     *  
+     * @param countryA name of the attacker country
+     * @param countryB name of the defender country
+     */
     private void playerLostRule(Country countryA, Country countryB){
         GameView.displayLog(countryB.getBelongsToPlayer().getName() + "has no countries left, player looses the game and is eliminated");
 
@@ -695,6 +710,7 @@ public class Player extends Observable {
 
         playerList.remove(countryB.getBelongsToPlayer());
     }
+  
     /**
      * This will take input for defender to choose number of dice he/she wants to roll 
      * @param gameView GameView Object
@@ -711,6 +727,7 @@ public class Player extends Observable {
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
                 selectOptions[0]);
     }
+  
     /**
      * This method will take input for attacker to choose number of armies he/she wants to move
      * @param gameView GameView Object
@@ -727,6 +744,7 @@ public class Player extends Observable {
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions.toArray(),
                 selectOptions.get(0));
     }
+  
 	/**
 	 *  This will take input for attacker to choose number of dice he/she wants to roll
 	 * @param gameView Main game view object
