@@ -968,6 +968,7 @@ public class Player extends Observable {
             currentPlayerReinforceArmies = getReinforcementArmyForPlayer(currentPlayer);
             currentPlayer.addArmy(currentPlayerReinforceArmies);
             playerIndex++;
+            updatePhaseDetails("Repaint");
             updatePhaseDetails("\n\n===" + currentPlayer.getName() + " is playing ===");
             updatePhaseDetails("Reinforcement Phase Begins \n");
             if (currentPlayer.mustTurnInCards()) {
