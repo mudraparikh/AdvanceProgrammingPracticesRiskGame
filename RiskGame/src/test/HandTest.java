@@ -1,7 +1,9 @@
-package riskModels.cards;
+package test;
 
 import org.junit.Before;
 import org.junit.Test;
+import riskModels.cards.Card;
+import riskModels.cards.Hand;
 import riskModels.country.Country;
 
 import static org.junit.Assert.*;

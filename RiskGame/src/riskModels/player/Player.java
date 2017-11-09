@@ -475,7 +475,7 @@ public class Player extends Observable {
      * @param gameView has the details to load game board
      * @return option to select how many armies to reinforce
      */
-    private Integer showReinforceArmiesDialogBox(GameView gameView) {
+    protected Integer showReinforceArmiesDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[currentPlayer.getTotalArmies()];
         for (int i = 0; i < currentPlayer.getTotalArmies(); i++) {
             selectOptions[i] = i + 1;
@@ -538,7 +538,6 @@ public class Player extends Observable {
             }
             // Rolls arrays have been ordered in descending order. Index 0 = highest pair
             compareDiceResultsAndCalculateLosses();
-
             GameView.displayLog("\n\n<COMBAT REPORT>");
 
             updateArmiesBasedOnDiceResult(attackerLosses, defenderLosses);
@@ -548,11 +547,11 @@ public class Player extends Observable {
             GameView.displayLog(countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
             GameView.displayLog(countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
             GameView.displayLog("\n\n");
-            updatePhaseDetails("<Dice Result>");
+            updatePhaseDetails("<Based On Dice Results> \n");
             updatePhaseDetails("Attacker Losses : " + attackerLosses + " army."+"\n"+"Defender Losses : " + defenderLosses + " army.");
 
             // If defending country loses all armies
-            if (countryB.getCurrentArmiesDeployed() < 1354) {
+            if (countryB.getCurrentArmiesDeployed() < 1) {
 
                 GameView.displayLog(countryA.getBelongsToPlayer().getName() + " has defeated all of " + countryB.getBelongsToPlayer().getName() + "'s armies in " + country2 + " and has occupied the country!");
                 defendingPlayerLostCountry(countryA, countryB, gameView);
@@ -582,19 +581,18 @@ public class Player extends Observable {
             GameView.displayLog("Can not attack right now.");
         }
     }
-
     /**
-     * This method updates armies based on the dice result by assigning attackers and defenders losses
-     * @param attackerLosses value of attacker losses that has to be subtracted from army
-     * @param defenderLosses value of defender losses that has to be subtracted from army
+     * This method will update attacker's and defender's country with recent armies based on Dice Result
+     * @param attackerLosses number of Armies attacker lost
+     * @param defenderLosses number of Armies defender lost
      */
     protected void updateArmiesBasedOnDiceResult(int attackerLosses, int defenderLosses) {
         countryA.subtractArmy(attackerLosses);
         countryB.subtractArmy(defenderLosses);
     }
-
+  
     /**
-     * this method compares dice result and calculates the players losses
+     * This method will compare attacker's and defender's dice result and calculate the loss of armies based on results
      */
     public void compareDiceResultsAndCalculateLosses(){
         // Calculate losses
@@ -634,13 +632,13 @@ public class Player extends Observable {
             nextPlayerTurn(model);
         }
     }
-
+  
     /**
-     * this method checks the attack is valid or not
-     * @param currentPlayer name of the player
-     * @param countryA name of the attacker country 
-     * @param countryB name of the country
-     * @return false if current armies deployed are less than 1
+     * This method will check if attacker can attack to selected defender's country
+     * @param currentPlayer attacker 
+     * @param countryA attacker's country
+     * @param countryB defender's country 
+     * @return true if attacker can attack else false
      */
     protected boolean isAttackValid(Player currentPlayer, Country countryA, Country countryB){
         if (countryA.getCurrentArmiesDeployed() > 1) {
@@ -660,13 +658,13 @@ public class Player extends Observable {
         }
         return false;
     }
-
+  
     /**
-     * This method performs actions that has to be done after one country is defended
-     * @param countryA name of the attacker country
-     * @param countryB name of the defender country
-     * @param gameView has the details to start game board
-     */
+     * This method will perform operation after defender has lost army , for example assign defender's country to attacker.
+	 * @param countryA attacker's country.
+	 * @param countryB defender's country that he/she lost.
+	 * @param gameView Current GameView Object.
+	 */
     public void defendingPlayerLostCountry(Country countryA, Country countryB, GameView gameView){
         // Remove country from defender's list of occupied territories and adds to attacker's list
         countryB.getBelongsToPlayer().assignedCountries.remove(countryB);
@@ -712,12 +710,11 @@ public class Player extends Observable {
 
         playerList.remove(countryB.getBelongsToPlayer());
     }
-
+  
     /**
-     * This method shows the defender dice dialog box
-     * 
-     * @param gameView has the details to start game board
-     * @return options of country names to be defending
+     * This will take input for defender to choose number of dice he/she wants to roll 
+     * @param gameView GameView Object
+     * @return number of dice that defender decided to roll 
      */
     protected int showDefenderDiceDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDicesForDefender(countryB)];
@@ -730,15 +727,12 @@ public class Player extends Observable {
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
                 selectOptions[0]);
     }
-
-
+  
     /**
-     * this method shows move armies to capture country dialog box
-     * 
-     * @param gameView has details to start game board
-     * @return options to select how many armies to be moved
+     * This method will take input for attacker to choose number of armies he/she wants to move
+     * @param gameView GameView Object
+     * @return  number of armies attacker decided to move
      */
-    
     protected int showMoveArmiesToCaptureCountryDialogBox(GameView gameView) {
 
         ArrayList<Integer> selectOptions = new ArrayList<>();
@@ -750,20 +744,18 @@ public class Player extends Observable {
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions.toArray(),
                 selectOptions.get(0));
     }
-
-
-    /**
-     * this method shows attacker dice dialog box
-     * 
-     * @param gameView has details to start game board
-     * @return options to be selected
-     */
-
+  
+	/**
+	 *  This will take input for attacker to choose number of dice he/she wants to roll
+	 * @param gameView Main game view object
+	 * @return number of dice that attacker decided to roll 
+	 */
     protected int showAttackerDiceDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDices(countryA)];
         for (int i = 0; i < getMaxNumberOfDices(countryA); i++) {
             selectOptions[i] = i + 1;
         }
+        updatePhaseDetails(countryA.getBelongsToPlayer().getName()+" is Attacking");
         return (Integer) JOptionPane.showInputDialog(gameView,
                 countryA.getBelongsToPlayer().getName() + ", is attacking " + countryB.getCountryName() + " from " + countryA.getCountryName() + "! How many dice will you roll?",
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
@@ -810,7 +802,11 @@ public class Player extends Observable {
             }
         }
     }
-
+    /**
+     * This method will take input for  player to choose number of armies he/she wants to move during fortification
+     * @param gameView  Current GameView Object
+     * @return number of armies player decide to move during fortification.
+     */
     protected int showFortificationArmyMoveDialog(GameView gameView) {
         Integer[] optionArmies = new Integer[countryA.getCurrentArmiesDeployed() - 1];
         for (int i = 0; i < optionArmies.length; i++) {
@@ -821,7 +817,11 @@ public class Player extends Observable {
 
     }
 
-    public boolean isFortifyValid(){
+    /**
+     * This method will check if the fortification is valid/possible or not 
+     * @return true if possible else false
+     */
+    protected boolean isFortifyValid(){
         boolean isValid;
         for (Country c : currentPlayer.assignedCountries){
             for (Country neighbor : GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(c.getCountryName()))){
@@ -864,7 +864,7 @@ public class Player extends Observable {
                     canAttack = false;
                     canFortify = false;
                     setChanged();
-                    notifyObservers("cards");
+                    notifyObservers();
 
                 } else {
                     GameView.displayLog("You must trade in three cards of the same type or one of each three types.");
@@ -886,12 +886,12 @@ public class Player extends Observable {
             GameView.displayLog("You captured at-least one country in your attack phase.");
             GameView.displayLog("You get a card");
             currentPlayer.addRiskCard(deck.draw());
+            /*currentPlayer.addRiskCard(deck.draw());
             currentPlayer.addRiskCard(deck.draw());
             currentPlayer.addRiskCard(deck.draw());
-            currentPlayer.addRiskCard(deck.draw());
-            currentPlayer.addRiskCard(deck.draw());
+            currentPlayer.addRiskCard(deck.draw());*/
             setChanged();
-            notifyObservers(Player.class);
+            notifyObservers();
         }
         hasCountryCaptured = false;
     }
@@ -969,7 +969,7 @@ public class Player extends Observable {
             currentPlayer.addArmy(currentPlayerReinforceArmies);
             playerIndex++;
             updatePhaseDetails("\n\n===" + currentPlayer.getName() + " is playing ===");
-            updatePhaseDetails("Reinforcement Phase Begins");
+            updatePhaseDetails("Reinforcement Phase Begins \n");
             if (currentPlayer.mustTurnInCards()) {
                 // While player has 5 or more cards
                 GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
@@ -999,7 +999,6 @@ public class Player extends Observable {
      * Starts the Game.
      * Shuffles the players.
      * @param model Player Class model
-     * @param model player object
      */
     public void startGame(Player model) {
         Collections.shuffle(playerList);

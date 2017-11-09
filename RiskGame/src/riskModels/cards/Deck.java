@@ -9,7 +9,7 @@ import java.util.Collections;
  * Allows the creation of the Risk deck containing the 42 Risk cards.
  *
  * @author Akshay Shah
- **/
+ */
 public class Deck {
 
     private int i;
@@ -49,7 +49,7 @@ public class Deck {
      * Public default constructor to access other methods.
      */
     public Deck(){
-
+        deck = new ArrayList<>();
     }
 
     /**
