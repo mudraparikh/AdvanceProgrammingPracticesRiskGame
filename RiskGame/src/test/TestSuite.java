@@ -1,14 +1,14 @@
-/*
+
 package test;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import riskModels.gamedriver.GamePlayModelTest;
-import riskModels.gamedriver.StartupPhaseTest;
+import riskModels.dice.DiceTest;
 import riskModels.map.MapModelTest;
+import riskModels.player.PlayerTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({GamePlayModelTest.class, MapModelTest.class, StartupPhaseTest.class})
+@Suite.SuiteClasses({MapModelTest.class, PlayerTest.class, DiceTest.class, })
 public class TestSuite {
     //nothing
-}*/
+}

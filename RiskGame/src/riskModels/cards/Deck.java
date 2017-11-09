@@ -19,7 +19,7 @@ public class Deck {
 
     private String[] typesArray;
 
-    private ArrayList<Card> deck;
+    public ArrayList<Card> deck;
 
     private Card drawCard;
 
@@ -43,6 +43,13 @@ public class Deck {
             System.out.println("Added new card to deck: " + deck.get(i).getName());
         }
         Collections.shuffle(deck);
+    }
+
+    /**
+     * Public default constructor to access other methods.
+     */
+    public Deck(){
+
     }
 
     /**

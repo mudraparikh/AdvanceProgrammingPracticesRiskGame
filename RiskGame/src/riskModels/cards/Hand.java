@@ -9,9 +9,11 @@ import java.util.ArrayList;
  **/
 public class Hand {
 
-    private boolean condition;
+    public boolean condition;
 
-    private ArrayList<Card> hand;
+    public ArrayList<Card> hand;
+
+    public Deck deck;
 
    /**
     * No-arg constructor. Instantiate Deck.
@@ -19,12 +21,12 @@ public class Hand {
     public Hand() {
 
         hand = new ArrayList<Card>();
+        deck = new Deck();
     }
 
     /**
      * Adds the card to the hand
-     * @param card name of the card
-     */
+     **/
     public void add(Card card) {
 
         hand.add(card);
@@ -39,6 +41,7 @@ public class Hand {
     public void removeCardsFromHand(int index1, int index2, int index3) {
 
         if (canTurnInCards(index1, index2, index3)) {
+            addCardsToDeckAgain(index1,index2,index3);
             hand.remove(index3);
             hand.remove(index2);
             hand.remove(index1);
@@ -48,7 +51,22 @@ public class Hand {
         }
     }
 
-   /**
+    /**
+     * returns the card to the deck
+     * @param index1 card turned in index 1
+     * @param index2 card turned in index 2
+     * @param index3 card turned in index 3
+     */
+    public void addCardsToDeckAgain(int index1, int index2, int index3) {
+        Card c1 = hand.get(index1);
+        Card c2 = hand.get(index2);
+        Card c3 = hand.get(index3);
+        deck.add(c1);
+        deck.add(c2);
+        deck.add(c3);
+    }
+
+    /**
     * returns true if the player can turn in cards
     * @param index1 card turned in index 1
     * @param index2 card turned in index 2

@@ -16,7 +16,6 @@ public class Continent {
     public String continentName;
     public List<Country> memberCountriesList = new ArrayList<Country>();
     public int numberOfTerritories;
-    public Color color;
     public int controlValue;
 
     /**
@@ -123,24 +122,6 @@ public class Continent {
      */
     public void setControlValue(int controlValue) {
         this.controlValue = controlValue;
-    }
-
-    /**
-     * getter method for player who own the continent
-     *
-     * @return color color of the continent player occupied
-     */
-    public Color getColor() {
-        return color;
-    }
-
-    /**
-     * setter method to assign color to the continent
-     *
-     * @param color for the continent
-     */
-    public void setColor(Color color) {
-        this.color = color;
     }
 
 }

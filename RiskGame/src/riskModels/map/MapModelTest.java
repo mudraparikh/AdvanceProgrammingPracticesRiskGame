@@ -19,8 +19,8 @@ public class MapModelTest {
     public void init() {
         mapObj = new MapModel();
         gameMapObj = GameMap.getInstance();
-        filePath = location.replaceAll("/bin", "/res");
-        //filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
+        //filePath = location.replaceAll("/bin", "/res");
+        filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
     }
 
     @Test
@@ -62,7 +62,7 @@ public class MapModelTest {
     @Test
     public void testCountryObject() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "validate.map");
-        assertEquals("44", mapObj.getCountryObj("44", gameMapObj).getCountryName());
+        assertEquals("c3", mapObj.getCountryObj("c3", gameMapObj).getCountryName());
     }
 
     @Test
@@ -74,17 +74,17 @@ public class MapModelTest {
     @Test
     public void removeCountry() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "validate.map");
-        Country countryToRemove = mapObj.getCountryObj("44", gameMapObj);
+        Country countryToRemove = mapObj.getCountryObj("c1", gameMapObj);
         mapObj.removeCountry(countryToRemove, gameMapObj);
-        assertEquals(null, mapObj.getCountryObj("44", gameMapObj));
+        assertEquals(null, mapObj.getCountryObj("c1", gameMapObj));
     }
 
     @Test
     public void addCountry() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "validate.map");
-        Country country = new Country("100", 23, 34, "Yukon");
-        Country country1 = new Country("101", 43, 94, "Yukon");
-        Country country2 = new Country("102", 63, 23, "Yukon");
+        Country country = new Country("100", 23, 34, "abc");
+        Country country1 = new Country("101", 43, 94, "abc");
+        Country country2 = new Country("102", 63, 23, "abc");
         List<Country> neighboringCountries = new ArrayList<Country>();
         neighboringCountries.add(country1);
         neighboringCountries.add(country2);
