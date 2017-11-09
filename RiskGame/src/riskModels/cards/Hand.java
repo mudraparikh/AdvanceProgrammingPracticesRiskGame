@@ -23,7 +23,8 @@ public class Hand {
 
     /**
      * Adds the card to the hand
-     **/
+     * @param card name of the card
+     */
     public void add(Card card) {
 
         hand.add(card);

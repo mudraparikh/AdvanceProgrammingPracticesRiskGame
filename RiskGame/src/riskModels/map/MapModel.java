@@ -464,8 +464,8 @@ public class MapModel {
     /**
      * This method will remove Continent from the map
      *
-     * @param continent
-     * @param fileName 
+     * @param continent name of the continent
+     * @param fileName name of the file from which continent should be removed
      */
     public void removeContinent(Continent continent, String fileName) {
         System.out.println("Removing Continent Name" + continent.getContinentName());
