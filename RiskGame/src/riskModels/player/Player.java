@@ -71,6 +71,10 @@ public class Player extends Observable {
 
     public Hand hand;
 
+    /**
+     * constructor which assigns the name of the player
+     * @param name players name
+     */
     public Player(String name) {
         super();
         this.name = name;
@@ -95,9 +99,10 @@ public class Player extends Observable {
         // TODO Auto-generated constructor stub
     }
 
-    /**
-     * getter method to get the list of current players
-     */
+   /**
+    * getter method to get the list of current players
+    * @return list of players
+    */
     public List<Player> getPlayerList() {
         return playerList;
     }
@@ -113,7 +118,6 @@ public class Player extends Observable {
 
     /**
      * getter method gives value of reinforcement army
-     *
      * @return value of reinforcement army
      */
     public int getReinforcementArmies() {
@@ -221,36 +225,54 @@ public class Player extends Observable {
 
     /**
      * Adds a risk card to the players hand
-     **/
+     * @param riskCard card that is to be added
+     */
     public void addRiskCard(Card riskCard) {
 
         hand.add(riskCard);
     }
 
-    /**
-     * Removed a set of risk cards from the players hand to reflect risk cards being turned in
-     **/
+   /**
+    * Removed a set of risk cards from the players hand to reflect risk cards being turned in
+    * @param cardsTurnedInIndex card turned in particular index
+    */
     public void removeCards(int[] cardsTurnedInIndex) {
 
         hand.removeCardsFromHand(cardsTurnedInIndex[0], cardsTurnedInIndex[1], cardsTurnedInIndex[2]);
     }
 
+    /**
+     * getter method gives the players turn
+     * @return count of players turn
+     */
     public int getTurnInCount() {
 
         turnInCount++;
         return turnInCount;
     }
 
+    /**
+     * getter method gives details of the cards in hand
+     * @return cards in the hand
+     */
     public ArrayList<Card> getHand() {
 
         return hand.getCards();
     }
 
+    /**
+     * getter method returns the hand object
+     * @return hand object
+     */
     public Hand getHandObject() {
 
         return hand;
     }
 
+    /**
+     * this getter method is boolean checks the turn in card
+     * @return true if the cards turns ,otherwise false
+     */
     public boolean mustTurnInCards() {
 
         return hand.mustTurnInCards();
@@ -260,7 +282,7 @@ public class Player extends Observable {
 
     /**
      * This method will create populate GameMap instance while reading file
-     *
+     * if the map file is invalid the system will exit the application.
      * @param file .map file
      */
     public void createGameMapFromFile(File file) {
@@ -392,7 +414,8 @@ public class Player extends Observable {
      * Handles placing reinforcements.
      *
      * @param country is a String of the country in which the reinforcements will be placed
-     **/
+     * @param gameView has the details to load the game board
+     */
     public void reinforce(String country, GameView gameView) {
 
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
@@ -433,7 +456,12 @@ public class Player extends Observable {
         }
     }
 
-    public Integer showReinforceArmiesDialogBox(GameView gameView) {
+    /**
+     * this method shows the reinforcement armies dialog box
+     * @param gameView has the details to load game board
+     * @return option to select how many armies to reinforce
+     */
+    private Integer showReinforceArmiesDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[currentPlayer.getTotalArmies()];
         for (int i = 0; i < currentPlayer.getTotalArmies(); i++) {
             selectOptions[i] = i + 1;
@@ -453,6 +481,7 @@ public class Player extends Observable {
      *
      * @param country1 is a String of the point A country.
      * @param country2 is a String of the point B country.
+     * @param gameView has the details to load game board
      **/
     public void attack(String country1, String country2, GameView gameView) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
@@ -649,6 +678,8 @@ public class Player extends Observable {
      *
      * @param country1 is a String of the point A country.
      * @param country2 is a String of the point B country.
+     * @param gameView has the details to load the game board
+     * @param model player object
      **/
     public void fortify(String country1, String country2, GameView gameView, Player model) {
 
@@ -842,7 +873,7 @@ public class Player extends Observable {
     /**
      * Starts the Game.
      * Shuffles the players.
-     * @param model
+     * @param model player object
      */
     public void startGame(Player model) {
         Collections.shuffle(playerList);
@@ -856,8 +887,8 @@ public class Player extends Observable {
         updatePhaseDetails("All the players have been given the countries randomly and have assigned 1 initial armies from the total initial armies player gets.\n");
         GameView.displayLog("To begin: Start reinforcement phase by placing army in your designated country\n");
         nextPlayerTurn(model);
-
     }
+
     /**
      * This method will act as driver method to call observer method to update phase details 
      * @param messageToUpdate message that you want to append to in Phase View, pass "Repaint" to remove all existing text in Phase view 
@@ -874,7 +905,7 @@ public class Player extends Observable {
      * Creates and returns the information for the cardsList in the BoardView.
      *
      * @return a list of Strings to be displayed in the cardsList.
-     **/
+     */
     public ArrayList<String> getCardsList() {
 
         list = new ArrayList<String>();
@@ -890,7 +921,7 @@ public class Player extends Observable {
     /**
      * Getting the reinforcement army for player.
      *
-     * @param p the p
+     * @param p players object
      * @return the reinforcement army for player
      */
     public int getReinforcementArmyForPlayer(Player p) {
@@ -914,7 +945,7 @@ public class Player extends Observable {
     /**
      * Getting the countries conquered by the player.
      *
-     * @param p the player obj
+     * @param p the player object
      * @return the countries conquered by the player.
      */
     public List<Country> getCountriesConqueredBy(Player p) {
@@ -924,7 +955,7 @@ public class Player extends Observable {
     /**
      * Getting the continents conquered by the player.
      *
-     * @param p the player obj
+     * @param p the player object
      * @return the continents conquered by the player.
      */
     public List<Continent> getContinentsConqueredBy(Player p) {
