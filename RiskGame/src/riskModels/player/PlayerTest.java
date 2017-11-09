@@ -1,19 +1,22 @@
 
 package riskModels.player;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import riskModels.cards.Deck;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskView.GameView;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 public class PlayerTest extends Player {
 
@@ -21,6 +24,7 @@ public class PlayerTest extends Player {
     private MapModel mapModel;
     private GameView gameView;
     private Player model;
+    
 
     private String filePath;
     String location = PlayerTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
@@ -28,9 +32,10 @@ public class PlayerTest extends Player {
     @Before
     public void setUp() throws Exception {
         mapModel = new MapModel();
-        File f = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/London.map");
-        gameMap = mapModel.readMapFile("/home/akshay/AdvanceProgrammingPracticesRiskGame/London.map");
-        createGameMapFromFile(f);
+        filePath = location.replaceAll("/bin", "/res");
+        File f = new File(filePath+"London.map");
+        gameMap = mapModel.readMapFile("C:\\Users\\prashantp95\\git\\AdvanceProgrammingPracticesRiskGame\\phaseView\\RiskGame\\res\\London.map");
+        
     }
 
     @Test
@@ -137,14 +142,54 @@ public class PlayerTest extends Player {
         setInitialArmies();
         allocateCountriesToPlayers();
         addInitialArmiesInRR();
-        gameView = new GameView();
-        assertTrue(1==1);
-
+       // gameView = new GameView();
+        
+        Player attacker = getPlayerList().get(0);
+        attacker.assignedCountries.clear();
+        for(Country c : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+        	c.setBelongsToPlayer(attacker);
+        	c.setCurrentArmiesDeployed(50);
+        	attacker.assignedCountries.add(c);
+        }
+        Player defender =  getPlayerList().get(1);
+        defender.assignedCountries.clear();
+        Country countryToAssignDefender = GameMap.getInstance().getCountryAndNeighborsMap().get(attacker.assignedCountries.get(0)).get(0);
+        
+        attacker.assignedCountries.remove(countryToAssignDefender);
+        countryToAssignDefender.setBelongsToPlayer(defender);
+        defender.assignedCountries.add(countryToAssignDefender);
+        
+        for(Country country :attacker.assignedCountries ) {
+        	System.out.println(country.getCountryName()+"----->"+country.getBelongsToPlayer().getName());
+        	List<Country> neighbors = GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(country.getCountryName()));
+        	GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbors);
+        }
+        for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet() ) {
+        	if(country.getCountryName().equalsIgnoreCase(defender.assignedCountries.get(0).getCountryName())) {
+        		country.setBelongsToPlayer(defender);
+        		country.setCurrentArmiesDeployed(2);
+        		List<Country> neighbors = GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(country.getCountryName()));
+            	GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbors);
+        	}
+        	System.out.println(country.getCountryName()+"----->"+country.getBelongsToPlayer().getName());
+        	
+        }
+       GameView gameView = new GameView();
+       currentPlayer=attacker;
+       canAttack=true;
+       mapModel = new MapModel();
+       attack(attacker.assignedCountries.get(0).getCountryName(),countryToAssignDefender.getCountryName(),gameView,attacker);
     }
 
     @Override
     protected int showMoveArmiesToCaptureCountryDialogBox(GameView gameView) {
         return 1;
+    }
+    
+    
+    @Override
+    protected boolean isAttackValid(Player p, Country c, Country c1) {
+    	return true;    	
     }
 
 
