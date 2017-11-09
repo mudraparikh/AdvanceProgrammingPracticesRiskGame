@@ -87,14 +87,7 @@ public class PlayerObserverModel extends Observable {
         this.player = player;
         this.updateMessage = "Domination";
         setChanged();
-        notifyObservers(Player.class);
-        String lable = "";
-
-        for (Player play : player.getPlayerList()) {
-            lable.concat(play.getName());
-            lable.concat(String.valueOf(play.getDomination()) + "\n");
-        }
-
+        notifyObservers();
     }
 
     /**
@@ -106,7 +99,6 @@ public class PlayerObserverModel extends Observable {
         this.updateMessage = "Phase";
         this.phaseDetailMessage = messageForPhase;
         setChanged();
-        notifyObservers(Player.class);
-
+        notifyObservers();
     }
 }

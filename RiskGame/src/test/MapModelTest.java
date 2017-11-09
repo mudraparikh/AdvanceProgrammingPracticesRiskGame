@@ -1,8 +1,10 @@
-package riskModels.map;
+package test;
 
 import org.junit.Before;
 import org.junit.Test;
 import riskModels.country.Country;
+import riskModels.map.GameMap;
+import riskModels.map.MapModel;
 
 import java.util.ArrayList;
 import java.util.List;

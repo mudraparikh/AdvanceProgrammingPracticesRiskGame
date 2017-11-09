@@ -1,4 +1,4 @@
-package riskModels.dice;
+package test;
 
 import org.junit.Test;
 import riskModels.dice.Dice;

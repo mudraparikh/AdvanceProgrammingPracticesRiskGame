@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Allows the creation of Risk Hand objects used to handle the cards held by a player.
  *
  * @author Akshay Shah
- **/
+ */
 public class Hand {
 
     public boolean condition;
@@ -25,8 +25,9 @@ public class Hand {
     }
 
     /**
-     * Adds the card to the hand
-     **/
+     * This method will add card in hand
+     * @param card card that you want to add
+     */
     public void add(Card card) {
 
         hand.add(card);

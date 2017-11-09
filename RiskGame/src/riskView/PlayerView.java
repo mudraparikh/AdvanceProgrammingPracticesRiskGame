@@ -29,7 +29,6 @@ public class PlayerView implements Observer {
                 dominationDetails.append(play.getName()).append(" ").append("\n");
                 dominationDetails.append(String.valueOf(play.getDomination())).append("%").append("\n");
             }
-            //GameView.dominationLabel = new JLabel(lable+"\n");
             GameView.showDomination(dominationDetails);
         }
         if (p.getUpdateMessage().equalsIgnoreCase("Phase")) {
