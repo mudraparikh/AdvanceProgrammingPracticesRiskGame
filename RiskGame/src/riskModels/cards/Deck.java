@@ -46,6 +46,13 @@ public class Deck {
     }
 
     /**
+     * Public default constructor to access other methods.
+     */
+    public Deck(){
+
+    }
+
+    /**
      * Removes a card from the deck and return it
      * @return card object
      */
