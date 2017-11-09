@@ -39,9 +39,9 @@ public class Launcher extends java.awt.Frame {
         });
     }
 
-    /**
-     * This method is used to generate buttons
-     */
+   /**
+    * This method is used to generate buttons
+    */
     private void initMenuComponents() {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();

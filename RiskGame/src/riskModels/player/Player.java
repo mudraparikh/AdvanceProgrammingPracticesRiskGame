@@ -61,6 +61,10 @@ public class Player extends Observable {
     private int turnInCount;
     private Hand hand;
 
+    /**
+     * constructor which assigns the name of the player
+     * @param name players name
+     */
     public Player(String name) {
         super();
         this.name = name;
@@ -840,6 +844,10 @@ public class Player extends Observable {
         nextPlayerTurn(model);
     }
 
+    /**
+     * this method updates the phase details when it get the message to update
+     * @param messageToUpdate string meassage to update the phase details
+     */
     private static void updatePhaseDetails(String messageToUpdate) {
     	PlayerObserverModel obsModel = new PlayerObserverModel();
         PlayerView playerView = new PlayerView();
@@ -852,7 +860,7 @@ public class Player extends Observable {
      * Creates and returns the information for the cardsList in the BoardView.
      *
      * @return a list of Strings to be displayed in the cardsList.
-     **/
+     */
     public ArrayList<String> getCardsList() {
 
         list = new ArrayList<String>();

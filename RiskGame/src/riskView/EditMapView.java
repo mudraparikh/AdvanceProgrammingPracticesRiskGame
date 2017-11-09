@@ -42,13 +42,16 @@ public class EditMapView extends java.awt.Frame {
     private JScrollPane pane;
     private int index;
 
+    /**
+     * constructor which calls the initMapComponent method
+     */
     public EditMapView() {
         initMapComponents();
     }
 
-    /**
-     * This continent method is used to edit map by "Add" or "Remove" functionality Continents from a Map
-     */
+  /**
+   * This continent method is used to edit map by "Add" or "Remove" functionality Continents from a Map
+   */
     private void continent(){
         continentList = new JList(continentDisplay);
         pane = new JScrollPane(continentList);
@@ -91,9 +94,9 @@ public class EditMapView extends java.awt.Frame {
         frame1.add(removeButton, BorderLayout.CENTER);
     }
 
-   /**
-    * This country method is used to edit map by "Add" or "Remove" functionality country from a Map
-    */
+/**
+ * This country method is used to edit map by "Add" or "Remove" functionality country from a Map
+ */
 
     private void country() {
         countryList = new JList(countryDisplay);
@@ -114,10 +117,7 @@ public class EditMapView extends java.awt.Frame {
         JTextField textCountry = new JTextField();
         JButton button2 = new JButton("OK");
 
-        /**
-         * The following loops display the list of continents and the countries
-         * by accessing the values from the gameMap object of the gameMap class
-         */
+       //The following loops display the list of continents and the countries by accessing the values from the gameMap object of the gameMap class
         for (int i = 0; i < gameMap.getContinentList().size(); i++)
             continentDisplay1.addElement(gameMap.getContinentList().get(i).getContinentName());
 
@@ -206,9 +206,9 @@ public class EditMapView extends java.awt.Frame {
 
     }
 
-    /**
-     * This initMapComponents is used to initialize the components usedin EditMapView class
-     */
+   /**
+    * This initMapComponents is used to initialize the components used in EditMapView class
+    */
     private void initMapComponents() {
         label1.setText("Click on the Button to Add/Remove Continent/Country/Territory from Map  ");
         label1.setVisible(true);

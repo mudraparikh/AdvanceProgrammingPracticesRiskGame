@@ -74,7 +74,7 @@ public class GameView extends JDialog {
 
 /**
  * Constructs the Risk game board.
- * @throws IOException when there is problem in giving input & output
+ * @throws IOException when there is problem in giving input or output
  */
     public GameView() throws IOException {
 
@@ -165,10 +165,18 @@ public class GameView extends JDialog {
         TextAreaForMapPanel.setText(stringBuilder.toString() + "\n Updated:" + date.toString());
     }
 
+    /**
+     * this method shows which player's domination
+     * @param dominationDetails details of whose domination
+     */
     public static void showDomination(StringBuilder dominationDetails) {
         dominationTextArea.setText(dominationDetails.toString());
     }
 
+    /**
+     * this method updates the card view 
+     * @param cardArray list of cards to be updated
+     */
     public static void updateCardView(String[] cardArray) {
 
         //Todo : make cards input dialog and change it to text !
@@ -176,9 +184,10 @@ public class GameView extends JDialog {
 
     }
 
-    /*
-     * The panel for the logger message display and game play buttons.
-     */
+  /**
+   * The panel for the logger message display and game play buttons.
+   * @return JPanel message
+   */
     private JPanel messagePanel() {
 
         messagePanel = new JPanel();
@@ -248,8 +257,9 @@ public class GameView extends JDialog {
         return messagePanel;
     }
 
-    /*
+    /**
      * The panel for the logger message display and game play buttons.
+     * @return message from JPanel
      */
     private JPanel actionPanel() {
         actionPanel = new JPanel();
@@ -333,8 +343,10 @@ public class GameView extends JDialog {
         return actionPanel;
     }
 
-    /*
-     * The panel for the map and load display as per users choice.
+   /**
+    * The panel for the map and load display as per users choice.
+    * @return map display
+    * @throws IOException when the is problem in input and output
     */
     public JPanel mapPanel() throws IOException {
         mapPanel = new JPanel();
@@ -369,8 +381,9 @@ public class GameView extends JDialog {
         return mapPanel;
     }
 
-    /*
-     * The panel to display the list of continents, countries and their adjacent territories.
+   /**
+    * The panel to display the list of continents, countries and their adjacent territories.
+    * @return list of all continents ,countries and adjacent territories
     */
     private JPanel countryInfoPanel() {
         countryInfoPanel = new JPanel();
@@ -539,6 +552,10 @@ public class GameView extends JDialog {
         return countryList2.getSelectedValue();
     }
 
+    /**
+     * this method updates the panel's phase details
+     * @param phaseDetailMessage has the details of the phase panel
+     */
 	public static void updatePanelOfPhaseDetails(String phaseDetailMessage) {
 		  GameView.phaseViewTextArea.setText(phaseDetailMessage);
 		

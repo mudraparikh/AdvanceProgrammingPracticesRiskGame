@@ -17,27 +17,50 @@ public class PlayerObserverModel extends Observable {
     String updateMessage = "";
     String phaseDetailMessage="";
 
+    /**
+     * getter method give current player
+     * @return name of current player
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * setter method to assign the player
+     * @param player name of the player
+     */
     public void setPlayer(Player player) {
         this.player = player;
     }
 
+    /**
+     * getter method give the message to update
+     * @return update message
+     */
     public String getUpdateMessage() {
         return updateMessage;
     }
 
+    /**
+     * setter method assigns the update message
+     * @param updateMessage string to update
+     */
     public void setUpdateMessage(String updateMessage) {
         this.updateMessage = updateMessage;
     }
     
-
+    /**
+     * getter method gives details about phase
+     * @return phase details
+     */
     public String getPhaseDetailMessage() {
 		return phaseDetailMessage;
 	}
 
+    /**
+     * setter method to assign phase details
+     * @param phaseDetailMessage details about phase
+     */
 	public void setPhaseDetailMessage(String phaseDetailMessage) {
 		this.phaseDetailMessage = phaseDetailMessage;
 	}
@@ -74,6 +97,10 @@ public class PlayerObserverModel extends Observable {
 
     }
 
+    /**
+     * setter method to assign message for the phase
+     * @param messageForPhase string message
+     */
     public void showPhaseDetails(String messageForPhase) {
         
         this.updateMessage = "Phase";

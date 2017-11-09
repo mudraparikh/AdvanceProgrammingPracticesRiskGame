@@ -229,6 +229,11 @@ public class GamePlayModel extends Observable {
         }
     }
 
+    /**
+     * this method shows the reinforce armies
+     * @param gameView has the details to start game board
+     * @return options to select how many armies to reinforce
+     */
     private Integer showReinforceArmiesDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[currentPlayer.getTotalArmies()];
         for (int i = 0; i < currentPlayer.getTotalArmies(); i++) {
@@ -621,7 +626,6 @@ public class GamePlayModel extends Observable {
 
     /**
      * Creates and returns the information for the cardsList in the BoardView.
-     *
      * @return a list of Strings to be displayed in the cardsList.
      **/
     public ArrayList<String> getCardsList() {
@@ -639,7 +643,7 @@ public class GamePlayModel extends Observable {
     /**
      * Getting the reinforcement army for player.
      *
-     * @param p the p
+     * @param p the player object
      * @return the reinforcement army for player
      */
     public int getReinforcementArmyForPlayer(Player p) {
@@ -663,7 +667,7 @@ public class GamePlayModel extends Observable {
     /**
      * Getting the countries conquered by the player.
      *
-     * @param p the player obj
+     * @param p the player object
      * @return the countries conquered by the player.
      */
     public List<Country> getCountriesConqueredBy(Player p) {
@@ -673,7 +677,7 @@ public class GamePlayModel extends Observable {
     /**
      * Getting the continents conquered by the player.
      *
-     * @param p the player obj
+     * @param p the player object
      * @return the continents conquered by the player.
      */
     public List<Continent> getContinentsConqueredBy(Player p) {
