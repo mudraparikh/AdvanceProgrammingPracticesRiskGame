@@ -289,7 +289,11 @@ public class Player extends Observable {
             //Initiailizing Player data
             initializePlayerData(playerCount);
             this.playerCount = playerCount;
+            
+            //Setting initial army for players
             setInitialArmies();
+            
+            //allocate armies to players
             allocateCountriesToPlayers();
             addInitialArmiesInRR();
             PlayerObserverModel playerModel = new PlayerObserverModel();

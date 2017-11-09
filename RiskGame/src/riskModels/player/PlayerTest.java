@@ -1,18 +1,20 @@
 package riskModels.player;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.File;
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import riskModels.cards.Deck;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskView.GameView;
 
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
-
-public class PlayerTest {
+public class PlayerTest extends Player {
 
     private GameMap gameMap;
     private MapModel mapModel;
@@ -26,10 +28,9 @@ public class PlayerTest {
     public void setUp() throws Exception {
         mapModel = new MapModel();
         filePath=location.replaceAll("/bin", "/res");
-        filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/";
-        mapModel.readMapFile(filePath+"London.map");
+        File f = new File("C:\\Users\\Mudra-PC\\git\\APPRiskGame\\RiskGame\\London.map");
         gameMap = GameMap.getInstance();
-        model = new Player();
+        createGameMapFromFile(f);
     }
 
     @Test
@@ -40,13 +41,19 @@ public class PlayerTest {
 
     @Test
     public void testInitialisePlayerData(){
-        model.initializePlayerData(6);
-        assertEquals("John", model.getPlayerList().get(0).getName());
-        assertEquals("Alexa", model.getPlayerList().get(1).getName());
-        assertEquals("Penny", model.getPlayerList().get(2).getName());
-        assertEquals("Sheldon", model.getPlayerList().get(3).getName());
-        assertEquals("Amy", model.getPlayerList().get(4).getName());
-        assertEquals("Raj", model.getPlayerList().get(5).getName());
+        initializePlayerData(6);
+        assertEquals("John", getPlayerList().get(0).getName());
+        assertEquals("Alexa", getPlayerList().get(1).getName());
+        assertEquals("Penny", getPlayerList().get(2).getName());
+        assertEquals("Sheldon", getPlayerList().get(3).getName());
+        assertEquals("Amy", getPlayerList().get(4).getName());
+        assertEquals("Raj", getPlayerList().get(5).getName());
     }
-
+    
+    @Test
+    public void testInitalArmy() {
+    	playerCount = 3;
+    	getInitialArmyCount();
+    	assertEquals(35,playerList.get(0).totalArmies);
+    }
 }
