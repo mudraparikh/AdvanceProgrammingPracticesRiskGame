@@ -12,7 +12,7 @@ import java.util.Random;
 public class Dice {
     int numberOfDice; //number of Dice user wants to roll
     Integer[] diceResult; //the dice result example : first dice roll result will be stored in diceResult[0]
-    boolean isDiceRolled; // check if dice rolled
+    public boolean isDiceRolled; // check if dice rolled
 
     /**
      * Returns result of Dice roll stored into object of values between 1 and 6 representing the

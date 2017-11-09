@@ -475,7 +475,7 @@ public class Player extends Observable {
      * @param gameView has the details to load game board
      * @return option to select how many armies to reinforce
      */
-    private Integer showReinforceArmiesDialogBox(GameView gameView) {
+    protected Integer showReinforceArmiesDialogBox(GameView gameView) {
         Integer[] selectOptions = new Integer[currentPlayer.getTotalArmies()];
         for (int i = 0; i < currentPlayer.getTotalArmies(); i++) {
             selectOptions[i] = i + 1;
@@ -552,7 +552,7 @@ public class Player extends Observable {
             updatePhaseDetails("Attacker Losses : " + attackerLosses + " army."+"\n"+"Defender Losses : " + defenderLosses + " army.");
 
             // If defending country loses all armies
-            if (countryB.getCurrentArmiesDeployed() < 1354) {
+            if (countryB.getCurrentArmiesDeployed() < 1) {
 
                 GameView.displayLog(countryA.getBelongsToPlayer().getName() + " has defeated all of " + countryB.getBelongsToPlayer().getName() + "'s armies in " + country2 + " and has occupied the country!");
                 defendingPlayerLostCountry(countryA, countryB, gameView);
@@ -766,7 +766,7 @@ public class Player extends Observable {
 
     }
 
-    public boolean isFortifyValid(){
+    protected boolean isFortifyValid(){
         boolean isValid;
         for (Country c : currentPlayer.assignedCountries){
             for (Country neighbor : GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(c.getCountryName()))){
@@ -831,10 +831,10 @@ public class Player extends Observable {
             GameView.displayLog("You captured at-least one country in your attack phase.");
             GameView.displayLog("You get a card");
             currentPlayer.addRiskCard(deck.draw());
+            /*currentPlayer.addRiskCard(deck.draw());
             currentPlayer.addRiskCard(deck.draw());
             currentPlayer.addRiskCard(deck.draw());
-            currentPlayer.addRiskCard(deck.draw());
-            currentPlayer.addRiskCard(deck.draw());
+            currentPlayer.addRiskCard(deck.draw());*/
             setChanged();
             notifyObservers(Player.class);
         }

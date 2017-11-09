@@ -49,7 +49,7 @@ public class Deck {
      * Public default constructor to access other methods.
      */
     public Deck(){
-
+        deck = new ArrayList<>();
     }
 
     /**
