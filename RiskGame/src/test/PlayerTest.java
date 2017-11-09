@@ -178,6 +178,7 @@ public class PlayerTest extends Player {
        mapModel = new MapModel();
        attack(attacker.assignedCountries.get(0).getCountryName(),countryToAssignDefender.getCountryName(),gameView,attacker);
         System.out.println(hasPlayerWon);
+
        assertTrue(hasPlayerWon);
     }
 
@@ -292,7 +293,7 @@ public class PlayerTest extends Player {
 
     @Override
     protected void updateArmiesBasedOnDiceResult(int attackerLosses,int defenderLosses){
-        countryA.subtractArmy(attackerLosses);
-        countryB.subtractArmy(defenderLosses);
+        countryA.subtractArmy(0);
+        countryB.subtractArmy(countryB.getCurrentArmiesDeployed());
     }
 }

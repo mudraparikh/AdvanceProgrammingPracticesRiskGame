@@ -803,7 +803,7 @@ public class Player extends Observable {
      * This method will check if the fortification is valid/possible or not 
      * @return true if possible else false
      */
-    public boolean isFortifyValid(){
+    protected boolean isFortifyValid(){
         boolean isValid;
         for (Country c : currentPlayer.assignedCountries){
             for (Country neighbor : GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(c.getCountryName()))){
@@ -846,7 +846,7 @@ public class Player extends Observable {
                     canAttack = false;
                     canFortify = false;
                     setChanged();
-                    notifyObservers("cards");
+                    notifyObservers();
 
                 } else {
                     GameView.displayLog("You must trade in three cards of the same type or one of each three types.");
@@ -873,7 +873,7 @@ public class Player extends Observable {
             currentPlayer.addRiskCard(deck.draw());
             currentPlayer.addRiskCard(deck.draw());*/
             setChanged();
-            notifyObservers(Player.class);
+            notifyObservers();
         }
         hasCountryCaptured = false;
     }
