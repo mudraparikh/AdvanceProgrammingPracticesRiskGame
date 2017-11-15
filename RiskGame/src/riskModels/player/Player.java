@@ -31,9 +31,11 @@ public class Player extends Observable {
     public boolean canEndTurn;
     public boolean hasCountryCaptured;
     public boolean hasPlayerWon;
+    public boolean isBot;
 
     public String name;
     public String startUpPhaseLogs;
+    public String botType;
 
     public int playerIndex = 0;
     public int i;
@@ -76,9 +78,11 @@ public class Player extends Observable {
      * constructor which assigns the name of the player
      * @param name players name
      */
-    public Player(String name) {
+    public Player(String name, Boolean isBot, String botType) {
         super();
         this.name = name;
+        this.isBot = isBot;
+        this.botType = botType;
         assignedCountries = new ArrayList<>();
         hand = new Hand();
         turnInCount = 0;
@@ -278,6 +282,22 @@ public class Player extends Observable {
         return hand.mustTurnInCards();
     }
 
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
+    }
+
+    public String getBotType() {
+        return botType;
+    }
+
+    public void setBotType(String botType) {
+        this.botType = botType;
+    }
+
     // Game APIs
 
     /**
@@ -298,19 +318,20 @@ public class Player extends Observable {
 
     /**
      * This method will perform initialization for the game for example reading map,Assign country to players
-     *
-     * @param selectedFile .map file
+     *  @param selectedFile .map file
      * @param playerCount  number of players for the game
+     * @param playerNames  name of the players
+     * @param playerTypes  type of the players
      */
-    public void initData(File selectedFile, int playerCount) {
+    public void initData(File selectedFile, int playerCount, ArrayList<String> playerNames, ArrayList<String> playerTypes) {
         if (selectedFile.getName().endsWith("map") && playerCount > 0) {
             createGameMapFromFile(selectedFile);
             // Creates deck
             System.out.println("Populating deck...");
             deck = new Deck((ArrayList<Country>) gameMap.getCountries());
 
-            //Initiailizing Player data
-            initializePlayerData(playerCount);
+            //Initializing Player data
+            initializePlayerData(playerCount, playerNames, playerTypes);
             this.playerCount = playerCount;
             
             //Setting initial army for players
@@ -409,13 +430,41 @@ public class Player extends Observable {
     /**
      * Will create the players object based on the number of player selected from the player count dialog box
      * @param playerCount Number of players selected from the dialog box
+     * @param playerNames Player Name list passed from the player setting dialog box
+     * @param playerTypes Player Type list for each corresponding player selected in the dialog box
      */
-    public void initializePlayerData(int playerCount) {
-        String playersName[] = {"John", "Alexa", "Penny", "Sheldon", "Amy", "Raj"};
+    public void initializePlayerData(int playerCount, ArrayList<String> playerNames, ArrayList<String> playerTypes) {
+        Boolean isBot = false;
+        String botType = "";
         playerList = new ArrayList<>();
         int i = 0;
         while (i < playerCount) {
-            playerList.add(new Player(playersName[i]));
+            switch (playerTypes.get(i)) {
+                case "Human":
+                    isBot = false;
+                    botType = "human";
+                    break;
+                case "Aggressive Bot":
+                    isBot = true;
+                    botType = "aggressive";
+                    break;
+                case "Benevolent Bot":
+                    isBot = true;
+                    botType = "benevolent";
+                    break;
+                case "Randomize Bot":
+                    isBot = true;
+                    botType = "random";
+                    break;
+                case "Cheater Bot":
+                    isBot = true;
+                    botType = "cheat";
+                    break;
+                default:
+                    System.out.println("Error: playerType " + playerTypes.get(i) + " not found!");
+                    break;
+            }
+            playerList.add(new Player(playerNames.get(i), isBot, botType));
             i++;
         }
         player = new Player(playerList);

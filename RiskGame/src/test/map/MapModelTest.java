@@ -1,4 +1,4 @@
-package test;
+package test.map;
 
 import org.junit.Before;
 import org.junit.Test;
