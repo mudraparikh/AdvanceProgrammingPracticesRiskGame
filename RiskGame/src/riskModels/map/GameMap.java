@@ -4,6 +4,7 @@ import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.player.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author prashantp95
  */
-public class GameMap {
+public class GameMap implements Serializable {
 
     private static GameMap gameMap;
     public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();

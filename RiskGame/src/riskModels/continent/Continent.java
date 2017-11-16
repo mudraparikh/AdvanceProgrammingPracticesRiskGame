@@ -3,6 +3,7 @@ package riskModels.continent;
 import riskModels.country.Country;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * @author prashantp95
  */
-public class Continent {
+public class Continent implements Serializable{
 
     public String continentName;
     public List<Country> memberCountriesList = new ArrayList<Country>();

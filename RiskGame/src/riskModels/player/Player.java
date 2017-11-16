@@ -15,6 +15,7 @@ import riskView.PlayerView;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicIconFactory;
 import java.io.File;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -22,7 +23,7 @@ import java.util.*;
  *
  * @author akshay shah
  */
-public class Player extends Observable {
+public class Player extends Observable implements Serializable {
 
     public boolean canTurnInCards;
     public boolean canReinforce;
