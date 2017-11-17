@@ -2,6 +2,7 @@ package riskModels.cards;
 
 import riskModels.country.Country;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -10,7 +11,7 @@ import java.util.Collections;
  *
  * @author Akshay Shah
  */
-public class Deck {
+public class Deck implements Serializable{
 
     private int i;
 

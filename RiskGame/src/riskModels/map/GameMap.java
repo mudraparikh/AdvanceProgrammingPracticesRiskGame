@@ -24,6 +24,7 @@ public class GameMap implements Serializable {
     public boolean isCorrectMap = true;
     public String errorMessage;
     public HashMap<String, String> mapDetail = new HashMap<>();
+    public Player currentPlayer;
 
     /**
      * Default Constructor
@@ -196,4 +197,19 @@ public class GameMap implements Serializable {
         countries.addAll(getCountryAndNeighborsMap().keySet());
         return countries;
     }
+    /**
+     * To get the currentPlayer Playing in map
+     * @return
+     */
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+	/**
+	 * To set the currentplayer in map
+	 * @param currentPlayer
+	 */
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+    
 }

@@ -320,6 +320,7 @@ public class Player extends Observable implements Serializable {
             //allocate armies to players
             allocateCountriesToPlayers();
             addInitialArmiesInRR();
+            
             PlayerObserverModel playerModel = new PlayerObserverModel();
             playerModel.getPlayerWorldDomination(player.getPlayerList());
             canTurnInCards = false;
@@ -985,7 +986,15 @@ public class Player extends Observable implements Serializable {
             } else {
                 canReinforce = true;
             }
-
+            currentPlayer.canReinforce=canReinforce;
+            currentPlayer.canAttack=canAttack;
+            currentPlayer.canFortify=canFortify;
+            currentPlayer.canTurnInCards=canTurnInCards;
+            currentPlayer.hasCountryCaptured=hasCountryCaptured;
+            GameMap.getInstance().setCurrentPlayer(currentPlayer);
+            //testing purpose. remove below two lines if you are getting exception.
+            MapModel.saveGame(GameMap.getInstance(), "test");
+            MapModel.loadGame("test");
         }
     }
 

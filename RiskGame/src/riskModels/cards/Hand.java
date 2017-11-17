@@ -1,5 +1,6 @@
 package riskModels.cards;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  *
  * @author Akshay Shah
  */
-public class Hand {
+public class Hand implements Serializable {
 
     public boolean condition;
 

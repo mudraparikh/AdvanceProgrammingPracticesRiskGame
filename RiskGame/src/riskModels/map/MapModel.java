@@ -603,7 +603,7 @@ public class MapModel {
      * @param filename filename that user wants to give
      * @return true if function able to save the game else false
      */
-    public boolean saveGame(GameMap gameMap,String filename) {
+    public static boolean saveGame(GameMap gameMap,String filename) {
     	FileOutputStream fout = null;
 		ObjectOutputStream oos = null;
 
@@ -642,13 +642,13 @@ public class MapModel {
      * @param fileName fileName that user gave while saving the map 
      * @return true if function able to save the game else false
      */
-    public boolean loadGame(String fileName) {
+    public static boolean loadGame(String fileName) {
     	FileInputStream fin = null;
 		ObjectInputStream ois = null;
 		GameMap gameMap=null;
 
 		try {
-			fin = new FileInputStream(fileName);
+			fin = new FileInputStream("c:\\temp\\address.ser");
 			ois = new ObjectInputStream(fin);
 			gameMap= (GameMap) ois.readObject();
 
