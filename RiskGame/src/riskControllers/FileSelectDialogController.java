@@ -1,5 +1,7 @@
 package riskControllers;
 
+import riskModels.map.GameMap;
+import riskModels.map.MapModel;
 import riskModels.player.Player;
 import riskView.FileSelectDialog;
 import riskView.GameView;
@@ -22,6 +24,7 @@ public class FileSelectDialogController implements ActionListener {
     private int playerCount;
     private Player model = new Player();
     private GameView gameView;
+    GameMap gameMap = GameMap.getInstance();
 
 /**
  * setter method assigns select file and the player count
@@ -43,6 +46,10 @@ public class FileSelectDialogController implements ActionListener {
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileSelectDialog.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+            MapModel mapmodel = new MapModel();
+            gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
+            //Condition to check if the correct file is selected.
+            if (gameMap.isCorrectMap) {
             model.initData(selectedFile, playerCount);
             try {
                 gameView = new GameView();
@@ -52,7 +59,10 @@ public class FileSelectDialogController implements ActionListener {
             }
             gameView.setVisible(true);
         }
+            else
+            {
+            	JOptionPane.showMessageDialog(null,GameMap.getInstance().getErrorMessage().toString());
+            }
     }
-
-
+   }
 }
