@@ -35,7 +35,6 @@ public class GameView extends JDialog {
     private static JTextArea TextAreaForMapPanel;
     private static DefaultCaret caret;
     public JPanel messagePanel;
-    public PlayerObserverModel playerModel = new PlayerObserverModel();
     public JList cardsList;
     public DefaultListModel<String> cardListDefault;
     private JPanel countryInfoPanel;
@@ -294,9 +293,8 @@ public class GameView extends JDialog {
         dominationTextArea.setWrapStyleWord(true);
         dominationViewPane = new JScrollPane(dominationTextArea);
         actionPanel.add(dominationViewPane);
-        PlayerView playerView = new PlayerView();
-        playerModel.addObserver(playerView);
-        playerModel.getPlayerWorldDomination(GameMap.getInstance().getPlayerList());
+        
+        
 
         phaseViewTextArea = new JTextArea();
         phaseViewTextArea.setFocusable(false);
@@ -304,7 +302,6 @@ public class GameView extends JDialog {
         phaseViewTextArea.setWrapStyleWord(true);
         phaseViewPane = new JScrollPane(phaseViewTextArea);
         actionPanel.add(phaseViewPane);
-        playerModel.setPhaseDetailMessage("");;
 
         c = new GridBagConstraints();
 

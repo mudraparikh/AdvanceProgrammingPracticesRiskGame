@@ -1,4 +1,7 @@
+
 package riskModels.cards;
+
+import java.io.Serializable;
 
 import riskModels.country.Country;
 
@@ -7,7 +10,7 @@ import riskModels.country.Country;
  *
  * @author Akshay Shah
  */
-public final class Card {
+public final class Card implements Serializable{
 
     private final String type;
     private final Country country;
