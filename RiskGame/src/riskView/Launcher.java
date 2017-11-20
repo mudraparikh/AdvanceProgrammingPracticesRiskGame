@@ -1,6 +1,7 @@
 package riskView;
 
 import riskControllers.PlayerCountController;
+import riskControllers.TournamentModeController;
 
 /**
  * This class holds the method that gives the menu option to start game,create map and edit map.
@@ -80,7 +81,9 @@ public class Launcher extends java.awt.Frame {
         jButton2.setName("jButton2");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-               
+               TournamentMode add = new TournamentMode();
+               add.addActionListeners(new TournamentModeController(add));
+               add.setVisible(true);
             }
         });
 
