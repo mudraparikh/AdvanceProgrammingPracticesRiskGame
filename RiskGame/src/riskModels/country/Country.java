@@ -2,6 +2,7 @@ package riskModels.country;
 
 import riskModels.player.Player;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @author prashantp95
  */
 
-public class Country {
+public class Country implements Serializable {
     public String countryName;
     public int startPixel;
     public int endPixel;

@@ -7,6 +7,7 @@ import util.RiskGameUtil;
 
 import java.io.*;
 import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * This class will perform operation related to MapObj created from MapFile
@@ -251,7 +252,17 @@ public class MapModel {
      * @return mapDetails with correct error message.
      */
     public GameMap validateMap(GameMap mapDetails) {
+    	boolean isConnectedContient=checkUnconnectedContinent(mapDetails);
+    	if(isConnectedContient) {
         Iterator it = mapDetails.getCountryAndNeighborsMap().entrySet().iterator();
+        for(Continent continent: mapDetails.getContinentList()) {
+        	if(continent.getControlValue()<=0) {
+        		mapDetails.setCorrectMap(false);
+                mapDetails.setErrorMessage("There is invalid  control value of the continent-->"+continent.getContinentName());
+                break;
+        	}
+        }
+        if(mapDetails.isCorrectMap()) {
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             Country country = (Country) pair.getKey();
@@ -278,10 +289,42 @@ public class MapModel {
                 }
             }
         }
+       }
+      }
         return mapDetails;
-    }
-
+   }
     /**
+     * 
+     * @param mapDetails current GameMap object
+     * @return true if there is no unconnected continent found. false if there is unconnected continent present in the map.
+     */
+    public boolean checkUnconnectedContinent(GameMap mapDetails) {
+    	// iterate over each continent 
+    	for (Entry<Continent, List<Country>> entry : mapDetails.getContinentCountryMap().entrySet()) {
+            Continent continent = entry.getKey();
+            List<Country> countries = entry.getValue();
+            for(Country country: countries) {
+            	int countryCount=0;
+            	for(Country neighbour:GameMap.getInstance().getCountryAndNeighborsMap().get(country)) {
+            		// check if all neighbors belongs to other continent
+            		if(!neighbour.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
+            			    countryCount++;
+                  			if(countryCount>=GameMap.getInstance().getCountryAndNeighborsMap().get(country).size()) {
+            				mapDetails.setCorrectMap(false);
+            				mapDetails.setErrorMessage("unconnected continent found"+continent.getContinentName());
+            				return false;
+            			}
+            		}
+            	}
+            	
+            }
+           
+        }
+		return true;
+		
+	}
+
+	/**
      * Checks if it is connected.
      *
      * @param c1           the country  1
@@ -552,6 +595,84 @@ public class MapModel {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+    /**
+     * This method will save the game .
+     * @param gameMap GameMap object at the point of saving the game
+     * @param filename filename that user wants to give
+     * @return true if function able to save the game else false
+     */
+    public static boolean saveGame(GameMap gameMap,String filename) {
+    	FileOutputStream fout = null;
+		ObjectOutputStream oos = null;
+
+		try {
+            fout = new FileOutputStream("c:\\temp\\address.ser");
+			oos = new ObjectOutputStream(fout);
+			oos.writeObject(gameMap);
+            System.out.println("Done");
+
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+
+		} finally {
+			if (fout != null) {
+				try {
+					fout.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			if (oos != null) {
+				try {
+					oos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+     return true;
+    }
+    /**
+     * This method will load the saved game
+     * @param fileName fileName that user gave while saving the map 
+     * @return true if function able to save the game else false
+     */
+    public static boolean loadGame(String fileName) {
+    	FileInputStream fin = null;
+		ObjectInputStream ois = null;
+		GameMap gameMap=null;
+
+		try {
+			fin = new FileInputStream("c:\\temp\\address.ser");
+			ois = new ObjectInputStream(fin);
+			gameMap= (GameMap) ois.readObject();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+
+			if (fin != null) {
+				try {
+					fin.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+           if (ois != null) {
+				try {
+					ois.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+		return true;
 
     }
 }
