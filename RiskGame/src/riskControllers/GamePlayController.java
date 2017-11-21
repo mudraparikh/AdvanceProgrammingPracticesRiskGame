@@ -36,7 +36,7 @@ public class GamePlayController implements ActionListener {
 
         switch (actionEvent) {
             case "clearLogBtn":
-            	view.clearLog();
+            	model.nextPlayerTurn(model);
                 break;
 
             case "turnInBtn":

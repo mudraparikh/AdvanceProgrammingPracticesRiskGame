@@ -19,7 +19,7 @@ public class CheaterBot implements PlayerStrategy {
         if(model.currentPlayer.assignedCountries.size() == GameMap.getInstance().getCountries().size()){
             model.hasPlayerWon = true;
             GameView.displayLog(""+model.currentPlayer.getName()+" has won the game ! Congratulations ! ");
-            Player.updatePhaseDetails(model.currentPlayer.getName()+"Won");
+            //Player.updatePhaseDetails(model.currentPlayer.getName()+"Won");
             model.canAttack = false;
             model.canReinforce = false;
             model.canEndTurn = false;
@@ -45,12 +45,25 @@ public class CheaterBot implements PlayerStrategy {
     public void reinforce(String country, GameView gameView, Player model) throws NullPointerException {
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
         if (model.canReinforce && countryA !=null){
+            System.out.println("reinorce phase enteresd !~!");
             int armies = countryA.currentArmiesDeployed;
             countryA.addArmy(armies);
             GameView.displayLog("Cheater has doubled it's armies on " + country);
         }
         model.canFortify = true;
         model.canAttack = true;
+        System.out.println("***turnAI-Game");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         GameView.updateMapPanel();
+        gameView.setVisible(true);
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

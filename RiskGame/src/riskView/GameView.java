@@ -126,8 +126,9 @@ public class GameView extends JDialog {
         add(actionPanel());
 
         setLocationRelativeTo(null);
-
+        setVisible(true);
         pack();
+
     }
 
     /**

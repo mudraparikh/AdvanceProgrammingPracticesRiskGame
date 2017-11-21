@@ -1097,9 +1097,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             updatePhaseDetails("Reinforcement Phase Begins \n");
             if (currentPlayer.isBot()) {
                 // Current player is AI
-                System.out.println("***turnAI-Game");
+
                 turnOfBot();
-                //nextPlayerTurn(model);
+                nextPlayerTurn(model);
 
             }
             if (currentPlayer.mustTurnInCards()) {
@@ -1227,7 +1227,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         updatePhaseDetails("All the players have been given the countries.\n");
         updateDomination();
         GameView.displayLog("To begin: Start reinforcement phase by placing army in your designated country\n");
-        nextPlayerTurn(model);
+        //nextPlayerTurn(model);
 
     }
     /**
