@@ -15,6 +15,7 @@ import riskView.PlayerView;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicIconFactory;
 import java.io.File;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -22,7 +23,7 @@ import java.util.*;
  *
  * @author akshay shah
  */
-public class Player extends Observable implements PlayerStrategy{
+public class Player extends Observable implements Serializable,PlayerStrategy {
 
     public boolean canTurnInCards;
     public boolean canReinforce;
@@ -78,6 +79,40 @@ public class Player extends Observable implements PlayerStrategy{
     public List<Player> playerList;
 
     public Hand hand;
+    String updateMessage = "";
+    String phaseDetailMessage="";
+
+    /**
+     * getter method give the message to update
+     * @return update message
+     */
+    public String getUpdateMessage() {
+        return updateMessage;
+    }
+
+    /**
+     * setter method assigns the update message
+     * @param updateMessage string to update
+     */
+    public void setUpdateMessage(String updateMessage) {
+        this.updateMessage = updateMessage;
+    }
+    
+    /**
+     * getter method gives details about phase
+     * @return phase details
+     */
+    public String getPhaseDetailMessage() {
+		return phaseDetailMessage;
+	}
+
+    /**
+     * setter method to assign phase details
+     * @param phaseDetailMessage details about phase
+     */
+	public void setPhaseDetailMessage(String phaseDetailMessage) {
+		this.phaseDetailMessage = phaseDetailMessage;
+	}
 
     /**
      * constructor which assigns the name of the player
@@ -91,6 +126,8 @@ public class Player extends Observable implements PlayerStrategy{
         assignedCountries = new ArrayList<>();
         hand = new Hand();
         turnInCount = 0;
+        PlayerView playerView = new PlayerView();
+    	this.addObserver(playerView);
     }
 
     /**
@@ -100,12 +137,16 @@ public class Player extends Observable implements PlayerStrategy{
      */
     public Player(List<Player> playerList) {
         this.playerList = playerList;
+        PlayerView playerView = new PlayerView();
+    	this.addObserver(playerView);
     }
 
     /**
      * default constructor
      */
     public Player() {
+    	PlayerView playerView = new PlayerView();
+    	this.addObserver(playerView);
     }
 
    /**
@@ -365,8 +406,6 @@ public class Player extends Observable implements PlayerStrategy{
             //allocate armies to players
             allocateCountriesToPlayers();
             addInitialArmiesInRR();
-            PlayerObserverModel playerModel = new PlayerObserverModel();
-            playerModel.getPlayerWorldDomination(player.getPlayerList());
             canTurnInCards = false;
             canReinforce = true;
             canAttack = false;
@@ -766,13 +805,19 @@ public class Player extends Observable implements PlayerStrategy{
             countryB.addArmy(moveArmies);
         }
         hasCountryCaptured = true;
-        PlayerView playerView = new PlayerView();
-        PlayerObserverModel playerModel = new PlayerObserverModel();
-        playerModel.addObserver(playerView);
-        playerModel.getPlayerWorldDomination(playerList);
+        updateDomination();
+        
     }
 
-    /**
+    public void updateDomination() {
+    	
+        this.updateMessage="Domination";
+        setChanged();
+        notifyObservers();
+		
+	}
+
+	/**
      * This method checks one of the player lost rule
      * if has no countries left, player looses the game and is eliminated
      *  
@@ -1070,7 +1115,15 @@ public class Player extends Observable implements PlayerStrategy{
             } else {
                 canReinforce = true;
             }
-
+            currentPlayer.canReinforce=canReinforce;
+            currentPlayer.canAttack=canAttack;
+            currentPlayer.canFortify=canFortify;
+            currentPlayer.canTurnInCards=canTurnInCards;
+            currentPlayer.hasCountryCaptured=hasCountryCaptured;
+            GameMap.getInstance().setCurrentPlayer(currentPlayer);
+            //testing purpose. remove below two lines if you are getting exception.
+            MapModel.saveGame(GameMap.getInstance(), "test");
+            MapModel.loadGame("test");
         }
     }
 
@@ -1172,6 +1225,7 @@ public class Player extends Observable implements PlayerStrategy{
         }
         updatePhaseDetails("Start up Phase \n");
         updatePhaseDetails("All the players have been given the countries.\n");
+        updateDomination();
         GameView.displayLog("To begin: Start reinforcement phase by placing army in your designated country\n");
         nextPlayerTurn(model);
 
@@ -1180,11 +1234,11 @@ public class Player extends Observable implements PlayerStrategy{
      * This method will act as driver method to call observer method to update phase details 
      * @param messageToUpdate message that you want to append to in Phase View, pass "Repaint" to remove all existing text in Phase view 
      */
-    public static void updatePhaseDetails(String messageToUpdate) {
-    	PlayerObserverModel obsModel = new PlayerObserverModel();
-        PlayerView playerView = new PlayerView();
-        obsModel.addObserver(playerView);
-        obsModel.showPhaseDetails(messageToUpdate);
+    public  void updatePhaseDetails(String messageToUpdate) {
+        this.updateMessage = "Phase";
+        this.phaseDetailMessage = messageToUpdate;
+        setChanged();
+        notifyObservers();
 	}
 
 	/**

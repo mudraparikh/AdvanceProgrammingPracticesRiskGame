@@ -1,8 +1,10 @@
 package riskView;
 
+import riskModels.map.GameMap;
 import riskModels.player.Player;
 import riskModels.player.PlayerObserverModel;
 
+import java.text.DecimalFormat;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,13 +23,18 @@ public class PlayerView implements Observer {
     public void update(Observable arg0, Object arg1) {
         // TODO Auto-generated method stub
 
-        PlayerObserverModel p = (PlayerObserverModel) arg0;
+        Player p = (Player) arg0;
         if (p.getUpdateMessage().equalsIgnoreCase("Domination")) {
             StringBuilder dominationDetails = new StringBuilder();
-
-            for (Player play : p.getPlayer().getPlayerList()) {
+            double totalNumberOfCountries = GameMap.getInstance().getCountryAndNeighborsMap().keySet().size();
+            DecimalFormat df = new DecimalFormat("#.##");
+            
+            for (Player play :p.getPlayerList()) {
+            	double dominationOfPlayer = play.assignedCountries.size() / totalNumberOfCountries;
+                dominationOfPlayer *= 100;
+                play.setDomination(Double.valueOf(df.format(dominationOfPlayer)));
                 dominationDetails.append(play.getName()).append(" ").append("\n");
-                dominationDetails.append(String.valueOf(play.getDomination())).append("%").append("\n");
+                dominationDetails.append(Double.valueOf(df.format(dominationOfPlayer))).append("%").append("\n");
             }
             GameView.showDomination(dominationDetails);
         }

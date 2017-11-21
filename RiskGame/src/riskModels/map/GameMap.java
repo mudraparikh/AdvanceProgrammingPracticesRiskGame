@@ -4,6 +4,7 @@ import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.player.Player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author prashantp95
  */
-public class GameMap {
+public class GameMap implements Serializable {
 
     private static GameMap gameMap;
     public HashMap<Country, List<Country>> countryAndNeighborsMap = new HashMap<>();
@@ -23,6 +24,7 @@ public class GameMap {
     public boolean isCorrectMap = true;
     public String errorMessage;
     public HashMap<String, String> mapDetail = new HashMap<>();
+    public Player currentPlayer;
 
     /**
      * Default Constructor
@@ -195,4 +197,19 @@ public class GameMap {
         countries.addAll(getCountryAndNeighborsMap().keySet());
         return countries;
     }
+    /**
+     * To get the currentPlayer Playing in map
+     * @return
+     */
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+	/**
+	 * To set the currentplayer in map
+	 * @param currentPlayer
+	 */
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+    
 }
