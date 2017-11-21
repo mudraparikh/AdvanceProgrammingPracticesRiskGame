@@ -194,7 +194,7 @@ public class PlayerTest extends Player {
         Country country = currentPlayer.assignedCountries.get(0);
         int oldArmies = country.currentArmiesDeployed;
         System.out.println();
-        reinforce(country.getCountryName(),gameView);
+        reinforce(country.getCountryName(),gameView, this);
         assertTrue(country.currentArmiesDeployed - oldArmies == 1);
     }
 

@@ -22,7 +22,7 @@ import java.util.*;
  *
  * @author akshay shah
  */
-public class Player extends Observable {
+public class Player extends Observable implements PlayerStrategy{
 
     public boolean canTurnInCards;
     public boolean canReinforce;
@@ -38,7 +38,7 @@ public class Player extends Observable {
     public String botType;
 
     public int playerIndex = 0;
-    public int i;
+    public int i,j,k;
     public int currentPlayerReinforceArmies;
     public int playerCount;
     public int attackerLosses;
@@ -54,14 +54,19 @@ public class Player extends Observable {
     public Integer[] attackerRolls;
     public Integer[] defenderRolls;
 
+    public int[] cards;
+
     public MapModel mapModel;
     public GameMap gameMap;
+    public GameView gameView;
 
     public Dice dice;
     public Deck deck;
 
     public Player player;
     public Player currentPlayer;
+
+    public PlayerStrategy strategy;
 
     public Country countryA;
     public Country countryB;
@@ -298,6 +303,26 @@ public class Player extends Observable {
         this.botType = botType;
     }
 
+    public PlayerStrategy getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(PlayerStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void executeAttack(String country1, String country2, GameView gameView, Player model) {
+        this.strategy.attack(country1, country2, gameView, model);
+    }
+
+    public void executeReinforce(String country, GameView gameView, Player model) {
+        this.strategy.reinforce(country,gameView, model);
+    }
+
+    public void executeFortification(String country1, String country2, GameView gameView, Player model) {
+        this.strategy.fortify(country1, country2, gameView, model);
+    }
+
     // Game APIs
 
     /**
@@ -478,7 +503,7 @@ public class Player extends Observable {
      * @param country is a String of the country in which the reinforcements will be placed
      * @param gameView has the details to load the game board
      */
-    public void reinforce(String country, GameView gameView) {
+    public void reinforce(String country, GameView gameView, Player model) {
 
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
         if (canReinforce) {
@@ -667,7 +692,7 @@ public class Player extends Observable {
      * @param currentPlayer name of the player
      * @param model  players object
      */
-    private void checkPlayerTurnCanContinue(Player currentPlayer, Player model) {
+    public void checkPlayerTurnCanContinue(Player currentPlayer, Player model) {
         for (Country c : currentPlayer.getAssignedCountries()) {
             canAttack = false;
             canFortify = false;
@@ -730,7 +755,12 @@ public class Player extends Observable {
         //The attacking player must then place a number of armies
         //in the conquered country which is greater or equal than the number of dice that was used in the attack that
         //resulted in conquering the country
-        int moveArmies = showMoveArmiesToCaptureCountryDialogBox(gameView);
+        int moveArmies = 0;
+        if(currentPlayer.isBot()){
+            moveArmies = 1;
+        } else {
+            moveArmies = showMoveArmiesToCaptureCountryDialogBox(gameView);
+        }
         if (moveArmies > 0) {
             countryA.subtractArmy(moveArmies);
             countryB.addArmy(moveArmies);
@@ -1020,6 +1050,13 @@ public class Player extends Observable {
             updatePhaseDetails("Repaint");
             updatePhaseDetails("\n\n===" + currentPlayer.getName() + " is playing ===");
             updatePhaseDetails("Reinforcement Phase Begins \n");
+            if (currentPlayer.isBot()) {
+                // Current player is AI
+                System.out.println("***turnAI-Game");
+                turnOfBot();
+                //nextPlayerTurn(model);
+
+            }
             if (currentPlayer.mustTurnInCards()) {
                 // While player has 5 or more cards
                 GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
@@ -1037,6 +1074,77 @@ public class Player extends Observable {
         }
     }
 
+    private void turnOfBot() {
+        cards = new int[3];
+        for (i = 0; i < currentPlayer.getHand().size(); i++) {
+
+            for (j = 0; j < currentPlayer.getHand().size(); j++) {
+
+                for (k = 0; k < currentPlayer.getHand().size(); k++) {
+
+                    if (currentPlayer.getHandObject().canTurnInCards(i, j, k)) {
+                        cards[0] = i;
+                        cards[1] = j;
+                        cards[2] = k;
+                        turnInCards(cards);
+                        GameView.displayLog("**Bot attempted to turn in cards");
+                    }
+                }
+            }
+        }
+        canReinforce = true;
+        switch (currentPlayer.getBotType()) {
+            case "aggressive":
+                aggressiveBotTurn();
+                break;
+            case "benevolent":
+                benevolentBotTurn();
+                break;
+            case "random":
+                randomBotTurn();
+                break;
+            case "cheat":
+                cheaterBotTurn();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void cheaterBotTurn() {
+        this.setStrategy(new CheaterBot());
+        for(Country country: currentPlayer.assignedCountries){
+            executeReinforce(country.getCountryName(),gameView, this);
+        }
+/*
+        for (Country country: currentPlayer.assignedCountries){
+            for (Country neighbor: country.getNeighborNodes()){
+                countryA = MapModel.getCountryObj(country.getCountryName(), GameMap.getInstance());
+                countryB = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
+                if (canAttack && isAttackValidForCheater(currentPlayer, countryA, countryB)) {
+                    executeAttack(countryA.getCountryName(), countryB.getCountryName(), gameView, this);
+                }
+            }
+        }
+*/
+    }
+
+    private boolean isAttackValidForCheater(Player currentPlayer, Country countryA, Country countryB) {
+        return !currentPlayer.equals(countryB.getBelongsToPlayer()) && currentPlayer.equals(countryA.getBelongsToPlayer());
+    }
+
+    private void randomBotTurn() {
+
+    }
+
+    private void benevolentBotTurn() {
+
+    }
+
+    private void aggressiveBotTurn() {
+
+    }
+
     /**
      * WIll notify all the observers for any card exchanges
      */
@@ -1050,7 +1158,8 @@ public class Player extends Observable {
      * Shuffles the players.
      * @param model Player Class model
      */
-    public void startGame(Player model) {
+    public void startGame(Player model, GameView gameView) {
+        this.gameView = gameView;
         Collections.shuffle(playerList);
         player.setPlayerList(playerList);
         GameMap.getInstance().setPlayerList(playerList);
