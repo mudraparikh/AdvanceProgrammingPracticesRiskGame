@@ -22,6 +22,7 @@ public class GamePlayController implements ActionListener {
      * setter method assigns model and gameView to the controller
      * @param model player object
      * @param gameView game view object
+     * @param loadGame game load object
      */
     public GamePlayController(Player model, GameView gameView,boolean loadGame) {
         this.model = model;
