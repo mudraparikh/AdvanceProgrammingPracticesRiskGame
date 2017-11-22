@@ -250,8 +250,6 @@ public class TournamentView extends JDialog {
 	        dominationViewPane = new JScrollPane(dominationTextArea);
 	        actionPanel.add(dominationViewPane);
 	        
-	        
-
 	        phaseViewTextArea = new JTextArea();
 	        phaseViewTextArea.setFocusable(false);
 	        phaseViewTextArea.setLineWrap(true);

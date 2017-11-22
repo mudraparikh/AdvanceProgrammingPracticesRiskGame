@@ -50,13 +50,13 @@ public class GameView extends JDialog {
     private JLabel selectedLabel;
     private JLabel targetLabel;
     private JLabel continentLabel;
-    private JButton clearLogBtn;
+    private JButton menuBtn;
     private JButton turnInBtn;
     private JButton reinforceBtn;
     private JButton attackBtn;
     private JButton fortifyBtn;
     private JButton endTurnBtn;
-    private String clearLogName = "clearLogBtn";
+    private String menuBtnName = "menuBtn";
     private String reinforceBtnName = "reinforceBtn";
     private String attackBtnName = "attackBtn";
     private String fortifyBtnName = "fortifyBtn";
@@ -273,8 +273,8 @@ public class GameView extends JDialog {
         messageLayout = new GridBagLayout();
         actionPanel.setLayout(messageLayout);
 
-        clearLogBtn = new JButton("clear Logs");
-        clearLogBtn.setActionCommand(clearLogName);
+        menuBtn = new JButton("Menu");
+        menuBtn.setActionCommand(menuBtnName);
         turnInBtn = new JButton("Turn In Cards");
         turnInBtn.setActionCommand(turnInBtnName);
         CardView cardsListModel = new CardView(model, "cards");
@@ -294,8 +294,6 @@ public class GameView extends JDialog {
         dominationViewPane = new JScrollPane(dominationTextArea);
         actionPanel.add(dominationViewPane);
         
-        
-
         phaseViewTextArea = new JTextArea();
         phaseViewTextArea.setFocusable(false);
         phaseViewTextArea.setLineWrap(true);
@@ -343,7 +341,7 @@ public class GameView extends JDialog {
         c.weighty = 0.5;
         c.gridx = 0;
         c.gridy = 4;
-        actionPanel.add(clearLogBtn, c);
+        actionPanel.add(menuBtn, c);
 
         return actionPanel;
     }
@@ -520,12 +518,13 @@ public class GameView extends JDialog {
    */
     public void addActionListeners(ActionListener evt1) {
 
-        clearLogBtn.addActionListener(evt1);
+        menuBtn.addActionListener(evt1);
         turnInBtn.addActionListener(evt1);
         reinforceBtn.addActionListener(evt1);
         attackBtn.addActionListener(evt1);
         fortifyBtn.addActionListener(evt1);
         endTurnBtn.addActionListener(evt1);
+        
     }
 
     /**

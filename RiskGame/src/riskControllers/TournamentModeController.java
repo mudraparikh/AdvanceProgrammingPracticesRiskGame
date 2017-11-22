@@ -16,12 +16,18 @@ import riskView.TournamentMode;
 import riskView.TournamentView;
 import riskControllers.TournamentViewController;
 import static util.RiskGameUtil.*;
-
+/**
+ * This class maps the user's input to the data and methods.
+ * @author mudraparikh
+ *
+ */
 public class TournamentModeController implements ActionListener{
 	private JFileChooser filechooser = new JFileChooser();
 	private TournamentMode view;
 	private TournamentView tournamentView;
     GameMap gameMap = GameMap.getInstance();
+    GameMap gameMap1 = GameMap.getInstance();
+    GameMap gameMap2 = GameMap.getInstance();
     MapModel mapModel = new MapModel();
     String fileName,fileName1,fileName2;
     StringBuilder stringBuilder = new StringBuilder();
@@ -70,7 +76,7 @@ public class TournamentModeController implements ActionListener{
     	        fileName1 = selectedFile.getName();
     	        System.out.println("Selected file 2: " + selectedFile.getAbsolutePath());
     	        MapModel mapmodel = new MapModel();
-    	        gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
+    	        gameMap1 = mapmodel.readMapFile(selectedFile.getAbsolutePath());
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
@@ -94,7 +100,7 @@ public class TournamentModeController implements ActionListener{
     	        fileName2 = selectedFile.getName();
     	        System.out.println("Selected file 3: " + selectedFile.getAbsolutePath());
     	        MapModel mapmodel = new MapModel();
-    	        gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
+    	        gameMap2 = mapmodel.readMapFile(selectedFile.getAbsolutePath());
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {

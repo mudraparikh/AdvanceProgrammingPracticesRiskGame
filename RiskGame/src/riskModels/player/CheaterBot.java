@@ -19,7 +19,7 @@ public class CheaterBot implements PlayerStrategy {
         if(model.currentPlayer.assignedCountries.size() == GameMap.getInstance().getCountries().size()){
             model.hasPlayerWon = true;
             GameView.displayLog(""+model.currentPlayer.getName()+" has won the game ! Congratulations ! ");
-            Player.updatePhaseDetails(model.currentPlayer.getName()+"Won");
+            //Player.updatePhaseDetails(model.currentPlayer.getName()+"Won");
             model.canAttack = false;
             model.canReinforce = false;
             model.canEndTurn = false;
