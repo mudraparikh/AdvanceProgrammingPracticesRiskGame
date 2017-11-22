@@ -38,7 +38,7 @@ public class PlayerTest extends Player {
     /**
      * This method setting up the context as many test cases share the same values
      * In this we are assigning the London.map file 
-     * @throws Exception
+     * @throws Exception it throws if there are any exceptions found
      */
     @Before
     public void setUp() throws Exception {
