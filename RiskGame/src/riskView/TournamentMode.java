@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import riskControllers.TournamentModeController;
 import riskModels.map.GameMap.*;
 import riskModels.map.MapModel.*;
 import static util.RiskGameUtil.*;
@@ -43,7 +45,6 @@ public class TournamentMode extends JDialog{
     public static String numTurns;
 	public static String numGames;
 	public static String[] games;
-	public static JScrollPane mapListPane;
 	public static JTextArea gameDetails;
     
 	/**
@@ -51,8 +52,8 @@ public class TournamentMode extends JDialog{
 	 */
 	public TournamentMode()
 	{
-		setTitle("--Tournament Mode--");
-        setPreferredSize(new Dimension(250, 310));
+		setTitle("Tournament Mode");
+        setPreferredSize(new Dimension(250, 250));
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setResizable(false);
         add(tournamentDetailsPanel());
@@ -64,17 +65,14 @@ public class TournamentMode extends JDialog{
 	{
 		tournamentDetailsPanel = new JPanel();
 		tournamentLayout = new GridLayout();
-		
-		
-		mapSelectLabel = new JLabel("---Select the Map Files---");
+
+		mapSelectLabel = new JLabel("Select the Map Files :");
 		mapBtn1 = new JButton("Map 1");
 		mapBtn2 = new JButton("Map 2");
 		mapBtn3 = new JButton("Map 3");
 		startGame = new JButton("Start Game");
 		gameDetails = new JTextArea();
-		mapListPane = new JScrollPane();
-		mapListPane.setPreferredSize(new Dimension(150,150));
-		mapListPane.setVisible(true);
+		gameDetails.setVisible(true);
 		
 		mapBtn1.setActionCommand(mapBtnName1);
 		mapBtn2.setActionCommand(mapBtnName2);
@@ -84,31 +82,36 @@ public class TournamentMode extends JDialog{
 		numberOfTurnsLabel = new JLabel("Number of turns :");
 		turns = new JTextField(5);
 		
-		
 		numberOfGames = new JLabel("Number of Games :");
 		games = new String[] {"1","2","3","4"};
 		gamesList = new JComboBox<>(games);
 		
-		
-		tournamentDetailsPanel.add(mapBtn1);
-		tournamentDetailsPanel.add(mapBtn2);
-		tournamentDetailsPanel.add(mapBtn3);
-		tournamentDetailsPanel.add(mapListPane);
-		tournamentDetailsPanel.add(numberOfTurnsLabel);
-		tournamentDetailsPanel.add(turns);
-		tournamentDetailsPanel.add(numberOfGames);
-		tournamentDetailsPanel.add(gamesList);
-		tournamentDetailsPanel.add(startGame);
-		tournamentDetailsPanel.add(mapListPane);
+		tournamentDetailsPanel.add(mapSelectLabel,0);
+		tournamentDetailsPanel.add(mapBtn1, 1);
+		tournamentDetailsPanel.add(mapBtn2, 2);
+		tournamentDetailsPanel.add(mapBtn3, 3);
+		tournamentDetailsPanel.add(numberOfTurnsLabel, 4);
+		tournamentDetailsPanel.add(turns, 5);
+		tournamentDetailsPanel.add(numberOfGames, 6);
+		tournamentDetailsPanel.add(gamesList, 7);
+		tournamentDetailsPanel.add(startGame, 8);
+		tournamentDetailsPanel.add(gameDetails, 9);
 		return tournamentDetailsPanel;
 	}
 	 /**
      * Adds the action listeners;
      */
-    protected void addActionListeners(ActionListener event) {
+  /*  protected void addActionListeners(ActionListener event) {
     mapBtn1.addActionListener(event);
     mapBtn2.addActionListener(event);
     mapBtn3.addActionListener(event);
     startGame.addActionListener(event);
-    }
+    }*/
+
+	public void addActionListeners(TournamentModeController event) {
+		mapBtn1.addActionListener(event);
+	    mapBtn2.addActionListener(event);
+	    mapBtn3.addActionListener(event);
+	    startGame.addActionListener(event);
+	}
  }

@@ -2,6 +2,7 @@ package riskControllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,6 +14,7 @@ import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskView.TournamentMode;
 import riskView.TournamentView;
+import riskControllers.TournamentViewController;
 import static util.RiskGameUtil.*;
 
 public class TournamentModeController implements ActionListener{
@@ -22,6 +24,9 @@ public class TournamentModeController implements ActionListener{
     GameMap gameMap = GameMap.getInstance();
     MapModel mapModel = new MapModel();
     String fileName,fileName1,fileName2;
+    StringBuilder stringBuilder = new StringBuilder();
+    TournamentView add;
+    
     
     public TournamentModeController(TournamentMode view) {
     	this.view = view;
@@ -45,15 +50,9 @@ public class TournamentModeController implements ActionListener{
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
+                	stringBuilder.append("Map File 1 : "+fileName+"\n");
                // model.initData(selectedFile, playerCount);
-                try {
-                    tournamentView = new TournamentView();
-                    //tournamentView.addActionListeners(new GamePlayController(model, gameView));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                //tournamentView.setVisible(true);
-            }
+               }
                 else
                 {
                 	JOptionPane.showMessageDialog(null,GameMap.getInstance().getErrorMessage().toString());
@@ -75,15 +74,9 @@ public class TournamentModeController implements ActionListener{
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
+                	stringBuilder.append("Map File 2 : "+fileName1+"\n");
                // model.initData(selectedFile, playerCount);
-                try {
-                    tournamentView = new TournamentView();
-                    //tournamentView.addActionListeners(new GamePlayController(model, gameView));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                //tournamentView.setVisible(true);
-            }
+               }
                 else
                 {
                 	JOptionPane.showMessageDialog(null,GameMap.getInstance().getErrorMessage().toString());
@@ -105,15 +98,9 @@ public class TournamentModeController implements ActionListener{
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
+                	stringBuilder.append("Map File 3 : "+fileName2+"\n");
                // model.initData(selectedFile, playerCount);
-                try {
-                    tournamentView = new TournamentView();
-                    //tournamentView.addActionListeners(new GamePlayController(model, gameView));
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-                //tournamentView.setVisible(true);
-            }
                 else
                 {
                 	JOptionPane.showMessageDialog(null,GameMap.getInstance().getErrorMessage().toString());
@@ -121,19 +108,21 @@ public class TournamentModeController implements ActionListener{
     	    }
 		}
 		else if(event.equals(startGameBtnName)) {
-			StringBuilder stringBuilder = new StringBuilder();
-			stringBuilder.append("Map File 1 :"+fileName+"\n");
-			stringBuilder.append("Map File 2 :"+fileName1+"\n");
-			stringBuilder.append("Map File 3 :"+fileName2+"\n");
-			System.out.println("Map files selected are :\n" + fileName+fileName1+fileName2);
+			System.out.println("Map files selected are :\n" + fileName+"\n"+fileName1+"\n"+fileName2+"\n");
 			view.numTurns = view.turns.getText();
-			stringBuilder.append("Numbber of Turns :"+view.numTurns);
+			stringBuilder.append("Number of Turns :"+view.numTurns+"\n");
 			System.out.println("Number of turns :"+ view.numTurns);
 			view.numGames = (String) view.gamesList.getSelectedItem();
 			stringBuilder.append("Number of Games :"+ view.numGames);
 			System.out.println("Number of Games :"+ view.numGames);
-			view.gameDetails.setText(stringBuilder.toString());
-			view.mapListPane.add(view.gameDetails);
+			TournamentMode.gameDetails.setText(stringBuilder.toString());
+			try {
+				add = new TournamentView();
+				add.addActionListeners(new TournamentViewController(add));
+				add.setVisible(true);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}	
 		}
 		else{
 			System.out.println("Error: " + actionEvent + " actionEvent not found!");
