@@ -197,7 +197,7 @@ public class GameView extends JDialog {
     private JPanel messagePanel() {
 
         messagePanel = new JPanel();
-        messagePanel.setPreferredSize(new Dimension(200, 690));
+        messagePanel.setPreferredSize(new Dimension(320, 690));
         messageLayout = new GridBagLayout();
         messagePanel.setLayout(messageLayout);
 
@@ -269,7 +269,7 @@ public class GameView extends JDialog {
      */
     private JPanel actionPanel() {
         actionPanel = new JPanel();
-        actionPanel.setPreferredSize(new Dimension(200, 690));
+        actionPanel.setPreferredSize(new Dimension(300, 690));
         messageLayout = new GridBagLayout();
         actionPanel.setLayout(messageLayout);
 
@@ -379,7 +379,7 @@ public class GameView extends JDialog {
         }
         TextAreaForMapPanel.setText(stringBuilder.toString());
         mapScrollPane = new JScrollPane(TextAreaForMapPanel);
-        mapScrollPane.setPreferredSize(new Dimension(675, 690));
+        mapScrollPane.setPreferredSize(new Dimension(370, 690));
         mapScrollPane.revalidate();
         mapScrollPane.repaint();
         mapPanel.add(mapScrollPane);
@@ -392,7 +392,7 @@ public class GameView extends JDialog {
     */
     private JPanel countryInfoPanel() {
         countryInfoPanel = new JPanel();
-        countryInfoPanel.setPreferredSize(new Dimension(250, 690));
+        countryInfoPanel.setPreferredSize(new Dimension(350, 690));
         actionLayout = new GridBagLayout();
         countryInfoPanel.setLayout(actionLayout);
 

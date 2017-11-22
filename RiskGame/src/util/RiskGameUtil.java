@@ -15,6 +15,10 @@ public class RiskGameUtil {
     public static String fivePlayersBtnName = "fivePlayersBtn";
     public static String sixPlayersBtnName = "sixPlayersBtn";
     public static String backBtnName = "backBtn";
+    public static String mapBtnName1 = "mapBtn1";
+    public static String mapBtnName2 = "mapBtn2";
+    public static String mapBtnName3 = "mapBtn3";
+    public static String startGameBtnName = "startGame";
 
     /**
      * to check null or empty string
