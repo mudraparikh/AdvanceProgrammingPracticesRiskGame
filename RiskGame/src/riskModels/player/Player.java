@@ -23,7 +23,7 @@ import java.util.*;
  *
  * @author akshay shah
  */
-public class Player extends Observable implements Serializable {
+public class Player extends Observable implements Serializable,PlayerStrategy {
 
     public boolean canTurnInCards;
     public boolean canReinforce;
@@ -32,12 +32,14 @@ public class Player extends Observable implements Serializable {
     public boolean canEndTurn;
     public boolean hasCountryCaptured;
     public boolean hasPlayerWon;
+    public boolean isBot;
 
     public String name;
     public String startUpPhaseLogs;
+    public String botType;
 
     public int playerIndex = 0;
-    public int i;
+    public int i,j,k;
     public int currentPlayerReinforceArmies;
     public int playerCount;
     public int attackerLosses;
@@ -53,14 +55,19 @@ public class Player extends Observable implements Serializable {
     public Integer[] attackerRolls;
     public Integer[] defenderRolls;
 
+    public int[] cards;
+
     public MapModel mapModel;
     public GameMap gameMap;
+    public GameView gameView;
 
     public Dice dice;
     public Deck deck;
 
     public Player player;
     public Player currentPlayer;
+
+    public PlayerStrategy strategy;
 
     public Country countryA;
     public Country countryB;
@@ -111,9 +118,11 @@ public class Player extends Observable implements Serializable {
      * constructor which assigns the name of the player
      * @param name players name
      */
-    public Player(String name) {
+    public Player(String name, Boolean isBot, String botType) {
         super();
         this.name = name;
+        this.isBot = isBot;
+        this.botType = botType;
         assignedCountries = new ArrayList<>();
         hand = new Hand();
         turnInCount = 0;
@@ -319,6 +328,42 @@ public class Player extends Observable implements Serializable {
         return hand.mustTurnInCards();
     }
 
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
+    }
+
+    public String getBotType() {
+        return botType;
+    }
+
+    public void setBotType(String botType) {
+        this.botType = botType;
+    }
+
+    public PlayerStrategy getStrategy() {
+        return strategy;
+    }
+
+    public void setStrategy(PlayerStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void executeAttack(String country1, String country2, GameView gameView, Player model) {
+        this.strategy.attack(country1, country2, gameView, model);
+    }
+
+    public void executeReinforce(String country, GameView gameView, Player model) {
+        this.strategy.reinforce(country,gameView, model);
+    }
+
+    public void executeFortification(String country1, String country2, GameView gameView, Player model) {
+        this.strategy.fortify(country1, country2, gameView, model);
+    }
+
     // Game APIs
 
     /**
@@ -339,19 +384,20 @@ public class Player extends Observable implements Serializable {
 
     /**
      * This method will perform initialization for the game for example reading map,Assign country to players
-     *
-     * @param selectedFile .map file
+     *  @param selectedFile .map file
      * @param playerCount  number of players for the game
+     * @param playerNames  name of the players
+     * @param playerTypes  type of the players
      */
-    public void initData(File selectedFile, int playerCount) {
+    public void initData(File selectedFile, int playerCount, ArrayList<String> playerNames, ArrayList<String> playerTypes) {
         if (selectedFile.getName().endsWith("map") && playerCount > 0) {
             createGameMapFromFile(selectedFile);
             // Creates deck
             System.out.println("Populating deck...");
             deck = new Deck((ArrayList<Country>) gameMap.getCountries());
 
-            //Initiailizing Player data
-            initializePlayerData(playerCount);
+            //Initializing Player data
+            initializePlayerData(playerCount, playerNames, playerTypes);
             this.playerCount = playerCount;
             
             //Setting initial army for players
@@ -448,13 +494,41 @@ public class Player extends Observable implements Serializable {
     /**
      * Will create the players object based on the number of player selected from the player count dialog box
      * @param playerCount Number of players selected from the dialog box
+     * @param playerNames Player Name list passed from the player setting dialog box
+     * @param playerTypes Player Type list for each corresponding player selected in the dialog box
      */
-    public void initializePlayerData(int playerCount) {
-        String playersName[] = {"John", "Alexa", "Penny", "Sheldon", "Amy", "Raj"};
+    public void initializePlayerData(int playerCount, ArrayList<String> playerNames, ArrayList<String> playerTypes) {
+        Boolean isBot = false;
+        String botType = "";
         playerList = new ArrayList<>();
         int i = 0;
         while (i < playerCount) {
-            playerList.add(new Player(playersName[i]));
+            switch (playerTypes.get(i)) {
+                case "Human":
+                    isBot = false;
+                    botType = "human";
+                    break;
+                case "Aggressive Bot":
+                    isBot = true;
+                    botType = "aggressive";
+                    break;
+                case "Benevolent Bot":
+                    isBot = true;
+                    botType = "benevolent";
+                    break;
+                case "Randomize Bot":
+                    isBot = true;
+                    botType = "random";
+                    break;
+                case "Cheater Bot":
+                    isBot = true;
+                    botType = "cheat";
+                    break;
+                default:
+                    System.out.println("Error: playerType " + playerTypes.get(i) + " not found!");
+                    break;
+            }
+            playerList.add(new Player(playerNames.get(i), isBot, botType));
             i++;
         }
         player = new Player(playerList);
@@ -468,7 +542,7 @@ public class Player extends Observable implements Serializable {
      * @param country is a String of the country in which the reinforcements will be placed
      * @param gameView has the details to load the game board
      */
-    public void reinforce(String country, GameView gameView) {
+    public void reinforce(String country, GameView gameView, Player model) {
 
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
         if (canReinforce) {
@@ -657,7 +731,7 @@ public class Player extends Observable implements Serializable {
      * @param currentPlayer name of the player
      * @param model  players object
      */
-    private void checkPlayerTurnCanContinue(Player currentPlayer, Player model) {
+    public void checkPlayerTurnCanContinue(Player currentPlayer, Player model) {
         for (Country c : currentPlayer.getAssignedCountries()) {
             canAttack = false;
             canFortify = false;
@@ -720,7 +794,12 @@ public class Player extends Observable implements Serializable {
         //The attacking player must then place a number of armies
         //in the conquered country which is greater or equal than the number of dice that was used in the attack that
         //resulted in conquering the country
-        int moveArmies = showMoveArmiesToCaptureCountryDialogBox(gameView);
+        int moveArmies = 0;
+        if(currentPlayer.isBot()){
+            moveArmies = 1;
+        } else {
+            moveArmies = showMoveArmiesToCaptureCountryDialogBox(gameView);
+        }
         if (moveArmies > 0) {
             countryA.subtractArmy(moveArmies);
             countryB.addArmy(moveArmies);
@@ -1016,6 +1095,13 @@ public class Player extends Observable implements Serializable {
             updatePhaseDetails("Repaint");
             updatePhaseDetails("\n\n===" + currentPlayer.getName() + " is playing ===");
             updatePhaseDetails("Reinforcement Phase Begins \n");
+            if (currentPlayer.isBot()) {
+                // Current player is AI
+
+                turnOfBot();
+                nextPlayerTurn(model);
+
+            }
             if (currentPlayer.mustTurnInCards()) {
                 // While player has 5 or more cards
                 GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
@@ -1041,6 +1127,77 @@ public class Player extends Observable implements Serializable {
         }
     }
 
+    private void turnOfBot() {
+        cards = new int[3];
+        for (i = 0; i < currentPlayer.getHand().size(); i++) {
+
+            for (j = 0; j < currentPlayer.getHand().size(); j++) {
+
+                for (k = 0; k < currentPlayer.getHand().size(); k++) {
+
+                    if (currentPlayer.getHandObject().canTurnInCards(i, j, k)) {
+                        cards[0] = i;
+                        cards[1] = j;
+                        cards[2] = k;
+                        turnInCards(cards);
+                        GameView.displayLog("**Bot attempted to turn in cards");
+                    }
+                }
+            }
+        }
+        canReinforce = true;
+        switch (currentPlayer.getBotType()) {
+            case "aggressive":
+                aggressiveBotTurn();
+                break;
+            case "benevolent":
+                benevolentBotTurn();
+                break;
+            case "random":
+                randomBotTurn();
+                break;
+            case "cheat":
+                cheaterBotTurn();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void cheaterBotTurn() {
+        this.setStrategy(new CheaterBot());
+        for(Country country: currentPlayer.assignedCountries){
+            executeReinforce(country.getCountryName(),gameView, this);
+        }
+/*
+        for (Country country: currentPlayer.assignedCountries){
+            for (Country neighbor: country.getNeighborNodes()){
+                countryA = MapModel.getCountryObj(country.getCountryName(), GameMap.getInstance());
+                countryB = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
+                if (canAttack && isAttackValidForCheater(currentPlayer, countryA, countryB)) {
+                    executeAttack(countryA.getCountryName(), countryB.getCountryName(), gameView, this);
+                }
+            }
+        }
+*/
+    }
+
+    private boolean isAttackValidForCheater(Player currentPlayer, Country countryA, Country countryB) {
+        return !currentPlayer.equals(countryB.getBelongsToPlayer()) && currentPlayer.equals(countryA.getBelongsToPlayer());
+    }
+
+    private void randomBotTurn() {
+
+    }
+
+    private void benevolentBotTurn() {
+
+    }
+
+    private void aggressiveBotTurn() {
+
+    }
+
     /**
      * WIll notify all the observers for any card exchanges
      */
@@ -1054,7 +1211,8 @@ public class Player extends Observable implements Serializable {
      * Shuffles the players.
      * @param model Player Class model
      */
-    public void startGame(Player model) {
+    public void startGame(Player model, GameView gameView) {
+        this.gameView = gameView;
         Collections.shuffle(playerList);
         player.setPlayerList(playerList);
         GameMap.getInstance().setPlayerList(playerList);
@@ -1069,7 +1227,7 @@ public class Player extends Observable implements Serializable {
         updatePhaseDetails("All the players have been given the countries.\n");
         updateDomination();
         GameView.displayLog("To begin: Start reinforcement phase by placing army in your designated country\n");
-        nextPlayerTurn(model);
+        //nextPlayerTurn(model);
 
     }
     /**

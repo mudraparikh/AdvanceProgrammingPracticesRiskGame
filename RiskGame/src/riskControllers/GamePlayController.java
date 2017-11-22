@@ -24,7 +24,7 @@ public class GamePlayController implements ActionListener {
     public GamePlayController(Player model, GameView gameView) {
         this.model = model;
         this.view = gameView;
-        model.startGame(model);
+        model.startGame(this.model, this.view);
     }
 
     /**
@@ -36,7 +36,7 @@ public class GamePlayController implements ActionListener {
 
         switch (actionEvent) {
             case "clearLogBtn":
-            	view.clearLog();
+            	model.nextPlayerTurn(model);
                 break;
 
             case "turnInBtn":
@@ -45,7 +45,7 @@ public class GamePlayController implements ActionListener {
                 break;
             case "reinforceBtn":
                 if (view.getCountryA() != null) {
-                    model.reinforce(view.getCountryA().replaceAll("[0-9]", " ").replaceAll("\\-", " "), view);
+                    model.reinforce(view.getCountryA().replaceAll("[0-9]", " ").replaceAll("\\-", " "), view, model);
                 } else {
                     GameView.displayLog("Please make sure that country is selected from the list !");
                 }

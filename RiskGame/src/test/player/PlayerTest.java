@@ -1,4 +1,4 @@
-package test;
+package test.player;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -47,7 +47,7 @@ public class PlayerTest extends Player {
 
     @Test
     public void testInitialisePlayerData(){
-        initializePlayerData(6);
+        //initializePlayerData(6, playerNames, playerTypes);
         assertEquals("John", getPlayerList().get(0).getName());
         assertEquals("Alexa", getPlayerList().get(1).getName());
         assertEquals("Penny", getPlayerList().get(2).getName());
@@ -58,7 +58,7 @@ public class PlayerTest extends Player {
 
     @Test
     public void testIsAttackPhase() throws IOException {
-        initializePlayerData(6);
+        //initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
@@ -72,7 +72,7 @@ public class PlayerTest extends Player {
 
     @Test
     public void testInitialArmy() {
-        initializePlayerData(6);
+       // initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         playerList.get(0);
@@ -119,7 +119,7 @@ public class PlayerTest extends Player {
     @Test
     public void testDefendingPlayerLostCountry() throws IOException {
 
-        initializePlayerData(6);
+       // initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
@@ -138,7 +138,7 @@ public class PlayerTest extends Player {
     @Test
     public void testGameWon() throws IOException {
 
-        initializePlayerData(3);
+       // initializePlayerData(3, playerNames, playerTypes);
         playerCount = 3;
         setInitialArmies();
         allocateCountriesToPlayers();
@@ -184,7 +184,7 @@ public class PlayerTest extends Player {
 
     @Test
     public void testReinforcementPhase() throws IOException {
-        initializePlayerData(6);
+       // initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
@@ -194,13 +194,13 @@ public class PlayerTest extends Player {
         Country country = currentPlayer.assignedCountries.get(0);
         int oldArmies = country.currentArmiesDeployed;
         System.out.println();
-        reinforce(country.getCountryName(),gameView);
+        reinforce(country.getCountryName(),gameView, this);
         assertTrue(country.currentArmiesDeployed - oldArmies == 1);
     }
 
     @Test
     public void testForReinforcementArmiesCalculation() throws IOException {
-        initializePlayerData(6);
+       // initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
@@ -236,7 +236,7 @@ public class PlayerTest extends Player {
 
     @Test
     public void testFortificationPhase() throws IOException {
-        initializePlayerData(6);
+      //  initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
