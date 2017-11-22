@@ -19,7 +19,7 @@ public class CheaterBot implements PlayerStrategy {
         if(model.currentPlayer.assignedCountries.size() == GameMap.getInstance().getCountries().size()){
             model.hasPlayerWon = true;
             GameView.displayLog(""+model.currentPlayer.getName()+" has won the game ! Congratulations ! ");
-            Player.updatePhaseDetails(model.currentPlayer.getName()+"Won");
+            model.updatePhaseDetails(model.currentPlayer.getName()+"Won");
             model.canAttack = false;
             model.canReinforce = false;
             model.canEndTurn = false;
@@ -29,10 +29,6 @@ public class CheaterBot implements PlayerStrategy {
         else{
             model.canReinforce = false;
             model.canEndTurn = true;
-
-            //Current Player cannot continue attack phase if none of his countries that have an adjacent country
-            //controlled by another player is containing more than one army
-            model.checkPlayerTurnCanContinue(model.currentPlayer, model);
         }
     }
 
@@ -45,7 +41,7 @@ public class CheaterBot implements PlayerStrategy {
     public void reinforce(String country, GameView gameView, Player model) throws NullPointerException {
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
         if (model.canReinforce && countryA !=null){
-            int armies = countryA.currentArmiesDeployed;
+            int armies = countryA.getCurrentArmiesDeployed();
             countryA.addArmy(armies);
             GameView.displayLog("Cheater has doubled it's armies on " + country);
         }
