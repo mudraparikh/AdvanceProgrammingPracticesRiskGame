@@ -29,6 +29,10 @@ public class CheaterBot implements PlayerStrategy {
         else{
             model.canReinforce = false;
             model.canEndTurn = true;
+
+            //Current Player cannot continue attack phase if none of his countries that have an adjacent country
+            //controlled by another player is containing more than one army
+            model.checkPlayerTurnCanContinue(model.currentPlayer, model);
         }
     }
 
@@ -41,25 +45,12 @@ public class CheaterBot implements PlayerStrategy {
     public void reinforce(String country, GameView gameView, Player model) throws NullPointerException {
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
         if (model.canReinforce && countryA !=null){
-            System.out.println("reinorce phase enteresd !~!");
             int armies = countryA.currentArmiesDeployed;
             countryA.addArmy(armies);
             GameView.displayLog("Cheater has doubled it's armies on " + country);
         }
         model.canFortify = true;
         model.canAttack = true;
-        System.out.println("***turnAI-Game");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         GameView.updateMapPanel();
-        gameView.setVisible(true);
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

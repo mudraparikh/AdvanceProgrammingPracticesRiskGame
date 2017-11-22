@@ -1,6 +1,7 @@
 package riskControllers;
 
 import riskModels.player.Player;
+import riskView.GameMenuView;
 import riskView.GameView;
 
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ public class GamePlayController implements ActionListener {
 
     private Player model;
     private GameView view;
+    private GameMenuView menuView;
 
     /**
      * setter method assigns model and gameView to the controller
@@ -35,8 +37,10 @@ public class GamePlayController implements ActionListener {
         String actionEvent = evt.getActionCommand();
 
         switch (actionEvent) {
-            case "clearLogBtn":
-            	model.nextPlayerTurn(model);
+            case "menuBtn":
+            	menuView = new GameMenuView();
+            	menuView.addActionListeners(new GameMenuViewController(menuView));
+            	menuView.setVisible(true);
                 break;
 
             case "turnInBtn":

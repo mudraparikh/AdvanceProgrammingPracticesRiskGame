@@ -1122,8 +1122,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             currentPlayer.hasCountryCaptured=hasCountryCaptured;
             GameMap.getInstance().setCurrentPlayer(currentPlayer);
             //testing purpose. remove below two lines if you are getting exception.
-            MapModel.saveGame(GameMap.getInstance(), "test");
-            MapModel.loadGame("test");
+            //MapModel.saveGame(GameMap.getInstance(), "test");
+           // MapModel.loadGame("test");
         }
     }
 
