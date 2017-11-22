@@ -61,14 +61,10 @@ private JPanel menuPanel;
 		return menuPanel;
 	}
 	
-	protected void addActionListeners(ActionListener evt)
+	public void addActionListeners(ActionListener evt)
 	{
 		returnBtn.addActionListener(evt);
 		saveBtn.addActionListener(evt);
 		quitBtn.addActionListener(evt);
-	}
-	public void addActionListeners(GameMenuViewController gameMenuViewController) {
-		// TODO Auto-generated method stub
-		
 	}
 }

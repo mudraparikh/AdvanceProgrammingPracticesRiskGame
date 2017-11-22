@@ -26,6 +26,8 @@ public class GameMap implements Serializable {
     public HashMap<String, String> mapDetail = new HashMap<>();
     public Player currentPlayer;
 
+    public String logDetails, phaseDetails;
+
     /**
      * Default Constructor
      */
@@ -43,6 +45,21 @@ public class GameMap implements Serializable {
             gameMap = new GameMap();
         }
         return gameMap;
+    }
+    public String getLogDetails() {
+        return logDetails;
+    }
+
+    public void setLogDetails(String logDetails) {
+        this.logDetails = logDetails;
+    }
+
+    public String getPhaseDetails() {
+        return phaseDetails;
+    }
+
+    public void setPhaseDetails(String phaseDetails) {
+        this.phaseDetails = phaseDetails;
     }
 
     /**

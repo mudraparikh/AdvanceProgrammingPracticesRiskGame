@@ -15,6 +15,7 @@ import riskView.PlayerView;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicIconFactory;
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -1115,12 +1116,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             } else {
                 canReinforce = true;
             }
-            currentPlayer.canReinforce=canReinforce;
-            currentPlayer.canAttack=canAttack;
-            currentPlayer.canFortify=canFortify;
-            currentPlayer.canTurnInCards=canTurnInCards;
-            currentPlayer.hasCountryCaptured=hasCountryCaptured;
-            GameMap.getInstance().setCurrentPlayer(currentPlayer);
+
             //testing purpose. remove below two lines if you are getting exception.
             //MapModel.saveGame(GameMap.getInstance(), "test");
            // MapModel.loadGame("test");
@@ -1227,7 +1223,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         updatePhaseDetails("All the players have been given the countries.\n");
         updateDomination();
         GameView.displayLog("To begin: Start reinforcement phase by placing army in your designated country\n");
-        //nextPlayerTurn(model);
+        nextPlayerTurn(model);
 
     }
     /**
@@ -1378,5 +1374,33 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     	return false;
     }
 
+    public  void saveGame() {
+        currentPlayer.canReinforce=canReinforce;
+        currentPlayer.canAttack=canAttack;
+        currentPlayer.canFortify=canFortify;
+        currentPlayer.canTurnInCards=canTurnInCards;
+        currentPlayer.hasCountryCaptured=hasCountryCaptured;
+        GameMap.getInstance().setCurrentPlayer(currentPlayer);
+        MapModel.saveGame(GameMap.getInstance(),"akshay");
+        //GameMap g = MapModel.loadGame("akshay");
+        //int a= 8;
+
+    }
+
+    public void loadGame() {
+        gameMap =  MapModel.loadGame("akshay");
+        playerList = gameMap.getPlayerList();
+        currentPlayer = gameMap.getCurrentPlayer();
+        canAttack = currentPlayer.canAttack;
+        canFortify = currentPlayer.canFortify;
+        canReinforce = currentPlayer.canReinforce;
+
+    }
+
+    public void populateLogsAndPhase() {
+        /*GameView.displayLog(GameMap.getInstance().getLogDetails());
+        updatePhaseDetails(GameMap.getInstance().getPhaseDetails());
+        GameView.displayLog("\n\n===== Game Loaded ====\n\n");*/
+    }
 }
 

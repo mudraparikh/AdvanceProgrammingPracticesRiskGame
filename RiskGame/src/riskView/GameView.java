@@ -140,6 +140,7 @@ public class GameView extends JDialog {
         String existingDetails = printTextArea.getText();
         StringBuilder stringBuilder = new StringBuilder(existingDetails);
         printTextArea.setText(stringBuilder.append(logDetail) + "\n");
+        GameMap.getInstance().setLogDetails(stringBuilder.append(logDetail) + "\n");
     }
     
     /**
@@ -564,7 +565,7 @@ public class GameView extends JDialog {
 		if(!phaseDetailMessage.equalsIgnoreCase("Repaint")) {
 				updatedPhaseDetail = GameView.phaseViewTextArea.getText()+phaseDetailMessage;
 		}
-		  
-		  GameView.phaseViewTextArea.setText(updatedPhaseDetail);
+        GameView.phaseViewTextArea.setText(updatedPhaseDetail);
+        GameMap.getInstance().setPhaseDetails(updatedPhaseDetail);
 	}
 }
