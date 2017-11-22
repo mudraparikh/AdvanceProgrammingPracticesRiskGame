@@ -19,6 +19,11 @@ import riskModels.map.MapModel;
 import riskModels.player.Player;
 import riskView.GameView;
 
+/**
+ * The Player Test class tests all the important functions of player working as expected 
+ * @author hnath
+ *
+ */
 public class PlayerTest extends Player {
 
     private GameMap gameMap;
@@ -30,6 +35,11 @@ public class PlayerTest extends Player {
     private String filePath;
     String location = PlayerTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
+    /**
+     * This method setting up the context as many test cases share the same values
+     * In this we are assigning the London.map file 
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         mapModel = new MapModel();
@@ -39,12 +49,18 @@ public class PlayerTest extends Player {
        //createGameMapFromFile(f);
     }
 
+    /**
+     * This method checks whether the deck cards has populated correctly
+     */
     @Test
     public void checkDeckCardsPopulated(){
         Deck deck = new Deck((ArrayList<Country>) gameMap.getCountries());
         assertEquals(gameMap.getCountries().size(), deck.deck.size());
     }
 
+    /**
+     * This method initializing the player data by assigning names
+     */
     @Test
     public void testInitialisePlayerData(){
         //initializePlayerData(6, playerNames, playerTypes);
@@ -56,6 +72,10 @@ public class PlayerTest extends Player {
         assertEquals("Raj", getPlayerList().get(5).getName());
     }
 
+    /**
+     * This method checks whether the attack function is working as expected
+     * @throws IOException if there is input output exceptions
+     */
     @Test
     public void testIsAttackPhase() throws IOException {
         //initializePlayerData(6, playerNames, playerTypes);
@@ -70,6 +90,9 @@ public class PlayerTest extends Player {
         assertTrue(isAttackValid(player, attackerCountry, defendingCountry));
     }
 
+    /**
+     * This method checks if the armies are assigned as expected
+     */
     @Test
     public void testInitialArmy() {
        // initializePlayerData(6, playerNames, playerTypes);
@@ -78,6 +101,10 @@ public class PlayerTest extends Player {
         playerList.get(0);
         assertEquals(20,playerList.get(0).totalArmies);
     }
+    
+    /**
+     * This method checks if the decision is correct by comparing the dice result and calculated loss
+     */
     @Test
     public void testCompareDiceResultsAndCalculateLosses(){
         attackerDice = 3;
@@ -116,6 +143,10 @@ public class PlayerTest extends Player {
         assertEquals(1,defenderLosses);
     }
 
+    /**
+     * This method checks if the defending player lost country or not
+     * @throws IOException if there are any input output exceptions
+     */
     @Test
     public void testDefendingPlayerLostCountry() throws IOException {
 
@@ -135,6 +166,10 @@ public class PlayerTest extends Player {
         assertTrue(defendingCountry.getBelongsToPlayer().equals(attackerCountry.getBelongsToPlayer()));
     }
 
+    /**
+     * This method checks the functioning of gameWon
+     * @throws IOException if there are any input output exceptions
+     */
     @Test
     public void testGameWon() throws IOException {
 
@@ -182,6 +217,10 @@ public class PlayerTest extends Player {
        assertTrue(hasPlayerWon);
     }
 
+    /**
+     * This method checks if the reinforcement function is working properly as expected or not
+     * @throws IOException if there are any input output exceptions
+     */
     @Test
     public void testReinforcementPhase() throws IOException {
        // initializePlayerData(6, playerNames, playerTypes);
@@ -198,6 +237,10 @@ public class PlayerTest extends Player {
         assertTrue(country.currentArmiesDeployed - oldArmies == 1);
     }
 
+    /**
+     * This method checks if the reinforcement armies are calculated correctly are not
+     * @throws IOException if there are any input output exceptions
+     */
     @Test
     public void testForReinforcementArmiesCalculation() throws IOException {
        // initializePlayerData(6, playerNames, playerTypes);
@@ -234,6 +277,10 @@ public class PlayerTest extends Player {
         assertEquals(8,currentPlayer.getTotalArmies());
     }
 
+    /**
+     * This method checks the functioning  of fortification phase is working as expected or not
+     * @throws IOException if there are any input output exceptions
+     */
     @Test
     public void testFortificationPhase() throws IOException {
       //  initializePlayerData(6, playerNames, playerTypes);
@@ -256,41 +303,65 @@ public class PlayerTest extends Player {
         assertEquals(oldArmyInCountry2, newArmyInCountry2 - 1);
     }
 
+    /**
+     * over ride showMoveArmiesToCaptureCountryDialogBox
+     */
     @Override
     protected int showMoveArmiesToCaptureCountryDialogBox(GameView gameView) {
         return 1;
     }
     
+    /**
+     * over ride showAttackerDiceDialogBox
+     */
     @Override
     protected int showAttackerDiceDialogBox(GameView gameView){
         return 1;
     }
 
+    /**
+     * over rides showDefenderDiceDialogBox
+     */
     @Override
     protected int showDefenderDiceDialogBox(GameView gameView) {
         return 1;
     }
 
+    /**
+     *  over rides isAttackValid and returns true if its valid
+     */
     @Override
     protected boolean isAttackValid(Player p, Country c, Country c1) {
     	return true;    	
     }
 
+    /**
+     * over rides isFortifyValid returns true if its valid
+     */
     @Override
     protected boolean isFortifyValid() {
         return true;
     }
 
+    /**
+     * over rides showReinforceArmiesDialogBox
+     */
     @Override
     protected Integer showReinforceArmiesDialogBox(GameView gameView) {
         return 1;
     }
 
+    /**
+     * over rides showFortificationArmyMoveDialog
+     */
     @Override
     protected int showFortificationArmyMoveDialog(GameView gameView){
         return  1;
     }
 
+    /**
+     * over rides updateArmiesBasedOnDiceResult
+     */
     @Override
     protected void updateArmiesBasedOnDiceResult(int attackerLosses,int defenderLosses){
         countryA.subtractArmy(0);
