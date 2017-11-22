@@ -1194,6 +1194,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     private void aggressiveBotTurn() {
+        List<Country> aggressivePlayerCountryList =  currentPlayer.getAssignedCountries();
 
     }
 
