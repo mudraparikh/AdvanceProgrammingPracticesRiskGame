@@ -605,7 +605,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * Attacking allows the player to engage in battles, with outcomes decided by RNG, with
      * opposing players in order to lower the number of armies in a territory to 0 in order
      * to occupy it.
-     *  @param country1 is a String of the point A country.
+     * @param country1 is a String of the point A country.
      * @param country2 is a String of the point B country.
      * @param model Player class object
      * @param gameView has the details to load game board
