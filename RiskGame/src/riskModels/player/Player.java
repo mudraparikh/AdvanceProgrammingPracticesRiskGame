@@ -1312,6 +1312,70 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
         return lst;
     }
+    /**
+     * This method will return strongest country of player
+     * @param player
+     * @return strongest country
+     */
+    public  static Country getStrongestCountry(Player player) {
+    	List<Country> playerCountry=player.getAssignedCountries();
+    	Country strongestCountry = null;
+    	int maxArmy=1;
+    	for(Country country:playerCountry) {
+    	 int army=	country.getCurrentArmiesDeployed();
+    		if(army>maxArmy) {
+    			maxArmy=army;
+    			strongestCountry = country;
+    		}
+    	}
+		return strongestCountry;
+}
+    
+    /**
+     * This method will return weakest country of player
+     * @param player
+     * @return strongest country
+     */
+    public  static Country getWeakestCountry(Player player) {
+    	List<Country> playerCountry=player.getAssignedCountries();
+    	Country weakestCountry = null;
+    	GameMap.getInstance().getCountries();
+    	int minArmy=200;
+    	for(Country country:playerCountry) {
+    	 int army=	country.getCurrentArmiesDeployed();
+    		if(army<minArmy) {
+    			minArmy=army;
+    			weakestCountry = country;
+    		}
+    	}
+		return weakestCountry;
+}
+    /**
+     * This method will check if attack is possible
+     * @param player player object 
+     * @return true if attack possible else false
+     */
+    public boolean isAttackPossible(Player player) {
+    	List<Country> assignedCountry=player.getAssignedCountries();
+    	List<Country> armiesMoreThanOne = new ArrayList<>();
+     	for(Country country : assignedCountry) {
+    		if(country.getCurrentArmiesDeployed()>1) {
+    			armiesMoreThanOne.add(country);
+    		}
+    	}
+     	if(armiesMoreThanOne!=null && !armiesMoreThanOne.isEmpty()) {
+     		for(Country country : armiesMoreThanOne){
+         		List<Country> neighbors = country.getNeighborNodes();
+         		for(Country neighbor: neighbors) {
+         			if(!neighbor.getBelongsToPlayer().getName().equalsIgnoreCase(player.getName())) {
+         				 return true;
+         			}
+         		}
+         	}
+     	}
+     	
+    	return false;
+    }
 
 }
 
