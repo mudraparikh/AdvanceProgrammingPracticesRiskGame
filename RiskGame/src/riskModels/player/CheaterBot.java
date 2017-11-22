@@ -29,10 +29,6 @@ public class CheaterBot implements PlayerStrategy {
         else{
             model.canReinforce = false;
             model.canEndTurn = true;
-
-            //Current Player cannot continue attack phase if none of his countries that have an adjacent country
-            //controlled by another player is containing more than one army
-            model.checkPlayerTurnCanContinue(model.currentPlayer, model);
         }
     }
 

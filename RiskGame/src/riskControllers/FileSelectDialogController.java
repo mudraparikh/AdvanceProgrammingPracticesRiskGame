@@ -1,5 +1,6 @@
 package riskControllers;
 
+import riskModels.map.GameMap;
 import riskModels.player.Player;
 import riskView.FileSelectDialog;
 import riskView.GameView;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 /**
  * This class maps the user's input to the data and methods in the model
  * @author hnath
- *
  */
 public class FileSelectDialogController implements ActionListener {
 
@@ -59,8 +59,8 @@ public class FileSelectDialogController implements ActionListener {
                 e.printStackTrace();
             }
             gameView.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, GameMap.getInstance().getErrorMessage().toString());
         }
     }
-
-
 }

@@ -789,7 +789,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
         // Set country player to attacker
         countryB.setBelongsToPlayer(countryA.getBelongsToPlayer());
-        updatePhaseDetails(""+countryB.getCountryName()+" has been captured ! ");
+        updatePhaseDetails("\n"+countryB.getCountryName()+" has been captured ! ");
 
         //The attacking player must then place a number of armies
         //in the conquered country which is greater or equal than the number of dice that was used in the attack that
@@ -1166,20 +1166,19 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
     private void cheaterBotTurn() {
         this.setStrategy(new CheaterBot());
+        List<Country> cheaterCountries = new ArrayList<>();
         for(Country country: currentPlayer.assignedCountries){
             executeReinforce(country.getCountryName(),gameView, this);
+            cheaterCountries.add(country);
         }
-/*
-        for (Country country: currentPlayer.assignedCountries){
+        for(Country country: cheaterCountries){
+            GameView.displayLog(country.getCountryName()+":"+country.getCurrentArmiesDeployed());
             for (Country neighbor: country.getNeighborNodes()){
-                countryA = MapModel.getCountryObj(country.getCountryName(), GameMap.getInstance());
-                countryB = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
-                if (canAttack && isAttackValidForCheater(currentPlayer, countryA, countryB)) {
-                    executeAttack(countryA.getCountryName(), countryB.getCountryName(), gameView, this);
+                if(isAttackValidForCheater(currentPlayer,country,neighbor)){
+                    executeAttack(country.getCountryName(),neighbor.getCountryName(),gameView,this);
                 }
             }
         }
-*/
     }
 
     private boolean isAttackValidForCheater(Player currentPlayer, Country countryA, Country countryB) {

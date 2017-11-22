@@ -81,7 +81,6 @@ public class EditMapView extends java.awt.Frame {
                     }
                 }
                 continentList.repaint();
-               // mapModel.writeMap(gameMap, fileName);
             }
         });
 
