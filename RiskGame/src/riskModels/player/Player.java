@@ -1206,6 +1206,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * Starts the Game.
      * Shuffles the players.
      * @param model Player Class model
+     * @param gameView game view object
      */
     public void startGame(Player model, GameView gameView) {
         this.gameView = gameView;
@@ -1309,9 +1310,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
         return lst;
     }
+    
     /**
      * This method will return strongest country of player
-     * @param player
+     * @param player player object
      * @return strongest country
      */
     public  static Country getStrongestCountry(Player player) {
@@ -1330,7 +1332,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     
     /**
      * This method will return weakest country of player
-     * @param player
+     * @param player player object
      * @return strongest country
      */
     public  static Country getWeakestCountry(Player player) {

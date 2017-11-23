@@ -224,14 +224,14 @@ public class GameMap implements Serializable {
     }
     /**
      * To get the currentPlayer Playing in map
-     * @return
+     * @return current player name
      */
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 	/**
-	 * To set the currentplayer in map
-	 * @param currentPlayer
+	 * To set the current player in map
+	 * @param currentPlayer name of the current player
 	 */
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
