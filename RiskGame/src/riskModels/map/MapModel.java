@@ -678,11 +678,10 @@ public class MapModel {
     	FileInputStream fin = null;
 		ObjectInputStream ois = null;
         GameMap gameMap = null;
-
 		try {
 			fin = new FileInputStream(fileName);
 			ois = new ObjectInputStream(fin);
-			gameMap= (GameMap) ois.readObject();
+			gameMap = (GameMap) ois.readObject();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -41,15 +41,22 @@ public class GameMap implements Serializable {
      *
      * @return single GameMap instance
      */
-    public static GameMap getInstance() {
+    public static GameMap getInstance(GameMap instance) {
         if (null == gameMap) {
-            gameMap = new GameMap();
+            if(instance==null)
+                gameMap = new GameMap();
+            else
+                gameMap = instance;
         }
         return gameMap;
     }
+
     public static void setInstance(GameMap gameMapToSet){
         System.out.println("inside set instance of transaction manager");
         gameMap = gameMapToSet;
+    }
+    public static GameMap getInstance() {
+        return getInstance(null);
     }
     public String getLogDetails() {
         return logDetails;
@@ -221,14 +228,14 @@ public class GameMap implements Serializable {
     }
     /**
      * To get the currentPlayer Playing in map
-     * @return
+     * @return current player name
      */
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 	/**
-	 * To set the currentplayer in map
-	 * @param currentPlayer
+	 * To set the current player in map
+	 * @param currentPlayer name of the current player
 	 */
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;

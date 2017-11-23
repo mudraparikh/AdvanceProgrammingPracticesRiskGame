@@ -80,6 +80,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public List<Player> playerList;
 
     public Hand hand;
+
+    public Random rng;
     String updateMessage = "";
     String phaseDetailMessage="";
 
@@ -825,7 +827,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * @param countryA name of the attacker country
      * @param countryB name of the defender country
      */
-    private void playerLostRule(Country countryA, Country countryB){
+    public void playerLostRule(Country countryA, Country countryB){
         GameView.displayLog(countryB.getBelongsToPlayer().getName() + "has no countries left, player looses the game and is eliminated");
 
         //Attacker will get all the cards of the defender as defender has lost all of it's countries
@@ -1116,7 +1118,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             } else {
                 canReinforce = true;
             }
-
+            GameMap.getInstance().setCurrentPlayer(currentPlayer);
             //testing purpose. remove below two lines if you are getting exception.
             //MapModel.saveGame(GameMap.getInstance(), "test");
            // MapModel.loadGame("test");
@@ -1167,14 +1169,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             executeReinforce(country.getCountryName(),gameView, this);
             cheaterCountries.add(country);
         }
-        for(Country country: cheaterCountries){
-            GameView.displayLog(country.getCountryName()+":"+country.getCurrentArmiesDeployed());
-            for (Country neighbor: country.getNeighborNodes()){
-                if(isAttackValidForCheater(currentPlayer,country,neighbor)){
-                    executeAttack(country.getCountryName(),neighbor.getCountryName(),gameView,this);
-                }
-            }
-        }
     }
 
     private boolean isAttackValidForCheater(Player currentPlayer, Country countryA, Country countryB) {
@@ -1190,7 +1184,72 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     private void aggressiveBotTurn() {
-        List<Country> aggressivePlayerCountryList =  currentPlayer.getAssignedCountries();
+        this.setStrategy(new AggressiveBot());
+        rng = new Random();
+        Country strongestCountry = getStrongestCountry(currentPlayer);
+
+        //reinforce phase for bot
+        executeReinforce(strongestCountry.getCountryName(),gameView,this);
+
+        //attack phase for bot
+        List<Country> neighbors = strongestCountry.getNeighborNodes();
+        for (Country neighbor : neighbors){
+            Country defenderCountry = MapModel.getCountryObj(neighbor.getCountryName(),GameMap.getInstance());
+            if(isAttackValid(currentPlayer,strongestCountry,defenderCountry)){
+                executeAttack(strongestCountry.getCountryName(),neighbor.getCountryName(),gameView,this);
+                break;
+            }
+        }
+
+        //fortification phase for bot
+        // AI fortify
+        //System.out.println("**AI fortify - start");
+        List<Country> priorityTargets = new ArrayList<>();
+
+        for (Country country:currentPlayer.getAssignedCountries()) {
+            boolean add1 = false;
+            boolean add2 = false;
+
+            for (Country neighbor: country.getNeighborNodes()) {
+                // Checks if country has both adjacent friendly and enemy countries
+                Country n = MapModel.getCountryObj(neighbor.getCountryName(),GameMap.getInstance());
+                if (n != null) {
+                    if (!n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                        // If priority country has an adjacent, enemy country
+                        add1 = true;
+
+                    } else if (n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                        add2 = true;
+                    }
+                }
+
+                if (add1 && add2) {
+                    priorityTargets.add(country);
+                }
+            }
+
+        }
+        //System.out.println("**AI fortify - Created priorityTargets list");
+
+        if (priorityTargets.size() > 0) {
+            List<Country> priorityCountries = new ArrayList<Country>();
+            int r1 = rng.nextInt(priorityTargets.size());
+
+            for (i = 0; i < priorityTargets.get(r1).getNeighborNodes().size(); i++) {
+
+                if (priorityTargets.get(r1).getNeighborNodes().get(i).getBelongsToPlayer().equals(currentPlayer) && priorityTargets.get(r1).getNeighborNodes().get(i).getCurrentArmiesDeployed() > 1 ) {
+                    priorityCountries.add(priorityTargets.get(r1).getNeighborNodes().get(i));
+                }
+            }
+            if (priorityCountries.size() > 0) {
+                //System.out.println("**AI fortify - Created priorityCountries list");
+                int r2 = rng.nextInt(priorityCountries.size());
+                //System.out.println("**AI fortify - Fortifying...");
+                executeFortification(priorityCountries.get(r2).getCountryName(),priorityTargets.get(r1).getCountryName(),gameView,this);
+                //System.out.println("**AI fortify - Successful fortify");
+            }
+        }
+        //System.out.println("**AI fortify - end");
 
     }
 
@@ -1206,6 +1265,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * Starts the Game.
      * Shuffles the players.
      * @param model Player Class model
+     * @param gameView game view object
      */
     public void startGame(Player model, GameView gameView) {
         this.gameView = gameView;
@@ -1309,9 +1369,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
         return lst;
     }
+    
     /**
      * This method will return strongest country of player
-     * @param player
+     * @param player player object
      * @return strongest country
      */
     public  static Country getStrongestCountry(Player player) {
@@ -1330,7 +1391,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     
     /**
      * This method will return weakest country of player
-     * @param player
+     * @param player player object
      * @return strongest country
      */
     public  static Country getWeakestCountry(Player player) {
@@ -1382,15 +1443,13 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         currentPlayer.hasCountryCaptured=hasCountryCaptured;
         GameMap.getInstance().setCurrentPlayer(currentPlayer);
         MapModel.saveGame(GameMap.getInstance(),"akshay");
-        //GameMap g = MapModel.loadGame("akshay");
-        //int a= 8;
-
     }
+
 
     public void loadGame(String file) {
         GameMap gameMap=MapModel.loadGame(file);
         GameMap.setInstance(gameMap);
-        playerList = GameMap.getInstance().getPlayerList();
+        playerList = gameMap.getPlayerList();
         currentPlayer = gameMap.getCurrentPlayer();
         canAttack = currentPlayer.canAttack;
         canFortify = currentPlayer.canFortify;
@@ -1400,9 +1459,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     public void populateLogsAndPhase() {
-        /*GameView.displayLog(GameMap.getInstance().getLogDetails());
-        updatePhaseDetails(GameMap.getInstance().getPhaseDetails());
-        GameView.displayLog("\n\n===== Game Loaded ====\n\n");*/
+        GameView.displayLog("\n\n===== Game Loaded ====\n\n");
     }
 }
 
