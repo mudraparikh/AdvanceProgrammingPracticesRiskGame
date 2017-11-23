@@ -1389,6 +1389,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
     public void loadGame() {
         gameMap =  MapModel.loadGame("akshay");
+
         playerList = gameMap.getPlayerList();
         currentPlayer = gameMap.getCurrentPlayer();
         canAttack = currentPlayer.canAttack;
@@ -1398,9 +1399,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     public void populateLogsAndPhase() {
-        /*GameView.displayLog(GameMap.getInstance().getLogDetails());
+        GameView.displayLog(GameMap.getInstance().getLogDetails());
         updatePhaseDetails(GameMap.getInstance().getPhaseDetails());
-        GameView.displayLog("\n\n===== Game Loaded ====\n\n");*/
+        GameView.displayLog("\n\n===== Game Loaded ====\n\n");
     }
 }
 

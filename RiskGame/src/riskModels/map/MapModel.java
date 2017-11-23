@@ -645,16 +645,18 @@ public class MapModel {
     public static GameMap loadGame(String fileName) {
     	FileInputStream fin = null;
 		ObjectInputStream ois = null;
-        GameMap gameMap = GameMap.getInstance();
+        GameMap gameMap = null;// = GameMap.getInstance();
 
 		try {
 			fin = new FileInputStream("c:\\temp\\address.ser");
 			ois = new ObjectInputStream(fin);
-			gameMap= (GameMap) ois.readObject();
+			gameMap = (GameMap) ois.readObject();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
+
+            gameMap = GameMap.getInstance(gameMap);
 
 			if (fin != null) {
 				try {

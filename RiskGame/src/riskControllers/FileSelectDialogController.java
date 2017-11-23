@@ -23,7 +23,7 @@ public class FileSelectDialogController implements ActionListener {
     private File selectedFile;
     private int playerCount;
     private boolean loadGame;
-    private Player model = new Player();
+    private Player model;
     private GameView gameView;
 
     private ArrayList<String> playerNames;
@@ -41,6 +41,7 @@ public class FileSelectDialogController implements ActionListener {
         this.playerCount = playerCount;
         this.playerNames = playerNames;
         this.playerTypes = playerTypes;
+        this.model = new Player();
         actionPerformed(null);
     }
 

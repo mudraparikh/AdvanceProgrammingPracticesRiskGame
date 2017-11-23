@@ -40,12 +40,20 @@ public class GameMap implements Serializable {
      *
      * @return single GameMap instance
      */
-    public static GameMap getInstance() {
+    public static GameMap getInstance(GameMap instance) {
         if (null == gameMap) {
-            gameMap = new GameMap();
+            if(instance==null)
+                gameMap = new GameMap();
+            else
+                gameMap = instance;
         }
         return gameMap;
     }
+
+    public static GameMap getInstance() {
+        return getInstance(null);
+    }
+
     public String getLogDetails() {
         return logDetails;
     }
