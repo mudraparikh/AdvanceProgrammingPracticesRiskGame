@@ -50,12 +50,13 @@ public class FileSelectDialogController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         int result = fileSelectDialog.showOpenDialog(fileSelectDialog);
+        GameMap gameMap=GameMap.getInstance();
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileSelectDialog.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             if (playerCount == 0){
                 loadGame = true;
-                model.loadGame();
+                model.loadGame(selectedFile.getAbsolutePath());
             }
             else {
                 model.initData(selectedFile, playerCount, playerNames, playerTypes);
@@ -65,6 +66,9 @@ public class FileSelectDialogController implements ActionListener {
             try {
                 gameView = new GameView();
                 gameView.addActionListeners(new GamePlayController(model, gameView, loadGame));
+                /*GameView.displayLog(GameMap.getInstance().getLogDetails());
+                GameView.updatePanelOfPhaseDetails(GameMap.getInstance().getPhaseDetails());
+                GameView.showDomination(GameMap.getInstance().getDominationViewDetails());*/
             } catch (IOException e) {
                 e.printStackTrace();
             }

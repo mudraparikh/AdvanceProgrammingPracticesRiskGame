@@ -36,7 +36,7 @@ public class PlayerView implements Observer {
                 dominationDetails.append(play.getName()).append(" ").append("\n");
                 dominationDetails.append(Double.valueOf(df.format(dominationOfPlayer))).append("%").append("\n");
             }
-            GameView.showDomination(dominationDetails);
+            GameView.showDomination(dominationDetails.toString());
         }
         if (p.getUpdateMessage().equalsIgnoreCase("Phase")) {
            GameView.updatePanelOfPhaseDetails(p.getPhaseDetailMessage());

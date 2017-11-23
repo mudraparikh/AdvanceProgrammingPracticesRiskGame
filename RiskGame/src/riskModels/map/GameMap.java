@@ -26,7 +26,8 @@ public class GameMap implements Serializable {
     public HashMap<String, String> mapDetail = new HashMap<>();
     public Player currentPlayer;
 
-    public String logDetails, phaseDetails;
+    public String logDetails, phaseDetails,dominationViewDetails;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Default Constructor
@@ -45,6 +46,10 @@ public class GameMap implements Serializable {
             gameMap = new GameMap();
         }
         return gameMap;
+    }
+    public static void setInstance(GameMap gameMapToSet){
+        System.out.println("inside set instance of transaction manager");
+        gameMap = gameMapToSet;
     }
     public String getLogDetails() {
         return logDetails;
@@ -227,6 +232,14 @@ public class GameMap implements Serializable {
 	 */
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
+	}
+
+	public String getDominationViewDetails() {
+		return dominationViewDetails;
+	}
+
+	public void setDominationViewDetails(String dominationViewDetails) {
+		this.dominationViewDetails = dominationViewDetails;
 	}
     
 }

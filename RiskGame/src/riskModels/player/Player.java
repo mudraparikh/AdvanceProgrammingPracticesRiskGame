@@ -25,7 +25,7 @@ import java.util.*;
  * @author akshay shah
  */
 public class Player extends Observable implements Serializable,PlayerStrategy {
-
+	private static final long serialVersionUID = 1113799434508676095L;
     public boolean canTurnInCards;
     public boolean canReinforce;
     public boolean canAttack;
@@ -812,7 +812,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
     public void updateDomination() {
     	
-        this.updateMessage="Domination";
+    	this.updateMessage="Domination";
         setChanged();
         notifyObservers();
 		
@@ -1387,13 +1387,15 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
     }
 
-    public void loadGame() {
-        gameMap =  MapModel.loadGame("akshay");
-        playerList = gameMap.getPlayerList();
+    public void loadGame(String file) {
+        GameMap gameMap=MapModel.loadGame(file);
+        GameMap.setInstance(gameMap);
+        playerList = GameMap.getInstance().getPlayerList();
         currentPlayer = gameMap.getCurrentPlayer();
         canAttack = currentPlayer.canAttack;
         canFortify = currentPlayer.canFortify;
         canReinforce = currentPlayer.canReinforce;
+        
 
     }
 

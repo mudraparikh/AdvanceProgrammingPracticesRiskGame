@@ -6,6 +6,7 @@ import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskModels.player.Player;
 import riskModels.player.PlayerObserverModel;
+import util.RiskGameUtil;
 
 import javax.swing.*;
 import javax.swing.text.DefaultCaret;
@@ -69,7 +70,7 @@ public class GameView extends JDialog {
     private DefaultListModel<String> countryDisplay1;
     private DefaultListModel<String> countryDisplay2;
     public  static DefaultListModel<String> cardListDisplay;
-    private GameMap gameMap;
+    public GameMap gameMap;
     private Player model;
 
 /**
@@ -177,8 +178,9 @@ public class GameView extends JDialog {
      * this method shows which player's domination
      * @param dominationDetails details of whose domination
      */
-    public static void showDomination(StringBuilder dominationDetails) {
+    public static void showDomination(String dominationDetails) {
         dominationTextArea.setText(dominationDetails.toString());
+        GameMap.getInstance().setDominationViewDetails(dominationDetails.toString());
     }
 
     /**
@@ -209,6 +211,9 @@ public class GameView extends JDialog {
         printTextArea.setWrapStyleWord(true);
         caret = (DefaultCaret) printTextArea.getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        if(RiskGameUtil.checkNullString(GameMap.getInstance().getLogDetails())) {
+        	printTextArea.setText(GameMap.getInstance().getLogDetails());        	
+        }
         messageScrollPane = new JScrollPane(printTextArea);
 
         reinforceBtn = new JButton("Reinforce Armies");
@@ -293,15 +298,23 @@ public class GameView extends JDialog {
         dominationTextArea.setFocusable(false);
         dominationTextArea.setLineWrap(true);
         dominationTextArea.setWrapStyleWord(true);
+        if(RiskGameUtil.checkNullString(GameMap.getInstance().getDominationViewDetails())) {
+        	dominationTextArea.setText(GameMap.getInstance().getDominationViewDetails());        	
+        }
         dominationViewPane = new JScrollPane(dominationTextArea);
         actionPanel.add(dominationViewPane);
+       
         
         phaseViewTextArea = new JTextArea();
         phaseViewTextArea.setFocusable(false);
         phaseViewTextArea.setLineWrap(true);
         phaseViewTextArea.setWrapStyleWord(true);
+        if(RiskGameUtil.checkNullString(GameMap.getInstance().getPhaseDetails())) {
+        	phaseViewTextArea.setText(GameMap.getInstance().getPhaseDetails());        	
+        }
         phaseViewPane = new JScrollPane(phaseViewTextArea);
         actionPanel.add(phaseViewPane);
+       
 
         c = new GridBagConstraints();
 
