@@ -101,9 +101,9 @@ public class Launcher extends java.awt.Frame {
         });
 
         //On click the button starts game in tournament mode.
-        jButton6.setText("Load Game");
-        jButton6.setName("jButton6");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setText("Load Game");
+        jButton3.setName("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fileSelectDialog = new FileSelectDialog();
                 fileSelectDialog.addActionListener(new FileSelectDialogController(fileSelectDialog, 0,null,null));
@@ -112,9 +112,9 @@ public class Launcher extends java.awt.Frame {
         });
 
         //On click the button creates an instance of the CreateMap class.
-        jButton3.setText("Create Map");
-        jButton3.setName("jButton3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.setText("Create Map");
+        jButton4.setName("jButton4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 util.CreateMap add = new util.CreateMap();
                 add.main(null);
@@ -123,18 +123,18 @@ public class Launcher extends java.awt.Frame {
         });
 
         //On click the button creates an instance of the EditMapView class.
-        jButton4.setText("Edit Map");
-        jButton4.setName("jButton4");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.setText("Edit Map");
+        jButton5.setName("jButton5");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditMapView add = new EditMapView();
                 add.setVisible(true);
             }
         });
         //On click the button terminates the game.
-        jButton5.setText("Exit");
-        jButton5.setName("jButton5");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButton6.setText("Exit");
+        jButton6.setName("jButton6");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 System.exit(0);
             }
