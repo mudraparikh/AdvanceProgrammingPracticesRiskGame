@@ -19,6 +19,7 @@ public class RiskGameUtil {
     public static String mapBtnName2 = "mapBtn2";
     public static String mapBtnName3 = "mapBtn3";
     public static String startGameBtnName = "startGame";
+    public static String resultBtnName = "resultBtn";
 
     /**
      * to check null or empty string

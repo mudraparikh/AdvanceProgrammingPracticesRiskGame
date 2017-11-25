@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Date;
 
@@ -285,8 +286,9 @@ public class TournamentView extends JDialog {
 	        
 	        return actionPanel;
 	    }
-	    public void addActionListeners(TournamentViewController tournamentViewController) throws IOException {	
-	  	  TournamentView();
+	    public void addActionListeners(ActionListener event1) throws IOException {	
+	    	TournamentView();
+	  	  resultBtn.addActionListener(event1);
 	  }
 }
 
