@@ -8,6 +8,7 @@ import riskView.GameView;
 public class BenevolentBot implements PlayerStrategy {
 
     public Country countryA;
+    public Country countryB;
     @Override
     public void attack(String country1, String country2, GameView gameView, Player model) {
         GameView.displayLog(model.currentPlayer+" is too afraid to attack ! Skipping the attack phase.");
@@ -19,6 +20,20 @@ public class BenevolentBot implements PlayerStrategy {
 
     @Override
     public void fortify(String country1, String country2, GameView gameView, Player model) {
+        countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
+        countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
+
+        // Player inputs how many armies to move from country A to country B
+        model.updatePhaseDetails("Repaint");
+        model.updatePhaseDetails("===Fortification phase===");
+
+        int armies = countryA.getCurrentArmiesDeployed() - 1;
+
+        model.moveArmyFromTo(countryA, countryB, armies);
+        GameView.updateMapPanel();
+        model.updatePhaseDetails("You moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
+        model.checkHasCountryCaptured();
+        model.updatePhaseDetails("===Fortification ends===");
 
     }
 

@@ -32,7 +32,7 @@ public class AggressiveBot implements PlayerStrategy {
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
         model.updatePhaseDetails("Repaint");
         model.updatePhaseDetails("==Attack Phase==");
-        do {
+        while (checkPlayerTurnCanContinue(countryA,countryB)) {
 
             dice = new Dice();
 
@@ -105,12 +105,13 @@ public class AggressiveBot implements PlayerStrategy {
 
             //If player conquered all the country and have won the game
             if (model.currentPlayer.assignedCountries.size() == GameMap.getInstance().getCountries().size()) {
+                model.hasBotWon = true;
                 GameView.displayLog("" + model.currentPlayer.getName() + " has won the game ! Congratulations ! ");
                 model.updatePhaseDetails(model.currentPlayer.getName() + "Won");
             }
             GameView.updateMapPanel();
 
-        }while (checkPlayerTurnCanContinue(countryA,countryB));
+        }
 
     }
 
