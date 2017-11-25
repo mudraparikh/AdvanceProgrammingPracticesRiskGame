@@ -5,14 +5,16 @@ import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskView.GameView;
 
-import java.util.Random;
+public class BenevolentBot implements PlayerStrategy {
 
-public class RandomBot implements PlayerStrategy {
     public Country countryA;
-    public Random rng;
     @Override
     public void attack(String country1, String country2, GameView gameView, Player model) {
-
+        GameView.displayLog(model.currentPlayer+" is too afraid to attack ! Skipping the attack phase.");
+        model.updatePhaseDetails("Repaint");
+        model.updatePhaseDetails("==Attack Phase==");
+        model.updatePhaseDetails("Skipping Attack Phase as player is benevolent.");
+        model.updatePhaseDetails("====Attack Phase ended===");
     }
 
     @Override
@@ -26,8 +28,7 @@ public class RandomBot implements PlayerStrategy {
         GameView.displayLog(model.currentPlayer.name + " gets " + model.currentPlayerReinforceArmies + " armies");
         try {
             if (model.currentPlayer.getTotalArmies() > 0) {
-                rng = new Random();
-                int armies = rng.nextInt(model.currentPlayer.getTotalArmies());
+                int armies = model.currentPlayer.getTotalArmies();
                 model.currentPlayer.subArmy(armies);
                 countryA.addArmy(armies);
                 GameView.displayLog(model.currentPlayer.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");

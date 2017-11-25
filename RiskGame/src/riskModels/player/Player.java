@@ -515,7 +515,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     isBot = true;
                     botType = "aggressive";
                     break;
-                case "Benevolent Bot":
+                case "BenevolentBot Bot":
                     isBot = true;
                     botType = "benevolent";
                     break;
@@ -1176,10 +1176,74 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     private void randomBotTurn() {
+        this.setStrategy(new RandomBot());
+        rng = new Random();
+        Country randomCountry = currentPlayer.getAssignedCountries().get(rng.nextInt(currentPlayer.getAssignedCountries().size()));
+
+
+        //reinforce phase for bot
+        executeReinforce(randomCountry.getCountryName(),gameView,this);
 
     }
 
     private void benevolentBotTurn() {
+        this.setStrategy(new BenevolentBot());
+        rng = new Random();
+        Country weakestCountry = getWeakestCountry(currentPlayer);
+
+        //reinforce phase for bot
+        executeReinforce(weakestCountry.getCountryName(),gameView,this);
+
+        //fortification phase for bot
+        // AI fortify
+        //System.out.println("**AI fortify - start");
+        List<Country> priorityTargets = new ArrayList<>();
+
+        for (Country country:currentPlayer.getAssignedCountries()) {
+            boolean add1 = false;
+            boolean add2 = false;
+
+            for (Country neighbor: country.getNeighborNodes()) {
+                // Checks if country has both adjacent friendly and enemy countries
+                Country n = MapModel.getCountryObj(neighbor.getCountryName(),GameMap.getInstance());
+                if (n != null) {
+                    if (!n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                        // If priority country has an adjacent, enemy country
+                        add1 = true;
+
+                    } else if (n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                        add2 = true;
+                    }
+                }
+
+                if (add1 && add2) {
+                    priorityTargets.add(country);
+                }
+            }
+
+        }
+        //System.out.println("**AI fortify - Created priorityTargets list");
+
+        if (priorityTargets.size() > 0) {
+            List<Country> priorityCountries = new ArrayList<Country>();
+            int r1 = rng.nextInt(priorityTargets.size());
+
+            for (i = 0; i < priorityTargets.get(r1).getNeighborNodes().size(); i++) {
+                Country c = MapModel.getCountryObj(priorityTargets.get(r1).getNeighborNodes().get(i).getCountryName(),GameMap.getInstance());
+
+                if (c != null && c.getBelongsToPlayer().equals(currentPlayer) && c.getCurrentArmiesDeployed() > 1) {
+                    priorityCountries.add(c);
+                }
+            }
+            if (priorityCountries.size() > 0) {
+                //System.out.println("**AI fortify - Created priorityCountries list");
+                int r2 = rng.nextInt(priorityCountries.size());
+                //System.out.println("**AI fortify - Fortifying...");
+                executeFortification(priorityCountries.get(r2).getCountryName(),priorityTargets.get(r1).getCountryName(),gameView,this);
+                //System.out.println("**AI fortify - Successful fortify");
+            }
+        }
+        //System.out.println("**AI fortify - end");
 
     }
 
@@ -1236,9 +1300,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             int r1 = rng.nextInt(priorityTargets.size());
 
             for (i = 0; i < priorityTargets.get(r1).getNeighborNodes().size(); i++) {
+                Country c = MapModel.getCountryObj(priorityTargets.get(r1).getNeighborNodes().get(i).getCountryName(),GameMap.getInstance());
 
-                if (priorityTargets.get(r1).getNeighborNodes().get(i).getBelongsToPlayer().equals(currentPlayer) && priorityTargets.get(r1).getNeighborNodes().get(i).getCurrentArmiesDeployed() > 1 ) {
-                    priorityCountries.add(priorityTargets.get(r1).getNeighborNodes().get(i));
+                if (c != null && c.getBelongsToPlayer().equals(currentPlayer) && c.getCurrentArmiesDeployed() > 1) {
+                    priorityCountries.add(c);
                 }
             }
             if (priorityCountries.size() > 0) {
