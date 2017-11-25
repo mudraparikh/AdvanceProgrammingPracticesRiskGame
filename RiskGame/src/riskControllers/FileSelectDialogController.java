@@ -60,16 +60,14 @@ public class FileSelectDialogController implements ActionListener {
                 model.loadGame(selectedFile.getAbsolutePath());
             }
             else {
-                model.initData(selectedFile, playerCount, playerNames, playerTypes);
+                model.setDrawTurns(10000);
+                model.initData(selectedFile, playerCount, playerNames, playerTypes,false);
                 loadGame = false;
             }
 
             try {
                 gameView = new GameView();
                 gameView.addActionListeners(new GamePlayController(model, gameView, loadGame));
-                /*GameView.displayLog(GameMap.getInstance().getLogDetails());
-                GameView.updatePanelOfPhaseDetails(GameMap.getInstance().getPhaseDetails());
-                GameView.showDomination(GameMap.getInstance().getDominationViewDetails());*/
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
+import riskModels.player.Player;
+import riskView.GameView;
 import riskView.TournamentMode;
 import riskView.TournamentView;
 import tournamentMode.TournamentModel;
@@ -30,13 +32,12 @@ public class TournamentModeController implements ActionListener{
 	private TournamentMode view;
 	private TournamentView tournamentView;
     GameMap gameMap = GameMap.getInstance();
-    GameMap gameMap1 = GameMap.getInstance();
-    GameMap gameMap2 = GameMap.getInstance();
+    public boolean allValidMaps;
     MapModel mapModel = new MapModel();
     String fileName,fileName1,fileName2;
     List<String> selectedFiles=new ArrayList<String>();
     StringBuilder stringBuilder = new StringBuilder();
-    TournamentView add;
+    GameView gameView;
     
     
     public TournamentModeController(TournamentMode view) {
@@ -133,14 +134,36 @@ public class TournamentModeController implements ActionListener{
 			int numberOfGames =Integer.valueOf(view.numGames);
 			System.out.println("Number of Games :"+ view.numGames);
 			TournamentMode.gameDetails.setText(stringBuilder.toString());
-			TournamentModel tournamentModel = new TournamentModel(selectedFiles,numberOfGames,maxNumberOfIteration);
-			try {
-				add = new TournamentView();
-				add.addActionListeners(new TournamentViewController(add,tournamentModel));
-				add.setVisible(true);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}	
+			for (String mapFile : selectedFiles) {
+				gameMap = mapModel.readMapFile(mapFile);
+				if (!gameMap.isCorrectMap) {
+					System.out.println(mapFile + " is not Valid");
+					System.out.println(gameMap.getErrorMessage());
+					allValidMaps = false;
+					break;
+				}
+				allValidMaps = true;
+			}
+			if (allValidMaps) {
+				TournamentModel tournamentModel = new TournamentModel(selectedFiles,numberOfGames,maxNumberOfIteration);
+                for (String mapFile : tournamentModel.getMapFiles()) {
+                    Player model = new Player();
+                    for (int i = 1; i <= tournamentModel.getNumberOfGames(); i++) {
+                        model.initData(new File(mapFile),4,tournamentModel.getPlayerNames(),tournamentModel.getPlayerTypes(),true);
+                        model.setDrawTurns(tournamentModel.getNumberOfTurns());
+                    }
+                    try {
+                        gameView = new GameView();
+                    } catch (IOException e) {
+                       // e.printStackTrace();
+                    }
+                    gameView.addActionListeners(new GamePlayController(model, gameView, false));
+                }
+			}
+			else{
+                System.out.println("Looks like you have selected an invalid map(s) file !");
+            }
+
 		}
 		else{
 			System.out.println("Error: " + actionEvent + " actionEvent not found!");

@@ -33,15 +33,16 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public boolean canEndTurn;
     public boolean hasCountryCaptured;
     public boolean hasPlayerWon;
-    public boolean isBot;
     public boolean hasBotWon;
+    public boolean isTournamentMode;
+    public boolean isBot;
 
 
     public String name;
     public String startUpPhaseLogs;
     public String botType;
 
-    public int playerIndex = 0;
+    public int playerIndex;
     public int i,j,k;
     public int currentPlayerReinforceArmies;
     public int playerCount;
@@ -52,6 +53,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public int totalArmies;
     public int reinforcementArmies;
     public int turnInCount;
+    public int drawTurns;
+    public int currentIteration = 1;
 
     public double domination; // player's domination in game based on number of countries out of total countries player own
 
@@ -349,6 +352,14 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         this.botType = botType;
     }
 
+    public int getDrawTurns() {
+        return drawTurns;
+    }
+
+    public void setDrawTurns(int drawTurns) {
+        this.drawTurns = drawTurns;
+    }
+
     public PlayerStrategy getStrategy() {
         return strategy;
     }
@@ -394,7 +405,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * @param playerNames  name of the players
      * @param playerTypes  type of the players
      */
-    public void initData(File selectedFile, int playerCount, ArrayList<String> playerNames, ArrayList<String> playerTypes) {
+    public void initData(File selectedFile, int playerCount, ArrayList<String> playerNames, ArrayList<String> playerTypes,boolean isTournamentMode) {
         if (selectedFile.getName().endsWith("map") && playerCount > 0) {
             createGameMapFromFile(selectedFile);
             // Creates deck
@@ -411,6 +422,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             //allocate armies to players
             allocateCountriesToPlayers();
             addInitialArmiesInRR();
+            this.isTournamentMode = isTournamentMode;
             canTurnInCards = false;
             canReinforce = true;
             canAttack = false;
@@ -462,7 +474,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             country.addArmy(1);
             p.subArmy(1);
             startUpPhaseLogs += "\nPlayer:"+p.getName()+" got "+country.getCountryName();
-            System.out.println("Player:"+p.getName()+" got "+country.getCountryName()+" with "+country.getCurrentArmiesDeployed()+" armies");
+            //System.out.println("Player:"+p.getName()+" got "+country.getCountryName()+" with "+country.getCurrentArmiesDeployed()+" armies");
             j++;
         }
         startUpPhaseLogs += "\n\n===Allocation completed===";
@@ -1099,36 +1111,59 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             canTurnInCards = false;
             canEndTurn = false;
             hasCountryCaptured = false;
-            currentPlayer = playerList.get(playerIndex % playerList.size());
-            currentPlayerReinforceArmies = getReinforcementArmyForPlayer(currentPlayer);
-            currentPlayer.addArmy(currentPlayerReinforceArmies);
             playerIndex++;
-            updatePhaseDetails("Repaint");
-            updatePhaseDetails("\n\n===" + currentPlayer.getName() + " is playing ===");
-            updatePhaseDetails("Reinforcement Phase Begins \n");
-            if (currentPlayer.isBot()) {
-                // Current player is AI
 
-                turnOfBot();
-                if(!hasBotWon){
-                    nextPlayerTurn(model);
+            if (playerIndex >= playerList.size()) {
+                // Loops player index back to 0 when it exceeds the number of players
+                playerIndex = 0;
+                currentIteration++;
+                System.out.println("Current Iterations is : "+currentIteration);
+            }
+
+            if(currentIteration > getDrawTurns()){
+                //TODO GameReport
+                System.out.println("Game is draw ! ");
+            }
+            else{
+                currentPlayer = playerList.get(playerIndex);
+                currentPlayerReinforceArmies = getReinforcementArmyForPlayer(currentPlayer);
+                currentPlayer.addArmy(currentPlayerReinforceArmies);
+                updatePhaseDetails("Repaint");
+                updatePhaseDetails("\n\n===" + currentPlayer.getName() + " is playing ===");
+                updatePhaseDetails("Reinforcement Phase Begins \n");
+                if (currentPlayer.isBot()) {
+                    // Current player is AI
+
+                    turnOfBot();
+                    if(!hasBotWon){
+                        nextPlayerTurn(model);
+                    }
+                    else{
+                        if(!isTournamentMode){
+                            showWinDialogBox();
+                        }
+                        else{
+                            //TODO: Storing the winner in the GameReport
+                            System.out.println(currentPlayer.getName()+" has won the game !");
+                        }
+                    }
                 }
 
+                if (currentPlayer.mustTurnInCards()) {
+                    // While player has 5 or more cards
+                    GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
+                    canTurnInCards = true;
+                    canReinforce = false;
+                    // Player model = new Player();
+                    CardView cardview = new CardView(model, "cards");
+                    model.addObserver(cardview);
+                    model.showCard();
 
+                } else {
+                    canReinforce = true;
+                }
             }
-            if (currentPlayer.mustTurnInCards()) {
-                // While player has 5 or more cards
-                GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
-                canTurnInCards = true;
-                canReinforce = false;
-                // Player model = new Player();
-                CardView cardview = new CardView(model, "cards");
-                model.addObserver(cardview);
-                model.showCard();
 
-            } else {
-                canReinforce = true;
-            }
             GameMap.getInstance().setCurrentPlayer(currentPlayer);
             //testing purpose. remove below two lines if you are getting exception.
             //MapModel.saveGame(GameMap.getInstance(), "test");
