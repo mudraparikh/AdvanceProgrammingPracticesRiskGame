@@ -1,21 +1,25 @@
 package riskControllers;
 
+import static util.RiskGameUtil.mapBtnName1;
+import static util.RiskGameUtil.mapBtnName2;
+import static util.RiskGameUtil.mapBtnName3;
+import static util.RiskGameUtil.startGameBtnName;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskView.TournamentMode;
 import riskView.TournamentView;
-import riskControllers.TournamentViewController;
-import static util.RiskGameUtil.*;
+import tournamentMode.TournamentModel;
 /**
  * This class maps the user's input to the data and methods.
  * @author mudraparikh
@@ -30,6 +34,7 @@ public class TournamentModeController implements ActionListener{
     GameMap gameMap2 = GameMap.getInstance();
     MapModel mapModel = new MapModel();
     String fileName,fileName1,fileName2;
+    List<String> selectedFiles=new ArrayList<String>();
     StringBuilder stringBuilder = new StringBuilder();
     TournamentView add;
     
@@ -52,11 +57,12 @@ public class TournamentModeController implements ActionListener{
     	        fileName = selectedFile.getName();
     	        System.out.println("Selected file 1: " + selectedFile.getAbsolutePath());
     	        MapModel mapmodel = new MapModel();
-    	        gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
+    	      //  gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
                 	stringBuilder.append("Map File 1 : "+fileName+"\n");
+                	selectedFiles.add(selectedFile.getAbsolutePath());
                // model.initData(selectedFile, playerCount);
                }
                 else
@@ -76,11 +82,13 @@ public class TournamentModeController implements ActionListener{
     	        fileName1 = selectedFile.getName();
     	        System.out.println("Selected file 2: " + selectedFile.getAbsolutePath());
     	        MapModel mapmodel = new MapModel();
-    	        gameMap1 = mapmodel.readMapFile(selectedFile.getAbsolutePath());
+    	        //gameMap1 = mapmodel.readMapFile(selectedFile.getAbsolutePath());
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
                 	stringBuilder.append("Map File 2 : "+fileName1+"\n");
+                	selectedFiles.add(selectedFile.getAbsolutePath());
+                	
                // model.initData(selectedFile, playerCount);
                }
                 else
@@ -100,11 +108,12 @@ public class TournamentModeController implements ActionListener{
     	        fileName2 = selectedFile.getName();
     	        System.out.println("Selected file 3: " + selectedFile.getAbsolutePath());
     	        MapModel mapmodel = new MapModel();
-    	        gameMap2 = mapmodel.readMapFile(selectedFile.getAbsolutePath());
+    	        //gameMap2 = mapmodel.readMapFile(selectedFile.getAbsolutePath());
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
                 	stringBuilder.append("Map File 3 : "+fileName2+"\n");
+                	selectedFiles.add(selectedFile.getAbsolutePath());
                // model.initData(selectedFile, playerCount);
                 }
                 else
@@ -120,11 +129,14 @@ public class TournamentModeController implements ActionListener{
 			System.out.println("Number of turns :"+ view.numTurns);
 			view.numGames = (String) view.gamesList.getSelectedItem();
 			stringBuilder.append("Number of Games :"+ view.numGames);
+			int maxNumberOfIteration =Integer.valueOf(view.numTurns);
+			int numberOfGames =Integer.valueOf(view.numGames);
 			System.out.println("Number of Games :"+ view.numGames);
 			TournamentMode.gameDetails.setText(stringBuilder.toString());
+			TournamentModel tournamentModel = new TournamentModel(selectedFiles,numberOfGames,maxNumberOfIteration);
 			try {
 				add = new TournamentView();
-				add.addActionListeners(new TournamentViewController(add));
+				add.addActionListeners(new TournamentViewController(add,tournamentModel));
 				add.setVisible(true);
 			} catch (IOException e) {
 				e.printStackTrace();
