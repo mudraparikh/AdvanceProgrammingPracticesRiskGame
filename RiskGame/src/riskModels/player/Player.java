@@ -1648,6 +1648,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         currentPlayer.canTurnInCards=canTurnInCards;
         currentPlayer.hasCountryCaptured=hasCountryCaptured;
         GameMap.getInstance().setCurrentPlayer(currentPlayer);
+        GameMap.getInstance().setDeck(deck);
         MapModel.saveGame(GameMap.getInstance());
     }
 
@@ -1661,6 +1662,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         canAttack = currentPlayer.canAttack;
         canFortify = currentPlayer.canFortify;
         canReinforce = currentPlayer.canReinforce;
+        deck = gameMap.getDeck();
         
 
     }

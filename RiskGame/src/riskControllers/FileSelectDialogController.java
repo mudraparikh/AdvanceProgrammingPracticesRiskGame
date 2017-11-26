@@ -57,6 +57,7 @@ public class FileSelectDialogController implements ActionListener {
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             if (playerCount == 0){
                 loadGame = true;
+                model.setDrawTurns(10000);
                 model.loadGame(selectedFile.getAbsolutePath());
             }
             else {
