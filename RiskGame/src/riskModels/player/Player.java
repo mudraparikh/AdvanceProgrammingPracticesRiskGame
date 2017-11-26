@@ -15,6 +15,7 @@ import riskView.PlayerView;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicIconFactory;
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -24,7 +25,7 @@ import java.util.*;
  * @author akshay shah
  */
 public class Player extends Observable implements Serializable,PlayerStrategy {
-
+	private static final long serialVersionUID = 1113799434508676095L;
     public boolean canTurnInCards;
     public boolean canReinforce;
     public boolean canAttack;
@@ -32,13 +33,16 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public boolean canEndTurn;
     public boolean hasCountryCaptured;
     public boolean hasPlayerWon;
+    public boolean hasBotWon;
+    public boolean isTournamentMode;
     public boolean isBot;
+
 
     public String name;
     public String startUpPhaseLogs;
     public String botType;
 
-    public int playerIndex = 0;
+    public int playerIndex;
     public int i,j,k;
     public int currentPlayerReinforceArmies;
     public int playerCount;
@@ -49,6 +53,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public int totalArmies;
     public int reinforcementArmies;
     public int turnInCount;
+    public int drawTurns;
+    public int currentIteration = 1;
 
     public double domination; // player's domination in game based on number of countries out of total countries player own
 
@@ -79,8 +85,11 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public List<Player> playerList;
 
     public Hand hand;
+
+    public Random rng;
     String updateMessage = "";
     String phaseDetailMessage="";
+    public String winner;
 
     /**
      * getter method give the message to update
@@ -344,6 +353,14 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         this.botType = botType;
     }
 
+    public int getDrawTurns() {
+        return drawTurns;
+    }
+
+    public void setDrawTurns(int drawTurns) {
+        this.drawTurns = drawTurns;
+    }
+
     public PlayerStrategy getStrategy() {
         return strategy;
     }
@@ -389,7 +406,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * @param playerNames  name of the players
      * @param playerTypes  type of the players
      */
-    public void initData(File selectedFile, int playerCount, ArrayList<String> playerNames, ArrayList<String> playerTypes) {
+    public void initData(File selectedFile, int playerCount, ArrayList<String> playerNames, ArrayList<String> playerTypes,boolean isTournamentMode) {
         if (selectedFile.getName().endsWith("map") && playerCount > 0) {
             createGameMapFromFile(selectedFile);
             // Creates deck
@@ -406,6 +423,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             //allocate armies to players
             allocateCountriesToPlayers();
             addInitialArmiesInRR();
+            this.isTournamentMode = isTournamentMode;
             canTurnInCards = false;
             canReinforce = true;
             canAttack = false;
@@ -457,7 +475,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             country.addArmy(1);
             p.subArmy(1);
             startUpPhaseLogs += "\nPlayer:"+p.getName()+" got "+country.getCountryName();
-            System.out.println("Player:"+p.getName()+" got "+country.getCountryName()+" with "+country.getCurrentArmiesDeployed()+" armies");
+            //System.out.println("Player:"+p.getName()+" got "+country.getCountryName()+" with "+country.getCurrentArmiesDeployed()+" armies");
             j++;
         }
         startUpPhaseLogs += "\n\n===Allocation completed===";
@@ -512,7 +530,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     isBot = true;
                     botType = "aggressive";
                     break;
-                case "Benevolent Bot":
+                case "BenevolentBot Bot":
                     isBot = true;
                     botType = "benevolent";
                     break;
@@ -605,7 +623,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * Attacking allows the player to engage in battles, with outcomes decided by RNG, with
      * opposing players in order to lower the number of armies in a territory to 0 in order
      * to occupy it.
-     *  @param country1 is a String of the point A country.
+     * @param country1 is a String of the point A country.
      * @param country2 is a String of the point B country.
      * @param model Player class object
      * @param gameView has the details to load game board
@@ -680,6 +698,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                 canEndTurn = false;
                 canFortify = false;
                 canTurnInCards = false;
+                showWinDialogBox();
             }
             else{
                 canReinforce = false;
@@ -694,6 +713,11 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             GameView.displayLog("Can not attack right now.");
         }
     }
+
+    private void showWinDialogBox() {
+        JOptionPane.showMessageDialog(null, "Congratulations! "+currentPlayer.getName()+" won the game.");
+    }
+
     /**
      * This method will update attacker's and defender's country with recent armies based on Dice Result
      * @param attackerLosses number of Armies attacker lost
@@ -789,7 +813,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
         // Set country player to attacker
         countryB.setBelongsToPlayer(countryA.getBelongsToPlayer());
-        updatePhaseDetails(""+countryB.getCountryName()+" has been captured ! ");
+        updatePhaseDetails("\n"+countryB.getCountryName()+" has been captured ! ");
 
         //The attacking player must then place a number of armies
         //in the conquered country which is greater or equal than the number of dice that was used in the attack that
@@ -811,7 +835,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
     public void updateDomination() {
     	
-        this.updateMessage="Domination";
+    	this.updateMessage="Domination";
         setChanged();
         notifyObservers();
 		
@@ -824,7 +848,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * @param countryA name of the attacker country
      * @param countryB name of the defender country
      */
-    private void playerLostRule(Country countryA, Country countryB){
+    public void playerLostRule(Country countryA, Country countryB){
         GameView.displayLog(countryB.getBelongsToPlayer().getName() + "has no countries left, player looses the game and is eliminated");
 
         //Attacker will get all the cards of the defender as defender has lost all of it's countries
@@ -1088,38 +1112,61 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             canTurnInCards = false;
             canEndTurn = false;
             hasCountryCaptured = false;
-            currentPlayer = playerList.get(playerIndex % playerList.size());
-            currentPlayerReinforceArmies = getReinforcementArmyForPlayer(currentPlayer);
-            currentPlayer.addArmy(currentPlayerReinforceArmies);
             playerIndex++;
-            updatePhaseDetails("Repaint");
-            updatePhaseDetails("\n\n===" + currentPlayer.getName() + " is playing ===");
-            updatePhaseDetails("Reinforcement Phase Begins \n");
-            if (currentPlayer.isBot()) {
-                // Current player is AI
-                System.out.println("***turnAI-Game");
-                turnOfBot();
-                //nextPlayerTurn(model);
-
+            
+            if (playerIndex >= playerList.size()) {
+                // Loops player index back to 0 when it exceeds the number of players
+                playerIndex = 0;
+                currentIteration++;
+                System.out.println("Current Iterations is : "+currentIteration);
             }
-            if (currentPlayer.mustTurnInCards()) {
-                // While player has 5 or more cards
-                GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
-                canTurnInCards = true;
-                canReinforce = false;
-                // Player model = new Player();
-                CardView cardview = new CardView(model, "cards");
-                model.addObserver(cardview);
-                model.showCard();
 
-            } else {
-                canReinforce = true;
+            if(currentIteration > getDrawTurns()){
+                //TODO GameReport
+            	model.winner="DrawGame";
+                System.out.println("Game is draw ! ");
             }
-            currentPlayer.canReinforce=canReinforce;
-            currentPlayer.canAttack=canAttack;
-            currentPlayer.canFortify=canFortify;
-            currentPlayer.canTurnInCards=canTurnInCards;
-            currentPlayer.hasCountryCaptured=hasCountryCaptured;
+            else{
+                currentPlayer = playerList.get(playerIndex);
+                currentPlayerReinforceArmies = getReinforcementArmyForPlayer(currentPlayer);
+                currentPlayer.addArmy(currentPlayerReinforceArmies);
+                updatePhaseDetails("Repaint");
+                updatePhaseDetails("===" + currentPlayer.getName() + " is playing ===");
+                updatePhaseDetails("\n Reinforcement Phase Begins \n");
+                if (currentPlayer.isBot()) {
+                    // Current player is AI
+
+                    turnOfBot();
+                    if(!hasBotWon){
+                        nextPlayerTurn(model);
+                    }
+                    else{
+                        if(!isTournamentMode){
+                            showWinDialogBox();
+                        }
+                        else{
+                            //TODO: Storing the winner in the GameReport
+                            System.out.println(currentPlayer.getName()+" has won the game !");
+                            model.winner=currentPlayer.getName();
+                        }
+                    }
+                }
+
+                if (currentPlayer.mustTurnInCards()) {
+                    // While player has 5 or more cards
+                    GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
+                    canTurnInCards = true;
+                    canReinforce = false;
+                    // Player model = new Player();
+                    CardView cardview = new CardView(model, "cards");
+                    model.addObserver(cardview);
+                    model.showCard();
+
+                } else {
+                    canReinforce = true;
+                }
+            }
+
             GameMap.getInstance().setCurrentPlayer(currentPlayer);
             //testing purpose. remove below two lines if you are getting exception.
             //MapModel.saveGame(GameMap.getInstance(), "test");
@@ -1166,35 +1213,248 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
     private void cheaterBotTurn() {
         this.setStrategy(new CheaterBot());
-        for(Country country: currentPlayer.assignedCountries){
+
+        //reinforce for bot
+        List<Country> cheaterCountries = new ArrayList<>();
+        for(Country country: currentPlayer.getAssignedCountries()){
             executeReinforce(country.getCountryName(),gameView, this);
+            cheaterCountries.add(country);
         }
-/*
-        for (Country country: currentPlayer.assignedCountries){
-            for (Country neighbor: country.getNeighborNodes()){
-                countryA = MapModel.getCountryObj(country.getCountryName(), GameMap.getInstance());
-                countryB = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
-                if (canAttack && isAttackValidForCheater(currentPlayer, countryA, countryB)) {
-                    executeAttack(countryA.getCountryName(), countryB.getCountryName(), gameView, this);
+
+        //attack phase for bot
+        for(Country attackingCountry: cheaterCountries) {
+            List<Country> neighbors = attackingCountry.getNeighborNodes();
+            for (Country neighbor : neighbors) {
+                Country defenderCountry = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
+                if (isAttackValid(currentPlayer, attackingCountry, defenderCountry)) {
+                    executeAttack(attackingCountry.getCountryName(), neighbor.getCountryName(), gameView, this);
+                    break;
                 }
             }
         }
-*/
-    }
 
-    private boolean isAttackValidForCheater(Player currentPlayer, Country countryA, Country countryB) {
-        return !currentPlayer.equals(countryB.getBelongsToPlayer()) && currentPlayer.equals(countryA.getBelongsToPlayer());
+        //fortification phase for bot
+        List<Country> priorityCountries = new ArrayList<>();
+
+        for(Country country : cheaterCountries){
+            List<Country> neighbors = country.getNeighborNodes();
+            for(Country neighbor: neighbors) {
+                Country c = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
+                if (c != null && !c.getBelongsToPlayer().getName().equalsIgnoreCase(currentPlayer.getName())) {
+                    priorityCountries.add(c);
+                   break;
+                }
+            }
+        }
+        if (priorityCountries.size() > 0) {
+            for (Country country:priorityCountries){
+                executeFortification(country.getCountryName(),null,gameView,this);
+            }
+        }
     }
 
     private void randomBotTurn() {
+        this.setStrategy(new RandomBot());
+        rng = new Random();
+        Country randomCountry = currentPlayer.getAssignedCountries().get(rng.nextInt(currentPlayer.getAssignedCountries().size()));
+
+
+        //reinforce phase for bot
+        executeReinforce(randomCountry.getCountryName(),gameView,this);
+
+        //attack phase for bot
+        List<Country> neighbors = randomCountry.getNeighborNodes();
+        for (Country neighbor : neighbors){
+            Country defenderCountry = MapModel.getCountryObj(neighbor.getCountryName(),GameMap.getInstance());
+            if(isAttackValid(currentPlayer,randomCountry,defenderCountry)){
+                executeAttack(randomCountry.getCountryName(),neighbor.getCountryName(),gameView,this);
+                break;
+            }
+        }
+
+
+        //fortification phase for bot
+        // AI fortify
+        //System.out.println("**AI fortify - start");
+        List<Country> priorityTargets = new ArrayList<>();
+
+        for (Country country:currentPlayer.getAssignedCountries()) {
+            boolean add1 = false;
+            boolean add2 = false;
+
+            for (Country neighbor: country.getNeighborNodes()) {
+                // Checks if country has both adjacent friendly and enemy countries
+                Country n = MapModel.getCountryObj(neighbor.getCountryName(),GameMap.getInstance());
+                if (n != null) {
+                    if (!n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                        // If priority country has an adjacent, enemy country
+                        add1 = true;
+
+                    } else if (n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                        add2 = true;
+                    }
+                }
+
+                if (add1 && add2) {
+                    priorityTargets.add(country);
+                }
+            }
+
+        }
+        //System.out.println("**AI fortify - Created priorityTargets list");
+
+        if (priorityTargets.size() > 0) {
+            List<Country> priorityCountries = new ArrayList<Country>();
+            int r1 = rng.nextInt(priorityTargets.size());
+
+            for (i = 0; i < priorityTargets.get(r1).getNeighborNodes().size(); i++) {
+                Country c = MapModel.getCountryObj(priorityTargets.get(r1).getNeighborNodes().get(i).getCountryName(),GameMap.getInstance());
+
+                if (c != null && c.getBelongsToPlayer().equals(currentPlayer) && c.getCurrentArmiesDeployed() > 1) {
+                    priorityCountries.add(c);
+                }
+            }
+            if (priorityCountries.size() > 0) {
+                //System.out.println("**AI fortify - Created priorityCountries list");
+                int r2 = rng.nextInt(priorityCountries.size());
+                //System.out.println("**AI fortify - Fortifying...");
+                executeFortification(priorityCountries.get(r2).getCountryName(),priorityTargets.get(r1).getCountryName(),gameView,this);
+                //System.out.println("**AI fortify - Successful fortify");
+            }
+        }
+        //System.out.println("**AI fortify - end");
 
     }
 
     private void benevolentBotTurn() {
+        this.setStrategy(new BenevolentBot());
+        rng = new Random();
+        Country weakestCountry = getWeakestCountry(currentPlayer);
+
+        //reinforce phase for bot
+        executeReinforce(weakestCountry.getCountryName(),gameView,this);
+
+        //fortification phase for bot
+        // AI fortify
+        //System.out.println("**AI fortify - start");
+        List<Country> priorityTargets = new ArrayList<>();
+
+        for (Country country:currentPlayer.getAssignedCountries()) {
+            boolean add1 = false;
+            boolean add2 = false;
+
+            for (Country neighbor: country.getNeighborNodes()) {
+                // Checks if country has both adjacent friendly and enemy countries
+                Country n = MapModel.getCountryObj(neighbor.getCountryName(),GameMap.getInstance());
+                if (n != null) {
+                    if (!n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                        // If priority country has an adjacent, enemy country
+                        add1 = true;
+
+                    } else if (n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                        add2 = true;
+                    }
+                }
+
+                if (add1 && add2) {
+                    priorityTargets.add(country);
+                }
+            }
+
+        }
+        //System.out.println("**AI fortify - Created priorityTargets list");
+
+        if (priorityTargets.size() > 0) {
+            List<Country> priorityCountries = new ArrayList<Country>();
+            int r1 = rng.nextInt(priorityTargets.size());
+
+            for (i = 0; i < priorityTargets.get(r1).getNeighborNodes().size(); i++) {
+                Country c = MapModel.getCountryObj(priorityTargets.get(r1).getNeighborNodes().get(i).getCountryName(),GameMap.getInstance());
+
+                if (c != null && c.getBelongsToPlayer().equals(currentPlayer) && c.getCurrentArmiesDeployed() > 1) {
+                    priorityCountries.add(c);
+                }
+            }
+            if (priorityCountries.size() > 0) {
+                //System.out.println("**AI fortify - Created priorityCountries list");
+                int r2 = rng.nextInt(priorityCountries.size());
+                //System.out.println("**AI fortify - Fortifying...");
+                executeFortification(priorityCountries.get(r2).getCountryName(),priorityTargets.get(r1).getCountryName(),gameView,this);
+                //System.out.println("**AI fortify - Successful fortify");
+            }
+        }
+        //System.out.println("**AI fortify - end");
 
     }
 
     private void aggressiveBotTurn() {
+        this.setStrategy(new AggressiveBot());
+        rng = new Random();
+        Country strongestCountry = getStrongestCountry(currentPlayer);
+
+        //reinforce phase for bot
+        executeReinforce(strongestCountry.getCountryName(),gameView,this);
+
+        //attack phase for bot
+        List<Country> neighbors = strongestCountry.getNeighborNodes();
+        for (Country neighbor : neighbors){
+            Country defenderCountry = MapModel.getCountryObj(neighbor.getCountryName(),GameMap.getInstance());
+            if(isAttackValid(currentPlayer,strongestCountry,defenderCountry)){
+                executeAttack(strongestCountry.getCountryName(),neighbor.getCountryName(),gameView,this);
+                break;
+            }
+        }
+
+        //fortification phase for bot
+        // AI fortify
+        //System.out.println("**AI fortify - start");
+        List<Country> priorityTargets = new ArrayList<>();
+
+        for (Country country:currentPlayer.getAssignedCountries()) {
+            boolean add1 = false;
+            boolean add2 = false;
+
+            for (Country neighbor: country.getNeighborNodes()) {
+                // Checks if country has both adjacent friendly and enemy countries
+                Country n = MapModel.getCountryObj(neighbor.getCountryName(),GameMap.getInstance());
+                if (n != null) {
+                    if (!n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                        // If priority country has an adjacent, enemy country
+                        add1 = true;
+
+                    } else if (n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                        add2 = true;
+                    }
+                }
+
+                if (add1 && add2) {
+                    priorityTargets.add(country);
+                }
+            }
+
+        }
+        //System.out.println("**AI fortify - Created priorityTargets list");
+
+        if (priorityTargets.size() > 0) {
+            List<Country> priorityCountries = new ArrayList<Country>();
+            int r1 = rng.nextInt(priorityTargets.size());
+
+            for (i = 0; i < priorityTargets.get(r1).getNeighborNodes().size(); i++) {
+                Country c = MapModel.getCountryObj(priorityTargets.get(r1).getNeighborNodes().get(i).getCountryName(),GameMap.getInstance());
+
+                if (c != null && c.getBelongsToPlayer().equals(currentPlayer) && c.getCurrentArmiesDeployed() > 1) {
+                    priorityCountries.add(c);
+                }
+            }
+            if (priorityCountries.size() > 0) {
+                //System.out.println("**AI fortify - Created priorityCountries list");
+                int r2 = rng.nextInt(priorityCountries.size());
+                //System.out.println("**AI fortify - Fortifying...");
+                executeFortification(priorityCountries.get(r2).getCountryName(),priorityTargets.get(r1).getCountryName(),gameView,this);
+                //System.out.println("**AI fortify - Successful fortify");
+            }
+        }
+        //System.out.println("**AI fortify - end");
 
     }
 
@@ -1210,6 +1470,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * Starts the Game.
      * Shuffles the players.
      * @param model Player Class model
+     * @param gameView game view object
      */
     public void startGame(Player model, GameView gameView) {
         this.gameView = gameView;
@@ -1313,6 +1574,101 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
         return lst;
     }
+    
+    /**
+     * This method will return strongest country of player
+     * @param player player object
+     * @return strongest country
+     */
+    public  static Country getStrongestCountry(Player player) {
+    	List<Country> playerCountry=player.getAssignedCountries();
+    	Country strongestCountry = null;
+    	int maxArmy=1;
+    	for(Country country:playerCountry) {
+    	 int army=	country.getCurrentArmiesDeployed();
+    		if(army>maxArmy) {
+    			maxArmy=army;
+    			strongestCountry = country;
+    		}
+    	}
+		return strongestCountry;
+}
+    
+    /**
+     * This method will return weakest country of player
+     * @param player player object
+     * @return strongest country
+     */
+    public  static Country getWeakestCountry(Player player) {
+    	List<Country> playerCountry=player.getAssignedCountries();
+    	Country weakestCountry = null;
+    	GameMap.getInstance().getCountries();
+    	int minArmy=200;
+    	for(Country country:playerCountry) {
+    	 int army=	country.getCurrentArmiesDeployed();
+    		if(army<minArmy) {
+    			minArmy=army;
+    			weakestCountry = country;
+    		}
+    	}
+		return weakestCountry;
+}
+    /**
+     * This method will check if attack is possible
+     * @param player player object 
+     * @return true if attack possible else false
+     */
+    public boolean isAttackPossible(Player player) {
+    	List<Country> assignedCountry=player.getAssignedCountries();
+    	List<Country> armiesMoreThanOne = new ArrayList<>();
+     	for(Country country : assignedCountry) {
+    		if(country.getCurrentArmiesDeployed()>1) {
+    			armiesMoreThanOne.add(country);
+    		}
+    	}
+     	if(!armiesMoreThanOne.isEmpty()) {
+     		for(Country country : armiesMoreThanOne){
+         		List<Country> neighbors = country.getNeighborNodes();
+         		for(Country neighbor: neighbors) {
+                    Country c = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
+                    if (c != null && !c.getBelongsToPlayer().getName().equalsIgnoreCase(player.getName())) {
+                        return true;
+                    }
+                }
+         	}
+     	}
+     	
+    	return false;
+    }
 
+    public  void saveGame() {
+        currentPlayer.canReinforce=canReinforce;
+        currentPlayer.canAttack=canAttack;
+        currentPlayer.canFortify=canFortify;
+        currentPlayer.canTurnInCards=canTurnInCards;
+        currentPlayer.hasCountryCaptured=hasCountryCaptured;
+        GameMap.getInstance().setCurrentPlayer(currentPlayer);
+        GameMap.getInstance().setDeck(deck);
+        MapModel.saveGame(GameMap.getInstance());
+    }
+
+
+    public void loadGame(String file) {
+    	mapModel = new MapModel();
+        GameMap gameMap=MapModel.loadGame(file);
+        GameMap.setInstance(gameMap);
+        playerList = gameMap.getPlayerList();
+        currentPlayer = gameMap.getCurrentPlayer();
+        canAttack = currentPlayer.canAttack;
+        canFortify = currentPlayer.canFortify;
+        canReinforce = currentPlayer.canReinforce;
+        deck = gameMap.getDeck();
+        
+
+    }
+
+    public void populateLogsAndPhase() {
+        GameView.displayLog("\n\n===== Game Loaded ====\n\n");
+    }
 }
 

@@ -1,13 +1,33 @@
 package riskModels.map;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.player.Player;
+import riskView.GameView;
 import util.RiskGameUtil;
-
-import java.io.*;
-import java.util.*;
-import java.util.Map.Entry;
 
 /**
  * This class will perform operation related to MapObj created from MapFile
@@ -16,6 +36,8 @@ import java.util.Map.Entry;
  * @version 1.0
  */
 public class MapModel {
+	
+	public static int saveFileCounter=1;
     /**
      * This method will assignContinent to Neighbor countries
      *
@@ -600,16 +622,26 @@ public class MapModel {
     /**
      * This method will save the game .
      * @param gameMap GameMap object at the point of saving the game
-     * @param filename filename that user wants to give
      * @return true if function able to save the game else false
      */
-    public static boolean saveGame(GameMap gameMap,String filename) {
+    public static boolean saveGame(GameMap gameMap) {
+    	
     	FileOutputStream fout = null;
 		ObjectOutputStream oos = null;
-
+		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date today;
+        String fileName="";
 		try {
-            fout = new FileOutputStream("c:\\temp\\address.ser");
+			today = formatter.parse(formatter.format(new Date()));
+			fileName=today.toString().replaceAll("00:00:00"," ").replaceAll("\\s+","").concat("_"+String.valueOf(saveFileCounter++));
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+       
+		try {
+            fout = new FileOutputStream("c:\\temp\\"+fileName+".ser");
 			oos = new ObjectOutputStream(fout);
+			GameView.displayLog("File Saved"+"c:\\temp\\"+fileName+".ser");
 			oos.writeObject(gameMap);
             System.out.println("Done");
 
@@ -642,15 +674,14 @@ public class MapModel {
      * @param fileName fileName that user gave while saving the map 
      * @return true if function able to save the game else false
      */
-    public static boolean loadGame(String fileName) {
+    public static GameMap loadGame(String fileName) {
     	FileInputStream fin = null;
 		ObjectInputStream ois = null;
-		GameMap gameMap=null;
-
+        GameMap gameMap = null;
 		try {
-			fin = new FileInputStream("c:\\temp\\address.ser");
+			fin = new FileInputStream(fileName);
 			ois = new ObjectInputStream(fin);
-			gameMap= (GameMap) ois.readObject();
+			gameMap = (GameMap) ois.readObject();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -672,7 +703,7 @@ public class MapModel {
 			}
 
 		}
-		return true;
+		return gameMap;
 
     }
 }

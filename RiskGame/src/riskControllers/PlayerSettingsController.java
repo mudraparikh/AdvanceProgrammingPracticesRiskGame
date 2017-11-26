@@ -60,6 +60,7 @@ public class PlayerSettingsController implements ActionListener {
                 System.out.println("Now Choose the map file from the Dialog box");
                 fileSelectDialog.addActionListener(new FileSelectDialogController(fileSelectDialog, playerCount,playerNames,playerTypes));
                 fileSelectDialog.setVisible(true);
+                view.dispose();
                 break;
             case "backBtn":
                 view.dispose();

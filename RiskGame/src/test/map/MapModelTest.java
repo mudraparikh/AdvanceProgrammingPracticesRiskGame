@@ -11,12 +11,20 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * This class performs the validations related to maps
+ * @author hnath
+ *
+ */
 public class MapModelTest {
     String location = MapModelTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
     private MapModel mapObj;
     private GameMap gameMapObj;
     private String filePath;
 
+    /**
+     * This method setting up the context as many test cases share the same values
+     */
     @Before
     public void init() {
         mapObj = new MapModel();
@@ -25,54 +33,90 @@ public class MapModelTest {
         filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
     }
 
+    /**
+     * This method checks if the selected map is the correct map
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void testValidateMap() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "validate.map");
         assertEquals(true, gameMapObj.isCorrectMap());
     }
 
+    /**
+     * This method checks whether the selected map is valid , if no header map is selected
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void testInValidateMap() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "no_headers.map");
         assertNotEquals(true, gameMapObj.isCorrectMap());
     }
 
+    /**
+     * This method checks whether the selected map is valid , if no neighbours map is selected
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void testInvalidNeighboursMap() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "no_neighbours.map");
         assertFalse(gameMapObj.isCorrectMap());
     }
     
+    /**
+     * This method checks whether the selected map is valid , if disconnected map is selected
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void testDisconnectedMap() throws Exception{
     	gameMapObj = mapObj.readMapFile(filePath + "disconnectedTest.map");
     	assertFalse(gameMapObj.isCorrectMap());
     }
 
+    /**
+     * This method checks whether the selected map is valid , if blank map is selected
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void testBlankMap() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "blank.map");
         assertFalse(gameMapObj.isCorrectMap());
     }
 
+    /**
+     * This method checks whether the selected map is valid , if invalid extension map is selected
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void testInvalidExtensionMap() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "invalid_extension.map");
         assertFalse(gameMapObj.isCorrectMap());
     }
 
+    /**
+     * This method checks for map validation by testing country object
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void testCountryObject() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "validate.map");
         assertEquals("c3", mapObj.getCountryObj("c3", gameMapObj).getCountryName());
     }
 
+    /**
+     * This method checks if the map is valid , the country object with null
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void testCountryObjectWithNull() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "validate.map");
         assertEquals(null, mapObj.getCountryObj("APP", gameMapObj));
     }
 
+    /**
+     * This method checks if the country is removed as expected to the map
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void removeCountry() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "validate.map");
@@ -81,6 +125,10 @@ public class MapModelTest {
         assertEquals(null, mapObj.getCountryObj("c1", gameMapObj));
     }
 
+    /**
+     * This method checks if the country is added as expected to the map
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void addCountry() throws Exception {
         gameMapObj = mapObj.readMapFile(filePath + "validate.map");

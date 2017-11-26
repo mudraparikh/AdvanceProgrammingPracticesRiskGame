@@ -1,5 +1,6 @@
 package riskModels.map;
 
+import riskModels.cards.Deck;
 import riskModels.continent.Continent;
 import riskModels.country.Country;
 import riskModels.player.Player;
@@ -25,6 +26,10 @@ public class GameMap implements Serializable {
     public String errorMessage;
     public HashMap<String, String> mapDetail = new HashMap<>();
     public Player currentPlayer;
+    public Deck deck;
+
+    public String logDetails, phaseDetails,dominationViewDetails;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Default Constructor
@@ -38,11 +43,45 @@ public class GameMap implements Serializable {
      *
      * @return single GameMap instance
      */
-    public static GameMap getInstance() {
+    public static GameMap getInstance(GameMap instance) {
         if (null == gameMap) {
-            gameMap = new GameMap();
+            if(instance==null)
+                gameMap = new GameMap();
+            else
+                gameMap = instance;
         }
         return gameMap;
+    }
+
+    public static void setInstance(GameMap gameMapToSet){
+        System.out.println("inside set instance of transaction manager");
+        gameMap = gameMapToSet;
+    }
+    public static GameMap getInstance() {
+        return getInstance(null);
+    }
+    public String getLogDetails() {
+        return logDetails;
+    }
+
+    public void setLogDetails(String logDetails) {
+        this.logDetails = logDetails;
+    }
+
+    public String getPhaseDetails() {
+        return phaseDetails;
+    }
+
+    public void setPhaseDetails(String phaseDetails) {
+        this.phaseDetails = phaseDetails;
+    }
+
+    public Deck getDeck() {
+        return deck;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
     }
 
     /**
@@ -199,17 +238,25 @@ public class GameMap implements Serializable {
     }
     /**
      * To get the currentPlayer Playing in map
-     * @return
+     * @return current player name
      */
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
 	/**
-	 * To set the currentplayer in map
-	 * @param currentPlayer
+	 * To set the current player in map
+	 * @param currentPlayer name of the current player
 	 */
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
+	}
+
+	public String getDominationViewDetails() {
+		return dominationViewDetails;
+	}
+
+	public void setDominationViewDetails(String dominationViewDetails) {
+		this.dominationViewDetails = dominationViewDetails;
 	}
     
 }

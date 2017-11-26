@@ -22,11 +22,17 @@ public class GamePlayController implements ActionListener {
      * setter method assigns model and gameView to the controller
      * @param model player object
      * @param gameView game view object
+     * @param loadGame game load object
      */
-    public GamePlayController(Player model, GameView gameView) {
+    public GamePlayController(Player model, GameView gameView,boolean loadGame) {
         this.model = model;
         this.view = gameView;
-        model.startGame(this.model, this.view);
+        if (loadGame){
+            model.populateLogsAndPhase();
+        }else{
+            model.startGame(this.model, this.view);
+        }
+
     }
 
     /**
@@ -39,7 +45,7 @@ public class GamePlayController implements ActionListener {
         switch (actionEvent) {
             case "menuBtn":
             	menuView = new GameMenuView();
-            	menuView.addActionListeners(new GameMenuViewController(menuView));
+            	menuView.addActionListeners(new GameMenuViewController(menuView, model));
             	menuView.setVisible(true);
                 break;
 

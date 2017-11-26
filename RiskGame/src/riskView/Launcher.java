@@ -1,7 +1,16 @@
 package riskView;
 
+import riskControllers.FileSelectDialogController;
 import riskControllers.PlayerCountController;
 import riskControllers.TournamentModeController;
+import riskModels.map.GameMap;
+import riskModels.map.MapModel;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 /**
  * This class holds the method that gives the menu option to start game,create map and edit map.
@@ -15,8 +24,11 @@ public class Launcher extends java.awt.Frame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+
+    private FileSelectDialog fileSelectDialog;
 
     /**
      * This method calls the initMenuComponents method to initialize Launcher components.
@@ -51,6 +63,7 @@ public class Launcher extends java.awt.Frame {
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(1, 1, 1));
@@ -87,10 +100,21 @@ public class Launcher extends java.awt.Frame {
             }
         });
 
-        //On click the button creates an instance of the CreateMap class.
-        jButton3.setText("Create Map");
+        //On click the button starts game in tournament mode.
+        jButton3.setText("Load Game");
         jButton3.setName("jButton3");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fileSelectDialog = new FileSelectDialog();
+                fileSelectDialog.addActionListener(new FileSelectDialogController(fileSelectDialog, 0,null,null));
+                fileSelectDialog.setVisible(true);
+            }
+        });
+
+        //On click the button creates an instance of the CreateMap class.
+        jButton4.setText("Create Map");
+        jButton4.setName("jButton4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 util.CreateMap add = new util.CreateMap();
                 add.main(null);
@@ -99,18 +123,18 @@ public class Launcher extends java.awt.Frame {
         });
 
         //On click the button creates an instance of the EditMapView class.
-        jButton4.setText("Edit Map");
-        jButton4.setName("jButton4");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.setText("Edit Map");
+        jButton5.setName("jButton5");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EditMapView add = new EditMapView();
                 add.setVisible(true);
             }
         });
         //On click the button terminates the game.
-        jButton5.setText("Exit");
-        jButton5.setName("jButton5");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButton6.setText("Exit");
+        jButton6.setName("jButton6");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 System.exit(0);
             }
@@ -135,7 +159,8 @@ public class Launcher extends java.awt.Frame {
                                                 .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                                                 .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                                                 .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
+                                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                                                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
                                         .addGap(87, 87, 87))
                 );
         //set the vertical group for the panel layout
@@ -155,7 +180,9 @@ public class Launcher extends java.awt.Frame {
                                         .addComponent(jButton4)
                                         .addGap(21, 21, 21)
                                         .addComponent(jButton5)
-                                        .addGap(24, 24, 24))
+                                        .addGap(24, 24, 24)
+                                        .addComponent(jButton6)
+                                        .addGap(27, 27, 27))
                 );
         add(jPanel1, java.awt.BorderLayout.CENTER);
         pack();

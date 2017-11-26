@@ -1,6 +1,7 @@
 package riskControllers;
 
 import riskModels.map.GameMap;
+import riskModels.map.MapModel;
 import riskModels.player.Player;
 import riskView.FileSelectDialog;
 import riskView.GameView;
@@ -21,7 +22,8 @@ public class FileSelectDialogController implements ActionListener {
     private FileSelectDialog fileSelectDialog;
     private File selectedFile;
     private int playerCount;
-    private Player model = new Player();
+    private boolean loadGame;
+    private Player model;
     private GameView gameView;
 
     private ArrayList<String> playerNames;
@@ -39,6 +41,7 @@ public class FileSelectDialogController implements ActionListener {
         this.playerCount = playerCount;
         this.playerNames = playerNames;
         this.playerTypes = playerTypes;
+        this.model = new Player();
         actionPerformed(null);
     }
 
@@ -48,19 +51,30 @@ public class FileSelectDialogController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         int result = fileSelectDialog.showOpenDialog(fileSelectDialog);
+        GameMap gameMap=GameMap.getInstance();
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileSelectDialog.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-            model.initData(selectedFile, playerCount, playerNames, playerTypes);
+            if (playerCount == 0){
+                loadGame = true;
+                model.setDrawTurns(10000);
+                model.loadGame(selectedFile.getAbsolutePath());
+            }
+            else {
+                model.setDrawTurns(10000);
+                model.initData(selectedFile, playerCount, playerNames, playerTypes,false);
+                loadGame = false;
+            }
+
             try {
                 gameView = new GameView();
-                gameView.addActionListeners(new GamePlayController(model, gameView));
+                gameView.addActionListeners(new GamePlayController(model, gameView, loadGame));
             } catch (IOException e) {
                 e.printStackTrace();
             }
             gameView.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, GameMap.getInstance().getErrorMessage().toString());
+            JOptionPane.showMessageDialog(null, GameMap.getInstance().getErrorMessage());
         }
     }
 }
