@@ -5,7 +5,10 @@ import org.junit.Test;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
+import riskModels.player.Player;
+import riskView.GameView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +19,7 @@ import static org.junit.Assert.*;
  * @author hnath
  *
  */
-public class MapModelTest {
+public class MapModelTest extends Player {
     String location = MapModelTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
     private MapModel mapObj;
     private GameMap gameMapObj;
@@ -141,6 +144,41 @@ public class MapModelTest {
         mapObj.addCountry(country, gameMapObj, neighboringCountries);
         assertEquals("100", mapObj.getCountryObj("100", gameMapObj).getCountryName());
 
+    }
+    
+    /**
+     * This method is used to check where the game getting saved correctly
+     * @throws IOException it throws exceptions if the are any problem in inputs and outputs
+     */
+    @Test
+    public void saveGame() throws IOException{
+    	 gameMapObj = mapObj.readMapFile(filePath + "validate.map");
+    	// initializePlayerData(3, playerNames, playerTypes);
+        playerCount = 3;
+        setInitialArmies(); //Assigning armies
+        allocateCountriesToPlayers();  //Allocating countries
+        addInitialArmiesInRR();  //Assigning initial armies
+        
+        Player player = getPlayerList().get(0); //Performing attack and defending
+        Country attackerCountry = player.assignedCountries.get(0);
+        Country defendingCountry = attackerCountry.getNeighborNodes().get(0);
+        
+        //Performing fortification
+        gameView = new GameView();    
+        nextPlayerTurn(this);
+        canFortify = true;
+        int oldArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
+        int oldArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
+        System.out.println(oldArmyInCountry1);
+        //System.out.println(oldArmyInCountry2);
+        moveArmyFromTo(currentPlayer.assignedCountries.get(0),currentPlayer.assignedCountries.get(1),1);
+        int newArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
+        System.out.println(newArmyInCountry1);
+        int newArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
+        
+        saveGame();
+    
+ //   	assertEquals(true,);
     }
 
 }

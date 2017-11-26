@@ -1641,7 +1641,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     	return false;
     }
 
-    public  void saveGame() {
+    public  void saveGame() throws IOException {
         currentPlayer.canReinforce=canReinforce;
         currentPlayer.canAttack=canAttack;
         currentPlayer.canFortify=canFortify;
