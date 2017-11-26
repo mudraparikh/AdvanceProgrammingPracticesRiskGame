@@ -1648,11 +1648,12 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         currentPlayer.canTurnInCards=canTurnInCards;
         currentPlayer.hasCountryCaptured=hasCountryCaptured;
         GameMap.getInstance().setCurrentPlayer(currentPlayer);
-        MapModel.saveGame(GameMap.getInstance(),"akshay");
+        MapModel.saveGame(GameMap.getInstance());
     }
 
 
     public void loadGame(String file) {
+    	mapModel = new MapModel();
         GameMap gameMap=MapModel.loadGame(file);
         GameMap.setInstance(gameMap);
         playerList = gameMap.getPlayerList();

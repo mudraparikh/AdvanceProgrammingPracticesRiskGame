@@ -37,6 +37,7 @@ import util.RiskGameUtil;
  */
 public class MapModel {
 	
+	public static int saveFileCounter=1;
     /**
      * This method will assignContinent to Neighbor countries
      *
@@ -621,10 +622,9 @@ public class MapModel {
     /**
      * This method will save the game .
      * @param gameMap GameMap object at the point of saving the game
-     * @param filename filename that user wants to give
      * @return true if function able to save the game else false
      */
-    public static boolean saveGame(GameMap gameMap,String filename) {
+    public static boolean saveGame(GameMap gameMap) {
     	
     	FileOutputStream fout = null;
 		ObjectOutputStream oos = null;
@@ -633,7 +633,7 @@ public class MapModel {
         String fileName="";
 		try {
 			today = formatter.parse(formatter.format(new Date()));
-			fileName=today.toString().replaceAll("00:00:00"," ").replaceAll("\\s+","").concat("_"+String.valueOf(1));
+			fileName=today.toString().replaceAll("00:00:00"," ").replaceAll("\\s+","").concat("_"+String.valueOf(saveFileCounter++));
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
@@ -641,7 +641,7 @@ public class MapModel {
 		try {
             fout = new FileOutputStream("c:\\temp\\"+fileName+".ser");
 			oos = new ObjectOutputStream(fout);
-			GameView.displayLog("File Saved"+fileName+".ser");
+			GameView.displayLog("File Saved"+"c:\\temp\\"+fileName+".ser");
 			oos.writeObject(gameMap);
             System.out.println("Done");
 
