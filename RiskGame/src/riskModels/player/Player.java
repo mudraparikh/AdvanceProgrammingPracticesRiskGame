@@ -89,6 +89,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public Random rng;
     String updateMessage = "";
     String phaseDetailMessage="";
+    public String winner;
 
     /**
      * getter method give the message to update
@@ -1112,7 +1113,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             canEndTurn = false;
             hasCountryCaptured = false;
             playerIndex++;
-
+            
             if (playerIndex >= playerList.size()) {
                 // Loops player index back to 0 when it exceeds the number of players
                 playerIndex = 0;
@@ -1122,6 +1123,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
             if(currentIteration > getDrawTurns()){
                 //TODO GameReport
+            	model.winner="DrawGame";
                 System.out.println("Game is draw ! ");
             }
             else{
@@ -1145,6 +1147,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                         else{
                             //TODO: Storing the winner in the GameReport
                             System.out.println(currentPlayer.getName()+" has won the game !");
+                            model.winner=currentPlayer.getName();
                         }
                     }
                 }

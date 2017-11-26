@@ -145,20 +145,37 @@ public class TournamentModeController implements ActionListener{
 				allValidMaps = true;
 			}
 			if (allValidMaps) {
+				StringBuilder finalResult =new StringBuilder();
 				TournamentModel tournamentModel = new TournamentModel(selectedFiles,numberOfGames,maxNumberOfIteration);
                 for (String mapFile : tournamentModel.getMapFiles()) {
                     Player model = new Player();
+                    
+                    int currentGame=1;
+                    StringBuilder result = new StringBuilder();
+                    result.append("------------------->Map ::"+ mapFile+"\n");
                     for (int i = 1; i <= tournamentModel.getNumberOfGames(); i++) {
+                    	currentGame=i;
                         model.initData(new File(mapFile),4,tournamentModel.getPlayerNames(),tournamentModel.getPlayerTypes(),true);
                         model.setDrawTurns(tournamentModel.getNumberOfTurns());
+                        try {
+                            gameView = new GameView();
+                        } catch (IOException e) {
+                           // e.printStackTrace();
+                        }
+                        //result.append("-------------------------ResultForGame"+ currentGame+"-------------\n");
+                       
+                        gameView.addActionListeners(new GamePlayController(model, gameView, false));
+                        result.append("Game"+ i+"\n");
+                        result.append("Result ::"+model.winner+"\n");
+                        
                     }
-                    try {
-                        gameView = new GameView();
-                    } catch (IOException e) {
-                       // e.printStackTrace();
-                    }
-                    gameView.addActionListeners(new GamePlayController(model, gameView, false));
+                    
+                    
+                    
+                    finalResult.append(result);
+                   
                 }
+                System.out.println(finalResult.toString());
 			}
 			else{
                 System.out.println("Looks like you have selected an invalid map(s) file !");
