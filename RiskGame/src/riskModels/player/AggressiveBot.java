@@ -41,17 +41,13 @@ public class AggressiveBot implements PlayerStrategy {
             defenderLosses = 0;
             attackerDice = 1;
             defenderDice = 1;
-            try {
-                // Attacker chooses how many dice to roll
-                rng = new Random();
-                if (countryA.getCurrentArmiesDeployed() <= 3) {
-                    attackerDice = 1;
-                } else {
-                    attackerDice = rng.nextInt(2) + 1;
-                }
-            } catch (IllegalArgumentException e) {
-                // Error: attacker inputs invalid number of dice
-                GameView.displayLog("Roll 1,2 or 3 dice. You must have at least one more army in your country than the number of dice you roll.");
+
+            // Attacker chooses how many dice to roll
+            rng = new Random();
+            if (countryA.getCurrentArmiesDeployed() <= 3) {
+                attackerDice = 1;
+            } else {
+                attackerDice = rng.nextInt(2) + 1;
             }
 
             try {
@@ -67,8 +63,9 @@ public class AggressiveBot implements PlayerStrategy {
                 else {
                     defenderDice = showDefenderDiceDialogBox(gameView, model);
                 }
-            } catch (IllegalArgumentException e) {
+            } catch (Exception e) {
                 // Error: defender inputs invalid number of dice
+                defenderDice = 1;
                 GameView.displayLog("Roll either 1 or 2 dice. To roll 2 dice, you must have at least 2 armies on your country.");
             }
             attackerRolls = Dice.rollDice(attackerDice).getDiceResult();
@@ -132,7 +129,7 @@ public class AggressiveBot implements PlayerStrategy {
     }
 
     private boolean checkPlayerTurnCanContinue(Country countryA, Country countryB) {
-        if(countryA.getCurrentArmiesDeployed() > 1 || !countryB.getBelongsToPlayer().getName().equals(countryA.getBelongsToPlayer().getName())){
+        if(countryA.getCurrentArmiesDeployed() > 1 && !countryB.getBelongsToPlayer().getName().equals(countryA.getBelongsToPlayer().getName())){
             return true;
         }
         return false;

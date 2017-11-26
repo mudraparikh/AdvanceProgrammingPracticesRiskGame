@@ -1131,8 +1131,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                 currentPlayerReinforceArmies = getReinforcementArmyForPlayer(currentPlayer);
                 currentPlayer.addArmy(currentPlayerReinforceArmies);
                 updatePhaseDetails("Repaint");
-                updatePhaseDetails("\n\n===" + currentPlayer.getName() + " is playing ===");
-                updatePhaseDetails("Reinforcement Phase Begins \n");
+                updatePhaseDetails("===" + currentPlayer.getName() + " is playing ===");
+                updatePhaseDetails("\n Reinforcement Phase Begins \n");
                 if (currentPlayer.isBot()) {
                     // Current player is AI
 
