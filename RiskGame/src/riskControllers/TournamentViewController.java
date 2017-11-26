@@ -9,16 +9,19 @@ import java.awt.event.ActionListener;
 import riskView.ResultView;
 
 public class TournamentViewController implements ActionListener {
-	ResultView add;
+	
+	private TournamentView view;
+	private ResultView addview;
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
 		String event = actionEvent.getActionCommand();
 		if (event.equals(resultBtnName)) {
-			add = new ResultView();
-			add.setVisible(true);
+			addview = new ResultView();
+			addview.setVisible(true);
 		}
 	}
 	
 	public TournamentViewController(TournamentView add) {
+		this.view = view;
     }
 }

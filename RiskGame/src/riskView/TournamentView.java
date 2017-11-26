@@ -287,7 +287,7 @@ public class TournamentView extends JDialog {
 	        
 	        return actionPanel;
 	    }
-	    public void addActionListeners(ActionListener event1) throws IOException {	
+	    public void addActionListeners(TournamentViewController event1) throws IOException {	
 	    	TournamentView();
 	  	  resultBtn.addActionListener(event1);
 	  }

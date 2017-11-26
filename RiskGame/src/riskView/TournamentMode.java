@@ -60,7 +60,10 @@ public class TournamentMode extends JDialog{
         setLocationRelativeTo(null);
         pack();
 	}
-	
+	/**
+	 * The panel will display map details and the logs for the Tournament mode of the game.
+	 * @return JPanel tournamentDetails 
+	 */
 	public JPanel tournamentDetailsPanel()
 	{
 		tournamentDetailsPanel = new JPanel();
@@ -101,13 +104,6 @@ public class TournamentMode extends JDialog{
 	 /**
      * Adds the action listeners;
      */
-  /*  protected void addActionListeners(ActionListener event) {
-    mapBtn1.addActionListener(event);
-    mapBtn2.addActionListener(event);
-    mapBtn3.addActionListener(event);
-    startGame.addActionListener(event);
-    }*/
-
 	public void addActionListeners(TournamentModeController event) {
 		mapBtn1.addActionListener(event);
 	    mapBtn2.addActionListener(event);

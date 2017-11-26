@@ -24,7 +24,6 @@ import static util.RiskGameUtil.*;
 public class TournamentModeController implements ActionListener{
 	private JFileChooser filechooser = new JFileChooser();
 	private TournamentMode view;
-	private TournamentView tournamentView;
     GameMap gameMap = GameMap.getInstance();
     GameMap gameMap1 = GameMap.getInstance();
     GameMap gameMap2 = GameMap.getInstance();
@@ -122,13 +121,13 @@ public class TournamentModeController implements ActionListener{
 			stringBuilder.append("Number of Games :"+ view.numGames);
 			System.out.println("Number of Games :"+ view.numGames);
 			TournamentMode.gameDetails.setText(stringBuilder.toString());
+			add = new TournamentView();
 			try {
-				add = new TournamentView();
 				add.addActionListeners(new TournamentViewController(add));
-				add.setVisible(true);
 			} catch (IOException e) {
 				e.printStackTrace();
-			}	
+			}
+			add.setVisible(true);	
 		}
 		else{
 			System.out.println("Error: " + actionEvent + " actionEvent not found!");

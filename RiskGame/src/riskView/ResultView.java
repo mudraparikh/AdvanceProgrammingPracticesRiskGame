@@ -12,13 +12,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+/**
+ * This class will load the Result of tournament mode
+ * @author mudraparikh
+ *
+ */
 public class ResultView extends JDialog {
-	private JPanel tablePanel;
-	private GridBagLayout tableLayout;
-	private JTable resultTable;
-	private GridBagConstraints c;
-	private JScrollPane tablePane;
-	private JButton okBtn;
+	public JPanel tablePanel;
+	public GridBagLayout tableLayout;
+	public JTable resultTable;
+	public GridBagConstraints c;
+	public JScrollPane tablePane;
+	public JButton okBtn;
 	public Object rowData[][] ={ 
 			{"Map1","Map2","Map3"},
 	        {"Agressive","Cheater","Cheater"}, 
@@ -28,10 +33,14 @@ public class ResultView extends JDialog {
 	};
 	public Object columnNames[]={ "", "Game 1", "Game 2","Game 3","Game 4" };
 	
+	/**
+	 * Constructs the view for result of tournament mode
+	 */
 	public void ResultView() {
 	setTitle("**Result - Tournament Mode**");
     setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     setResizable(false);
+    setVisible(true);
     
 	tableLayout = new GridBagLayout();
     setLayout(tableLayout);
@@ -48,6 +57,9 @@ public class ResultView extends JDialog {
     setLocationRelativeTo(null);
     pack();
 }
+	/**
+	 * This panel will display the result table
+	 */
 	private JPanel tablePanel() {
 		tablePanel = new JPanel();
 		tablePanel.setPreferredSize(new Dimension(250,250));
@@ -81,6 +93,9 @@ public class ResultView extends JDialog {
 		
 		return tablePanel;
 	}
+	/**
+	 * Add action listeners
+	 */
 	public void addActionListeners() {
 		ResultView();
 		
