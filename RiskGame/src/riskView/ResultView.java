@@ -28,7 +28,7 @@ public class ResultView extends JDialog {
 	};
 	public Object columnNames[]={ "", "Game 1", "Game 2","Game 3","Game 4" };
 	
-	private void ResultView() {
+	public void ResultView() {
 	setTitle("**Result - Tournament Mode**");
     setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     setResizable(false);

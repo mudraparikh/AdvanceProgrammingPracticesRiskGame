@@ -20,6 +20,5 @@ public class TournamentViewController implements ActionListener {
 	}
 	
 	public TournamentViewController(TournamentView add) {
-    	//TODO Generated code
     }
 }
