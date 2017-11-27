@@ -5,7 +5,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 
 import javax.swing.DefaultListModel;
@@ -100,14 +106,64 @@ public class TournamentView extends JDialog {
         pack();
 	}	
 	/**
-     * This method will display updated logs in logger window of the game
+     * This method will append logs in text file
      *
      * @param logDetail log message that you want to add.
      */
     public static void displayLog(String logDetail) {
-        String existingDetails = printTextArea.getText();
-        StringBuilder stringBuilder = new StringBuilder(existingDetails);
-        printTextArea.setText(stringBuilder.append(logDetail) + "\n");
+    	// The name of the file to open.
+        String fileName = "TournamentModeLogs.txt";
+
+        // This will reference one line at a time
+        String line = null;
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader = 
+                new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader = 
+                new BufferedReader(fileReader);
+            if(logDetail.equalsIgnoreCase("repaint")) {
+            	sb.append("");
+            }else {
+            	while((line = bufferedReader.readLine()) != null) {
+                    sb.append(line+"\n");
+                }
+            }
+               
+
+            // Always close files.
+            bufferedReader.close();         
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                "Unable to open file '" + 
+                fileName + "'");                
+        }
+        catch(IOException ex) {
+            System.out.println(
+                "Error reading file '" 
+                + fileName + "'");                  
+            // Or we could just do this: 
+            // ex.printStackTrace();
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("TournamentModeLogs.txt")))) {
+        	if(logDetail.equalsIgnoreCase("repaint")) {
+        		out.print(sb.append("").toString() + "\n");	
+        	}else {
+        		out.print(sb.append(logDetail).toString() + "\n");
+        	}
+        	
+        	out.close();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
     
     /**
@@ -285,9 +341,44 @@ public class TournamentView extends JDialog {
 	        
 	        return actionPanel;
 	    }
+	    /**
+	     * Adding Actional Listeners for 
+	     * @param tournamentViewController controller of Tournament View
+	     * @throws IOException
+	     */
 	    public void addActionListeners(TournamentViewController tournamentViewController) throws IOException {	
 	  	  TournamentView();
 	  }
+	    /**
+	     * This method will print map panel details in txt file for tournament mode.
+	     * @param gameNumber game number Ex: 1,2,3
+	     * @param state state details Ex: before ,After
+	     */
+	    public static void updateMapPanelFinal(int gameNumber,String state) {
+	        StringBuilder stringBuilder = new StringBuilder();
+	        for (Continent continent : GameMap.getInstance().getContinentList()) {
+	            stringBuilder.append("----------------------------");
+	            stringBuilder.append(continent.getContinentName());
+	            stringBuilder.append("----------------------------" + "\n");
+	            for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+	                if (country.getBelongsToContinent().equalsIgnoreCase(continent.getContinentName())) {
+	                    stringBuilder.append(country.getCountryName());
+	                    stringBuilder.append(" - ").append(country.getCurrentArmiesDeployed()).append(" - ");
+	                    stringBuilder.append(country.getBelongsToPlayer().getName()).append("\n");
+	                }
+	            }
+
+	        }
+	        Date date = new Date();
+	        TextAreaForMapPanel.setText(stringBuilder.toString() + "\n Updated:" + date.toString());
+	        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Game_"+gameNumber+"_"+state+".txt")))) {
+	        	out.print(stringBuilder.toString() + "\n");
+	        	out.close();
+	            
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 }
 
 //Alert Message structure
