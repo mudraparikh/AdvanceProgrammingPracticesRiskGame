@@ -484,7 +484,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     /**
      * This will set the total number of armies for the player during the start-up phase
      */
-    public void setInitialArmies() {
+    public void setInitialArmies()throws NullPointerException {
        for (Player p : player.getPlayerList()) {
             p.setTotalArmies(getInitialArmyCount());
         }
@@ -1641,7 +1641,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     	return false;
     }
 
-    public  void saveGame() throws IOException {
+    public  void saveGame()throws Exception{
         currentPlayer.canReinforce=canReinforce;
         currentPlayer.canAttack=canAttack;
         currentPlayer.canFortify=canFortify;

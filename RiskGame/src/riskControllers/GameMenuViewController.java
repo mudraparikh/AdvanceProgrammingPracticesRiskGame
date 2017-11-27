@@ -29,7 +29,12 @@ public class GameMenuViewController implements ActionListener {
                 break;
 
             case "saveBtn":
-                model.saveGame();
+			try {
+				model.saveGame();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
                 break;
 
             case "quitBtn":
