@@ -39,11 +39,17 @@ public class TournamentModeController implements ActionListener{
     StringBuilder stringBuilder = new StringBuilder();
     GameView gameView;
     
-    
+    /**
+     * Constructor assigning view
+     * @param view tournament mode view
+     */
     public TournamentModeController(TournamentMode view) {
     	this.view = view;
 	}
 
+    /**
+     * over rides action performed method
+     */
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
 		String event = actionEvent.getActionCommand();

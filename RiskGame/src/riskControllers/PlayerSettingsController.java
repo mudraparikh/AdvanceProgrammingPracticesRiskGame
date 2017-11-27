@@ -8,6 +8,11 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+/**
+ * This class sets the Player Controller
+ * @author hnath
+ *
+ */
 public class PlayerSettingsController implements ActionListener {
     private PlayerSettingsView view;
     private int playerCount;
@@ -16,12 +21,20 @@ public class PlayerSettingsController implements ActionListener {
     private ArrayList<String> playerNames;
     private ArrayList<String> playerTypes;
 
+    /**
+     * This constructor assigning players count and view
+     * @param playerSettingsView Player object
+     * @param playerCount Number of players
+     */
     public PlayerSettingsController(PlayerSettingsView playerSettingsView, int playerCount) {
         this.fileSelectDialog = new FileSelectDialog();
         this.view = playerSettingsView;
         this.playerCount = playerCount;
     }
 
+    /**
+     * over rides action performed method
+     */
     @Override
     public void actionPerformed(ActionEvent evt) {
         String actionEvent = evt.getActionCommand();
