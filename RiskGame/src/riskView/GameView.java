@@ -142,6 +142,7 @@ public class GameView extends JDialog {
         StringBuilder stringBuilder = new StringBuilder(existingDetails);
         printTextArea.setText(stringBuilder.append(logDetail) + "\n");
         GameMap.getInstance().setLogDetails(stringBuilder.append(logDetail) + "\n");
+        TournamentView.displayLog(logDetail); // to get real time updates during tournament mode.
     }
     
     /**

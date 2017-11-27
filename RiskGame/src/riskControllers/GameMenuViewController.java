@@ -7,6 +7,7 @@ import riskView.GameView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * This GameMenuViewController class gives menu buttons function
@@ -45,8 +46,9 @@ public class GameMenuViewController implements ActionListener {
             case "saveBtn":
 			try {
 				model.saveGame();
+
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+
 				e.printStackTrace();
 			}
                 break;
