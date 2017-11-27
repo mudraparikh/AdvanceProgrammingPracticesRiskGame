@@ -7,6 +7,7 @@ import riskView.GameView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class GameMenuViewController implements ActionListener {
 
@@ -29,7 +30,12 @@ public class GameMenuViewController implements ActionListener {
                 break;
 
             case "saveBtn":
-                model.saveGame();
+			try {
+				model.saveGame();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
                 break;
 
             case "quitBtn":

@@ -780,7 +780,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     protected boolean isAttackValid(Player currentPlayer, Country countryA, Country countryB){
         if (countryA.getCurrentArmiesDeployed() > 1) {
             //Check if at-least 2 armies are there on the attacking country.
-            if (!currentPlayer.equals(countryB.getBelongsToPlayer()) && currentPlayer.equals(countryA.getBelongsToPlayer())) {
+            if (!currentPlayer.getName().equals(countryB.getBelongsToPlayer().getName()) && currentPlayer.getName().equals(countryA.getBelongsToPlayer().getName())) {
                 // Check if another country is occupied by an opponent and not by the currentPlayer.
                 if (mapModel.isNeighbour(countryA, countryB)) {
                     return true;
@@ -1641,7 +1641,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     	return false;
     }
 
-    public  void saveGame() {
+    public  void saveGame() throws IOException {
         currentPlayer.canReinforce=canReinforce;
         currentPlayer.canAttack=canAttack;
         currentPlayer.canFortify=canFortify;
