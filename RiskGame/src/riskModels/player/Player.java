@@ -778,7 +778,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * @return true if attacker can attack else false
      */
     protected boolean isAttackValid(Player currentPlayer, Country countryA, Country countryB){
-        if (countryA.getCurrentArmiesDeployed() > 1) {
+        if (countryA.getCurrentArmiesDeployed() > 1 && !hasBotWon) {
             //Check if at-least 2 armies are there on the attacking country.
             if (!currentPlayer.getName().equals(countryB.getBelongsToPlayer().getName()) && currentPlayer.getName().equals(countryA.getBelongsToPlayer().getName())) {
                 // Check if another country is occupied by an opponent and not by the currentPlayer.
@@ -791,7 +791,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                 GameView.displayLog("You cannot attack your own country.");
             }
         } else {
-            GameView.displayLog("You must have more than 1 army on " + countryA.getCountryName() + " if you wish to attack from it.");
+        	if(!hasBotWon) {
+        		GameView.displayLog("You must have more than 1 army on " + countryA.getCountryName() + " if you wish to attack from it.");	
+        	}
+            
         }
         return false;
     }
