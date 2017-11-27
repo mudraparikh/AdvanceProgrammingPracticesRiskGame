@@ -8,17 +8,31 @@ import riskView.GameView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This GameMenuViewController class gives menu buttons function
+ * @author hnath
+ *
+ */
 public class GameMenuViewController implements ActionListener {
 
     public GameMenuView view;
     public Player model;
 
+    /**
+     * constructor 
+     * @param menuView menu view object
+     * @param model model object
+     */
     public GameMenuViewController(GameMenuView menuView, Player model) {
         // TODO Auto-generated constructor stub
         this.view = menuView;
         this.model = model;
     }
 
+    /**
+     * over rides actionPerformed method
+     * and have 3 buttons to return,save and quit the game
+     */
     @Override
     public void actionPerformed(ActionEvent evt) {
         String actionEvent = evt.getActionCommand();
