@@ -33,7 +33,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public boolean canEndTurn;
     public boolean hasCountryCaptured;
     public boolean hasPlayerWon;
-    public boolean hasBotWon;
+    public static boolean hasBotWon;
     public boolean isTournamentMode;
     public boolean isBot;
 
@@ -1107,7 +1107,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * @param model <code>Player.class</code> object to passed for Card View Observable
      */
     public void nextPlayerTurn(Player model) {
-        if (playerList.size() > 1) {
+        if (playerList.size() > 1 && !hasBotWon) {
             //if at least one player remains
             canReinforce = false;
             canAttack = false;
@@ -1225,12 +1225,15 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
 
         //attack phase for bot
-        for(Country attackingCountry: cheaterCountries) {
+       attackPhase: for(Country attackingCountry: cheaterCountries) {
             List<Country> neighbors = attackingCountry.getNeighborNodes();
             for (Country neighbor : neighbors) {
                 Country defenderCountry = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
                 if (isAttackValid(currentPlayer, attackingCountry, defenderCountry)) {
                     executeAttack(attackingCountry.getCountryName(), neighbor.getCountryName(), gameView, this);
+                    if(hasBotWon) {
+                    	break attackPhase;
+                    }
                     break;
                 }
             }
@@ -1587,6 +1590,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     	List<Country> playerCountry=player.getAssignedCountries();
     	Country strongestCountry = null;
     	int maxArmy=1;
+    	if(playerCountry.size()==1) {
+    		return playerCountry.get(0);
+    	}
     	for(Country country:playerCountry) {
     	 int army=	country.getCurrentArmiesDeployed();
     		if(army>maxArmy) {
