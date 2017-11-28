@@ -706,7 +706,17 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
             try {
                 // Defender chooses how many dice to roll after attacker
-                defenderDice = showDefenderDiceDialogBox(gameView);
+                if(countryB.getBelongsToPlayer().isBot()){
+                    rng = new Random();
+                    if (countryB.getCurrentArmiesDeployed() <= 1) {
+                        defenderDice = 1;
+                    } else {
+                        defenderDice = rng.nextInt(1) + 1;
+                    }
+                }
+                else {
+                    defenderDice = showDefenderDiceDialogBox(gameView);
+                }
             } catch (IllegalArgumentException e) {
                 // Error: defender inputs invalid number of dice
                 GameView.displayLog("Roll either 1 or 2 dice. To roll 2 dice, you must have at least 2 armies on your country.");
@@ -728,8 +738,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
             updateArmiesBasedOnDiceResult(attackerLosses, defenderLosses);
 
-            GameView.displayLog("Attacker Losses : " + attackerLosses + " army.");
-            GameView.displayLog("Defender Losses : " + defenderLosses + " army.");
+            GameView.displayLog(countryA.getBelongsToPlayer().getName()+"(Attacker) Losses : " + attackerLosses + " army in " +countryA.getCountryName());
+            GameView.displayLog(countryB.getBelongsToPlayer().getName()+"(Defender) Losses : " + defenderLosses + " army in " +countryB.getCountryName());
             GameView.displayLog(countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
             GameView.displayLog(countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
             GameView.displayLog("\n\n");
