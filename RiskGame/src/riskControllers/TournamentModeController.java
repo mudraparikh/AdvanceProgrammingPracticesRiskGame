@@ -15,6 +15,7 @@ import riskModels.map.MapModel;
 import riskModels.player.Player;
 import riskView.GameView;
 import riskView.TournamentMode;
+import riskView.TournamentView;
 import tournamentMode.TournamentModel;
 
 import static util.RiskGameUtil.*;
@@ -102,6 +103,7 @@ public class TournamentModeController implements ActionListener{
 			}
 			//checks for all the as selected by the user are valid or not
 			if (allValidMaps && maxNumberOfIteration>=10 && maxNumberOfIteration <=50) {
+				Player.isTournamentMode=true;
 				StringBuilder finalResult =new StringBuilder();
 				TournamentModel tournamentModel = new TournamentModel(selectedFiles,numberOfGames,maxNumberOfIteration);
                 for (String mapFile : tournamentModel.getMapFiles()) {
@@ -109,30 +111,40 @@ public class TournamentModeController implements ActionListener{
                     
                     int currentGame=1;
                     StringBuilder result = new StringBuilder();
-                    result.append("--------->Map ::").append(mapFile).append("\n");
+                    result.append("------------------->Map ::"+ mapFile+"\n");
+                    GameView.displayLog("------------------Now Playing for map------------------>"+mapFile);
                     for (int i = 1; i <= tournamentModel.getNumberOfGames(); i++) {
+                    	
                     	currentGame=i;
+                    	GameView.displayLog("Game"+i+"Starts");
                         model.initData(new File(mapFile),4,tournamentModel.getPlayerNames(),tournamentModel.getPlayerTypes(),true);
                         model.setDrawTurns(tournamentModel.getNumberOfTurns());
+                        TournamentView.updateMapPanelFinal(i, "Before",mapFile);
                         try {
                             gameView = new GameView();
                         } catch (IOException e) {
                            // e.printStackTrace();
                         }
-                        result.append("---------------ResultForGame").append(currentGame).append("-------------\n");
-                       
+                   	   
                         gameView.addActionListeners(new GamePlayController(model, gameView, false));
-                        result.append("Game").append(i).append("\n");
-                        result.append("Result ::").append(model.winner).append("\n");
+                        result.append("Game"+ i+"\n");
+                        result.append("Result ::"+model.winner+"\n");
                         gameView.setVisible(true);
+                        TournamentView.updateMapPanelFinal(i, "After",mapFile);
                         gameView=null;
                         GameMap.setInstance(null);
                         Player.hasBotWon=false;
+                        GameView.displayLog("------------------------->Game"+currentGame+"Ends");
+                        GameView.displayLog("Results is -->"+result.toString());
+                        
                     }
+                    
+                    
+                    
                     finalResult.append(result);
                    
                 }
-                System.out.println(finalResult.toString());
+                GameView.displayLog("All Game Ends \n"+finalResult.toString());
 			}
 			else{
                 System.out.println("\nLooks like you have selected an invalid map(s) file !\nor\nNumber of max turn is not in range of 10-50 !!");

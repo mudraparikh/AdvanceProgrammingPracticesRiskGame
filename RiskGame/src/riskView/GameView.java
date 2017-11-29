@@ -138,11 +138,14 @@ public class GameView extends JDialog {
      * @param logDetail log message that you want to add.
      */
     public static void displayLog(String logDetail) {
-        String existingDetails = printTextArea.getText();
-        StringBuilder stringBuilder = new StringBuilder(existingDetails);
-        printTextArea.setText(stringBuilder.append(logDetail) + "\n");
-        GameMap.getInstance().setLogDetails(stringBuilder.append(logDetail) + "\n");
-        TournamentView.displayLog(logDetail); // to get real time updates during tournament mode.
+    	if(Player.isTournamentMode) {
+   		 TournamentView.displayLog(logDetail); // to get real time updates during tournament mode.
+	   	}else {
+	   		String existingDetails = printTextArea.getText();
+	           StringBuilder stringBuilder = new StringBuilder(existingDetails);
+	           printTextArea.setText(stringBuilder.append(logDetail) + "\n");
+	           GameMap.getInstance().setLogDetails(stringBuilder.append(logDetail) + "\n");
+	   	}
     }
     
     /**

@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -353,8 +354,9 @@ public class TournamentView extends JDialog {
 	     * This method will print map panel details in txt file for tournament mode.
 	     * @param gameNumber game number Ex: 1,2,3
 	     * @param state state details Ex: before ,After
+	     * @param mapFile path of mapfile you want to see map panel for 
 	     */
-	    public static void updateMapPanelFinal(int gameNumber,String state) {
+	    public static void updateMapPanelFinal(int gameNumber,String state,String mapFile) {
 	        StringBuilder stringBuilder = new StringBuilder();
 	        for (Continent continent : GameMap.getInstance().getContinentList()) {
 	            stringBuilder.append("----------------------------");
@@ -370,8 +372,8 @@ public class TournamentView extends JDialog {
 
 	        }
 	        Date date = new Date();
-	        TextAreaForMapPanel.setText(stringBuilder.toString() + "\n Updated:" + date.toString());
-	        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Game_"+gameNumber+"_"+state+".txt")))) {
+	        File file = new File(mapFile);
+	        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file.getName()+"Game_"+gameNumber+"_"+state+".txt")))) {
 	        	out.print(stringBuilder.toString() + "\n");
 	        	out.close();
 	            

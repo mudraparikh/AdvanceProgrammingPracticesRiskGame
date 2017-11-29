@@ -34,7 +34,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public boolean hasCountryCaptured;
     public boolean hasPlayerWon;
     public static boolean hasBotWon;
-    public boolean isTournamentMode;
+    public static boolean isTournamentMode;
     public boolean isBot;
 
 
