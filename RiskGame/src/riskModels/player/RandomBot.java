@@ -191,7 +191,20 @@ public class RandomBot implements PlayerStrategy {
 
     @Override
     public void fortify(String country1, String country2, GameView gameView, Player model) {
+        countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
+        countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
 
+        // Player inputs how many armies to move from country A to country B
+        model.updatePhaseDetails("Repaint");
+        model.updatePhaseDetails("===Fortification phase===");
+
+        int armies = countryA.getCurrentArmiesDeployed() - 1;
+
+        model.moveArmyFromTo(countryA, countryB, armies);
+        GameView.updateMapPanel();
+        model.updatePhaseDetails(model.currentPlayer.getName()+" moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
+        model.checkHasCountryCaptured();
+        model.updatePhaseDetails("===Fortification ends===");
     }
 
     @Override
@@ -207,7 +220,7 @@ public class RandomBot implements PlayerStrategy {
                 countryA.addArmy(armies);
                 GameView.displayLog(model.currentPlayer.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");
                 if (model.currentPlayer.getTotalArmies() == 0) {
-                    GameView.displayLog("\nYou do not have any armies left to reinforce");
+                    GameView.displayLog(model.currentPlayer.getName()+" do not have any armies left to reinforce");
                     model.updatePhaseDetails("\nReinforcement Phase ends");
                 }
                 GameView.updateMapPanel();

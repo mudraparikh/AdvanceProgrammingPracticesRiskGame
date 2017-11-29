@@ -198,7 +198,7 @@ public class AggressiveBot implements PlayerStrategy {
 
         model.moveArmyFromTo(countryA, countryB, armies);
         GameView.updateMapPanel();
-        model.updatePhaseDetails("You moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
+        model.updatePhaseDetails(model.currentPlayer.getName()+" moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
         model.checkHasCountryCaptured();
         model.updatePhaseDetails("===Fortification ends===");
     }
@@ -214,7 +214,7 @@ public class AggressiveBot implements PlayerStrategy {
                 countryA.addArmy(armies);
                 GameView.displayLog(model.currentPlayer.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");
                 if (model.currentPlayer.getTotalArmies() == 0) {
-                    GameView.displayLog("You do not have any armies left to reinforce");
+                    GameView.displayLog(model.currentPlayer.getName()+" do not have any armies left to reinforce");
                     model.updatePhaseDetails("Reinforcement Phase ends");
                 }
                 GameView.updateMapPanel();

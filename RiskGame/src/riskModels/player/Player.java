@@ -1505,10 +1505,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      */
     public void startGame(Player model, GameView gameView) {
         this.gameView = gameView;
-        Collections.shuffle(playerList);
+        //Collections.shuffle(playerList);
         player.setPlayerList(playerList);
         GameMap.getInstance().setPlayerList(playerList);
-        //GameView.displayLog(startUpPhaseLogs);
+        GameView.displayLog(startUpPhaseLogs);
         GameView.displayLog("\n\n");
         GameView.displayLog("Enjoy the game ! All the best !");
         GameView.displayLog("The order of turns:");

@@ -41,15 +41,15 @@ public class PlayerCountController implements ActionListener {
         } else if (event.equals(fourPlayersBtnName)) {
 
             playerSettingsView = new PlayerSettingsView(view, true, 4);
-            playerSettingsView.addActionListeners(new PlayerSettingsController(playerSettingsView, 3 ));
+            playerSettingsView.addActionListeners(new PlayerSettingsController(playerSettingsView, 4 ));
             playerSettingsView.setVisible(true);
         } else if (event.equals(fivePlayersBtnName)) {
             playerSettingsView = new PlayerSettingsView(view, true, 5);
-            playerSettingsView.addActionListeners(new PlayerSettingsController(playerSettingsView, 3 ));
+            playerSettingsView.addActionListeners(new PlayerSettingsController(playerSettingsView, 5 ));
             playerSettingsView.setVisible(true);
         } else if (event.equals(sixPlayersBtnName)) {
             playerSettingsView = new PlayerSettingsView(view, true, 6);
-            playerSettingsView.addActionListeners(new PlayerSettingsController(playerSettingsView, 3 ));
+            playerSettingsView.addActionListeners(new PlayerSettingsController(playerSettingsView, 6 ));
             playerSettingsView.setVisible(true);
         } else if (event.equals(backBtnName)) {
             view.dispose();
