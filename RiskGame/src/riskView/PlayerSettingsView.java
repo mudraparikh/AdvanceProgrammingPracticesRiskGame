@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 /**
  * This class displays the types of player and player settings
- * @author akshay
+ * @author Akshay Shah
  *
  */
 public class PlayerSettingsView extends JDialog {

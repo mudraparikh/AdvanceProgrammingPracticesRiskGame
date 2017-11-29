@@ -64,13 +64,11 @@ public class TournamentModeController implements ActionListener{
     	        fileName = selectedFile.getName();
     	        System.out.println("Selected file 1: " + selectedFile.getAbsolutePath());
     	        MapModel mapmodel = new MapModel();
-    	      //  gameMap = mapmodel.readMapFile(selectedFile.getAbsolutePath());
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
                 	stringBuilder.append("Map File 1 : "+fileName+"\n");
                 	selectedFiles.add(selectedFile.getAbsolutePath());
-               // model.initData(selectedFile, playerCount);
                }
                 else
                 {
@@ -89,14 +87,11 @@ public class TournamentModeController implements ActionListener{
     	        fileName1 = selectedFile.getName();
     	        System.out.println("Selected file 2: " + selectedFile.getAbsolutePath());
     	        MapModel mapmodel = new MapModel();
-    	        //gameMap1 = mapmodel.readMapFile(selectedFile.getAbsolutePath());
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
                 	stringBuilder.append("Map File 2 : "+fileName1+"\n");
                 	selectedFiles.add(selectedFile.getAbsolutePath());
-                	
-               // model.initData(selectedFile, playerCount);
                }
                 else
                 {
@@ -115,13 +110,11 @@ public class TournamentModeController implements ActionListener{
     	        fileName2 = selectedFile.getName();
     	        System.out.println("Selected file 3: " + selectedFile.getAbsolutePath());
     	        MapModel mapmodel = new MapModel();
-    	        //gameMap2 = mapmodel.readMapFile(selectedFile.getAbsolutePath());
     	        
     	      //Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
                 	stringBuilder.append("Map File 3 : "+fileName2+"\n");
                 	selectedFiles.add(selectedFile.getAbsolutePath());
-               // model.initData(selectedFile, playerCount);
                 }
                 else
                 {
@@ -150,6 +143,7 @@ public class TournamentModeController implements ActionListener{
 				}
 				allValidMaps = true;
 			}
+			//checks for all the as selected by the user are valid or not
 			if (allValidMaps) {
 				StringBuilder finalResult =new StringBuilder();
 				TournamentModel tournamentModel = new TournamentModel(selectedFiles,numberOfGames,maxNumberOfIteration);
@@ -158,7 +152,7 @@ public class TournamentModeController implements ActionListener{
                     
                     int currentGame=1;
                     StringBuilder result = new StringBuilder();
-                    result.append("------------------->Map ::"+ mapFile+"\n");
+                    result.append("--------->Map ::"+ mapFile+"\n");
                     for (int i = 1; i <= tournamentModel.getNumberOfGames(); i++) {
                     	currentGame=i;
                         model.initData(new File(mapFile),4,tournamentModel.getPlayerNames(),tournamentModel.getPlayerTypes(),true);
@@ -168,7 +162,7 @@ public class TournamentModeController implements ActionListener{
                         } catch (IOException e) {
                            // e.printStackTrace();
                         }
-                        //result.append("-------------------------ResultForGame"+ currentGame+"-------------\n");
+                        result.append("---------------ResultForGame"+ currentGame+"-------------\n");
                        
                         gameView.addActionListeners(new GamePlayController(model, gameView, false));
                         result.append("Game"+ i+"\n");
@@ -178,9 +172,6 @@ public class TournamentModeController implements ActionListener{
                         GameMap.setInstance(null);
                         Player.hasBotWon=false;
                     }
-                    
-                    
-                    
                     finalResult.append(result);
                    
                 }
