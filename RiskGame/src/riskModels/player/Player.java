@@ -533,7 +533,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     isBot = true;
                     botType = "aggressive";
                     break;
-                case "BenevolentBot Bot":
+                case "Benevolent Bot":
                     isBot = true;
                     botType = "benevolent";
                     break;
@@ -717,7 +717,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
     }
 
-    private void showWinDialogBox() {
+    protected void showWinDialogBox() {
         JOptionPane.showMessageDialog(null, "Congratulations! "+currentPlayer.getName()+" won the game.");
     }
 

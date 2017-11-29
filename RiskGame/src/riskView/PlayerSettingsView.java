@@ -39,7 +39,7 @@ public class PlayerSettingsView extends JDialog {
 
     private int playerCount;
 
-    private String[] types = { "Human", "Aggressive Bot", "BenevolentBot Bot", "Randomize Bot", "Cheater Bot" };
+    private String[] types = { "Human", "Aggressive Bot", "Benevolent Bot", "Randomize Bot", "Cheater Bot" };
     
     /**
      * Constructs the view for player settings 

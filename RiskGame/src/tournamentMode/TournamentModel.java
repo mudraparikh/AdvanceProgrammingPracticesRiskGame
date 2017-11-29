@@ -27,7 +27,7 @@ public class TournamentModel {
 		playerNames.add("Random");
 		playerNames.add("Cheater");
 		playerTypes.add("Aggressive Bot");
-		playerTypes.add("BenevolentBot Bot");
+		playerTypes.add("Benevolent Bot");
 		playerTypes.add("Randomize Bot");
 		playerTypes.add("Cheater Bot");
 
