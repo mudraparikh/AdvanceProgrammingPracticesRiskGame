@@ -148,7 +148,7 @@ public class MapModelTest extends Player {
     
     /**
      * This method is used to check where the game getting saved correctly
-     * @throws IOException 
+     * @throws IOException when the input given is incorrect
      */
     @Test
     public void saveGame() throws IOException{
