@@ -148,7 +148,7 @@ public class MapModelTest extends Player {
     
     /**
      * This method is used to check where the game getting saved correctly
-     * @throws IOException when the input given is incorrect
+     * @throws IOException when the input or output has some exceptions
      */
     @Test
     public void saveGame() throws IOException{
@@ -183,6 +183,10 @@ public class MapModelTest extends Player {
  //  	assertEquals(true,);
     }
     
+    /**
+     * This method test whether LoadGmae function is working as intended
+     * @throws IOException when the input or output has some exceptions
+     */
     @Test
     public void loadGame() throws IOException{
     	filePath="C:\\Windows\\Temp\\SunNov26EST2017_1.ser\\";
