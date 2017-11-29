@@ -3,14 +3,16 @@ package riskView;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import riskControllers.GameMenuViewController;
 
+/**
+ * This class will display the menu options for the game
+ * @author mudraparikh
+ */
 public class GameMenuView extends JDialog{
 private JPanel menuPanel;
 	
@@ -23,6 +25,11 @@ private JPanel menuPanel;
 	private String returnBtnName = "returnBtn";
 	private String saveBtnName = "saveBtn";
 	private String quitBtnName = "quitBtn";
+	
+	/**
+	 * Constructs the view for the menu to be displayed
+	 * 
+	 */
 	
 	public GameMenuView()
 	{
@@ -39,6 +46,11 @@ private JPanel menuPanel;
 		
 		pack();
 	}
+	
+	/**
+	 * The panel to display the menu options in the panel
+	 * @return JPanel message
+	 */
 	private JPanel menuPanel()
 	{
 		menuPanel = new JPanel();
@@ -60,6 +72,11 @@ private JPanel menuPanel;
 		
 		return menuPanel;
 	}
+	
+	/**
+	 * Add Action Listeners
+	 * @param evt listens to the action performed on the button click
+	 */
 	
 	public void addActionListeners(ActionListener evt)
 	{

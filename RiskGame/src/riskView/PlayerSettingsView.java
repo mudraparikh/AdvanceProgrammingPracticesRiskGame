@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * This class displays the types of player and player settings
+ * @author akshay
+ *
+ */
 public class PlayerSettingsView extends JDialog {
     private JPanel playerNamesPanel;
     private JPanel playerTypesPanel;
@@ -35,7 +40,13 @@ public class PlayerSettingsView extends JDialog {
     private int playerCount;
 
     private String[] types = { "Human", "Aggressive Bot", "BenevolentBot Bot", "Randomize Bot", "Cheater Bot" };
-
+    
+    /**
+     * Constructs the view for player settings 
+     * @param owner details of the player count
+     * @param modality to check the modality
+     * @param playerCount maintains count of the player
+     */
     public PlayerSettingsView(PlayerCount owner, boolean modality, int playerCount)
     {
         super(owner, modality);
@@ -56,7 +67,11 @@ public class PlayerSettingsView extends JDialog {
 
         pack();
     }
-
+    
+    /**
+     * This panel displays the player names
+     * @return JPanel message
+     */
     private JPanel playerNamesPanel() {
 
         playerNamesPanel = new JPanel();
@@ -94,6 +109,10 @@ public class PlayerSettingsView extends JDialog {
         return playerNamesPanel;
     }
 
+    /**
+     * This panel displays the different types of players
+     * @return JPanel message
+     */
     private JPanel playerTypesPanel() {
 
         playerTypesPanel = new JPanel();
@@ -132,14 +151,21 @@ public class PlayerSettingsView extends JDialog {
 
         return playerTypesPanel;
     }
-
+    /**
+     * Add action Listener
+     * @param evt listen to the event tht occurs on click of button
+     */
     public void addActionListeners(ActionListener evt)
     {
         startBtn.addActionListener(evt);
         backBtn.addActionListener(evt);
     }
 
-    // Get methods for text fields
+    /**
+     * Getter methods for text field of players
+     * @param playerNum maintains the player number
+     * @return getText value from the respective text-field
+     */
 
     public String getPlayerTextField(int playerNum)
     {
@@ -170,6 +196,11 @@ public class PlayerSettingsView extends JDialog {
     }
 
     // Get methods for combo boxes
+    /**
+     * Getter methods for the comboBox
+     * @param playerNum maintains the player number
+     * @return getSelectedItem the value of the selected item form the comboBox
+     */
 
     public String getPlayerComboBox(int playerNum)
     {

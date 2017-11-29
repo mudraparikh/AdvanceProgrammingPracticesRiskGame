@@ -29,7 +29,6 @@ import static util.RiskGameUtil.*;
  * @author mudraparikh
  *
  */
-
 public class TournamentMode extends JDialog{
 	public static JPanel tournamentDetailsPanel;
 	public static GridLayout tournamentLayout;
@@ -61,6 +60,10 @@ public class TournamentMode extends JDialog{
         pack();
 	}
 	
+	/**
+	 * The panel to display all the elements for playing tournament mode
+	 * @return JPanel message
+	 */
 	public JPanel tournamentDetailsPanel()
 	{
 		tournamentDetailsPanel = new JPanel();
@@ -98,6 +101,7 @@ public class TournamentMode extends JDialog{
 		tournamentDetailsPanel.add(gameDetails, 9);
 		return tournamentDetailsPanel;
 	}
+	
 	 /**
      * Adds the action listeners;
      * @param event Event that should occur in tournamentModeController
