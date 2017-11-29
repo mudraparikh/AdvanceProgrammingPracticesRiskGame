@@ -41,6 +41,7 @@ public class GameMap implements Serializable {
     /**
      * This method will will return singleton instance for the GameMap class
      *
+     * @param instance creates an instance of GameMap class
      * @return single GameMap instance
      */
     public static GameMap getInstance(GameMap instance) {

@@ -220,7 +220,7 @@ public class TournamentView extends JDialog {
 	 /**
 	    * The panel for the map and load display as per users choice.
 	    * @return map display
-	    * @throws IOException when the is problem in input and output
+	    * @throws IOException when there is problem in input and output
 	    */
 	    public JPanel mapPanel() throws IOException {
 	        mapPanel = new JPanel();
@@ -342,9 +342,9 @@ public class TournamentView extends JDialog {
 	        return actionPanel;
 	    }
 	    /**
-	     * Adding Actional Listeners for 
+	     * Adding Action Listeners for 
 	     * @param tournamentViewController controller of Tournament View
-	     * @throws IOException
+	     * @throws IOException throws exception in case of incorrect input.
 	     */
 	    public void addActionListeners(TournamentViewController tournamentViewController) throws IOException {	
 	  	  TournamentView();
@@ -380,7 +380,3 @@ public class TournamentView extends JDialog {
 	        }
 	    }
 }
-
-//Alert Message structure
-//JOptionPane.showMessageDialog(null,"Message");
-//JOptionPane.showConfirmDialog(null, "message");

@@ -100,14 +100,8 @@ public class TournamentMode extends JDialog{
 	}
 	 /**
      * Adds the action listeners;
+     * @param event Event that should occur in tournamentModeController
      */
-  /*  protected void addActionListeners(ActionListener event) {
-    mapBtn1.addActionListener(event);
-    mapBtn2.addActionListener(event);
-    mapBtn3.addActionListener(event);
-    startGame.addActionListener(event);
-    }*/
-
 	public void addActionListeners(TournamentModeController event) {
 		mapBtn1.addActionListener(event);
 	    mapBtn2.addActionListener(event);

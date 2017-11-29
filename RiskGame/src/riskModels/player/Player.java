@@ -126,6 +126,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     /**
      * constructor which assigns the name of the player
      * @param name players name
+     * @param isBot check if the player is a bot or not
+     * @param botType type of bot player
      */
     public Player(String name, Boolean isBot, String botType) {
         super();
@@ -401,10 +403,11 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
     /**
      * This method will perform initialization for the game for example reading map,Assign country to players
-     *  @param selectedFile .map file
+     * @param selectedFile .map file
      * @param playerCount  number of players for the game
      * @param playerNames  name of the players
      * @param playerTypes  type of the players
+     * @param isTournamentMode checks for the game mode
      */
     public void initData(File selectedFile, int playerCount, ArrayList<String> playerNames, ArrayList<String> playerTypes,boolean isTournamentMode) {
         if (selectedFile.getName().endsWith("map") && playerCount > 0) {
