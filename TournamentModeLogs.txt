@@ -45275,3 +45275,1733 @@ Cheater has doubled it's armies on secondleft
 Cheater has defeated all of Random's armies in fourthleft and has occupied the country!
 Random has no countries left, player looses the game and is eliminated
 Cheater has won the game ! Congratulations ! 
+
+
+===Allocation of countries to players===
+Player:Aggressive got Enfield
+Player:Benevolent got Hillingdon
+Player:Random got Havering
+Player:Cheater got Wandsworth
+Player:Aggressive got Kingston
+Player:Benevolent got Barking
+Player:Random got Tower Hamlets
+Player:Cheater got Lewisham
+Player:Aggressive got Hounslow
+Player:Benevolent got Hammersmith
+Player:Random got Wakham Forest
+Player:Cheater got Redbridge
+Player:Aggressive got Southwark
+Player:Benevolent got West Minster
+Player:Random got Camden
+Player:Cheater got Bromley
+Player:Aggressive got Lambeth
+Player:Benevolent got Kensington & Chelsea
+Player:Random got Islington
+Player:Cheater got Barnet
+Player:Aggressive got Harrow
+Player:Benevolent got Sutton
+Player:Random got Haringey
+Player:Cheater got Brent
+Player:Aggressive got Bexley
+Player:Benevolent got Hackney
+Player:Random got Greenwich
+Player:Cheater got Merton
+Player:Aggressive got Croydon
+Player:Benevolent got Newham
+Player:Random got Ealing
+Player:Cheater got City Centre
+Player:Aggressive got Richmond
+
+===Allocation completed===
+
+==Adding remaining armies to players==
+Player:Aggressive put 1 army on Croydon
+Player:Benevolent put 1 army on Newham
+Player:Random put 1 army on Ealing
+Player:Cheater put 1 army on Redbridge
+Player:Aggressive put 1 army on Lambeth
+Player:Benevolent put 1 army on West Minster
+Player:Random put 1 army on Havering
+Player:Cheater put 1 army on Wandsworth
+Player:Aggressive put 1 army on Hounslow
+Player:Benevolent put 1 army on Hackney
+Player:Random put 1 army on Islington
+Player:Cheater put 1 army on Merton
+Player:Aggressive put 1 army on Southwark
+Player:Benevolent put 1 army on Hillingdon
+Player:Random put 1 army on Havering
+Player:Cheater put 1 army on Lewisham
+Player:Aggressive put 1 army on Richmond
+Player:Benevolent put 1 army on Hackney
+Player:Random put 1 army on Greenwich
+Player:Cheater put 1 army on Wandsworth
+Player:Aggressive put 1 army on Enfield
+Player:Benevolent put 1 army on West Minster
+Player:Random put 1 army on Islington
+Player:Cheater put 1 army on Bromley
+Player:Aggressive put 1 army on Southwark
+Player:Benevolent put 1 army on Kensington & Chelsea
+Player:Random put 1 army on Havering
+Player:Cheater put 1 army on Bromley
+Player:Aggressive put 1 army on Richmond
+Player:Benevolent put 1 army on Barking
+Player:Random put 1 army on Camden
+Player:Cheater put 1 army on Redbridge
+Player:Aggressive put 1 army on Bexley
+Player:Benevolent put 1 army on Hillingdon
+Player:Random put 1 army on Tower Hamlets
+Player:Cheater put 1 army on Redbridge
+Player:Aggressive put 1 army on Southwark
+Player:Benevolent put 1 army on Hammersmith
+Player:Random put 1 army on Haringey
+Player:Cheater put 1 army on Bromley
+Player:Aggressive put 1 army on Bexley
+Player:Benevolent put 1 army on Sutton
+Player:Random put 1 army on Greenwich
+Player:Cheater put 1 army on Lewisham
+Player:Aggressive put 1 army on Croydon
+Player:Benevolent put 1 army on Barking
+Player:Random put 1 army on Greenwich
+Player:Cheater put 1 army on Bromley
+Player:Aggressive put 1 army on Richmond
+Player:Benevolent put 1 army on West Minster
+Player:Random put 1 army on Wakham Forest
+Player:Cheater put 1 army on Wandsworth
+Player:Aggressive put 1 army on Harrow
+Player:Benevolent put 1 army on Newham
+Player:Random put 1 army on Islington
+Player:Cheater put 1 army on Brent
+Player:Aggressive put 1 army on Enfield
+Player:Benevolent put 1 army on Sutton
+Player:Random put 1 army on Tower Hamlets
+Player:Cheater put 1 army on Bromley
+Player:Aggressive put 1 army on Lambeth
+Player:Benevolent put 1 army on Sutton
+Player:Random put 1 army on Greenwich
+Player:Cheater put 1 army on Wandsworth
+Player:Aggressive put 1 army on Richmond
+Player:Benevolent put 1 army on Hillingdon
+Player:Random put 1 army on Wakham Forest
+Player:Cheater put 1 army on Bromley
+Player:Aggressive put 1 army on Richmond
+Player:Benevolent put 1 army on West Minster
+Player:Random put 1 army on Haringey
+Player:Cheater put 1 army on Lewisham
+Player:Aggressive put 1 army on Bexley
+Player:Benevolent put 1 army on West Minster
+Player:Random put 1 army on Tower Hamlets
+Player:Cheater put 1 army on Brent
+Player:Aggressive put 1 army on Lambeth
+Player:Benevolent put 1 army on Kensington & Chelsea
+Player:Random put 1 army on Camden
+Player:Cheater put 1 army on Bromley
+Player:Aggressive put 1 army on Croydon
+Player:Benevolent put 1 army on Sutton
+Player:Random put 1 army on Greenwich
+Player:Cheater put 1 army on Merton
+Player:Benevolent put 1 army on Newham
+Player:Random put 1 army on Havering
+Player:Cheater put 1 army on Merton
+
+==Allocating armies as well as country is done===
+
+
+
+Enjoy the game ! All the best !
+The order of turns:
+Aggressive
+Benevolent
+Random
+Cheater
+To begin: Start reinforcement phase by placing army in your designated country
+
+Aggressive gets 3 armies
+Aggressive has chosen to reinforce Richmond with 3 armies.
+Aggressive do not have any armies left to reinforce
+You cannot attack your own country.
+
+Attackers threw  dice(s) : 
+ 1 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Richmond has now 8
+Hammersmith has now 2
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+ 1 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Richmond has now 8
+Hammersmith has now 1
+
+
+
+
+Attackers threw  dice(s) : 
+ 2 
+ 2 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Richmond has now 8
+Hammersmith has now 0
+
+
+
+Aggressive has defeated all of Benevolent's armies in Hammersmith and has occupied the country!
+Aggressive has chosen to fortify Croydon with 3 armies from Lambeth.
+You captured at-least one country in your attack phase.
+You get a card
+Benevolent gets 3 armies
+Benevolent has chosen to reinforce Barking with 3 armies.
+
+You do not have any armies left to reinforce
+Benevolent is too afraid to attack ! Skipping the attack phase.
+Benevolent has chosen to fortify Hackney with 3 armies from Newham.
+Random gets 3 armies
+Random has chosen to reinforce Wakham Forest with 1 armies.
+
+Attackers threw  dice(s) : 
+ 5 
+ 4 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Wakham Forest has now 4
+Enfield has now 2
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+ 3 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Wakham Forest has now 3
+Enfield has now 2
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Wakham Forest has now 3
+Enfield has now 1
+
+
+
+
+Attackers threw  dice(s) : 
+ 1 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Wakham Forest has now 2
+Enfield has now 1
+
+
+
+Random has chosen to fortify Tower Hamlets with 5 armies from Greenwich.
+Cheater has doubled it's armies on Wandsworth
+Cheater has doubled it's armies on Lewisham
+Cheater has doubled it's armies on Redbridge
+Cheater has doubled it's armies on Bromley
+Cheater has doubled it's armies on Barnet
+Cheater has doubled it's armies on Brent
+Cheater has doubled it's armies on Merton
+Cheater has doubled it's armies on City Centre
+Cheater has defeated all of Benevolent's armies in Kensington & Chelsea and has occupied the country!
+Cheater has defeated all of Random's armies in Greenwich and has occupied the country!
+Cheater has defeated all of Random's armies in Havering and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Croydon and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Enfield and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Harrow and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Kingston and has occupied the country!
+Cheater has defeated all of Random's armies in Islington and has occupied the country!
+Cheater has doubled it's armies on Hammersmith
+Cheater has doubled it's armies on Southwark
+Cheater has doubled it's armies on Barking
+Cheater has doubled it's armies on Lambeth
+Cheater has doubled it's armies on Haringey
+Cheater has doubled it's armies on Ealing
+Cheater has doubled it's armies on Sutton
+Cheater has doubled it's armies on Hackney
+Aggressive gets 3 armies
+Aggressive has chosen to reinforce Southwark with 3 armies.
+Aggressive do not have any armies left to reinforce
+
+Attackers threw  dice(s) : 
+ 1 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 10
+Bromley has now 15
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+ 1 
+
+Defender threw  dice(s) : 
+ 4 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 9
+Bromley has now 15
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+ 1 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 9
+Bromley has now 14
+
+
+
+
+Attackers threw  dice(s) : 
+ 2 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 9
+Bromley has now 13
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 4 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 9
+Bromley has now 12
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+ 4 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 8
+Bromley has now 12
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 8
+Bromley has now 11
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+ 3 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 8
+Bromley has now 10
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+
+Defender threw  dice(s) : 
+ 4 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 7
+Bromley has now 10
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 7
+Bromley has now 9
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 7
+Bromley has now 8
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+ 3 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 6
+Bromley has now 8
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+
+Defender threw  dice(s) : 
+ 4 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 5
+Bromley has now 8
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 4
+Bromley has now 8
+
+
+
+
+Attackers threw  dice(s) : 
+ 1 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 3
+Bromley has now 8
+
+
+
+
+Attackers threw  dice(s) : 
+ 1 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 2
+Bromley has now 8
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 2
+Bromley has now 7
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+
+Defender threw  dice(s) : 
+ 4 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 1
+Bromley has now 7
+
+
+
+Aggressive has chosen to fortify Hammersmith with 1 armies from Hounslow.
+Benevolent gets 3 armies
+Benevolent has chosen to reinforce Newham with 3 armies.
+
+You do not have any armies left to reinforce
+Benevolent is too afraid to attack ! Skipping the attack phase.
+Benevolent has chosen to fortify Hackney with 3 armies from Newham.
+Random gets 3 armies
+Random has chosen to reinforce Tower Hamlets with 1 armies.
+
+Attackers threw  dice(s) : 
+ 3 
+ 1 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Tower Hamlets has now 9
+Hackney has now 15
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+ 4 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Tower Hamlets has now 9
+Hackney has now 14
+
+
+
+Random has chosen to fortify Haringey with 2 armies from Camden.
+Cheater has doubled it's armies on Wandsworth
+Cheater has doubled it's armies on Lewisham
+Cheater has doubled it's armies on Redbridge
+Cheater has doubled it's armies on Bromley
+Cheater has doubled it's armies on Barnet
+Cheater has doubled it's armies on Brent
+Cheater has doubled it's armies on Merton
+Cheater has doubled it's armies on City Centre
+Cheater has doubled it's armies on Kensington & Chelsea
+Cheater has doubled it's armies on Greenwich
+Cheater has doubled it's armies on Havering
+Cheater has doubled it's armies on Croydon
+Cheater has doubled it's armies on Enfield
+Cheater has doubled it's armies on Harrow
+Cheater has doubled it's armies on Kingston
+Cheater has doubled it's armies on Islington
+Cheater has defeated all of Aggressive's armies in Hammersmith and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Southwark and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Barking and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Lambeth and has occupied the country!
+Cheater has defeated all of Random's armies in Haringey and has occupied the country!
+Cheater has defeated all of Random's armies in Ealing and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Sutton and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Hackney and has occupied the country!
+Cheater has defeated all of Benevolent's armies in West Minster and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Bexley and has occupied the country!
+Cheater has defeated all of Random's armies in Wakham Forest and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Hillingdon and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Richmond and has occupied the country!
+Cheater has defeated all of Random's armies in Camden and has occupied the country!
+Cheater has doubled it's armies on Tower Hamlets
+Cheater has doubled it's armies on Newham
+Cheater has doubled it's armies on Tower Hamlets
+Cheater has doubled it's armies on Newham
+Aggressive gets 3 armies
+Aggressive has chosen to reinforce Hounslow with 3 armies.
+Aggressive do not have any armies left to reinforce
+
+Attackers threw  dice(s) : 
+ 3 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Hounslow has now 3
+Hillingdon has now 5
+
+
+
+
+Attackers threw  dice(s) : 
+ 2 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Hounslow has now 2
+Hillingdon has now 5
+
+
+
+
+Attackers threw  dice(s) : 
+ 2 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Hounslow has now 1
+Hillingdon has now 5
+
+
+
+Benevolent gets 3 armies
+Benevolent has chosen to reinforce Newham with 3 armies.
+
+You do not have any armies left to reinforce
+Benevolent is too afraid to attack ! Skipping the attack phase.
+Random gets 3 armies
+Random has chosen to reinforce Tower Hamlets with 4 armies.
+
+Attackers threw  dice(s) : 
+ 4 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Tower Hamlets has now 39
+Hackney has now 15
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+ 1 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Tower Hamlets has now 38
+Hackney has now 15
+
+
+
+
+Attackers threw  dice(s) : 
+ 2 
+ 2 
+
+Defender threw  dice(s) : 
+ 4 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Tower Hamlets has now 37
+Hackney has now 15
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+ 2 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Tower Hamlets has now 36
+Hackney has now 15
+
+
+
+Cheater has doubled it's armies on Wandsworth
+Cheater has doubled it's armies on Lewisham
+Cheater has doubled it's armies on Redbridge
+Cheater has doubled it's armies on Bromley
+Cheater has doubled it's armies on Barnet
+Cheater has doubled it's armies on Brent
+Cheater has doubled it's armies on Merton
+Cheater has doubled it's armies on City Centre
+Cheater has doubled it's armies on Kensington & Chelsea
+Cheater has doubled it's armies on Greenwich
+Cheater has doubled it's armies on Havering
+Cheater has doubled it's armies on Croydon
+Cheater has doubled it's armies on Enfield
+Cheater has doubled it's armies on Harrow
+Cheater has doubled it's armies on Kingston
+Cheater has doubled it's armies on Islington
+Cheater has doubled it's armies on Hammersmith
+Cheater has doubled it's armies on Southwark
+Cheater has doubled it's armies on Barking
+Cheater has doubled it's armies on Lambeth
+Cheater has doubled it's armies on Haringey
+Cheater has doubled it's armies on Ealing
+Cheater has doubled it's armies on Sutton
+Cheater has doubled it's armies on Hackney
+Cheater has doubled it's armies on West Minster
+Cheater has doubled it's armies on Bexley
+Cheater has doubled it's armies on Wakham Forest
+Cheater has doubled it's armies on Hillingdon
+Cheater has doubled it's armies on Richmond
+Cheater has doubled it's armies on Camden
+Cheater has defeated all of Random's armies in Tower Hamlets and has occupied the country!
+Random has no countries left, player looses the game and is eliminated
+Cheater has defeated all of Benevolent's armies in Newham and has occupied the country!
+Benevolent has no countries left, player looses the game and is eliminated
+Cheater has defeated all of Aggressive's armies in Hounslow and has occupied the country!
+Aggressive has no countries left, player looses the game and is eliminated
+Cheater has won the game ! Congratulations ! 
+
+
+===Allocation of countries to players===
+Player:Aggressive got Enfield
+Player:Benevolent got Hillingdon
+Player:Random got Havering
+Player:Cheater got Wandsworth
+Player:Aggressive got Kingston
+Player:Benevolent got Barking
+Player:Random got Tower Hamlets
+Player:Cheater got Lewisham
+Player:Aggressive got Hounslow
+Player:Benevolent got Hammersmith
+Player:Random got Wakham Forest
+Player:Cheater got Redbridge
+Player:Aggressive got Southwark
+Player:Benevolent got West Minster
+Player:Random got Camden
+Player:Cheater got Bromley
+Player:Aggressive got Lambeth
+Player:Benevolent got Kensington & Chelsea
+Player:Random got Islington
+Player:Cheater got Barnet
+Player:Aggressive got Harrow
+Player:Benevolent got Sutton
+Player:Random got Haringey
+Player:Cheater got Brent
+Player:Aggressive got Bexley
+Player:Benevolent got Hackney
+Player:Random got Greenwich
+Player:Cheater got Merton
+Player:Aggressive got Croydon
+Player:Benevolent got Newham
+Player:Random got Ealing
+Player:Cheater got City Centre
+Player:Aggressive got Richmond
+
+===Allocation completed===
+
+==Adding remaining armies to players==
+Player:Aggressive put 1 army on Southwark
+Player:Benevolent put 1 army on Hillingdon
+Player:Random put 1 army on Camden
+Player:Cheater put 1 army on Redbridge
+Player:Aggressive put 1 army on Kingston
+Player:Benevolent put 1 army on Barking
+Player:Random put 1 army on Havering
+Player:Cheater put 1 army on Wandsworth
+Player:Aggressive put 1 army on Kingston
+Player:Benevolent put 1 army on West Minster
+Player:Random put 1 army on Havering
+Player:Cheater put 1 army on City Centre
+Player:Aggressive put 1 army on Enfield
+Player:Benevolent put 1 army on Barking
+Player:Random put 1 army on Tower Hamlets
+Player:Cheater put 1 army on Brent
+Player:Aggressive put 1 army on Croydon
+Player:Benevolent put 1 army on Hackney
+Player:Random put 1 army on Havering
+Player:Cheater put 1 army on Merton
+Player:Aggressive put 1 army on Harrow
+Player:Benevolent put 1 army on Sutton
+Player:Random put 1 army on Ealing
+Player:Cheater put 1 army on City Centre
+Player:Aggressive put 1 army on Richmond
+Player:Benevolent put 1 army on Hillingdon
+Player:Random put 1 army on Ealing
+Player:Cheater put 1 army on City Centre
+Player:Aggressive put 1 army on Harrow
+Player:Benevolent put 1 army on West Minster
+Player:Random put 1 army on Havering
+Player:Cheater put 1 army on Redbridge
+Player:Aggressive put 1 army on Richmond
+Player:Benevolent put 1 army on Sutton
+Player:Random put 1 army on Ealing
+Player:Cheater put 1 army on Wandsworth
+Player:Aggressive put 1 army on Bexley
+Player:Benevolent put 1 army on Sutton
+Player:Random put 1 army on Wakham Forest
+Player:Cheater put 1 army on Lewisham
+Player:Aggressive put 1 army on Bexley
+Player:Benevolent put 1 army on Hackney
+Player:Random put 1 army on Havering
+Player:Cheater put 1 army on Bromley
+Player:Aggressive put 1 army on Kingston
+Player:Benevolent put 1 army on West Minster
+Player:Random put 1 army on Tower Hamlets
+Player:Cheater put 1 army on City Centre
+Player:Aggressive put 1 army on Kingston
+Player:Benevolent put 1 army on Sutton
+Player:Random put 1 army on Haringey
+Player:Cheater put 1 army on Wandsworth
+Player:Aggressive put 1 army on Southwark
+Player:Benevolent put 1 army on Hammersmith
+Player:Random put 1 army on Islington
+Player:Cheater put 1 army on Bromley
+Player:Aggressive put 1 army on Kingston
+Player:Benevolent put 1 army on Hillingdon
+Player:Random put 1 army on Islington
+Player:Cheater put 1 army on Bromley
+Player:Aggressive put 1 army on Bexley
+Player:Benevolent put 1 army on Hammersmith
+Player:Random put 1 army on Greenwich
+Player:Cheater put 1 army on City Centre
+Player:Aggressive put 1 army on Richmond
+Player:Benevolent put 1 army on Sutton
+Player:Random put 1 army on Ealing
+Player:Cheater put 1 army on Brent
+Player:Aggressive put 1 army on Southwark
+Player:Benevolent put 1 army on Kensington & Chelsea
+Player:Random put 1 army on Wakham Forest
+Player:Cheater put 1 army on Merton
+Player:Aggressive put 1 army on Richmond
+Player:Benevolent put 1 army on Barking
+Player:Random put 1 army on Tower Hamlets
+Player:Cheater put 1 army on Wandsworth
+Player:Aggressive put 1 army on Enfield
+Player:Benevolent put 1 army on West Minster
+Player:Random put 1 army on Wakham Forest
+Player:Cheater put 1 army on Wandsworth
+Player:Aggressive put 1 army on Hounslow
+Player:Benevolent put 1 army on Newham
+Player:Random put 1 army on Ealing
+Player:Cheater put 1 army on City Centre
+Player:Benevolent put 1 army on Hackney
+Player:Random put 1 army on Havering
+Player:Cheater put 1 army on Merton
+
+==Allocating armies as well as country is done===
+
+
+
+Enjoy the game ! All the best !
+The order of turns:
+Aggressive
+Benevolent
+Random
+Cheater
+To begin: Start reinforcement phase by placing army in your designated country
+
+Aggressive gets 3 armies
+Aggressive has chosen to reinforce Kingston with 3 armies.
+Aggressive do not have any armies left to reinforce
+You cannot attack your own country.
+
+Attackers threw  dice(s) : 
+ 4 
+ 3 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Kingston has now 9
+Wandsworth has now 5
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+ 2 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Kingston has now 8
+Wandsworth has now 5
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Kingston has now 7
+Wandsworth has now 5
+
+
+
+
+Attackers threw  dice(s) : 
+ 1 
+ 1 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Kingston has now 6
+Wandsworth has now 5
+
+
+
+
+Attackers threw  dice(s) : 
+ 1 
+ 1 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Kingston has now 5
+Wandsworth has now 5
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Kingston has now 5
+Wandsworth has now 4
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+ 1 
+
+Defender threw  dice(s) : 
+ 4 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Kingston has now 4
+Wandsworth has now 4
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+ 3 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Kingston has now 4
+Wandsworth has now 3
+
+
+
+
+Attackers threw  dice(s) : 
+ 2 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Kingston has now 3
+Wandsworth has now 3
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Kingston has now 3
+Wandsworth has now 2
+
+
+
+
+Attackers threw  dice(s) : 
+ 2 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Kingston has now 2
+Wandsworth has now 2
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Kingston has now 2
+Wandsworth has now 1
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Kingston has now 2
+Wandsworth has now 0
+
+
+
+Aggressive has defeated all of Cheater's armies in Wandsworth and has occupied the country!
+Benevolent gets 3 armies
+Benevolent has chosen to reinforce Kensington & Chelsea with 3 armies.
+
+You do not have any armies left to reinforce
+Benevolent is too afraid to attack ! Skipping the attack phase.
+Benevolent has chosen to fortify Newham with 3 armies from Hackney.
+Random gets 3 armies
+Random has chosen to reinforce Camden with 1 armies.
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Camden has now 3
+Barnet has now 0
+
+
+
+Random has defeated all of Cheater's armies in Barnet and has occupied the country!
+Looks like cannot attack anymore ! 
+Random has chosen to fortify Barnet with 1 armies from Camden.
+You captured at-least one country in your attack phase.
+You get a card
+Cheater has doubled it's armies on Lewisham
+Cheater has doubled it's armies on Redbridge
+Cheater has doubled it's armies on Bromley
+Cheater has doubled it's armies on Brent
+Cheater has doubled it's armies on Merton
+Cheater has doubled it's armies on City Centre
+Cheater has defeated all of Random's armies in Greenwich and has occupied the country!
+Cheater has defeated all of Random's armies in Havering and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Croydon and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Harrow and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Kingston and has occupied the country!
+Cheater has defeated all of Random's armies in Islington and has occupied the country!
+Cheater has doubled it's armies on Southwark
+Cheater has doubled it's armies on Barking
+Cheater has doubled it's armies on Lambeth
+Cheater has doubled it's armies on Ealing
+Cheater has doubled it's armies on Wandsworth
+Cheater has doubled it's armies on Hackney
+Aggressive gets 3 armies
+Aggressive has chosen to reinforce Southwark with 3 armies.
+Aggressive do not have any armies left to reinforce
+
+Attackers threw  dice(s) : 
+ 2 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 10
+Bromley has now 7
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 10
+Bromley has now 6
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+ 2 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 10
+Bromley has now 5
+
+
+
+
+Attackers threw  dice(s) : 
+ 2 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 9
+Bromley has now 5
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 9
+Bromley has now 4
+
+
+
+
+Attackers threw  dice(s) : 
+ 2 
+ 1 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 8
+Bromley has now 4
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 8
+Bromley has now 3
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+ 2 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 8
+Bromley has now 2
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+ 2 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 8
+Bromley has now 1
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+ 2 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Southwark has now 7
+Bromley has now 1
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 7
+Bromley has now 0
+
+
+
+Aggressive has defeated all of Cheater's armies in Bromley and has occupied the country!
+Benevolent gets 3 armies
+Benevolent has chosen to reinforce Hackney with 3 armies.
+
+You do not have any armies left to reinforce
+Benevolent is too afraid to attack ! Skipping the attack phase.
+Benevolent has chosen to fortify Hackney with 4 armies from Newham.
+Random gets 3 armies
+Random has chosen to reinforce Camden with 1 armies.
+You cannot attack your own country.
+
+Attackers threw  dice(s) : 
+ 1 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Camden has now 1
+Brent has now 5
+
+
+
+Looks like cannot attack anymore ! 
+Random has chosen to fortify Wakham Forest with 1 armies from Haringey.
+Cheater has doubled it's armies on Lewisham
+Cheater has doubled it's armies on Redbridge
+Cheater has doubled it's armies on Brent
+Cheater has doubled it's armies on Merton
+Cheater has doubled it's armies on City Centre
+Cheater has doubled it's armies on Greenwich
+Cheater has doubled it's armies on Havering
+Cheater has doubled it's armies on Croydon
+Cheater has doubled it's armies on Harrow
+Cheater has doubled it's armies on Kingston
+Cheater has doubled it's armies on Islington
+Cheater has defeated all of Aggressive's armies in Bromley and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Barking and has occupied the country!
+Cheater has defeated all of Random's armies in Ealing and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Wandsworth and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Hackney and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Bexley and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Sutton and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Hillingdon and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Richmond and has occupied the country!
+Cheater has defeated all of Random's armies in Haringey and has occupied the country!
+Cheater has doubled it's armies on Southwark
+Cheater has doubled it's armies on Newham
+Cheater has doubled it's armies on Barnet
+Cheater has doubled it's armies on Lambeth
+Cheater has doubled it's armies on Tower Hamlets
+Cheater has doubled it's armies on Newham
+Cheater has doubled it's armies on Lambeth
+Cheater has doubled it's armies on Barnet
+Cheater has doubled it's armies on Camden
+Aggressive gets 3 armies
+Aggressive has chosen to reinforce Southwark with 3 armies.
+Aggressive do not have any armies left to reinforce
+
+Attackers threw  dice(s) : 
+ 5 
+ 3 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 15
+Bromley has now 1
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 15
+Bromley has now 0
+
+
+
+Aggressive has defeated all of Cheater's armies in Bromley and has occupied the country!
+Aggressive has chosen to fortify Southwark with 7 armies from Lambeth.
+You captured at-least one country in your attack phase.
+You get a card
+Benevolent gets 3 armies
+Benevolent has chosen to reinforce Hammersmith with 3 armies.
+
+You do not have any armies left to reinforce
+Benevolent is too afraid to attack ! Skipping the attack phase.
+Benevolent has chosen to fortify Hammersmith with 4 armies from Kensington & Chelsea.
+Random gets 3 armies
+Random has chosen to reinforce Barnet with 1 armies.
+
+Attackers threw  dice(s) : 
+ 5 
+ 5 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Barnet has now 8
+Enfield has now 3
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+ 1 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Barnet has now 8
+Enfield has now 2
+
+
+
+
+Attackers threw  dice(s) : 
+ 5 
+ 1 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Barnet has now 8
+Enfield has now 1
+
+
+
+
+Attackers threw  dice(s) : 
+ 3 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Barnet has now 7
+Enfield has now 1
+
+
+
+
+Attackers threw  dice(s) : 
+ 2 
+ 2 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Barnet has now 7
+Enfield has now 0
+
+
+
+Random has defeated all of Aggressive's armies in Enfield and has occupied the country!
+Random has chosen to fortify Camden with 4 armies from Barnet.
+You captured at-least one country in your attack phase.
+You get a card
+Cheater has doubled it's armies on Lewisham
+Cheater has doubled it's armies on Redbridge
+Cheater has doubled it's armies on Brent
+Cheater has doubled it's armies on Merton
+Cheater has doubled it's armies on City Centre
+Cheater has doubled it's armies on Greenwich
+Cheater has doubled it's armies on Havering
+Cheater has doubled it's armies on Croydon
+Cheater has doubled it's armies on Harrow
+Cheater has doubled it's armies on Kingston
+Cheater has doubled it's armies on Islington
+Cheater has doubled it's armies on Barking
+Cheater has doubled it's armies on Ealing
+Cheater has doubled it's armies on Wandsworth
+Cheater has doubled it's armies on Hackney
+Cheater has doubled it's armies on Bexley
+Cheater has doubled it's armies on Sutton
+Cheater has doubled it's armies on Hillingdon
+Cheater has doubled it's armies on Richmond
+Cheater has doubled it's armies on Haringey
+Cheater has defeated all of Aggressive's armies in Bromley and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Newham and has occupied the country!
+Cheater has defeated all of Random's armies in Barnet and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Lambeth and has occupied the country!
+Cheater has defeated all of Random's armies in Tower Hamlets and has occupied the country!
+Cheater has defeated all of Random's armies in Camden and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Hammersmith and has occupied the country!
+Cheater has defeated all of Benevolent's armies in Kensington & Chelsea and has occupied the country!
+Cheater has defeated all of Random's armies in Wakham Forest and has occupied the country!
+Cheater has defeated all of Aggressive's armies in Hounslow and has occupied the country!
+Cheater has defeated all of Random's armies in Enfield and has occupied the country!
+Random has no countries left, player looses the game and is eliminated
+Cheater has doubled it's armies on Southwark
+Cheater has doubled it's armies on West Minster
+Cheater has doubled it's armies on Southwark
+Cheater has doubled it's armies on West Minster
+Aggressive gets 3 armies
+Aggressive has chosen to reinforce Southwark with 3 armies.
+Aggressive do not have any armies left to reinforce
+
+Attackers threw  dice(s) : 
+ 5 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 87
+Bromley has now 1
+
+
+
+
+Attackers threw  dice(s) : 
+ 4 
+
+Defender threw  dice(s) : 
+ 1 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Southwark has now 87
+Bromley has now 0
+
+
+
+Aggressive has defeated all of Cheater's armies in Bromley and has occupied the country!
+Benevolent gets 3 armies
+Benevolent has chosen to reinforce West Minster with 3 armies.
+
+You do not have any armies left to reinforce
+Benevolent is too afraid to attack ! Skipping the attack phase.
+Cheater has doubled it's armies on Lewisham
+Cheater has doubled it's armies on Redbridge
+Cheater has doubled it's armies on Brent
+Cheater has doubled it's armies on Merton
+Cheater has doubled it's armies on City Centre
+Cheater has doubled it's armies on Greenwich
+Cheater has doubled it's armies on Havering
+Cheater has doubled it's armies on Croydon
+Cheater has doubled it's armies on Harrow
+Cheater has doubled it's armies on Kingston
+Cheater has doubled it's armies on Islington
+Cheater has doubled it's armies on Barking
+Cheater has doubled it's armies on Ealing
+Cheater has doubled it's armies on Wandsworth
+Cheater has doubled it's armies on Hackney
+Cheater has doubled it's armies on Bexley
+Cheater has doubled it's armies on Sutton
+Cheater has doubled it's armies on Hillingdon
+Cheater has doubled it's armies on Richmond
+Cheater has doubled it's armies on Haringey
+Cheater has doubled it's armies on Newham
+Cheater has doubled it's armies on Barnet
+Cheater has doubled it's armies on Lambeth
+Cheater has doubled it's armies on Tower Hamlets
+Cheater has doubled it's armies on Camden
+Cheater has doubled it's armies on Hammersmith
+Cheater has doubled it's armies on Kensington & Chelsea
+Cheater has doubled it's armies on Wakham Forest
+Cheater has doubled it's armies on Hounslow
+Cheater has doubled it's armies on Enfield
+Cheater has defeated all of Aggressive's armies in Bromley and has occupied the country!
+Cheater has defeated all of Benevolent's armies in West Minster and has occupied the country!
+Benevolent has no countries left, player looses the game and is eliminated
+Cheater has defeated all of Aggressive's armies in Southwark and has occupied the country!
+Aggressive has no countries left, player looses the game and is eliminated
+Cheater has won the game ! Congratulations ! 

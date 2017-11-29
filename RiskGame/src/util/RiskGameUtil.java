@@ -18,6 +18,8 @@ public class RiskGameUtil {
     public static String mapBtnName1 = "mapBtn1";
     public static String mapBtnName2 = "mapBtn2";
     public static String mapBtnName3 = "mapBtn3";
+    public static String mapBtnName4 = "mapBtn4";
+    public static String mapBtnName5 = "mapBtn5";
     public static String startGameBtnName = "startGame";
 
     /**

@@ -36,6 +36,8 @@ public class TournamentMode extends JDialog{
     public static JButton mapBtn1;
     public static JButton mapBtn2;
     public static JButton mapBtn3;
+	public static JButton mapBtn4;
+	public static JButton mapBtn5;
     public static JButton startGame;
     public static JLabel numberOfTurnsLabel;
     public static JLabel numberOfGames;
@@ -73,6 +75,8 @@ public class TournamentMode extends JDialog{
 		mapBtn1 = new JButton("Map 1");
 		mapBtn2 = new JButton("Map 2");
 		mapBtn3 = new JButton("Map 3");
+        mapBtn4 = new JButton("Map 4");
+        mapBtn5 = new JButton("Map 5");
 		startGame = new JButton("Start Game");
 		gameDetails = new JTextArea();
 		gameDetails.setVisible(true);
@@ -80,6 +84,8 @@ public class TournamentMode extends JDialog{
 		mapBtn1.setActionCommand(mapBtnName1);
 		mapBtn2.setActionCommand(mapBtnName2);
 		mapBtn3.setActionCommand(mapBtnName3);
+        mapBtn4.setActionCommand(mapBtnName4);
+        mapBtn5.setActionCommand(mapBtnName5);
 		startGame.setActionCommand(startGameBtnName);
 		
 		numberOfTurnsLabel = new JLabel("Number of turns :");
@@ -93,12 +99,14 @@ public class TournamentMode extends JDialog{
 		tournamentDetailsPanel.add(mapBtn1, 1);
 		tournamentDetailsPanel.add(mapBtn2, 2);
 		tournamentDetailsPanel.add(mapBtn3, 3);
-		tournamentDetailsPanel.add(numberOfTurnsLabel, 4);
-		tournamentDetailsPanel.add(turns, 5);
-		tournamentDetailsPanel.add(numberOfGames, 6);
-		tournamentDetailsPanel.add(gamesList, 7);
-		tournamentDetailsPanel.add(startGame, 8);
-		tournamentDetailsPanel.add(gameDetails, 9);
+        tournamentDetailsPanel.add(mapBtn4, 4);
+        tournamentDetailsPanel.add(mapBtn5, 5);
+		tournamentDetailsPanel.add(numberOfTurnsLabel, 6);
+		tournamentDetailsPanel.add(turns, 7);
+		tournamentDetailsPanel.add(numberOfGames, 8);
+		tournamentDetailsPanel.add(gamesList, 9);
+		tournamentDetailsPanel.add(startGame, 10);
+		tournamentDetailsPanel.add(gameDetails, 11);
 		return tournamentDetailsPanel;
 	}
 	
@@ -110,6 +118,8 @@ public class TournamentMode extends JDialog{
 		mapBtn1.addActionListener(event);
 	    mapBtn2.addActionListener(event);
 	    mapBtn3.addActionListener(event);
+        mapBtn4.addActionListener(event);
+        mapBtn5.addActionListener(event);
 	    startGame.addActionListener(event);
 	}
  }
