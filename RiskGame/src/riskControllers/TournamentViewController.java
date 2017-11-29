@@ -11,13 +11,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-
+/**
+ * This class implements the controller for the tournament mode
+ * @author mudraparikh
+ *
+ */
 public class TournamentViewController implements ActionListener {
 
     private ArrayList<String> playerNames;
     private ArrayList<String> playerTypes;
     private GameView view;
 
+    /**
+     * This constructor adds the various types of players to the view
+     * @param view creates object of gameView class
+     * @param tournamentModel creates object of TournamentModel
+     */
 	public TournamentViewController(GameView view, TournamentModel tournamentModel) {
         // TODO Auto-generated constructor stub
 
@@ -38,6 +47,9 @@ public class TournamentViewController implements ActionListener {
 
     }
 
+	/**
+	 * overriding the action performed method
+	 */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         //Do nothing

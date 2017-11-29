@@ -39,7 +39,7 @@ public class GameMap implements Serializable {
     }
 
     /**
-     * This method will will return singleton instance for the GameMap class
+     * This method will return singleton instance for the GameMap class
      *
      * @param instance creates an instance of GameMap class
      * @return single GameMap instance
@@ -54,33 +54,67 @@ public class GameMap implements Serializable {
         return gameMap;
     }
 
+    /**
+     * This method will assign gameMapToSet info to the GameMap class
+     * @param gameMapToSet GameMap object
+     */
     public static void setInstance(GameMap gameMapToSet){
         System.out.println("inside set instance of transaction manager");
         gameMap = gameMapToSet;
     }
+    
+    /**
+     * This method returns the instance of GameMap
+     * @return GameMap object
+     */
     public static GameMap getInstance() {
         return getInstance(null);
     }
+    
+    /**
+     * To get the Log details
+     * @return Log information
+     */
     public String getLogDetails() {
         return logDetails;
     }
 
+    /**
+     * To set the log details
+     * @param logDetails log information
+     */
     public void setLogDetails(String logDetails) {
         this.logDetails = logDetails;
     }
 
+    /**
+     * To get the phase details
+     * @return phase object
+     */
     public String getPhaseDetails() {
         return phaseDetails;
     }
 
+    /**
+     * To set the phase details
+     * @param phaseDetails info about phase
+     */
     public void setPhaseDetails(String phaseDetails) {
         this.phaseDetails = phaseDetails;
     }
 
+    /**
+     * To get the deck details
+     * @return deck details
+     */
     public Deck getDeck() {
         return deck;
     }
 
+    /**
+     * To set the deck details
+     * @param deck deck information
+     */
     public void setDeck(Deck deck) {
         this.deck = deck;
     }
@@ -252,10 +286,18 @@ public class GameMap implements Serializable {
 		this.currentPlayer = currentPlayer;
 	}
 
+	/**
+	 * To get the domination view details
+	 * @return view object
+	 */
 	public String getDominationViewDetails() {
 		return dominationViewDetails;
 	}
 
+	/**
+	 * To set the domination view details
+	 * @param dominationViewDetails info about dominated player
+	 */
 	public void setDominationViewDetails(String dominationViewDetails) {
 		this.dominationViewDetails = dominationViewDetails;
 	}
