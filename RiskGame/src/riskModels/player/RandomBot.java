@@ -183,7 +183,7 @@ public class RandomBot implements PlayerStrategy {
     }
 
     private boolean checkPlayerTurnCanContinue(Country countryA, Country countryB) {
-        if(countryA.getCurrentArmiesDeployed() > 1 || !countryB.getBelongsToPlayer().getName().equals(countryA.getBelongsToPlayer().getName())){
+        if(countryA.getCurrentArmiesDeployed() > 1 && !countryB.getBelongsToPlayer().getName().equals(countryA.getBelongsToPlayer().getName())){
             return true;
         }
         return false;
@@ -202,6 +202,7 @@ public class RandomBot implements PlayerStrategy {
             if (model.currentPlayer.getTotalArmies() > 0) {
                 rng = new Random();
                 int armies = rng.nextInt(model.currentPlayer.getTotalArmies());
+                if (armies  == 0) armies = 1;
                 model.currentPlayer.subArmy(armies);
                 countryA.addArmy(armies);
                 GameView.displayLog(model.currentPlayer.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");

@@ -795,6 +795,26 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
         return false;
     }
+
+    /**
+     * This method will check if attacker can attack to selected defender's country
+     * @param currentPlayer attacker
+     * @param countryA attacker's country
+     * @param countryB defender's country
+     * @return true if attacker can attack else false
+     */
+    protected boolean isAttackValidForCheater(Player currentPlayer, Country countryA, Country countryB){
+        if (countryA.getCurrentArmiesDeployed() > 1) {
+            //Check if at-least 2 armies are there on the attacking country.
+            if (!currentPlayer.getName().equals(countryB.getBelongsToPlayer().getName()) && currentPlayer.getName().equals(countryA.getBelongsToPlayer().getName())) {
+                // Check if another country is occupied by an opponent and not by the currentPlayer.
+                if (mapModel.isNeighbour(countryA, countryB)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
   
     /**
      * This method will perform operation after defender has lost army , for example assign defender's country to attacker.
@@ -849,7 +869,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * @param countryB name of the defender country
      */
     public void playerLostRule(Country countryA, Country countryB){
-        GameView.displayLog(countryB.getBelongsToPlayer().getName() + "has no countries left, player looses the game and is eliminated");
+        GameView.displayLog(countryB.getBelongsToPlayer().getName() + " has no countries left, player looses the game and is eliminated");
 
         //Attacker will get all the cards of the defender as defender has lost all of it's countries
         List<Card> listOfDefenderCards = countryB.getBelongsToPlayer().getHand();
@@ -1112,13 +1132,11 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             canTurnInCards = false;
             canEndTurn = false;
             hasCountryCaptured = false;
-            playerIndex++;
             
             if (playerIndex >= playerList.size()) {
                 // Loops player index back to 0 when it exceeds the number of players
                 playerIndex = 0;
                 currentIteration++;
-                System.out.println("Current Iterations is : "+currentIteration);
             }
 
             if(currentIteration > getDrawTurns()){
@@ -1128,6 +1146,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             }
             else{
                 currentPlayer = playerList.get(playerIndex);
+                playerIndex++;
                 currentPlayerReinforceArmies = getReinforcementArmyForPlayer(currentPlayer);
                 currentPlayer.addArmy(currentPlayerReinforceArmies);
                 updatePhaseDetails("Repaint");
@@ -1226,7 +1245,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             List<Country> neighbors = attackingCountry.getNeighborNodes();
             for (Country neighbor : neighbors) {
                 Country defenderCountry = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
-                if (isAttackValid(currentPlayer, attackingCountry, defenderCountry)) {
+                if (isAttackValidForCheater(currentPlayer, attackingCountry, defenderCountry)) {
                     executeAttack(attackingCountry.getCountryName(), neighbor.getCountryName(), gameView, this);
                     break;
                 }
@@ -1333,6 +1352,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
         //reinforce phase for bot
         executeReinforce(weakestCountry.getCountryName(),gameView,this);
+
+        //attack phase for bot
+        executeAttack(null,null,gameView,this);
 
         //fortification phase for bot
         // AI fortify
@@ -1477,7 +1499,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         Collections.shuffle(playerList);
         player.setPlayerList(playerList);
         GameMap.getInstance().setPlayerList(playerList);
-        GameView.displayLog(startUpPhaseLogs);
+        //GameView.displayLog(startUpPhaseLogs);
         GameView.displayLog("\n\n");
         GameView.displayLog("Enjoy the game ! All the best !");
         GameView.displayLog("The order of turns:");

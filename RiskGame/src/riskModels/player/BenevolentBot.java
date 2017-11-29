@@ -11,7 +11,7 @@ public class BenevolentBot implements PlayerStrategy {
     public Country countryB;
     @Override
     public void attack(String country1, String country2, GameView gameView, Player model) {
-        GameView.displayLog(model.currentPlayer+" is too afraid to attack ! Skipping the attack phase.");
+        GameView.displayLog(model.currentPlayer.getName()+" is too afraid to attack ! Skipping the attack phase.");
         model.updatePhaseDetails("Repaint");
         model.updatePhaseDetails("==Attack Phase==");
         model.updatePhaseDetails("Skipping Attack Phase as player is benevolent.");
