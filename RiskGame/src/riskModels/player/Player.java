@@ -33,7 +33,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public boolean canEndTurn;
     public boolean hasCountryCaptured;
     public boolean hasPlayerWon;
-    public boolean hasBotWon;
+    public static boolean hasBotWon;
     public boolean isTournamentMode;
     public boolean isBot;
 
@@ -484,7 +484,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     /**
      * This will set the total number of armies for the player during the start-up phase
      */
-    public void setInitialArmies() {
+    public void setInitialArmies()throws NullPointerException {
        for (Player p : player.getPlayerList()) {
             p.setTotalArmies(getInitialArmyCount());
         }
@@ -778,7 +778,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * @return true if attacker can attack else false
      */
     protected boolean isAttackValid(Player currentPlayer, Country countryA, Country countryB){
-        if (countryA.getCurrentArmiesDeployed() > 1) {
+        if (countryA.getCurrentArmiesDeployed() > 1 && !hasBotWon) {
             //Check if at-least 2 armies are there on the attacking country.
             if (!currentPlayer.getName().equals(countryB.getBelongsToPlayer().getName()) && currentPlayer.getName().equals(countryA.getBelongsToPlayer().getName())) {
                 // Check if another country is occupied by an opponent and not by the currentPlayer.
@@ -791,7 +791,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                 GameView.displayLog("You cannot attack your own country.");
             }
         } else {
-            GameView.displayLog("You must have more than 1 army on " + countryA.getCountryName() + " if you wish to attack from it.");
+        	if(!hasBotWon) {
+        		GameView.displayLog("You must have more than 1 army on " + countryA.getCountryName() + " if you wish to attack from it.");	
+        	}
+            
         }
         return false;
     }
@@ -1124,7 +1127,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * @param model <code>Player.class</code> object to passed for Card View Observable
      */
     public void nextPlayerTurn(Player model) {
-        if (playerList.size() > 1) {
+        if (playerList.size() > 1 && !hasBotWon) {
             //if at least one player remains
             canReinforce = false;
             canAttack = false;
@@ -1241,12 +1244,15 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
 
         //attack phase for bot
-        for(Country attackingCountry: cheaterCountries) {
+       attackPhase: for(Country attackingCountry: cheaterCountries) {
             List<Country> neighbors = attackingCountry.getNeighborNodes();
             for (Country neighbor : neighbors) {
                 Country defenderCountry = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
                 if (isAttackValidForCheater(currentPlayer, attackingCountry, defenderCountry)) {
                     executeAttack(attackingCountry.getCountryName(), neighbor.getCountryName(), gameView, this);
+                    if(hasBotWon) {
+                    	break attackPhase;
+                    }
                     break;
                 }
             }
@@ -1606,6 +1612,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     	List<Country> playerCountry=player.getAssignedCountries();
     	Country strongestCountry = null;
     	int maxArmy=1;
+    	if(playerCountry.size()==1) {
+    		return playerCountry.get(0);
+    	}
     	for(Country country:playerCountry) {
     	 int army=	country.getCurrentArmiesDeployed();
     		if(army>maxArmy) {
@@ -1663,7 +1672,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     	return false;
     }
 
-    public  void saveGame() throws IOException {
+    public  void saveGame()throws Exception{
         currentPlayer.canReinforce=canReinforce;
         currentPlayer.canAttack=canAttack;
         currentPlayer.canFortify=canFortify;

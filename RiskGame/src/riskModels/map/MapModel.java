@@ -639,9 +639,10 @@ public class MapModel {
 		}
        
 		try {
-            fout = new FileOutputStream("c:\\temp\\"+fileName+".ser");
+          //  fout = new FileOutputStream("c:\\temp\\"+fileName+".ser");
+            fout = new FileOutputStream("C:\\Windows\\Temp\\"+fileName+".ser");
 			oos = new ObjectOutputStream(fout);
-			GameView.displayLog("File Saved"+"c:\\temp\\"+fileName+".ser");
+			GameView.displayLog("File Saved"+"c:\\Windows\\temp\\"+fileName+".ser");
 			oos.writeObject(gameMap);
             System.out.println("Done");
 

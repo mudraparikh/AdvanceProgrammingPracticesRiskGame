@@ -39,11 +39,17 @@ public class TournamentModeController implements ActionListener{
     StringBuilder stringBuilder = new StringBuilder();
     GameView gameView;
     
-    
+    /**
+     * Constructor assigning view
+     * @param view tournament mode view
+     */
     public TournamentModeController(TournamentMode view) {
     	this.view = view;
 	}
 
+    /**
+     * over rides action performed method
+     */
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
 		String event = actionEvent.getActionCommand();
@@ -167,7 +173,10 @@ public class TournamentModeController implements ActionListener{
                         gameView.addActionListeners(new GamePlayController(model, gameView, false));
                         result.append("Game"+ i+"\n");
                         result.append("Result ::"+model.winner+"\n");
-                        
+                        gameView.setVisible(true);
+                        gameView=null;
+                        GameMap.setInstance(null);
+                        Player.hasBotWon=false;
                     }
                     
                     

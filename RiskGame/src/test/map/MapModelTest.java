@@ -148,7 +148,7 @@ public class MapModelTest extends Player {
     
     /**
      * This method is used to check where the game getting saved correctly
-     * @throws IOException it throws exceptions if the are any problem in inputs and outputs
+     * @throws IOException 
      */
     @Test
     public void saveGame() throws IOException{
@@ -177,8 +177,18 @@ public class MapModelTest extends Player {
         int newArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
         
         saveGame();
+    //    filePath="C:\\Windows\\Temp\\SunNov26EST2017_1.ser\\";
+    //    loadGame(filePath);
+        
+ //  	assertEquals(true,);
+    }
     
- //   	assertEquals(true,);
+    @Test
+    public void loadGame() throws IOException{
+    	filePath="C:\\Windows\\Temp\\SunNov26EST2017_1.ser\\";
+        gameMapObj = mapObj.readMapFile(filePath);
+        loadGame(filePath);
+        
     }
 
 }
