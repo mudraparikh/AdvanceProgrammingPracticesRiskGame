@@ -135,21 +135,14 @@ public class TournamentView extends JDialog {
                     sb.append(line+"\n");
                 }
             }
-            
             // Always close files.
             bufferedReader.close();         
         }
         catch(FileNotFoundException ex) {
-            System.out.println(
-                "Unable to open file '" + 
-                fileName + "'");                
+            System.out.println("Unable to open file '" + fileName + "'");                
         }
         catch(IOException ex) {
-            System.out.println(
-                "Error reading file '" 
-                + fileName + "'");                  
-            // Or we could just do this: 
-            // ex.printStackTrace();
+            System.out.println("Error reading file '" + fileName + "'");
         }
         StringBuilder stringBuilder = new StringBuilder();
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("TournamentModeLogs.txt")))) {
@@ -158,7 +151,7 @@ public class TournamentView extends JDialog {
         	}else {
         		out.print(sb.append(logDetail).toString() + "\n");
         	}
-        	
+        	//Close the printwriter
         	out.close();
             
         } catch (Exception e) {
