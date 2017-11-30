@@ -1364,62 +1364,56 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         Country weakestCountry = getWeakestCountry(currentPlayer);
 
         //reinforce phase for bot
-        executeReinforce(weakestCountry.getCountryName(),gameView,this);
+        if(weakestCountry !=null) {
+            executeReinforce(weakestCountry.getCountryName(), gameView, this);
 
-        //attack phase for bot
-        executeAttack(null,null,gameView,this);
+            //attack phase for bot
+            executeAttack(null, null, gameView, this);
 
-        //fortification phase for bot
-        // AI fortify
-        //System.out.println("**AI fortify - start");
-        List<Country> priorityTargets = new ArrayList<>();
+            //fortification phase for bot
+            // AI fortify
+            GameView.displayLog("\n===Benevolent Player fortify - start===");
+            List<Country> priorityTargets = new ArrayList<>();
 
-        for (Country country:currentPlayer.getAssignedCountries()) {
-            boolean add1 = false;
-            boolean add2 = false;
-
-            for (Country neighbor: country.getNeighborNodes()) {
-                // Checks if country has both adjacent friendly and enemy countries
-                Country n = MapModel.getCountryObj(neighbor.getCountryName(),GameMap.getInstance());
-                if (n != null) {
-                    if (!n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
-                        // If priority country has an adjacent, enemy country
-                        add1 = true;
-
-                    } else if (n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
-                        add2 = true;
+            for (Country country : currentPlayer.getAssignedCountries()) {
+                for (Country neighbor : country.getNeighborNodes()) {
+                    // Checks if country has both adjacent friendly and enemy countries
+                    Country n = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
+                    if (n != null) {
+                        if (n.getBelongsToPlayer().getName().equals(currentPlayer.getName())) {
+                            priorityTargets.add(country);
+                        }
                     }
                 }
 
-                if (add1 && add2) {
-                    priorityTargets.add(country);
+            }
+            //System.out.println("**AI fortify - Created priorityTargets list");
+
+            if (priorityTargets.size() > 0) {
+                List<Country> priorityCountries = new ArrayList<Country>();
+                int r1 = rng.nextInt(priorityTargets.size());
+
+                for (i = 0; i < priorityTargets.get(r1).getNeighborNodes().size(); i++) {
+                    Country c = MapModel.getCountryObj(priorityTargets.get(r1).getNeighborNodes().get(i).getCountryName(), GameMap.getInstance());
+
+                    if (c != null && c.getBelongsToPlayer().equals(currentPlayer) && c.getCurrentArmiesDeployed() > 1) {
+                        priorityCountries.add(c);
+                    }
                 }
-            }
-
-        }
-        //System.out.println("**AI fortify - Created priorityTargets list");
-
-        if (priorityTargets.size() > 0) {
-            List<Country> priorityCountries = new ArrayList<Country>();
-            int r1 = rng.nextInt(priorityTargets.size());
-
-            for (i = 0; i < priorityTargets.get(r1).getNeighborNodes().size(); i++) {
-                Country c = MapModel.getCountryObj(priorityTargets.get(r1).getNeighborNodes().get(i).getCountryName(),GameMap.getInstance());
-
-                if (c != null && c.getBelongsToPlayer().equals(currentPlayer) && c.getCurrentArmiesDeployed() > 1) {
-                    priorityCountries.add(c);
+                if (priorityCountries.size() > 0) {
+                    //System.out.println("**AI fortify - Created priorityCountries list");
+                    int r2 = rng.nextInt(priorityCountries.size());
+                    GameView.displayLog(" Fortifying...");
+                    executeFortification(priorityCountries.get(r2).getCountryName(), priorityTargets.get(r1).getCountryName(), gameView, this);
+                    GameView.displayLog("Successful fortify");
+                }else{
+                    GameView.displayLog(priorityTargets.get(r1).getCountryName()+" does not have any valid neighbours from which it can fortify ! ");
                 }
+            } else{
+                GameView.displayLog("The player doesn't have any valid countries to fortify !");
             }
-            if (priorityCountries.size() > 0) {
-                //System.out.println("**AI fortify - Created priorityCountries list");
-                int r2 = rng.nextInt(priorityCountries.size());
-                //System.out.println("**AI fortify - Fortifying...");
-                executeFortification(priorityCountries.get(r2).getCountryName(),priorityTargets.get(r1).getCountryName(),gameView,this);
-                //System.out.println("**AI fortify - Successful fortify");
-            }
+            GameView.displayLog("\n===Benevolent Player type fortify - end===");
         }
-        //System.out.println("**AI fortify - end");
-
     }
 
     private void aggressiveBotTurn() {

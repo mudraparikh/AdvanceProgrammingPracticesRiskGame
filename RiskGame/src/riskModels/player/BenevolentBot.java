@@ -26,6 +26,7 @@ public class BenevolentBot implements PlayerStrategy {
      */
     @Override
     public void attack(String country1, String country2, GameView gameView, Player model) {
+        GameView.displayLog("Skipping Attack Phase as player is benevolent.");
         GameView.displayLog(model.currentPlayer.getName()+" is too afraid to attack ! Skipping the attack phase.");
         model.updatePhaseDetails("Repaint");
         model.updatePhaseDetails("==Attack Phase==");
@@ -54,6 +55,7 @@ public class BenevolentBot implements PlayerStrategy {
 
         model.moveArmyFromTo(countryA, countryB, armies);
         GameView.updateMapPanel();
+        GameView.displayLog("Benevolent moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
         model.updatePhaseDetails("You moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
         model.checkHasCountryCaptured();
         model.updatePhaseDetails("===Fortification ends===");
@@ -70,6 +72,7 @@ public class BenevolentBot implements PlayerStrategy {
     @Override
     public void reinforce(String country, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
+        GameView.displayLog("\n===Reinforcement phase for Benevolent type player begins===");
         GameView.displayLog(model.currentPlayer.name + " gets " + model.currentPlayerReinforceArmies + " armies");
         try {
             if (model.currentPlayer.getTotalArmies() > 0) {
@@ -79,6 +82,7 @@ public class BenevolentBot implements PlayerStrategy {
                 GameView.displayLog(model.currentPlayer.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");
                 if (model.currentPlayer.getTotalArmies() == 0) {
                     GameView.displayLog("\nYou do not have any armies left to reinforce");
+                    GameView.displayLog("===Reinforcement phase for Benevolent type player ends===\n");
                     model.updatePhaseDetails("\nReinforcement Phase ends");
                 }
                 GameView.updateMapPanel();

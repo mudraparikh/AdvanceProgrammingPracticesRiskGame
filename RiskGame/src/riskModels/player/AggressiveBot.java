@@ -37,7 +37,7 @@ public class AggressiveBot implements PlayerStrategy {
      * 
      * @param country1 name of the attacker's country
      * @param country2 name of the defender's country
-     * @param gameview object of GameView class
+     * @param gameView object of GameView class
      * @param model object of the Player class
      * 
      */
@@ -87,7 +87,7 @@ public class AggressiveBot implements PlayerStrategy {
             attackerRolls = Dice.rollDice(attackerDice).getDiceResult();
             defenderRolls = Dice.rollDice(defenderDice).getDiceResult();
 
-            GameView.displayLog("\n"+countryA.getBelongsToPlayer().getName()+"+(attacker) threw  dice(s) : ");
+            GameView.displayLog("\n"+countryA.getBelongsToPlayer().getName()+" (attacker) threw  dice(s) : ");
             for (int attackerRoll : attackerRolls) {
                 GameView.displayLog(" " + attackerRoll + " ");
             }
