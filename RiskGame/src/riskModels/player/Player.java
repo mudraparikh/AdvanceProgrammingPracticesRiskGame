@@ -331,54 +331,96 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     /**
-     * this getter method is boolean checks the turn in card
+     * Getter method is boolean checks the turn in card
      * @return true if the cards turns ,otherwise false
      */
     public boolean mustTurnInCards() {
 
         return hand.mustTurnInCards();
     }
-
+    /**
+     * Checks for the player if it is a bot or not
+     * @return true if its a bot
+     */
     public boolean isBot() {
         return isBot;
     }
-
+    /**
+     * Setter method will set the player to bot
+     * @param bot contains value true or false
+     */
     public void setBot(boolean bot) {
         isBot = bot;
     }
-
+    /**
+     * Getter method returns the type of bot
+     * @return botType type of bot
+     */
     public String getBotType() {
         return botType;
     }
-
+    /**
+     * Setter method that is used to set the type of bot
+     * @param botType sets type of bot
+     */
     public void setBotType(String botType) {
         this.botType = botType;
     }
-
+    /**
+     * Getter method to draw number of turns 
+     * @return number of turns
+     */
     public int getDrawTurns() {
         return drawTurns;
     }
-
+    /**
+     * Setter method to set number of draw turns
+     * @param drawTurns turns
+     */
     public void setDrawTurns(int drawTurns) {
         this.drawTurns = drawTurns;
     }
-
+    /**
+     * Getter method for strategy used by the player
+     * @return type of strategy
+     */
     public PlayerStrategy getStrategy() {
         return strategy;
     }
-
+    /**
+     * Setter method for setting the strategy of the player
+     * @param strategy type for player
+     */
     public void setStrategy(PlayerStrategy strategy) {
         this.strategy = strategy;
     }
-
+    /**
+     * This method will execute the attack method from the PlayerStrategy interface
+     * @param country1 name of the attacker's country
+     * @param country2 name of the defender's country
+     * @param gameView object of GameView class
+     * 
+     */
     public void executeAttack(String country1, String country2, GameView gameView, Player model) {
         this.strategy.attack(country1, country2, gameView, model);
     }
-
+    
+    /**
+     * This method will execute the reinforce method from the PlayerStrategy interface
+     * @param country name of the country where the armies need to reinforced 
+     * @param gameView object of GameView class
+     * @param model object of Player class
+     */
     public void executeReinforce(String country, GameView gameView, Player model) {
         this.strategy.reinforce(country,gameView, model);
     }
-
+    /**
+     * This method will execute the fortification method from the PlayerStrategy interface
+     * @param country1 name of the attacker's country
+     * @param country2 name of the defender's country
+     * @param gameView object of GameView class
+     * @param model object of Player class
+     */
     public void executeFortification(String country1, String country2, GameView gameView, Player model) {
         this.strategy.fortify(country1, country2, gameView, model);
     }
@@ -1198,7 +1240,11 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
            // MapModel.loadGame("test");
         }
     }
-
+    /**
+     * This method will turn in cards and reinforce armies for bot players.
+     * It will check for the bot type of the selected player and call the respective bot type.
+     * 
+     */
     private void turnOfBot() {
         cards = new int[3];
         for (i = 0; i < currentPlayer.getHand().size(); i++) {
@@ -1235,7 +1281,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                 break;
         }
     }
-
+    /**
+     * This method implements strategy for the Chetaer bot
+     */
     private void cheaterBotTurn() {
         this.setStrategy(new CheaterBot());
 
@@ -1280,7 +1328,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             }
         }
     }
-
+    /**
+     * This method implements strategy for Random bot
+     */
     private void randomBotTurn() {
         this.setStrategy(new RandomBot());
         rng = new Random();
@@ -1353,7 +1403,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         //System.out.println("**AI fortify - end");
 
     }
-
+    /**
+     * This method implements strategy for benevolent bot
+     */
     private void benevolentBotTurn() {
         this.setStrategy(new BenevolentBot());
         rng = new Random();
@@ -1417,7 +1469,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         //System.out.println("**AI fortify - end");
 
     }
-
+    /**
+     * This method implements strategy for aggressive bot
+     */
     private void aggressiveBotTurn() {
         this.setStrategy(new AggressiveBot());
         rng = new Random();
@@ -1490,7 +1544,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     /**
-     * WIll notify all the observers for any card exchanges
+     * Will notify all the observers for any card exchanges
      */
     public void showCard() {
         setChanged();
@@ -1674,7 +1728,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      	
     	return false;
     }
-
+    /**
+     * This method will save the game instance at the give point
+     * @throws Exception when instance is incorrect
+     */
     public  void saveGame()throws Exception{
         currentPlayer.canReinforce=canReinforce;
         currentPlayer.canAttack=canAttack;
@@ -1685,8 +1742,11 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         GameMap.getInstance().setDeck(deck);
         MapModel.saveGame(GameMap.getInstance());
     }
-
-
+    
+    /**
+     * This method will load game from the saved game instance
+     * @param file name of the file where instance is saved
+     */
     public void loadGame(String file) {
     	mapModel = new MapModel();
         GameMap gameMap=MapModel.loadGame(file);
@@ -1700,7 +1760,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         
 
     }
-
+    /**
+     * This method will populate the logger.
+     */
     public void populateLogsAndPhase() {
         GameView.displayLog("\n\n===== Game Loaded ====\n\n");
     }
