@@ -134,7 +134,7 @@ public class MapModel {
     /**
      * This  method will prepare HashMap for continent and country objects
      *
-     * @param country          list of country that we have got while parsing the  map file
+     * @param country list of country that we have got while parsing the  map file
      * @param listOfContinents listOfContinents that we have got while parsing the map file
      * @return HashMap of continent to countries objects
      */

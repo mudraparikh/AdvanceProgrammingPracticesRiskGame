@@ -1314,7 +1314,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
     }
     /**
-     * This method implements strategy for the Chetaer bot
+     * Sets the strategy to cheater bot and 
+     * update its logger
      */
     private void cheaterBotTurn() {
         this.setStrategy(new CheaterBot());
@@ -1374,7 +1375,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     /**
-     * This method implements strategy for Random bot
+     * Sets the strategy to random bot and 
+     * update its logger
      */
     private void randomBotTurn() {
         this.setStrategy(new RandomBot());
@@ -1443,7 +1445,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     /**
-     * This method implements strategy for benevolent bot
+     * Sets the strategy to benevolent bot and 
+     * update its logger
      */
     private void benevolentBotTurn() {
         this.setStrategy(new BenevolentBot());
@@ -1504,7 +1507,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
     
     /**
-     * This method implements strategy for aggressive bot
+     * Sets the strategy to aggressive bot and 
+     * update its logger
      */
     private void aggressiveBotTurn() {
         this.setStrategy(new AggressiveBot());

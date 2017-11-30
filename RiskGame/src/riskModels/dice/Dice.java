@@ -81,7 +81,6 @@ public class Dice {
      * getter method gives the result of rolled dices
      * @return value of the result
      */
-
     public Integer[] getDiceResult() {
         return diceResult;
     }
