@@ -32,6 +32,7 @@ public class RandomBot implements PlayerStrategy {
     public void attack(String country1, String country2, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
+        GameView.displayLog("\n===Attack phase for random player type begins===");
         model.updatePhaseDetails("Repaint");
         model.updatePhaseDetails("==Attack Phase==");
         rng = new Random();
@@ -71,11 +72,11 @@ public class RandomBot implements PlayerStrategy {
                 attackerRolls = Dice.rollDice(attackerDice).getDiceResult();
                 defenderRolls = Dice.rollDice(defenderDice).getDiceResult();
 
-                GameView.displayLog("\nAttackers threw  dice(s) : ");
+                GameView.displayLog("\n"+countryA.getBelongsToPlayer().getName()+" (attacker) threw  dice(s) : ");
                 for (int attackerRoll : attackerRolls) {
                     GameView.displayLog(" " + attackerRoll + " ");
                 }
-                GameView.displayLog("\nDefender threw  dice(s) : ");
+                GameView.displayLog("\n"+countryB.getBelongsToPlayer().getName()+" (defender) threw  dice(s) : ");
                 for (int defenderRoll : defenderRolls) {
                     GameView.displayLog(" " + defenderRoll + " ");
                 }
@@ -85,10 +86,10 @@ public class RandomBot implements PlayerStrategy {
 
                 updateArmiesBasedOnDiceResult(attackerLosses, defenderLosses);
 
-                GameView.displayLog("Attacker Losses : " + attackerLosses + " army.");
-                GameView.displayLog("Defender Losses : " + defenderLosses + " army.");
-                GameView.displayLog(countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
-                GameView.displayLog(countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
+                GameView.displayLog(countryA.getBelongsToPlayer().getName()+" (attacker) losses : " + attackerLosses + " army.");
+                GameView.displayLog(countryB.getBelongsToPlayer().getName()+" (defender) losses : " + defenderLosses + " army.");
+                GameView.displayLog(countryA.getBelongsToPlayer().getName()+"'s (attacker) " +countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
+                GameView.displayLog(countryB.getBelongsToPlayer().getName()+"'s (defender)"+ countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
                 GameView.displayLog("\n\n");
                 model.updatePhaseDetails("<Based On Dice Results> \n");
                 model.updatePhaseDetails("Attacker Losses : " + attackerLosses + " army." + "\n" + "Defender Losses : " + defenderLosses + " army.");
@@ -111,7 +112,7 @@ public class RandomBot implements PlayerStrategy {
                 randomTimeAttacks--;
 
             }else {
-                GameView.displayLog("Looks like cannot attack anymore ! ");
+                GameView.displayLog("Looks like random player type cannot attack anymore ! ");
                 break;
             }
         }
@@ -210,6 +211,7 @@ public class RandomBot implements PlayerStrategy {
     @Override
     public void reinforce(String country, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
+        GameView.displayLog("\n===Reinforcement phase for Random type player begins===");
         GameView.displayLog(model.currentPlayer.name + " gets " + model.currentPlayerReinforceArmies + " armies");
         try {
             if (model.currentPlayer.getTotalArmies() > 0) {
@@ -221,6 +223,7 @@ public class RandomBot implements PlayerStrategy {
                 GameView.displayLog(model.currentPlayer.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");
                 if (model.currentPlayer.getTotalArmies() == 0) {
                     GameView.displayLog(model.currentPlayer.getName()+" do not have any armies left to reinforce");
+                    GameView.displayLog("===Reinforcement phase for Random type player ends===\n");
                     model.updatePhaseDetails("\nReinforcement Phase ends");
                 }
                 GameView.updateMapPanel();
