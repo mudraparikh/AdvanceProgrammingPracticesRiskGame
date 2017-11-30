@@ -107,6 +107,10 @@ public class TournamentMode extends JDialog{
         pack();
 	}
 
+	/**
+	 * This panel displays all the elements like players strategies
+	 * @return players JPanel
+	 */
     private JPanel playerTypesPanel() {
     	
         playerTypesPanel = new JPanel();
