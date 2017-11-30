@@ -339,14 +339,26 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         return hand.mustTurnInCards();
     }
 
+    /**
+     * This getter method is boolean checks if its Bot or not
+     * @return true if the cards turns ,otherwise false
+     */
     public boolean isBot() {
         return isBot;
     }
 
+    /**
+     * This setter method assigns boolean value of its Bot or not
+     * @param bot boolean value
+     */
     public void setBot(boolean bot) {
         isBot = bot;
     }
 
+    /**
+     * this getter method gives type of the Bot
+     * @return string object of Bot type
+     */
     public String getBotType() {
         return botType;
     }
