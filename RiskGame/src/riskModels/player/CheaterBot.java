@@ -32,12 +32,13 @@ public class CheaterBot implements PlayerStrategy {
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
         model.updatePhaseDetails("Repaint");
         model.updatePhaseDetails("==Attack Phase==");
+        GameView.displayLog("Cheater is attacking : "+country2);
         GameView.displayLog(countryA.getBelongsToPlayer().getName() + " has defeated all of " + countryB.getBelongsToPlayer().getName() + "'s armies in " + country2 + " and has occupied the country!");
         defendingPlayerLostCountry(countryA, countryB, model);
 
         //If player conquered all the country and have won the game
         if (model.currentPlayer.assignedCountries.size() == GameMap.getInstance().getCountries().size()) {
-            model.hasBotWon = true;
+            Player.hasBotWon = true;
             GameView.displayLog("" + model.currentPlayer.getName() + " has won the game ! Congratulations ! ");
             model.winner=model.currentPlayer.getName();
             model.updatePhaseDetails(model.currentPlayer.getName() + "Won");

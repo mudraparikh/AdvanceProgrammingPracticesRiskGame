@@ -35,12 +35,15 @@ public class TournamentModeController implements ActionListener{
     List<String> selectedFiles=new ArrayList<String>();
     StringBuilder stringBuilder = new StringBuilder();
     GameView gameView;
-    
+    private ArrayList<String> playerNames;
+    private ArrayList<String> playerTypes;
     /**
      * Constructor assigning view
      * @param view tournament mode view
      */
     public TournamentModeController(TournamentMode view) {
+		playerNames = new ArrayList<String>();
+		playerTypes = new ArrayList<String>();
     	this.view = view;
 	}
 
@@ -101,6 +104,17 @@ public class TournamentModeController implements ActionListener{
 				}
 				allValidMaps = true;
 			}
+
+            playerNames.add(view.getPlayerTextField(1));
+            playerNames.add(view.getPlayerTextField(2));
+            playerNames.add(view.getPlayerTextField(3));
+            playerNames.add(view.getPlayerTextField(4));
+
+            playerTypes.add(view.getPlayerComboBox(1));
+            playerTypes.add(view.getPlayerComboBox(2));
+            playerTypes.add(view.getPlayerComboBox(3));
+            playerTypes.add(view.getPlayerComboBox(4));
+
 			//checks for all the as selected by the user are valid or not
 			if (allValidMaps && maxNumberOfIteration>=10 && maxNumberOfIteration <=50) {
 				Player.isTournamentMode=true;
@@ -117,7 +131,7 @@ public class TournamentModeController implements ActionListener{
                     	
                     	currentGame=i;
                     	GameView.displayLog("Game"+i+"Starts");
-                        model.initData(new File(mapFile),4,tournamentModel.getPlayerNames(),tournamentModel.getPlayerTypes(),true);
+                        model.initData(new File(mapFile),tournamentModel.getPlayerNames().size(),tournamentModel.getPlayerNames(),tournamentModel.getPlayerTypes(),true);
                         model.setDrawTurns(tournamentModel.getNumberOfTurns());
                         TournamentView.updateMapPanelFinal(i, "Before",mapFile);
                         try {

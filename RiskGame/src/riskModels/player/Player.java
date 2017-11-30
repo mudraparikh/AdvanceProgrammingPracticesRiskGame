@@ -1243,44 +1243,54 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     private void cheaterBotTurn() {
         this.setStrategy(new CheaterBot());
 
-        //reinforce for bot
-        List<Country> cheaterCountries = new ArrayList<>();
-        for(Country country: currentPlayer.getAssignedCountries()){
-            executeReinforce(country.getCountryName(),gameView, this);
-            cheaterCountries.add(country);
-        }
+        if(currentPlayer.assignedCountries !=null) {
 
-        //attack phase for bot
-       attackPhase: for(Country attackingCountry: cheaterCountries) {
-            List<Country> neighbors = attackingCountry.getNeighborNodes();
-            for (Country neighbor : neighbors) {
-                Country defenderCountry = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
-                if (isAttackValidForCheater(currentPlayer, attackingCountry, defenderCountry)) {
-                    executeAttack(attackingCountry.getCountryName(), neighbor.getCountryName(), gameView, this);
-                    if(hasBotWon) {
-                    	break attackPhase;
+            //reinforce for bot
+            GameView.displayLog("\n===Reinforcement phase for Cheater type player begins===");
+            List<Country> cheaterCountries = new ArrayList<>();
+            for (Country country : currentPlayer.getAssignedCountries()) {
+                executeReinforce(country.getCountryName(), gameView, this);
+                cheaterCountries.add(country);
+            }
+            GameView.displayLog("\n===Reinforcement phase for Cheater type player ends===");
+
+
+            //attack phase for bot
+            GameView.displayLog("\n===Attack phase for Cheater player type begins===");
+            attackPhase:
+            for (Country attackingCountry : cheaterCountries) {
+                GameView.displayLog("Cheater is attacking with "+attackingCountry.getCountryName()+" country...");
+                List<Country> neighbors = attackingCountry.getNeighborNodes();
+                for (Country neighbor : neighbors) {
+                    Country defenderCountry = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
+                    if (isAttackValidForCheater(currentPlayer, attackingCountry, defenderCountry)) {
+                        executeAttack(attackingCountry.getCountryName(), neighbor.getCountryName(), gameView, this);
+                        if (hasBotWon) {
+                            break attackPhase;
+                        }
+                        break;
                     }
-                    break;
                 }
             }
-        }
+            GameView.displayLog("\n===Attack phase for Cheater player type ends===");
 
-        //fortification phase for bot
-        List<Country> priorityCountries = new ArrayList<>();
+            //fortification phase for bot
+            List<Country> priorityCountries = new ArrayList<>();
 
-        for(Country country : cheaterCountries){
-            List<Country> neighbors = country.getNeighborNodes();
-            for(Country neighbor: neighbors) {
-                Country c = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
-                if (c != null && !c.getBelongsToPlayer().getName().equalsIgnoreCase(currentPlayer.getName())) {
-                    priorityCountries.add(c);
-                   break;
+            for (Country country : cheaterCountries) {
+                List<Country> neighbors = country.getNeighborNodes();
+                for (Country neighbor : neighbors) {
+                    Country c = MapModel.getCountryObj(neighbor.getCountryName(), GameMap.getInstance());
+                    if (c != null && !c.getBelongsToPlayer().getName().equalsIgnoreCase(currentPlayer.getName())) {
+                        priorityCountries.add(country);
+                        break;
+                    }
                 }
             }
-        }
-        if (priorityCountries.size() > 0) {
-            for (Country country:priorityCountries){
-                executeFortification(country.getCountryName(),null,gameView,this);
+            if (priorityCountries.size() > 0) {
+                for (Country country : priorityCountries) {
+                    executeFortification(country.getCountryName(), null, gameView, this);
+                }
             }
         }
     }

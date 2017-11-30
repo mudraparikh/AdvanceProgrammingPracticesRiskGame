@@ -81,7 +81,7 @@ public class BenevolentBot implements PlayerStrategy {
                 countryA.addArmy(armies);
                 GameView.displayLog(model.currentPlayer.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");
                 if (model.currentPlayer.getTotalArmies() == 0) {
-                    GameView.displayLog("\nYou do not have any armies left to reinforce");
+                    GameView.displayLog("You do not have any armies left to reinforce");
                     GameView.displayLog("===Reinforcement phase for Benevolent type player ends===\n");
                     model.updatePhaseDetails("\nReinforcement Phase ends");
                 }

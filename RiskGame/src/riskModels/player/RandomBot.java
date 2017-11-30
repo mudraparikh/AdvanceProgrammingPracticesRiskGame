@@ -34,7 +34,7 @@ public class RandomBot implements PlayerStrategy {
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
         GameView.displayLog("\n===Attack phase for random player type begins===");
         model.updatePhaseDetails("Repaint");
-        model.updatePhaseDetails("==Attack Phase==");
+        model.updatePhaseDetails("===Attack Phase==");
         rng = new Random();
         int randomTimeAttacks = rng.nextInt(5)+1;
         while(randomTimeAttacks > 0){
@@ -103,7 +103,7 @@ public class RandomBot implements PlayerStrategy {
 
                 //If player conquered all the country and have won the game
                 if (model.currentPlayer.assignedCountries.size() == GameMap.getInstance().getCountries().size()) {
-                    model.hasBotWon = true;
+                    Player.hasBotWon = true;
                     GameView.displayLog("" + model.currentPlayer.getName() + " has won the game ! Congratulations ! ");
                     model.updatePhaseDetails(model.currentPlayer.getName() + "Won");
                 }

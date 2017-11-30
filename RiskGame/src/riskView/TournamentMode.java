@@ -1,28 +1,19 @@
 package riskView;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import riskControllers.TournamentModeController;
-import riskModels.map.GameMap.*;
-import riskModels.map.MapModel.*;
+
 import static util.RiskGameUtil.*;
 /**
  * This class will get the details required to start the game in tournament mode.
@@ -30,23 +21,48 @@ import static util.RiskGameUtil.*;
  *
  */
 public class TournamentMode extends JDialog{
-	public static JPanel tournamentDetailsPanel;
-	public static GridLayout tournamentLayout;
-    public static JLabel mapSelectLabel;
+
     public static JButton mapBtn1;
     public static JButton mapBtn2;
     public static JButton mapBtn3;
 	public static JButton mapBtn4;
 	public static JButton mapBtn5;
     public static JButton startGame;
+
     public static JLabel numberOfTurnsLabel;
     public static JLabel numberOfGames;
+    public static JLabel mapSelectLabel;
+
     public static JTextField turns;
+
     public static JComboBox <String> gamesList;
+
     public static String numTurns;
 	public static String numGames;
+
 	public static String[] games;
+
 	public static JTextArea gameDetails;
+
+    private JPanel playerNamesPanel;
+    private JPanel playerTypesPanel;
+    public static JPanel tournamentDetailsPanel;
+
+    private GridLayout playerNamesLayout;
+    private GridLayout playerTypesLayout;
+    public static GridLayout tournamentLayout;
+
+    private JTextField player1TextField;
+    private JTextField player2TextField;
+    private JTextField player3TextField;
+    private JTextField player4TextField;
+
+    private JComboBox<String> player1ComboBox;
+    private JComboBox<String> player2ComboBox;
+    private JComboBox<String> player3ComboBox;
+    private JComboBox<String> player4ComboBox;
+
+    private String[] types = {"Aggressive Bot", "Benevolent Bot", "Randomize Bot", "Cheater Bot" };
     
 	/**
 	 * this constructor helps to set title,window size,default close operation
@@ -58,11 +74,54 @@ public class TournamentMode extends JDialog{
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setResizable(false);
         add(tournamentDetailsPanel());
+		//add(playerNamesPanel());
+		//add(playerTypesPanel());
         setLocationRelativeTo(null);
         pack();
 	}
-	
-	/**
+
+    private JPanel playerTypesPanel() {
+        playerTypesPanel = new JPanel();
+
+        playerTypesPanel.setPreferredSize(new Dimension(200, 4 * 40 + 40));
+
+        //playerTypesLayout = new GridLayout(4 + 1, 1, 5, 5);
+        //playerTypesPanel.setLayout(playerTypesLayout);
+
+        player1ComboBox = new JComboBox<>(types);
+        player2ComboBox = new JComboBox<>(types);
+        player3ComboBox = new JComboBox<>(types);
+        player4ComboBox = new JComboBox<>(types);
+
+        playerTypesPanel.add(player1ComboBox);
+        playerTypesPanel.add(player2ComboBox);
+        playerTypesPanel.add(player3ComboBox);
+        playerTypesPanel.add(player4ComboBox);
+
+        return playerTypesPanel;
+    }
+
+    private JPanel playerNamesPanel() {
+        playerNamesPanel = new JPanel();
+
+        playerNamesPanel.setPreferredSize(new Dimension(200, 4 * 40 + 40));
+
+        //playerNamesLayout = new GridLayout(4 + 1, 1, 5, 5);
+       // playerNamesPanel.setLayout(playerNamesLayout);
+
+        player1TextField = new JTextField("Aggressive");
+        player2TextField = new JTextField("Benevolent");
+        player3TextField = new JTextField("Random");
+        player4TextField = new JTextField("Cheater");
+
+        playerNamesPanel.add(player1TextField);
+        playerNamesPanel.add(player2TextField);
+        playerNamesPanel.add(player3TextField);
+        playerNamesPanel.add(player4TextField);
+        return playerNamesPanel;
+    }
+
+    /**
 	 * The panel to display all the elements for playing tournament mode
 	 * @return JPanel message
 	 */
@@ -122,4 +181,57 @@ public class TournamentMode extends JDialog{
         mapBtn5.addActionListener(event);
 	    startGame.addActionListener(event);
 	}
+
+    /**
+     * Getter methods for text field of players
+     * @param playerNum maintains the player number
+     * @return getText value from the respective text-field
+     */
+
+    public String getPlayerTextField(int playerNum)
+    {
+        if (playerNum == 1)
+        {
+            return player1TextField.getText();
+        }
+        else if (playerNum == 2)
+        {
+            return player2TextField.getText();
+        }
+        else if (playerNum == 3)
+        {
+            return player3TextField.getText();
+        }
+        else
+        {
+            return player4TextField.getText();
+        }
+    }
+
+    // Get methods for combo boxes
+    /**
+     * Getter methods for the comboBox
+     * @param playerNum maintains the player number
+     * @return getSelectedItem the value of the selected item form the comboBox
+     */
+
+    public String getPlayerComboBox(int playerNum)
+    {
+        if (playerNum == 1)
+        {
+            return player1ComboBox.getSelectedItem().toString();
+        }
+        else if (playerNum == 2)
+        {
+            return player2ComboBox.getSelectedItem().toString();
+        }
+        else if (playerNum == 3)
+        {
+            return player3ComboBox.getSelectedItem().toString();
+        }
+        else
+        {
+            return player4ComboBox.getSelectedItem().toString();
+        }
+    }
  }

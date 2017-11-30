@@ -197,3 +197,5 @@ gen
 .classpath
 .project
 *.ser
+*.txt
+TournamentModeLogs.txt
