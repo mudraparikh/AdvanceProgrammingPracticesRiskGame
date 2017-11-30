@@ -194,12 +194,14 @@ public class RandomBot implements PlayerStrategy {
     public void fortify(String country1, String country2, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
-
+        rng = new Random();
         // Player inputs how many armies to move from country A to country B
         model.updatePhaseDetails("Repaint");
         model.updatePhaseDetails("===Fortification phase===");
 
-        int armies = countryA.getCurrentArmiesDeployed() - 1;
+
+        int armies = rng.nextInt(countryA.getCurrentArmiesDeployed()-1);
+        if (armies  == 0) armies = 1;
 
         model.moveArmyFromTo(countryA, countryB, armies);
         GameView.updateMapPanel();

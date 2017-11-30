@@ -105,7 +105,7 @@ public class TournamentModeController implements ActionListener{
 				allValidMaps = true;
 			}
 
-            playerNames.add(view.getPlayerTextField(1));
+            /*playerNames.add(view.getPlayerTextField(1));
             playerNames.add(view.getPlayerTextField(2));
             playerNames.add(view.getPlayerTextField(3));
             playerNames.add(view.getPlayerTextField(4));
@@ -113,13 +113,14 @@ public class TournamentModeController implements ActionListener{
             playerTypes.add(view.getPlayerComboBox(1));
             playerTypes.add(view.getPlayerComboBox(2));
             playerTypes.add(view.getPlayerComboBox(3));
-            playerTypes.add(view.getPlayerComboBox(4));
+            playerTypes.add(view.getPlayerComboBox(4));*/
 
 			//checks for all the as selected by the user are valid or not
-			if (allValidMaps && maxNumberOfIteration>=10 && maxNumberOfIteration <=50) {
+			if (allValidMaps && maxNumberOfIteration>=10 && maxNumberOfIteration <=500) {
 				Player.isTournamentMode=true;
 				StringBuilder finalResult =new StringBuilder();
 				TournamentModel tournamentModel = new TournamentModel(selectedFiles,numberOfGames,maxNumberOfIteration);
+				GameView.displayLog("repaint");
                 for (String mapFile : tournamentModel.getMapFiles()) {
                     Player model = new Player();
                     

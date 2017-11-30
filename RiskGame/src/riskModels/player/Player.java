@@ -433,6 +433,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             canFortify = false;
             canEndTurn = false;
             hasPlayerWon = false;
+            currentIteration = 0;
 
         } else {
             System.out.println("Something went wrong ! ");
