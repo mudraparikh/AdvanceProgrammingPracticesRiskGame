@@ -105,7 +105,7 @@ public class TournamentModeController implements ActionListener{
 				allValidMaps = true;
 			}
 
-            /*playerNames.add(view.getPlayerTextField(1));
+            playerNames.add(view.getPlayerTextField(1));
             playerNames.add(view.getPlayerTextField(2));
             playerNames.add(view.getPlayerTextField(3));
             playerNames.add(view.getPlayerTextField(4));
@@ -113,7 +113,7 @@ public class TournamentModeController implements ActionListener{
             playerTypes.add(view.getPlayerComboBox(1));
             playerTypes.add(view.getPlayerComboBox(2));
             playerTypes.add(view.getPlayerComboBox(3));
-            playerTypes.add(view.getPlayerComboBox(4));*/
+            playerTypes.add(view.getPlayerComboBox(4));
 
 			//checks for all the as selected by the user are valid or not
 			if (allValidMaps && maxNumberOfIteration>=10 && maxNumberOfIteration <=500) {
@@ -132,7 +132,7 @@ public class TournamentModeController implements ActionListener{
                     	
                     	currentGame=i;
                     	GameView.displayLog("Game"+i+"Starts");
-                        model.initData(new File(mapFile),tournamentModel.getPlayerNames().size(),tournamentModel.getPlayerNames(),tournamentModel.getPlayerTypes(),true);
+                        model.initData(new File(mapFile),playerNames.size(),playerNames,playerTypes,true);
                         model.setDrawTurns(tournamentModel.getNumberOfTurns());
                         TournamentView.updateMapPanelFinal(i, "Before",mapFile);
                         try {
