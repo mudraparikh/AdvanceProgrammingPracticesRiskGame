@@ -78,6 +78,7 @@ public class PlayerCount extends JDialog {
 
     /**
      * Adds the action listeners;
+     * @param event listens to the button events
      */
     protected void addActionListeners(ActionListener event) {
         threePlayerBtn.addActionListener(event);

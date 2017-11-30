@@ -409,7 +409,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      * @param country1 name of the attacker's country
      * @param country2 name of the defender's country
      * @param gameView object of GameView class
-     * 
+     * @param model object of Player class
      */
     public void executeAttack(String country1, String country2, GameView gameView, Player model) {
         this.strategy.attack(country1, country2, gameView, model);

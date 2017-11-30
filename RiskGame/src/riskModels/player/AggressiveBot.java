@@ -241,8 +241,8 @@ public class AggressiveBot implements PlayerStrategy {
     /**
      * Overrides fortify phase for aggressive bot
      * from the PlayerStrategy Interface
-     * @param country1 object of Country class
-     * @param country2 object of Country class
+     * @param country1 name of the attacker's country
+     * @param country2 name of the defender's country
      * @param gameView object of GameView class
      * @param model object of player class
      * 
@@ -270,6 +270,7 @@ public class AggressiveBot implements PlayerStrategy {
     /**
      * Overrides reinforcement phase for aggressive bot
      * from the PlaerStrategy Interface
+     * @param country name of country where armies are to be reinforced
      * @param gameView object of GameView class
      * @param model object of Player class
      * 

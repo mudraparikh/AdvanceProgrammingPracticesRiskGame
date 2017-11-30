@@ -10,7 +10,11 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicIconFactory;
 import java.util.Objects;
 import java.util.Random;
-
+/**
+ * This class implements the strategy of Random bot player
+ * @author mudraparikh
+ *
+ */
 public class RandomBot implements PlayerStrategy {
 
     public Country countryA;
@@ -27,7 +31,16 @@ public class RandomBot implements PlayerStrategy {
     public Integer[] defenderRolls;
 
     public Random rng;
-
+    
+    /**
+     * Overrides the attack phase for Random bot
+     * from he PlayerStrategy interface
+     * @param country1 name of the attacker's country
+     * @param country2 name of the defender's country
+     * @param gameView object of GameView class
+     * @param model object of Player class
+     * 
+     */
     @Override
     public void attack(String country1, String country2, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
@@ -118,7 +131,13 @@ public class RandomBot implements PlayerStrategy {
         }
 
     }
-
+    /**
+     * Checks if the defending player has lost armies
+     * @param countryA object of Country class
+     * @param countryB object of Country class
+     * @param model object of Player class
+     * 
+     */
     private void defendingPlayerLostCountry(Country countryA, Country countryB, Player model) {
         // Remove country from defender's list of occupied territories and adds to attacker's list
         countryB.getBelongsToPlayer().assignedCountries.remove(countryB);
@@ -142,12 +161,21 @@ public class RandomBot implements PlayerStrategy {
         model.hasCountryCaptured = true;
         model.updateDomination();
     }
-
+    /**
+     * Updates the armies of the attacker/defender based on the dice roll result
+     * @param attackerLosses number of armies lost by attacker
+     * @param defenderLosses number of armies lost by defender
+     * 
+     */
     private void updateArmiesBasedOnDiceResult(int attackerLosses, int defenderLosses) {
         countryA.subtractArmy(attackerLosses);
         countryB.subtractArmy(defenderLosses);
     }
-
+    /**
+     * Compares the dice results for attacker and defender
+     * and calculates the army loss for them
+     * 
+     */
     private void compareDiceResultsAndCalculateLosses() {
         // Calculate losses
         if (attackerRolls[0] > defenderRolls[0]) {
@@ -166,7 +194,12 @@ public class RandomBot implements PlayerStrategy {
             }
         }
     }
-
+    /**
+     * Displays the dialogBox for dice roll of defender
+     * @param gameView object of GameView class
+     * @param model  object of Player class
+     * @return JOptionPane message
+     */
     private int showDefenderDiceDialogBox(GameView gameView, Player model) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDicesForDefender(countryB)];
         for (int i = 0; i < selectOptions.length; i++) {
@@ -178,18 +211,35 @@ public class RandomBot implements PlayerStrategy {
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
                 selectOptions[0]);
     }
-
+    /**
+     * Number of dice roll for defender depending on the armies
+     * @param country object of Country class
+     * @return number of dices that can be rolled
+     */
     private int getMaxNumberOfDicesForDefender(Country country) {
         return country.getCurrentArmiesDeployed() >= 2 ? 2 : 1;
     }
-
+    /**
+     * Checks if player can still continue to attack depending on the armies left
+     * @param countryA object of Country class
+     * @param countryB object of Country class
+     * @return boolean value true or false
+     */
     private boolean checkPlayerTurnCanContinue(Country countryA, Country countryB) {
         if(countryA.getCurrentArmiesDeployed() > 1 && !countryB.getBelongsToPlayer().getName().equals(countryA.getBelongsToPlayer().getName())){
             return true;
         }
         return false;
     }
-
+    /**
+     * Overrides fortify phase for Random bot
+     * from the PlayerStrategy interface
+     * @param country1 name of the attacker's country
+     * @param country2 name of the defender's country
+     * @param gameView object of GameView class
+     * @param model object of Player class
+     * 
+     */
     @Override
     public void fortify(String country1, String country2, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
@@ -209,7 +259,13 @@ public class RandomBot implements PlayerStrategy {
         model.checkHasCountryCaptured();
         model.updatePhaseDetails("===Fortification ends===");
     }
-
+    /**
+     * Overrides reinforcement phase for Random bot
+     * from the PlayerStrategy interface
+     * @param country name of country where armies are to be reinforced
+     * @param gameView object of GameView class
+     * @param model object of Player class
+     */
     @Override
     public void reinforce(String country, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());

@@ -136,7 +136,7 @@ public class MapModel {
      *
      * @param country          list of country that we have got while parsing the  map file
      * @param listOfContinents listOfContinents that we have got while parsing the map file
-     * @return HashMap of continent->countries  objects
+     * @return HashMap of continent to countries objects
      */
     private static HashMap<Continent, List<Country>> getContinentCountryMap(List<Country> country, List<Continent> listOfContinents) {
         HashMap<Continent, List<Country>> continentCountryMap = new HashMap<>();
