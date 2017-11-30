@@ -16,7 +16,7 @@ import riskModels.player.Player;
 import riskView.GameView;
 import riskView.TournamentMode;
 import riskView.TournamentView;
-import tournamentMode.TournamentModel;
+import riskModels.tournament.TournamentModel;
 
 import static util.RiskGameUtil.*;
 
@@ -39,7 +39,7 @@ public class TournamentModeController implements ActionListener{
     private ArrayList<String> playerTypes;
     /**
      * Constructor assigning view
-     * @param view tournament mode view
+     * @param view riskModels.tournament mode view
      */
     public TournamentModeController(TournamentMode view) {
 		playerNames = new ArrayList<String>();
@@ -65,7 +65,6 @@ public class TournamentModeController implements ActionListener{
     	    if (result == JFileChooser.APPROVE_OPTION) {
     	        File selectedFile = fileChooser.getSelectedFile();
     	        fileName = selectedFile.getName();
-    	        System.out.println("Selected file : " + selectedFile.getAbsolutePath());
 
 				//Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
@@ -79,7 +78,7 @@ public class TournamentModeController implements ActionListener{
     	    }
         }
 		else if(event.equals(startGameBtnName)) {
-			System.out.println("Map files selected are :\n" + fileName+"\n"+fileName1+"\n"+fileName2+"\n");
+
 
 			TournamentMode.numTurns = TournamentMode.turns.getText();
 			stringBuilder.append("Number of Turns :").append(TournamentMode.numTurns).append("\n");
@@ -116,11 +115,15 @@ public class TournamentModeController implements ActionListener{
             playerTypes.add(view.getPlayerComboBox(4));
 
 			//checks for all the as selected by the user are valid or not
-			if (allValidMaps && maxNumberOfIteration>=10 && maxNumberOfIteration <=500) {
+			if (allValidMaps && maxNumberOfIteration>=10 && maxNumberOfIteration <=50) {
 				Player.isTournamentMode=true;
 				StringBuilder finalResult =new StringBuilder();
+				List<String> v = selectedFiles;
+
 				TournamentModel tournamentModel = new TournamentModel(selectedFiles,numberOfGames,maxNumberOfIteration);
 				GameView.displayLog("repaint");
+
+                List<String> s = tournamentModel.getMapFiles();
                 for (String mapFile : tournamentModel.getMapFiles()) {
                     Player model = new Player();
                     

@@ -139,7 +139,7 @@ public class GameView extends JDialog {
      */
     public static void displayLog(String logDetail) {
     	if(Player.isTournamentMode) {
-   		 TournamentView.displayLog(logDetail); // to get real time updates during tournament mode.
+   		 TournamentView.displayLog(logDetail); // to get real time updates during riskModels.tournament mode.
 	   	}else {
 	   		String existingDetails = printTextArea.getText();
 	           StringBuilder stringBuilder = new StringBuilder(existingDetails);
