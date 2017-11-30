@@ -7,12 +7,25 @@ import riskModels.map.MapModel;
 import riskView.GameView;
 
 import java.util.Random;
-
+/**
+ * This class implements the strategy for Cheater bot
+ * @author prashantp95
+ *
+ */
 public class CheaterBot implements PlayerStrategy {
 
     public Country countryA;
     public Country countryB;
-
+    
+    /**
+     * Overrides the attack phase for Cheater bot
+     * from the PlayerStrategy interface
+     * @param country1 name of the attacker's country
+     * @param country2 name of the defender's country
+     * @param gameView object of GameView class
+     * @param model object of Player class
+     * 
+     */
     @Override
     public void attack(String country1, String country2, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
@@ -32,7 +45,15 @@ public class CheaterBot implements PlayerStrategy {
         GameView.updateMapPanel();
 
     }
-
+    /**
+     * Overrides the fortify phase for Cheater bot
+     * from the PlayerStrategy interface
+     * @param country1 name of the attacker's country
+     * @param country2 name of the defender's country
+     * @param gameView object of GameView class
+     * @param model object of Player class
+     * 
+     */
     @Override
     public void fortify(String country1, String country2, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
@@ -43,7 +64,14 @@ public class CheaterBot implements PlayerStrategy {
         }
         GameView.updateMapPanel();
     }
-
+    /**
+     * Overrides the reinforce phase for Cheater bot
+     * from the PlayerStrategy interface
+     * @param country name of the attacker's country
+     * @param gameView object of GameView class
+     * @param model object of Player class
+     * 
+     */
     @Override
     public void reinforce(String country, GameView gameView, Player model) throws NullPointerException {
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
@@ -54,8 +82,13 @@ public class CheaterBot implements PlayerStrategy {
         }
         GameView.updateMapPanel();
     }
-
-
+    /**
+     * Checks if the defending player has lost countries.
+     * @param countryA object of Country class
+     * @param countryB object of Country class
+     * @param model object of Player class
+     * 
+     */
     private void defendingPlayerLostCountry(Country countryA, Country countryB, Player model) {
 
         // Remove country from defender's list of occupied territories and adds to attacker's list

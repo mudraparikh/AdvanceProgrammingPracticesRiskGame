@@ -24,6 +24,9 @@ public class MapModelTest extends Player {
     private MapModel mapObj;
     private GameMap gameMapObj;
     private String filePath;
+    
+    private ArrayList<String> playerNames;
+    private ArrayList<String> playerTypes;
 
     /**
      * This method setting up the context as many test cases share the same values
@@ -32,8 +35,23 @@ public class MapModelTest extends Player {
     public void init() {
         mapObj = new MapModel();
         gameMapObj = GameMap.getInstance();
-        //filePath = location.replaceAll("/bin", "/res");
-        filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
+        filePath = location.replaceAll("/bin", "/res");
+      //  filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
+        playerNames = new ArrayList<String>();
+        playerTypes = new ArrayList<String>();
+
+        playerNames.add("John");
+        playerNames.add("Alexa");
+        playerNames.add("Penny");
+        playerNames.add("Sheldon");
+        playerNames.add("Amy");
+        playerNames.add("Raj");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human"); 
     }
 
     /**
@@ -76,6 +94,15 @@ public class MapModelTest extends Player {
     	assertFalse(gameMapObj.isCorrectMap());
     }
 
+    /**
+     * This method checks UnconnectedContinent map is valid or not
+     * @throws Exception it throws if there are any exceptions found
+     */
+    @Test
+    public void testUnconnectedContinent() throws Exception{
+    	gameMapObj = mapObj.readMapFile(filePath + "UnconnectedContinent.map");
+    	assertFalse(gameMapObj.isCorrectMap());
+    }
     /**
      * This method checks whether the selected map is valid , if blank map is selected
      * @throws Exception it throws if there are any exceptions found

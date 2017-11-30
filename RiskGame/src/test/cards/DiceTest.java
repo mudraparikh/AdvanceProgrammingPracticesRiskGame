@@ -4,13 +4,26 @@ import org.junit.Test;
 import riskModels.dice.Dice;
 import static org.junit.Assert.*;
 
+/**
+ * This class tests if the dices function is working as intended
+ * @author hnath
+ *
+ */
 public class DiceTest {
 
+	/**
+	 * This method checks whether the dices rolled or not
+	 * @throws Exception it throws if there are any exceptions found
+	 */
     @Test
     public void testDiceResult() throws Exception {
     	assertTrue(Dice.rollDice(3).isDiceRolled);
     }
 
+    /**
+     * This method checks if the dice result more than three or not
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void testDiceResultMoreThanThree() throws Exception{
         assertFalse(Dice.rollDice(6).isDiceRolled);
