@@ -34,7 +34,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public boolean hasCountryCaptured;
     public boolean hasPlayerWon;
     public static boolean hasBotWon;
-    public boolean isTournamentMode;
+    public static boolean isTournamentMode;
     public boolean isBot;
 
 
@@ -533,7 +533,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     isBot = true;
                     botType = "aggressive";
                     break;
-                case "BenevolentBot Bot":
+                case "Benevolent Bot":
                     isBot = true;
                     botType = "benevolent";
                     break;
@@ -717,7 +717,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
     }
 
-    private void showWinDialogBox() {
+    protected void showWinDialogBox() {
         JOptionPane.showMessageDialog(null, "Congratulations! "+currentPlayer.getName()+" won the game.");
     }
 
@@ -1505,10 +1505,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      */
     public void startGame(Player model, GameView gameView) {
         this.gameView = gameView;
-        Collections.shuffle(playerList);
+        //Collections.shuffle(playerList);
         player.setPlayerList(playerList);
         GameMap.getInstance().setPlayerList(playerList);
-        //GameView.displayLog(startUpPhaseLogs);
+        GameView.displayLog(startUpPhaseLogs);
         GameView.displayLog("\n\n");
         GameView.displayLog("Enjoy the game ! All the best !");
         GameView.displayLog("The order of turns:");

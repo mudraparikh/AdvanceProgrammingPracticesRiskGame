@@ -1,10 +1,5 @@
 package riskControllers;
 
-import static util.RiskGameUtil.mapBtnName1;
-import static util.RiskGameUtil.mapBtnName2;
-import static util.RiskGameUtil.mapBtnName3;
-import static util.RiskGameUtil.startGameBtnName;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -22,16 +17,18 @@ import riskView.GameView;
 import riskView.TournamentMode;
 import riskView.TournamentView;
 import tournamentMode.TournamentModel;
+
+import static util.RiskGameUtil.*;
+
 /**
  * This class maps the user's input to the data and methods.
  * @author mudraparikh
  *
  */
 public class TournamentModeController implements ActionListener{
-	private JFileChooser filechooser = new JFileChooser();
+	private JFileChooser fileChooser = new JFileChooser();
 	private TournamentMode view;
-	private TournamentView tournamentView;
-    GameMap gameMap = GameMap.getInstance();
+	GameMap gameMap = GameMap.getInstance();
     public boolean allValidMaps;
     MapModel mapModel = new MapModel();
     String fileName,fileName1,fileName2;
@@ -53,85 +50,46 @@ public class TournamentModeController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
 		String event = actionEvent.getActionCommand();
-		if (event.equals(mapBtnName1)) {
-            System.out.println("Now Choose the first map file from the Dialog box");
+		if (event.equals(mapBtnName1)
+                || (event.equals(mapBtnName2))
+                || (event.equals(mapBtnName3))
+                || (event.equals(mapBtnName4))
+                || (event.equals(mapBtnName5))) {
         	//Displays the dialog to select a file from the user's machine.
-    	    filechooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-    	    filechooser.setDialogTitle("Select a .map file");
-    	    int result = filechooser.showOpenDialog(filechooser);
-    	    if (result == filechooser.APPROVE_OPTION) {
-    	        File selectedFile = filechooser.getSelectedFile();
+    	    fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+    	    fileChooser.setDialogTitle("Select a .map file");
+    	    int result = fileChooser.showOpenDialog(fileChooser);
+    	    if (result == JFileChooser.APPROVE_OPTION) {
+    	        File selectedFile = fileChooser.getSelectedFile();
     	        fileName = selectedFile.getName();
-    	        System.out.println("Selected file 1: " + selectedFile.getAbsolutePath());
-    	        MapModel mapmodel = new MapModel();
-    	        
-    	      //Condition to check if the correct file is selected.
+    	        System.out.println("Selected file : " + selectedFile.getAbsolutePath());
+
+				//Condition to check if the correct file is selected.
                 if (gameMap.isCorrectMap) {
-                	stringBuilder.append("Map File 1 : "+fileName+"\n");
+                	stringBuilder.append("Map File  : ").append(fileName).append("\n");
                 	selectedFiles.add(selectedFile.getAbsolutePath());
                }
                 else
                 {
-                	JOptionPane.showMessageDialog(null,GameMap.getInstance().getErrorMessage().toString());
+                	JOptionPane.showMessageDialog(null, GameMap.getInstance().getErrorMessage());
                 }
     	    }
         }
-		else if(event.equals(mapBtnName2)) {
-			System.out.println("Now Choose the first map file from the Dialog box");
-        	//Displays the dialog to select a file from the user's machine.
-    	    filechooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-    	    filechooser.setDialogTitle("Select a .map file");
-    	    int result = filechooser.showOpenDialog(filechooser);
-    	    if (result == filechooser.APPROVE_OPTION) {
-    	        File selectedFile = filechooser.getSelectedFile();
-    	        fileName1 = selectedFile.getName();
-    	        System.out.println("Selected file 2: " + selectedFile.getAbsolutePath());
-    	        MapModel mapmodel = new MapModel();
-    	        
-    	      //Condition to check if the correct file is selected.
-                if (gameMap.isCorrectMap) {
-                	stringBuilder.append("Map File 2 : "+fileName1+"\n");
-                	selectedFiles.add(selectedFile.getAbsolutePath());
-               }
-                else
-                {
-                	JOptionPane.showMessageDialog(null,GameMap.getInstance().getErrorMessage().toString());
-                }
-    	    }	
-		}
-		else if(event.equals(mapBtnName3)) {
-			System.out.println("Now Choose the first map file from the Dialog box");
-        	//Displays the dialog to select a file from the user's machine.
-    	    filechooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-    	    filechooser.setDialogTitle("Select a .map file");
-    	    int result = filechooser.showOpenDialog(filechooser);
-    	    if (result == filechooser.APPROVE_OPTION) {
-    	        File selectedFile = filechooser.getSelectedFile();
-    	        fileName2 = selectedFile.getName();
-    	        System.out.println("Selected file 3: " + selectedFile.getAbsolutePath());
-    	        MapModel mapmodel = new MapModel();
-    	        
-    	      //Condition to check if the correct file is selected.
-                if (gameMap.isCorrectMap) {
-                	stringBuilder.append("Map File 3 : "+fileName2+"\n");
-                	selectedFiles.add(selectedFile.getAbsolutePath());
-                }
-                else
-                {
-                	JOptionPane.showMessageDialog(null,GameMap.getInstance().getErrorMessage().toString());
-                }
-    	    }
-		}
 		else if(event.equals(startGameBtnName)) {
 			System.out.println("Map files selected are :\n" + fileName+"\n"+fileName1+"\n"+fileName2+"\n");
-			view.numTurns = view.turns.getText();
-			stringBuilder.append("Number of Turns :"+view.numTurns+"\n");
-			System.out.println("Number of turns :"+ view.numTurns);
-			view.numGames = (String) view.gamesList.getSelectedItem();
-			stringBuilder.append("Number of Games :"+ view.numGames);
-			int maxNumberOfIteration =Integer.valueOf(view.numTurns);
-			int numberOfGames =Integer.valueOf(view.numGames);
-			System.out.println("Number of Games :"+ view.numGames);
+
+			TournamentMode.numTurns = TournamentMode.turns.getText();
+			stringBuilder.append("Number of Turns :").append(TournamentMode.numTurns).append("\n");
+			System.out.println("Number of turns :"+ TournamentMode.numTurns);
+            int maxNumberOfIteration =Integer.valueOf(TournamentMode.numTurns);
+
+			TournamentMode.numGames = (String) TournamentMode.gamesList.getSelectedItem();
+			stringBuilder.append("Number of Games :").append(TournamentMode.numGames);
+            System.out.println("Number of Games :"+ TournamentMode.numGames);
+            int numberOfGames =Integer.valueOf(TournamentMode.numGames);
+
+
+
 			TournamentMode.gameDetails.setText(stringBuilder.toString());
 			for (String mapFile : selectedFiles) {
 				gameMap = mapModel.readMapFile(mapFile);
@@ -144,7 +102,8 @@ public class TournamentModeController implements ActionListener{
 				allValidMaps = true;
 			}
 			//checks for all the as selected by the user are valid or not
-			if (allValidMaps) {
+			if (allValidMaps && maxNumberOfIteration>=10 && maxNumberOfIteration <=50) {
+				Player.isTournamentMode=true;
 				StringBuilder finalResult =new StringBuilder();
 				TournamentModel tournamentModel = new TournamentModel(selectedFiles,numberOfGames,maxNumberOfIteration);
                 for (String mapFile : tournamentModel.getMapFiles()) {
@@ -152,33 +111,43 @@ public class TournamentModeController implements ActionListener{
                     
                     int currentGame=1;
                     StringBuilder result = new StringBuilder();
-                    result.append("--------->Map ::"+ mapFile+"\n");
+                    result.append("------------------->Map ::"+ mapFile+"\n");
+                    GameView.displayLog("------------------Now Playing for map------------------>"+mapFile);
                     for (int i = 1; i <= tournamentModel.getNumberOfGames(); i++) {
+                    	
                     	currentGame=i;
+                    	GameView.displayLog("Game"+i+"Starts");
                         model.initData(new File(mapFile),4,tournamentModel.getPlayerNames(),tournamentModel.getPlayerTypes(),true);
                         model.setDrawTurns(tournamentModel.getNumberOfTurns());
+                        TournamentView.updateMapPanelFinal(i, "Before",mapFile);
                         try {
                             gameView = new GameView();
                         } catch (IOException e) {
                            // e.printStackTrace();
                         }
-                        result.append("---------------ResultForGame"+ currentGame+"-------------\n");
-                       
+                   	   
                         gameView.addActionListeners(new GamePlayController(model, gameView, false));
                         result.append("Game"+ i+"\n");
                         result.append("Result ::"+model.winner+"\n");
                         gameView.setVisible(true);
+                        TournamentView.updateMapPanelFinal(i, "After",mapFile);
                         gameView=null;
                         GameMap.setInstance(null);
                         Player.hasBotWon=false;
+                        GameView.displayLog("------------------------->Game"+currentGame+"Ends");
+                        GameView.displayLog("Results is -->"+result.toString());
+                        
                     }
+                    
+                    
+                    
                     finalResult.append(result);
                    
                 }
-                System.out.println(finalResult.toString());
+                GameView.displayLog("All Game Ends \n"+finalResult.toString());
 			}
 			else{
-                System.out.println("Looks like you have selected an invalid map(s) file !");
+                System.out.println("\nLooks like you have selected an invalid map(s) file !\nor\nNumber of max turn is not in range of 10-50 !!");
             }
 
 		}

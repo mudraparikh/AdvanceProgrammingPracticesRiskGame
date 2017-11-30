@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicIconFactory;
 import java.util.Objects;
 import java.util.Random;
+
 /**
  * This class implements the strategy for aggressive bot player
  * @author mudraparikh
@@ -121,7 +122,9 @@ public class AggressiveBot implements PlayerStrategy {
                 model.updatePhaseDetails(model.currentPlayer.getName() + "Won");
             }
             GameView.updateMapPanel();
+
         }
+
     }
     
     /**
@@ -166,6 +169,7 @@ public class AggressiveBot implements PlayerStrategy {
         }
         return false;
     }
+    
     /**
      * Checks for result after the attack phase is over
      * @param countryA object of country class
@@ -197,6 +201,7 @@ public class AggressiveBot implements PlayerStrategy {
         model.hasCountryCaptured = true;
         model.updateDomination();
     }
+    
     /**
      * Compares the dice results for attacker and defender
      * and calculates the army loss for them
@@ -220,6 +225,7 @@ public class AggressiveBot implements PlayerStrategy {
             }
         }
     }
+    
     /**
      * Update armies of the players based on the dice results
      * @param attackerLosses number of armies lost by attacker
@@ -230,6 +236,7 @@ public class AggressiveBot implements PlayerStrategy {
         countryA.subtractArmy(attackerLosses);
         countryB.subtractArmy(defenderLosses);
     }
+    
     /**
      * Overrides fortify phase for aggressive bot
      * from the PlayerStrategy Interface
@@ -253,10 +260,11 @@ public class AggressiveBot implements PlayerStrategy {
 
         model.moveArmyFromTo(countryA, countryB, armies);
         GameView.updateMapPanel();
-        model.updatePhaseDetails("You moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
+        model.updatePhaseDetails(model.currentPlayer.getName()+" moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
         model.checkHasCountryCaptured();
         model.updatePhaseDetails("===Fortification ends===");
     }
+    
     /**
      * Overrides reinforcement phase for aggressive bot
      * from the PlaerStrategy Interface
@@ -275,7 +283,7 @@ public class AggressiveBot implements PlayerStrategy {
                 countryA.addArmy(armies);
                 GameView.displayLog(model.currentPlayer.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");
                 if (model.currentPlayer.getTotalArmies() == 0) {
-                    GameView.displayLog("You do not have any armies left to reinforce");
+                    GameView.displayLog(model.currentPlayer.getName()+" do not have any armies left to reinforce");
                     model.updatePhaseDetails("Reinforcement Phase ends");
                 }
                 GameView.updateMapPanel();
@@ -284,6 +292,5 @@ public class AggressiveBot implements PlayerStrategy {
         } catch (Exception e) {
             GameView.displayLog("System Error or Exception is thrown for reinforce method");
         }
-
     }
 }

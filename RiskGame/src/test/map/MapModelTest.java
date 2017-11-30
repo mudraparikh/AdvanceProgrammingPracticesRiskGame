@@ -24,6 +24,9 @@ public class MapModelTest extends Player {
     private MapModel mapObj;
     private GameMap gameMapObj;
     private String filePath;
+    
+    private ArrayList<String> playerNames;
+    private ArrayList<String> playerTypes;
 
     /**
      * This method setting up the context as many test cases share the same values
@@ -32,8 +35,23 @@ public class MapModelTest extends Player {
     public void init() {
         mapObj = new MapModel();
         gameMapObj = GameMap.getInstance();
-        //filePath = location.replaceAll("/bin", "/res");
-        filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
+        filePath = location.replaceAll("/bin", "/res");
+      //  filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
+        playerNames = new ArrayList<String>();
+        playerTypes = new ArrayList<String>();
+
+        playerNames.add("John");
+        playerNames.add("Alexa");
+        playerNames.add("Penny");
+        playerNames.add("Sheldon");
+        playerNames.add("Amy");
+        playerNames.add("Raj");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human"); 
     }
 
     /**
@@ -76,6 +94,15 @@ public class MapModelTest extends Player {
     	assertFalse(gameMapObj.isCorrectMap());
     }
 
+    /**
+     * This method checks UnconnectedContinent map is valid or not
+     * @throws Exception it throws if there are any exceptions found
+     */
+    @Test
+    public void testUnconnectedContinent() throws Exception{
+    	gameMapObj = mapObj.readMapFile(filePath + "UnconnectedContinent.map");
+    	assertFalse(gameMapObj.isCorrectMap());
+    }
     /**
      * This method checks whether the selected map is valid , if blank map is selected
      * @throws Exception it throws if there are any exceptions found
@@ -153,7 +180,7 @@ public class MapModelTest extends Player {
     @Test
     public void saveGame() throws IOException{
     	 gameMapObj = mapObj.readMapFile(filePath + "validate.map");
-    	// initializePlayerData(3, playerNames, playerTypes);
+    	initializePlayerData(3, playerNames, playerTypes);
         playerCount = 3;
         setInitialArmies(); //Assigning armies
         allocateCountriesToPlayers();  //Allocating countries
@@ -162,9 +189,10 @@ public class MapModelTest extends Player {
         Player player = getPlayerList().get(0); //Performing attack and defending
         Country attackerCountry = player.assignedCountries.get(0);
         Country defendingCountry = attackerCountry.getNeighborNodes().get(0);
-        
+        gameView = new GameView();
+       
         //Performing fortification
-        gameView = new GameView();    
+           
         nextPlayerTurn(this);
         canFortify = true;
         int oldArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
@@ -177,10 +205,8 @@ public class MapModelTest extends Player {
         int newArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
         
         saveGame();
-    //    filePath="C:\\Windows\\Temp\\SunNov26EST2017_1.ser\\";
-    //    loadGame(filePath);
-        
- //  	assertEquals(true,);
+        filePath="C:\\Windows\\Temp\\SunNov26EST2017_1.ser\\";
+        loadGame(filePath);
     }
     
     /**

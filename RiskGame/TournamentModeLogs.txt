@@ -1,0 +1,126 @@
+
+Attackers threw  dice(s) : 
+ 1 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Enfield has now 50
+Wakham Forest has now 0
+
+
+
+John has defeated all of Alexa's armies in Wakham Forest and has occupied the country!
+Alexa has no countries left, player looses the game and is eliminated
+John has won the game ! Congratulations ! 
+
+Attackers threw  dice(s) : 
+ 3 
+
+Defender threw  dice(s) : 
+ 4 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Enfield has now 50
+Wakham Forest has now 0
+
+
+
+John has defeated all of Alexa's armies in Wakham Forest and has occupied the country!
+Alexa has no countries left, player looses the game and is eliminated
+John has won the game ! Congratulations ! 
+John has chosen to fortify Tower Hamlets with 1 armies from Enfield.
+John gets 3 armies
+John has chosen to reinforce Enfield with 1 armies.
+
+Attackers threw  dice(s) : 
+ 1 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Enfield has now 50
+Wakham Forest has now 0
+
+
+
+John has defeated all of Alexa's armies in Wakham Forest and has occupied the country!
+Alexa has no countries left, player looses the game and is eliminated
+John has won the game ! Congratulations ! 
+John has chosen to fortify Tower Hamlets with 1 armies from Enfield.
+John gets 3 armies
+John has chosen to reinforce Enfield with 1 armies.
+
+Attackers threw  dice(s) : 
+ 2 
+
+Defender threw  dice(s) : 
+ 3 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Enfield has now 50
+Wakham Forest has now 0
+
+
+
+John has defeated all of Alexa's armies in Wakham Forest and has occupied the country!
+Alexa has no countries left, player looses the game and is eliminated
+John has won the game ! Congratulations ! 
+John has chosen to fortify Tower Hamlets with 1 armies from Enfield.
+John gets 3 armies
+John has chosen to reinforce Enfield with 1 armies.
+
+Attackers threw  dice(s) : 
+ 3 
+
+Defender threw  dice(s) : 
+ 2 
+
+
+<COMBAT REPORT>
+Attacker Losses : 0 army.
+Defender Losses : 1 army.
+Enfield has now 50
+Wakham Forest has now 0
+
+
+
+John has defeated all of Alexa's armies in Wakham Forest and has occupied the country!
+Alexa has no countries left, player looses the game and is eliminated
+John has won the game ! Congratulations ! 
+John has chosen to fortify Tower Hamlets with 1 armies from Enfield.
+John gets 3 armies
+John has chosen to reinforce Enfield with 1 armies.
+
+Attackers threw  dice(s) : 
+ 1 
+
+Defender threw  dice(s) : 
+ 5 
+
+
+<COMBAT REPORT>
+Attacker Losses : 1 army.
+Defender Losses : 0 army.
+Enfield has now 50
+Wakham Forest has now 0
+
+
+
+John has defeated all of Alexa's armies in Wakham Forest and has occupied the country!
+Alexa has no countries left, player looses the game and is eliminated
+John has won the game ! Congratulations ! 

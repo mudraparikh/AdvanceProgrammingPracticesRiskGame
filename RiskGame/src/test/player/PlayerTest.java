@@ -19,6 +19,8 @@ import riskModels.map.MapModel;
 import riskModels.player.Player;
 import riskView.GameView;
 
+import javax.swing.*;
+
 /**
  * The Player Test class tests all the important functions of player working as expected 
  * @author hnath
@@ -30,6 +32,9 @@ public class PlayerTest extends Player {
     private MapModel mapModel;
     private GameView gameView;
     private Player model;
+
+    private ArrayList<String> playerNames;
+    private ArrayList<String> playerTypes;
     
 
     private String filePath;
@@ -46,7 +51,23 @@ public class PlayerTest extends Player {
         filePath = location.replaceAll("/bin", "/res");
         File f = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/London.map");
         gameMap = mapModel.readMapFile("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/London.map");
-       //createGameMapFromFile(f);
+        playerNames = new ArrayList<String>();
+        playerTypes = new ArrayList<String>();
+
+        playerNames.add("John");
+        playerNames.add("Alexa");
+        playerNames.add("Penny");
+        playerNames.add("Sheldon");
+        playerNames.add("Amy");
+        playerNames.add("Raj");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        playerTypes.add("Human");
+        drawTurns = 1000;
+        //createGameMapFromFile(f);
     }
 
     /**
@@ -63,7 +84,7 @@ public class PlayerTest extends Player {
      */
     @Test
     public void testInitialisePlayerData(){
-        //initializePlayerData(6, playerNames, playerTypes);
+        initializePlayerData(6, playerNames, playerTypes);
         assertEquals("John", getPlayerList().get(0).getName());
         assertEquals("Alexa", getPlayerList().get(1).getName());
         assertEquals("Penny", getPlayerList().get(2).getName());
@@ -78,7 +99,7 @@ public class PlayerTest extends Player {
      */
     @Test
     public void testIsAttackPhase() throws IOException {
-        //initializePlayerData(6, playerNames, playerTypes);
+        initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
@@ -95,7 +116,7 @@ public class PlayerTest extends Player {
      */
     @Test
     public void testInitialArmy() {
-       // initializePlayerData(6, playerNames, playerTypes);
+        initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         playerList.get(0);
@@ -150,15 +171,16 @@ public class PlayerTest extends Player {
     @Test
     public void testDefendingPlayerLostCountry() throws IOException {
 
-       // initializePlayerData(6, playerNames, playerTypes);
+        initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
         addInitialArmiesInRR();
         gameView = new GameView();
-
+        gameView.setVisible(false);
         Player player = getPlayerList().get(0);
         Country attackerCountry = player.assignedCountries.get(0);
+        currentPlayer = player;
         Country defendingCountry = attackerCountry.getNeighborNodes().get(0);
         defendingCountry.setBelongsToPlayer(getPlayerList().get(1));
         defendingCountry.currentArmiesDeployed = 0;
@@ -173,7 +195,7 @@ public class PlayerTest extends Player {
     @Test
     public void testGameWon() throws IOException {
 
-       // initializePlayerData(3, playerNames, playerTypes);
+        initializePlayerData(3, playerNames, playerTypes);
         playerCount = 3;
         setInitialArmies();
         allocateCountriesToPlayers();
@@ -223,7 +245,7 @@ public class PlayerTest extends Player {
      */
     @Test
     public void testReinforcementPhase() throws IOException {
-       // initializePlayerData(6, playerNames, playerTypes);
+        initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
@@ -243,7 +265,7 @@ public class PlayerTest extends Player {
      */
     @Test
     public void testForReinforcementArmiesCalculation() throws IOException {
-       // initializePlayerData(6, playerNames, playerTypes);
+        initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
@@ -283,7 +305,7 @@ public class PlayerTest extends Player {
      */
     @Test
     public void testFortificationPhase() throws IOException {
-      //  initializePlayerData(6, playerNames, playerTypes);
+        initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
         allocateCountriesToPlayers();
@@ -366,5 +388,10 @@ public class PlayerTest extends Player {
     protected void updateArmiesBasedOnDiceResult(int attackerLosses,int defenderLosses){
         countryA.subtractArmy(0);
         countryB.subtractArmy(countryB.getCurrentArmiesDeployed());
+    }
+
+    @Override
+    protected void showWinDialogBox() {
+        System.out.println("Congratulations! "+currentPlayer.getName()+" won the game.");
     }
 }
