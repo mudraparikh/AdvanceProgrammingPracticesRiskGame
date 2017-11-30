@@ -151,7 +151,9 @@ public class RandomBotTest extends Player {
         Country randomCountry = currentPlayer.getAssignedCountries().get(rng.nextInt(currentPlayer.getAssignedCountries().size()));
         randomCountry.setCurrentArmiesDeployed(10);
         Country neighbor = MapModel.getCountryObj(randomCountry.getNeighborNodes().get(0).getCountryName(),GameMap.getInstance());
+        neighbor.setCurrentArmiesDeployed(5);
         executeFortification(randomCountry.getCountryName(),neighbor.getCountryName(),gameView,this);
-        assertTrue(randomCountry.getCurrentArmiesDeployed() <= neighbor.getCurrentArmiesDeployed());
+        assertTrue(randomCountry.getCurrentArmiesDeployed() < 10);
+        assertTrue(neighbor.getCurrentArmiesDeployed() > 5);
     }
 }

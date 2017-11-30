@@ -1,18 +1,13 @@
 package riskControllers;
 
-import riskModels.map.GameMap;
-import riskModels.map.MapModel;
-import riskModels.player.Player;
 import riskView.GameView;
-import riskView.TournamentView;
-import tournamentMode.TournamentModel;
+import riskModels.tournament.TournamentModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 /**
- * This class implements the controller for the tournament mode
+ * This class implements the controller for the riskModels.tournament mode
  * @author mudraparikh
  *
  */

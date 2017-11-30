@@ -36,7 +36,7 @@ public class MapModelTest extends Player {
         mapObj = new MapModel();
         gameMapObj = GameMap.getInstance();
         filePath = location.replaceAll("/bin", "/res");
-      //  filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
+        filePath = "/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/res/";
         playerNames = new ArrayList<String>();
         playerTypes = new ArrayList<String>();
 

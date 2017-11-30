@@ -19,7 +19,7 @@ import riskControllers.TournamentModeController;
 
 import static util.RiskGameUtil.*;
 /**
- * This class will get the details required to start the game in tournament mode.
+ * This class will get the details required to start the game in riskModels.tournament mode.
  * @author mudraparikh
  *
  */
@@ -222,7 +222,7 @@ public class TournamentMode extends JDialog{
     }
 
     /**
-	 * The panel to display all the elements for playing tournament mode
+	 * The panel to display all the elements for playing riskModels.tournament mode
 	 * @return JPanel message
 	 */
 	public JPanel tournamentDetailsPanel()

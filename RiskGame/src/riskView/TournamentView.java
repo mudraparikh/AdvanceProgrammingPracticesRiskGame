@@ -33,7 +33,7 @@ import riskModels.map.GameMap;
 import riskModels.player.Player;
 import riskControllers.TournamentViewController;
 /**
- * This class will load the game board for tournament mode
+ * This class will load the game board for riskModels.tournament mode
  * @author mudraparikh
  *
  */
@@ -60,7 +60,7 @@ public class TournamentView extends JDialog {
 	  private String resultBtnName = "resultBtn";
 	  
 	/**
-	 * constructs the board game for tournament mode
+	 * constructs the board game for riskModels.tournament mode
 	 * @throws IOException when there is problem in giving input or output
 	 */
 	private void TournamentView() throws IOException {
@@ -351,7 +351,7 @@ public class TournamentView extends JDialog {
 	  	  TournamentView();
 	  }
 	    /**
-	     * This method will print map panel details in txt file for tournament mode.
+	     * This method will print map panel details in txt file for riskModels.tournament mode.
 	     * @param gameNumber game number Ex: 1,2,3
 	     * @param state state details Ex: before ,After
 	     * @param mapFile path of mapfile you want to see map panel for 

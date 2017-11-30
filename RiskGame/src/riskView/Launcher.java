@@ -89,7 +89,7 @@ public class Launcher extends java.awt.Frame {
             }
         });
         
-      //On click the button starts game in tournament mode.
+      //On click the button starts game in riskModels.tournament mode.
         jButton2.setText("Tournament Mode");
         jButton2.setName("jButton2");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -100,7 +100,7 @@ public class Launcher extends java.awt.Frame {
             }
         });
 
-        //On click the button starts game in tournament mode.
+        //On click the button starts game in riskModels.tournament mode.
         jButton3.setText("Load Game");
         jButton3.setName("jButton3");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
