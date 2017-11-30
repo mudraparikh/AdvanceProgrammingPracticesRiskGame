@@ -363,34 +363,74 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         return botType;
     }
 
+    /**
+     * This setter method assigns Bot type
+     * @param botType type name of the Bot
+     */
     public void setBotType(String botType) {
         this.botType = botType;
     }
 
+    /**
+     * This getter method gives the number of draw turns
+     * @return count of the draw turns
+     */
     public int getDrawTurns() {
         return drawTurns;
     }
 
+    /**
+     * This setter method assigns the value of draw turns 
+     * @param drawTurns count of draw turn
+     */
     public void setDrawTurns(int drawTurns) {
         this.drawTurns = drawTurns;
     }
 
+    /**
+     * This method gives which Strategy the player belongs to
+     * @return type of the strategy
+     */
     public PlayerStrategy getStrategy() {
         return strategy;
     }
 
+    /**
+     * This setter method assigns type of the strategy to the player
+     * @param strategy type of the player strategy
+     */
     public void setStrategy(PlayerStrategy strategy) {
         this.strategy = strategy;
     }
 
+    /**
+     * This setter method assigns all the values needed to execute attack
+     * @param country1 is a String of the point A country.
+     * @param country2 is a String of the point B country.
+     * @param gameView game view object
+     * @param model Player class object
+     */
     public void executeAttack(String country1, String country2, GameView gameView, Player model) {
         this.strategy.attack(country1, country2, gameView, model);
     }
 
+    /**
+     * This setter method assigns all the values needed to execute reinforcement phase
+     * @param country name of the country
+     * @param gameView game view object
+     * @param model Player class object
+     */
     public void executeReinforce(String country, GameView gameView, Player model) {
         this.strategy.reinforce(country,gameView, model);
     }
 
+    /**
+     * This setter method assigns all the values needed to execute fortification phase
+     * @param country1 is a String of the point A country.
+     * @param country2 is a String of the point B country.
+     * @param gameView game view object
+     * @param model model object
+     */
     public void executeFortification(String country1, String country2, GameView gameView, Player model) {
         this.strategy.fortify(country1, country2, gameView, model);
     }
@@ -729,6 +769,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
     }
 
+    /**
+     * This method shows message on the dialog Box ,which player has won the game
+     */
     protected void showWinDialogBox() {
         JOptionPane.showMessageDialog(null, "Congratulations! "+currentPlayer.getName()+" won the game.");
     }
@@ -873,6 +916,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         
     }
 
+    /**
+     * This method updates who's domination, and notify the observer
+     */
     public void updateDomination() {
     	
     	this.updateMessage="Domination";
@@ -1252,6 +1298,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
     }
 
+    /**
+     * This method is called if the player strategy is cheater and when he gets his turn
+     */
     private void cheaterBotTurn() {
         this.setStrategy(new CheaterBot());
 
@@ -1307,6 +1356,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
     }
 
+    /**
+     * This method is called if the player strategy is random and when he gets his turn
+     */
     private void randomBotTurn() {
         this.setStrategy(new RandomBot());
         rng = new Random();
@@ -1373,6 +1425,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
     }
 
+    /**
+     * This method is called if the player strategy is benevolent and when he gets his turn
+     */
     private void benevolentBotTurn() {
         this.setStrategy(new BenevolentBot());
         rng = new Random();
@@ -1431,6 +1486,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
     }
 
+    /**
+     * This method is called if the player strategy is aggressive and when he gets his turn
+     */
     private void aggressiveBotTurn() {
         this.setStrategy(new AggressiveBot());
         rng = new Random();
@@ -1505,7 +1563,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     /**
-     * WIll notify all the observers for any card exchanges
+     * Will notify all the observers for any card exchanges
      */
     public void showCard() {
         setChanged();
@@ -1537,6 +1595,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         nextPlayerTurn(model);
 
     }
+    
     /**
      * This method will act as driver method to call observer method to update phase details 
      * @param messageToUpdate message that you want to append to in Phase View, pass "Repaint" to remove all existing text in Phase view 
@@ -1690,6 +1749,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     	return false;
     }
 
+    /**
+     * This method saves the game to the file
+     * @throws Exception it throws if there are any exceptions found
+     */
     public  void saveGame() throws Exception{
         currentPlayer.canReinforce=canReinforce;
         currentPlayer.canAttack=canAttack;
@@ -1701,7 +1764,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         MapModel.saveGame(GameMap.getInstance());
     }
 
-
+    /**
+     * This method loads the game by taking the file as parameter
+     * @param file name of the file
+     */
     public void loadGame(String file) {
     	mapModel = new MapModel();
         GameMap gameMap=MapModel.loadGame(file);
@@ -1716,6 +1782,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
     }
 
+    /**
+     * This method display the Log
+     */
     public void populateLogsAndPhase() {
         GameView.displayLog("\n\n===== Game Loaded ====\n\n");
     }
