@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class DiceTest {
 
 	/**
-	 * This method checks whether the dices rolled or not
+	 * This method checks whether the dices result
 	 * @throws Exception it throws if there are any exceptions found
 	 */
     @Test
@@ -29,6 +29,10 @@ public class DiceTest {
         assertFalse(Dice.rollDice(6).isDiceRolled);
     }
 
+    /**
+     * This method checks the rolled dice result which should be more than 0 and less than 7
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void testRollDice() throws Exception{
     	Integer[] i = Dice.rollDice(3).getDiceResult();
