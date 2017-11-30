@@ -338,6 +338,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
         return hand.mustTurnInCards();
     }
+
     /**
      * Checks for the player if it is a bot or not
      * @return true if its a bot
@@ -345,6 +346,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public boolean isBot() {
         return isBot;
     }
+
     /**
      * Setter method will set the player to bot
      * @param bot contains value true or false
@@ -352,6 +354,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public void setBot(boolean bot) {
         isBot = bot;
     }
+
     /**
      * Getter method returns the type of bot
      * @return botType type of bot
@@ -359,6 +362,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public String getBotType() {
         return botType;
     }
+
+
     /**
      * Setter method that is used to set the type of bot
      * @param botType sets type of bot
@@ -366,13 +371,15 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public void setBotType(String botType) {
         this.botType = botType;
     }
+
     /**
      * Getter method to draw number of turns 
-     * @return number of turns
+     * @return count for number of turns
      */
     public int getDrawTurns() {
         return drawTurns;
     }
+    
     /**
      * Setter method to set number of draw turns
      * @param drawTurns turns
@@ -380,6 +387,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public void setDrawTurns(int drawTurns) {
         this.drawTurns = drawTurns;
     }
+    
     /**
      * Getter method for strategy used by the player
      * @return type of strategy
@@ -387,6 +395,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public PlayerStrategy getStrategy() {
         return strategy;
     }
+
     /**
      * Setter method for setting the strategy of the player
      * @param strategy type for player
@@ -394,6 +403,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public void setStrategy(PlayerStrategy strategy) {
         this.strategy = strategy;
     }
+
     /**
      * This method will execute the attack method from the PlayerStrategy interface
      * @param country1 name of the attacker's country
@@ -404,7 +414,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public void executeAttack(String country1, String country2, GameView gameView, Player model) {
         this.strategy.attack(country1, country2, gameView, model);
     }
-    
+
     /**
      * This method will execute the reinforce method from the PlayerStrategy interface
      * @param country name of the country where the armies need to reinforced 
@@ -414,6 +424,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public void executeReinforce(String country, GameView gameView, Player model) {
         this.strategy.reinforce(country,gameView, model);
     }
+
     /**
      * This method will execute the fortification method from the PlayerStrategy interface
      * @param country1 name of the attacker's country
@@ -696,7 +707,17 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
             try {
                 // Defender chooses how many dice to roll after attacker
-                defenderDice = showDefenderDiceDialogBox(gameView);
+                if(countryB.getBelongsToPlayer().isBot()){
+                    rng = new Random();
+                    if (countryB.getCurrentArmiesDeployed() <= 1) {
+                        defenderDice = 1;
+                    } else {
+                        defenderDice = rng.nextInt(1) + 1;
+                    }
+                }
+                else {
+                    defenderDice = showDefenderDiceDialogBox(gameView);
+                }
             } catch (IllegalArgumentException e) {
                 // Error: defender inputs invalid number of dice
                 GameView.displayLog("Roll either 1 or 2 dice. To roll 2 dice, you must have at least 2 armies on your country.");
@@ -718,8 +739,8 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
             updateArmiesBasedOnDiceResult(attackerLosses, defenderLosses);
 
-            GameView.displayLog("Attacker Losses : " + attackerLosses + " army.");
-            GameView.displayLog("Defender Losses : " + defenderLosses + " army.");
+            GameView.displayLog(countryA.getBelongsToPlayer().getName()+"(Attacker) Losses : " + attackerLosses + " army in " +countryA.getCountryName());
+            GameView.displayLog(countryB.getBelongsToPlayer().getName()+"(Defender) Losses : " + defenderLosses + " army in " +countryB.getCountryName());
             GameView.displayLog(countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
             GameView.displayLog(countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
             GameView.displayLog("\n\n");
@@ -759,6 +780,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         }
     }
 
+    /**
+     * This method shows message on the dialog Box ,which player has won the game
+     */
     protected void showWinDialogBox() {
         JOptionPane.showMessageDialog(null, "Congratulations! "+currentPlayer.getName()+" won the game.");
     }
@@ -903,6 +927,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         
     }
 
+    /**
+     * This method updates who's domination, and notify the observer
+     */
     public void updateDomination() {
     	
     	this.updateMessage="Domination";
@@ -1342,6 +1369,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             }
         }
     }
+
     /**
      * This method implements strategy for Random bot
      */
@@ -1410,6 +1438,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             GameView.displayLog("\n===Random Player type fortify - end===");
         }
     }
+
     /**
      * This method implements strategy for benevolent bot
      */
@@ -1470,6 +1499,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             GameView.displayLog("\n===Benevolent Player type fortify - end===");
         }
     }
+    
     /**
      * This method implements strategy for aggressive bot
      */
@@ -1579,6 +1609,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         nextPlayerTurn(model);
 
     }
+    
     /**
      * This method will act as driver method to call observer method to update phase details 
      * @param messageToUpdate message that you want to append to in Phase View, pass "Repaint" to remove all existing text in Phase view 
@@ -1733,10 +1764,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     }
 
     /**
-     * This method will save the game instance at the give point
-     * @throws Exception when instance is incorrect
+     * This method saves the game to the file
+     * @throws Exception it throws if there are any exceptions found
      */
-    public  void saveGame()throws Exception{
+    public  void saveGame() throws Exception{
         currentPlayer.canReinforce=canReinforce;
         currentPlayer.canAttack=canAttack;
         currentPlayer.canFortify=canFortify;
@@ -1764,6 +1795,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         
 
     }
+
     /**
      * This method will populate the logger.
      */
