@@ -1,7 +1,10 @@
 package riskView;
 
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -32,6 +35,8 @@ public class TournamentMode extends JDialog{
     public static JLabel numberOfTurnsLabel;
     public static JLabel numberOfGames;
     public static JLabel mapSelectLabel;
+    public static JLabel playersNames;
+    public static JLabel playersTypes;
 
     public static JTextField turns;
 
@@ -43,15 +48,16 @@ public class TournamentMode extends JDialog{
 	public static String[] games;
 
 	public static JTextArea gameDetails;
-
-    private JPanel playerNamesPanel;
-    private JPanel playerTypesPanel;
+	
+    public static JPanel playerTypesPanel;
     public static JPanel tournamentDetailsPanel;
-
-    private GridLayout playerNamesLayout;
-    private GridLayout playerTypesLayout;
-    public static GridLayout tournamentLayout;
-
+    
+    public static GridBagLayout playerTypesLayout;
+    public static GridBagLayout tournamentLayout;
+    public static GridBagLayout mainLayout;
+    
+    private GridBagConstraints c;
+    
     private JTextField player1TextField;
     private JTextField player2TextField;
     private JTextField player3TextField;
@@ -70,55 +76,149 @@ public class TournamentMode extends JDialog{
 	public TournamentMode()
 	{
 		setTitle("Tournament Mode");
-        setPreferredSize(new Dimension(250, 250));
+        setPreferredSize(new Dimension(600,400));
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setResizable(false);
+        mainLayout = new GridBagLayout();
+        setLayout(mainLayout);
+        
+        c = new GridBagConstraints();
+
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.LINE_END;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 0;
+        c.gridy = 0;
+        add(playerTypesPanel());
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.LINE_START;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 0;
+        c.gridy = 1;
         add(tournamentDetailsPanel());
-		//add(playerNamesPanel());
-		//add(playerTypesPanel());
+        
         setLocationRelativeTo(null);
+        setVisible(false);
         pack();
 	}
 
     private JPanel playerTypesPanel() {
+    	
         playerTypesPanel = new JPanel();
-
-        playerTypesPanel.setPreferredSize(new Dimension(200, 4 * 40 + 40));
-
-        //playerTypesLayout = new GridLayout(4 + 1, 1, 5, 5);
-        //playerTypesPanel.setLayout(playerTypesLayout);
-
+        playerTypesPanel.setPreferredSize(new Dimension(300,200));
+        playerTypesLayout = new GridBagLayout();
+        playerTypesPanel.setLayout(playerTypesLayout);
+        
+        playersNames = new JLabel();
+        playersNames.setText("Enter Player Name :");
+        playersNames.setVisible(true);
+        
+        player1TextField = new JTextField(7);
+        player1TextField.setText("Aggressive");
+        player2TextField = new JTextField(7);
+        player2TextField.setText("Benevolent");
+        player3TextField = new JTextField(7);
+        player3TextField.setText("Cheater");
+        player4TextField = new JTextField(7);
+        player4TextField.setText("Random");
+        
+        playersTypes = new JLabel();
+        playersTypes.setText("Select Player Type :");
+        playersTypes.setVisible(true);
+        
         player1ComboBox = new JComboBox<>(types);
         player2ComboBox = new JComboBox<>(types);
         player3ComboBox = new JComboBox<>(types);
         player4ComboBox = new JComboBox<>(types);
-
-        playerTypesPanel.add(player1ComboBox);
-        playerTypesPanel.add(player2ComboBox);
-        playerTypesPanel.add(player3ComboBox);
-        playerTypesPanel.add(player4ComboBox);
-
+        
+        c = new GridBagConstraints();
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 0;
+        c.gridy = 0;
+        playerTypesPanel.add(playersNames,c);
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 1;
+        c.gridy = 0;
+        playerTypesPanel.add(playersTypes,c);
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 0;
+        c.gridy = 1;
+        playerTypesPanel.add(player1TextField,c);
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 1;
+        c.gridy = 1;
+        playerTypesPanel.add(player1ComboBox,c);
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 0;
+        c.gridy = 2;
+        playerTypesPanel.add(player2TextField,c);
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 1;
+        c.gridy = 2;
+        playerTypesPanel.add(player2ComboBox,c);
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 0;
+        c.gridy = 3;
+        playerTypesPanel.add(player3TextField,c);
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 1;
+        c.gridy = 3;
+        playerTypesPanel.add(player3ComboBox,c);
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 0;
+        c.gridy = 4;
+        playerTypesPanel.add(player4TextField,c);
+        
+        c.fill = GridBagConstraints.BOTH;
+        c.insets = new Insets(5, 5, 5, 5);
+        c.weightx = 0.5;
+        c.weighty = 0.5;
+        c.gridx = 1;
+        c.gridy = 4;
+        playerTypesPanel.add(player4ComboBox,c);
+        
         return playerTypesPanel;
-    }
-
-    private JPanel playerNamesPanel() {
-        playerNamesPanel = new JPanel();
-
-        playerNamesPanel.setPreferredSize(new Dimension(200, 4 * 40 + 40));
-
-        //playerNamesLayout = new GridLayout(4 + 1, 1, 5, 5);
-       // playerNamesPanel.setLayout(playerNamesLayout);
-
-        player1TextField = new JTextField("Aggressive");
-        player2TextField = new JTextField("Benevolent");
-        player3TextField = new JTextField("Random");
-        player4TextField = new JTextField("Cheater");
-
-        playerNamesPanel.add(player1TextField);
-        playerNamesPanel.add(player2TextField);
-        playerNamesPanel.add(player3TextField);
-        playerNamesPanel.add(player4TextField);
-        return playerNamesPanel;
     }
 
     /**
@@ -128,7 +228,9 @@ public class TournamentMode extends JDialog{
 	public JPanel tournamentDetailsPanel()
 	{
 		tournamentDetailsPanel = new JPanel();
-		tournamentLayout = new GridLayout();
+		tournamentDetailsPanel.setPreferredSize(new Dimension(300,200));
+		tournamentLayout = new GridBagLayout();
+		tournamentDetailsPanel.setLayout(tournamentLayout);
 
 		mapSelectLabel = new JLabel("Select the Map Files :");
 		mapBtn1 = new JButton("Map 1");
@@ -139,7 +241,7 @@ public class TournamentMode extends JDialog{
 		startGame = new JButton("Start Game");
 		gameDetails = new JTextArea();
 		gameDetails.setVisible(true);
-		
+	
 		mapBtn1.setActionCommand(mapBtnName1);
 		mapBtn2.setActionCommand(mapBtnName2);
 		mapBtn3.setActionCommand(mapBtnName3);
@@ -154,18 +256,103 @@ public class TournamentMode extends JDialog{
 		games = new String[] {"1","2","3","4"};
 		gamesList = new JComboBox<>(games);
 		
-		tournamentDetailsPanel.add(mapSelectLabel,0);
-		tournamentDetailsPanel.add(mapBtn1, 1);
-		tournamentDetailsPanel.add(mapBtn2, 2);
-		tournamentDetailsPanel.add(mapBtn3, 3);
-        tournamentDetailsPanel.add(mapBtn4, 4);
-        tournamentDetailsPanel.add(mapBtn5, 5);
-		tournamentDetailsPanel.add(numberOfTurnsLabel, 6);
-		tournamentDetailsPanel.add(turns, 7);
-		tournamentDetailsPanel.add(numberOfGames, 8);
-		tournamentDetailsPanel.add(gamesList, 9);
-		tournamentDetailsPanel.add(startGame, 10);
-		tournamentDetailsPanel.add(gameDetails, 11);
+		 c = new GridBagConstraints();
+		 
+		 c.fill = GridBagConstraints.BOTH;
+	     c.insets = new Insets(5, 5, 5, 5);
+	     c.weightx = 0.5;
+	     c.weighty = 0.5;
+	     c.gridx = 0;
+	     c.gridy = 0;
+	    tournamentDetailsPanel.add(mapSelectLabel,c);
+	    
+	    c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 0;
+	    c.gridy = 1;
+	    tournamentDetailsPanel.add(mapBtn1, c);
+	    
+	    c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 1;
+	    c.gridy = 1;
+		tournamentDetailsPanel.add(mapBtn2, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 0;
+	    c.gridy = 2;
+		tournamentDetailsPanel.add(mapBtn3, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 1;
+	    c.gridy = 2;
+        tournamentDetailsPanel.add(mapBtn4, c);
+        
+        c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 0;
+	    c.gridy = 3;
+        tournamentDetailsPanel.add(mapBtn5, c);
+        
+        c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 0;
+	    c.gridy = 4;
+		tournamentDetailsPanel.add(numberOfTurnsLabel, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 1;
+	    c.gridy = 4;
+		tournamentDetailsPanel.add(turns, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 0;
+	    c.gridy = 5;
+		tournamentDetailsPanel.add(numberOfGames, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 1;
+	    c.gridy = 5;
+		tournamentDetailsPanel.add(gamesList, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 0;
+	    c.gridy = 6;
+		tournamentDetailsPanel.add(startGame, c);
+		
+		c.fill = GridBagConstraints.BOTH;
+	    c.insets = new Insets(5, 5, 5, 5);
+	    c.weightx = 0.5;
+	    c.weighty = 0.5;
+	    c.gridx = 0;
+	    c.gridy = 7;
+		tournamentDetailsPanel.add(gameDetails, c);
 		return tournamentDetailsPanel;
 	}
 	

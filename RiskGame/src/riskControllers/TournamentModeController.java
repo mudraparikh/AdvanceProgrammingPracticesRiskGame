@@ -131,7 +131,7 @@ public class TournamentModeController implements ActionListener{
                     	
                     	currentGame=i;
                     	GameView.displayLog("Game"+i+"Starts");
-                        model.initData(new File(mapFile),tournamentModel.getPlayerNames().size(),tournamentModel.getPlayerNames(),tournamentModel.getPlayerTypes(),true);
+                        model.initData(new File(mapFile),playerNames.size(),playerNames,playerTypes,true);
                         model.setDrawTurns(tournamentModel.getNumberOfTurns());
                         TournamentView.updateMapPanelFinal(i, "Before",mapFile);
                         try {
