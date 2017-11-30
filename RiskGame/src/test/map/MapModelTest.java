@@ -172,53 +172,5 @@ public class MapModelTest extends Player {
         assertEquals("100", mapObj.getCountryObj("100", gameMapObj).getCountryName());
 
     }
-    
-    /**
-     * This method is used to check where the game getting saved correctly
-     * @throws IOException when the input or output has some exceptions
-     */
-    @Test
-    public void saveGame() throws IOException{
-    	 gameMapObj = mapObj.readMapFile(filePath + "validate.map");
-    	initializePlayerData(3, playerNames, playerTypes);
-        playerCount = 3;
-        setInitialArmies(); //Assigning armies
-        allocateCountriesToPlayers();  //Allocating countries
-        addInitialArmiesInRR();  //Assigning initial armies
-        
-        Player player = getPlayerList().get(0); //Performing attack and defending
-        Country attackerCountry = player.assignedCountries.get(0);
-        Country defendingCountry = attackerCountry.getNeighborNodes().get(0);
-        gameView = new GameView();
-       
-        //Performing fortification
-           
-        nextPlayerTurn(this);
-        canFortify = true;
-        int oldArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
-        int oldArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
-        System.out.println(oldArmyInCountry1);
-        //System.out.println(oldArmyInCountry2);
-        moveArmyFromTo(currentPlayer.assignedCountries.get(0),currentPlayer.assignedCountries.get(1),1);
-        int newArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
-        System.out.println(newArmyInCountry1);
-        int newArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
-        
-        saveGame();
-        filePath="C:\\Windows\\Temp\\SunNov26EST2017_1.ser\\";
-        loadGame(filePath);
-    }
-    
-    /**
-     * This method test whether LoadGmae function is working as intended
-     * @throws IOException when the input or output has some exceptions
-     */
-    @Test
-    public void loadGame() throws IOException{
-    	filePath="C:\\Windows\\Temp\\SunNov26EST2017_1.ser\\";
-        gameMapObj = mapObj.readMapFile(filePath);
-        loadGame(filePath);
-        
-    }
 
 }
