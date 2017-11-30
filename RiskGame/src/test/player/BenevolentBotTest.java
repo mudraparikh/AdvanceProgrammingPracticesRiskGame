@@ -23,7 +23,11 @@ import riskModels.player.CheaterBot;
 import riskModels.player.Player;
 import riskModels.player.RandomBot;
 import riskView.GameView;
-
+/**
+ * This test class checks whether BenevolentBot strategy is working as intended or not
+ * @author hnath
+ *
+ */
 public class BenevolentBotTest extends Player {
     private GameMap gameMap;
     private GameView gameView;
@@ -67,7 +71,10 @@ public class BenevolentBotTest extends Player {
         //createGameMapFromFile(f);
     }
 
-
+    /**
+     * This method checks if reinforcement for BenevolentBot strategy is working as intended
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void reinforceBenevolentTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);
@@ -86,7 +93,11 @@ public class BenevolentBotTest extends Player {
         executeReinforce(weakestCountry.getCountryName(), gameView, this);
         assertTrue(oldArmy <= weakestCountry.getCurrentArmiesDeployed());
     }
-
+    
+    /**
+     * This method checks if fortification for BenevolentBot strategy is working as intended
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void fortificationBenevolentTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);

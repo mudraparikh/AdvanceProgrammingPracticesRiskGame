@@ -433,6 +433,9 @@ public class PlayerTest extends Player {
         countryB.subtractArmy(countryB.getCurrentArmiesDeployed());
     }
 
+    /**
+     * over rides showWinDialogBox
+     */
     @Override
     protected void showWinDialogBox() {
         System.out.println("Congratulations! "+currentPlayer.getName()+" won the game.");

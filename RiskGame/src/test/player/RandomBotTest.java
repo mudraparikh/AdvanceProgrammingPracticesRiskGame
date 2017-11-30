@@ -22,7 +22,11 @@ import riskModels.player.CheaterBot;
 import riskModels.player.Player;
 import riskModels.player.RandomBot;
 import riskView.GameView;
-
+/**
+ * This test class checks whether RandomBot strategy is working as intended or not
+ * @author hnath
+ *
+ */
 public class RandomBotTest extends Player {
 
     private GameMap gameMap;
@@ -67,7 +71,10 @@ public class RandomBotTest extends Player {
         //createGameMapFromFile(f);
     }
 
-
+    /**
+     * This method checks if reinforcement for RandomBot strategy is working as intended
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void reinforceRandomTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);
@@ -88,6 +95,10 @@ public class RandomBotTest extends Player {
         assertTrue(oldArmy <= randomCountry.getCurrentArmiesDeployed());
     }
 
+    /**
+     * This method checks if the Random player attack passing only one iteration
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void attackRandomWithOneRandomLoopTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);
@@ -111,6 +122,10 @@ public class RandomBotTest extends Player {
         assertTrue(hasCountryCaptured);
     }
 
+    /**
+     * This method checks if the Random player attack iterations passing more than random value
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void attackRandomWithMoreThanRandomLoopTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);
@@ -134,6 +149,10 @@ public class RandomBotTest extends Player {
         assertTrue(!hasCountryCaptured);
     }
 
+    /**
+     * This method checks if fortification for RandomBot strategy is working as intended
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void fortificationRandomTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);

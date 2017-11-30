@@ -24,7 +24,11 @@ import riskModels.map.MapModel;
 import riskModels.player.CheaterBot;
 import riskModels.player.Player;
 import riskView.GameView;
-
+/**
+ * This test class checks whether CheaterBot strategy is working as intended or not
+ * @author hnath
+ *
+ */
 public class CheaterBotTest extends Player {
     private GameMap gameMap;
     private GameView gameView;
@@ -68,7 +72,10 @@ public class CheaterBotTest extends Player {
         //createGameMapFromFile(f);
     }
 
-
+    /**
+     * This method checks if reinforcement for CheaterBot strategy is working as intended
+     * @throws Exception it throws if there are any exceptions found
+     */
    @Test
    public void reinforceCheaterTest() throws Exception{
        initializePlayerData(6, playerNames, playerTypes);
@@ -89,7 +96,11 @@ public class CheaterBotTest extends Player {
        int newArmies = cheaterCountries.get(0).getCurrentArmiesDeployed();
        assertEquals(oldArmy*2,newArmies);
    }
-
+   
+   /**
+    * This method checks if attack phase for CheaterBot strategy is working as intended
+    * @throws Exception it throws if there are any exceptions found
+    */
     @Test
     public void attackCheaterTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);
@@ -142,6 +153,10 @@ public class CheaterBotTest extends Player {
         assertTrue(hasAllNeighborsOccupied);
     }
 
+    /**
+     * This method checks if fortification for CheaterBot strategy is working as intended
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void fortificationCheaterTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);

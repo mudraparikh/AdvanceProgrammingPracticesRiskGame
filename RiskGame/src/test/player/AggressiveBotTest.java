@@ -24,6 +24,11 @@ import riskModels.player.Player;
 import riskModels.player.RandomBot;
 import riskView.GameView;
 
+/**
+ * This test class checks whether AggressiveBot strategy is working as intended or not
+ * @author hnath
+ *
+ */
 public class AggressiveBotTest extends Player {
 
 
@@ -69,9 +74,12 @@ public class AggressiveBotTest extends Player {
         //createGameMapFromFile(f);
     }
 
-
+    /**
+     * This method checks if fortification for AggressiveBot strategy is working as intended
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
-    public void reinforceAttackTest() throws Exception{
+    public void reinforceAggressiveTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
@@ -89,6 +97,10 @@ public class AggressiveBotTest extends Player {
         assertTrue(oldArmy <= strongestCountry.getCurrentArmiesDeployed());
     }
 
+    /**
+     * This method checks if the Aggressive player attack passing only one iteration
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void attackRandomWithOneRandomLoopTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);
@@ -112,6 +124,10 @@ public class AggressiveBotTest extends Player {
         assertTrue(hasCountryCaptured);
     }
 
+    /**
+     * This method checks if the Aggressive player attack iterations passing more than random value
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
     public void attackRandomWithMoreThanRandomLoopTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);
@@ -135,8 +151,12 @@ public class AggressiveBotTest extends Player {
         assertTrue(!hasCountryCaptured);
     }
 
+    /**
+     * This method checks if fortification for AggressiveBot strategy is working as intended
+     * @throws Exception it throws if there are any exceptions found
+     */
     @Test
-    public void fortificationRandomTest() throws Exception{
+    public void fortificationAggressiveTest() throws Exception{
         initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();

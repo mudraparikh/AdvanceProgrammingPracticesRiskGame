@@ -25,7 +25,11 @@ import riskModels.player.RandomBot;
 import riskView.GameView;
 import riskView.TournamentView;
 import test.player.PlayerTest;
-
+/**
+ * This test class checks whether Tournament mode is working as intended or not
+ * @author hnath
+ *
+ */
 public class TournamentTest extends Player {
 
 
