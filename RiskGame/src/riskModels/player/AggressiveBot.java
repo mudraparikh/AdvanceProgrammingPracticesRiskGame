@@ -10,7 +10,11 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicIconFactory;
 import java.util.Objects;
 import java.util.Random;
-
+/**
+ * This class implements the strategy for aggressive bot player
+ * @author mudraparikh
+ *
+ */
 public class AggressiveBot implements PlayerStrategy {
     public Country countryA;
     public Country countryB;
@@ -25,7 +29,17 @@ public class AggressiveBot implements PlayerStrategy {
     public Integer[] defenderRolls;
 
     public Random rng;
-
+    
+    /**
+     * Overrides attack phase for aggressive bot player
+     * from the PlayerStrategy interface
+     * 
+     * @param country1 name of the attacker's country
+     * @param country2 name of the defender's country
+     * @param gameview object of GameView class
+     * @param model object of the Player class
+     * 
+     */
     @Override
     public void attack(String country1, String country2, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
@@ -107,11 +121,16 @@ public class AggressiveBot implements PlayerStrategy {
                 model.updatePhaseDetails(model.currentPlayer.getName() + "Won");
             }
             GameView.updateMapPanel();
-
         }
-
     }
-
+    
+    /**
+     * Displays the dialogBox for dice roll of defender
+     * @param gameView object of GameView class
+     * @param model object of player class
+     * @return JOptionPane message
+     * 
+     */
     private int showDefenderDiceDialogBox(GameView gameView, Player model) {
         Integer[] selectOptions = new Integer[getMaxNumberOfDicesForDefender(countryB)];
         for (int i = 0; i < selectOptions.length; i++) {
@@ -123,18 +142,37 @@ public class AggressiveBot implements PlayerStrategy {
                 "Input", JOptionPane.OK_OPTION, BasicIconFactory.getMenuArrowIcon(), selectOptions,
                 selectOptions[0]);
     }
-
+    
+    /**
+     * Number of dice roll for defender depending on the armies
+     * @param country object of Country class
+     * @return number of dices that can be rolled
+     * 
+     */
     private int getMaxNumberOfDicesForDefender(Country country) {
         return country.getCurrentArmiesDeployed() >= 2 ? 2 : 1;
     }
-
+    
+    /**
+     * Checks if player can still continue to attack depending on the armies left
+     * @param countryA object of country class
+     * @param countryB object of country class
+     * @return boolean value true or false
+     * 
+     */
     private boolean checkPlayerTurnCanContinue(Country countryA, Country countryB) {
         if(countryA.getCurrentArmiesDeployed() > 1 && !countryB.getBelongsToPlayer().getName().equals(countryA.getBelongsToPlayer().getName())){
             return true;
         }
         return false;
     }
-
+    /**
+     * Checks for result after the attack phase is over
+     * @param countryA object of country class
+     * @param countryB object of country class
+     * @param model object of player class
+     * 
+     */
     private void defendingPlayerLostCountry(Country countryA, Country countryB, Player model) {
 
         // Remove country from defender's list of occupied territories and adds to attacker's list
@@ -159,7 +197,11 @@ public class AggressiveBot implements PlayerStrategy {
         model.hasCountryCaptured = true;
         model.updateDomination();
     }
-
+    /**
+     * Compares the dice results for attacker and defender
+     * and calculates the army loss for them
+     * 
+     */
     private void compareDiceResultsAndCalculateLosses() {
         // Calculate losses
         if (attackerRolls[0] > defenderRolls[0]) {
@@ -178,12 +220,25 @@ public class AggressiveBot implements PlayerStrategy {
             }
         }
     }
-
+    /**
+     * Update armies of the players based on the dice results
+     * @param attackerLosses number of armies lost by attacker
+     * @param defenderLosses number of armies lost by defender
+     * 
+     */
     private void updateArmiesBasedOnDiceResult(int attackerLosses, int defenderLosses) {
         countryA.subtractArmy(attackerLosses);
         countryB.subtractArmy(defenderLosses);
     }
-
+    /**
+     * Overrides fortify phase for aggressive bot
+     * from the PlayerStrategy Interface
+     * @param country1 object of Country class
+     * @param country2 object of Country class
+     * @param gameView object of GameView class
+     * @param model object of player class
+     * 
+     */
     @Override
     public void fortify(String country1, String country2, GameView gameView, Player model) {
 
@@ -202,7 +257,13 @@ public class AggressiveBot implements PlayerStrategy {
         model.checkHasCountryCaptured();
         model.updatePhaseDetails("===Fortification ends===");
     }
-
+    /**
+     * Overrides reinforcement phase for aggressive bot
+     * from the PlaerStrategy Interface
+     * @param gameView object of GameView class
+     * @param model object of Player class
+     * 
+     */
     @Override
     public void reinforce(String country, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
