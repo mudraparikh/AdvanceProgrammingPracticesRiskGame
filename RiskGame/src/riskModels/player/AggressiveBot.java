@@ -30,6 +30,7 @@ public class AggressiveBot implements PlayerStrategy {
     public void attack(String country1, String country2, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country1, GameMap.getInstance());
         countryB = MapModel.getCountryObj(country2, GameMap.getInstance());
+        GameView.displayLog("\n===Attack phase for aggressive player type begins===");
         model.updatePhaseDetails("Repaint");
         model.updatePhaseDetails("==Attack Phase==");
         while (checkPlayerTurnCanContinue(countryA,countryB)) {
@@ -66,16 +67,16 @@ public class AggressiveBot implements PlayerStrategy {
             } catch (Exception e) {
                 // Error: defender inputs invalid number of dice
                 defenderDice = 1;
-                GameView.displayLog("Roll either 1 or 2 dice. To roll 2 dice, you must have at least 2 armies on your country.");
+                GameView.displayLog("By default defender rolls 1 dice !");
             }
             attackerRolls = Dice.rollDice(attackerDice).getDiceResult();
             defenderRolls = Dice.rollDice(defenderDice).getDiceResult();
 
-            GameView.displayLog("\nAttackers threw  dice(s) : ");
+            GameView.displayLog("\n"+countryA.getBelongsToPlayer().getName()+"+(attacker) threw  dice(s) : ");
             for (int attackerRoll : attackerRolls) {
                 GameView.displayLog(" " + attackerRoll + " ");
             }
-            GameView.displayLog("\nDefender threw  dice(s) : ");
+            GameView.displayLog("\n"+countryB.getBelongsToPlayer().getName()+" (defender) threw  dice(s) : ");
             for (int defenderRoll : defenderRolls) {
                 GameView.displayLog(" " + defenderRoll + " ");
             }
@@ -85,10 +86,10 @@ public class AggressiveBot implements PlayerStrategy {
 
             updateArmiesBasedOnDiceResult(attackerLosses, defenderLosses);
 
-            GameView.displayLog("Attacker Losses : " + attackerLosses + " army.");
-            GameView.displayLog("Defender Losses : " + defenderLosses + " army.");
-            GameView.displayLog(countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
-            GameView.displayLog(countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
+            GameView.displayLog(countryA.getBelongsToPlayer().getName()+" (attacker) losses : " + attackerLosses + " army.");
+            GameView.displayLog(countryB.getBelongsToPlayer().getName()+" (defender) losses : " + defenderLosses + " army.");
+            GameView.displayLog(countryA.getBelongsToPlayer().getName()+"'s (attacker) " +countryA.getCountryName() + " has now " + countryA.getCurrentArmiesDeployed());
+            GameView.displayLog(countryB.getBelongsToPlayer().getName()+"'s (defender)"+ countryB.getCountryName() + " has now " + countryB.getCurrentArmiesDeployed());
             GameView.displayLog("\n\n");
             model.updatePhaseDetails("<Based On Dice Results> \n");
             model.updatePhaseDetails("Attacker Losses : " + attackerLosses + " army." + "\n" + "Defender Losses : " + defenderLosses + " army.");
@@ -103,8 +104,8 @@ public class AggressiveBot implements PlayerStrategy {
             //If player conquered all the country and have won the game
             if (model.currentPlayer.assignedCountries.size() == GameMap.getInstance().getCountries().size()) {
                 model.hasBotWon = true;
-                GameView.displayLog("" + model.currentPlayer.getName() + " has won the game ! Congratulations ! ");
-                model.updatePhaseDetails(model.currentPlayer.getName() + "Won");
+                GameView.displayLog("\n" + model.currentPlayer.getName() + " has won the game ! Congratulations ! ");
+                model.updatePhaseDetails(model.currentPlayer.getName() + "Won.  ");
             }
             GameView.updateMapPanel();
 
@@ -199,6 +200,7 @@ public class AggressiveBot implements PlayerStrategy {
         model.moveArmyFromTo(countryA, countryB, armies);
         GameView.updateMapPanel();
         model.updatePhaseDetails(model.currentPlayer.getName()+" moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
+        GameView.displayLog(model.currentPlayer.getName()+" moved "+armies+" army from "+countryA.getCountryName()+" to " + countryB.getCountryName());
         model.checkHasCountryCaptured();
         model.updatePhaseDetails("===Fortification ends===");
     }
@@ -206,6 +208,7 @@ public class AggressiveBot implements PlayerStrategy {
     @Override
     public void reinforce(String country, GameView gameView, Player model) {
         countryA = MapModel.getCountryObj(country, GameMap.getInstance());
+        GameView.displayLog("\n===Reinforcement phase for Aggressive type player begins===");
         GameView.displayLog(model.currentPlayer.name + " gets " + model.currentPlayerReinforceArmies + " armies");
         try {
             if (model.currentPlayer.getTotalArmies() > 0) {
@@ -215,6 +218,7 @@ public class AggressiveBot implements PlayerStrategy {
                 GameView.displayLog(model.currentPlayer.getName() + " has chosen to reinforce " + countryA.getCountryName() + " with " + armies + " armies.");
                 if (model.currentPlayer.getTotalArmies() == 0) {
                     GameView.displayLog(model.currentPlayer.getName()+" do not have any armies left to reinforce");
+                    GameView.displayLog("===Reinforcement phase for Aggressive type player ends===\n");
                     model.updatePhaseDetails("Reinforcement Phase ends");
                 }
                 GameView.updateMapPanel();

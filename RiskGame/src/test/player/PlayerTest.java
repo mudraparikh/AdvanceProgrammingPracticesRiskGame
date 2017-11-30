@@ -5,8 +5,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -324,6 +329,44 @@ public class PlayerTest extends Player {
         assertEquals(oldArmyInCountry1,newArmyInCountry1+1);
         assertEquals(oldArmyInCountry2, newArmyInCountry2 - 1);
     }
+
+    /**
+     * This method is used to check where the game getting saved correctly
+     * @throws IOException when the input or output has some exceptions
+     */
+    @Test
+    public void saveGameTest() throws Exception {
+        initializePlayerData(6, playerNames, playerTypes);
+        playerCount = 6;
+        setInitialArmies();
+        allocateCountriesToPlayers();
+        addInitialArmiesInRR();
+        gameView = new GameView();
+        nextPlayerTurn(this);
+        canFortify = true;
+        int oldArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
+        int oldArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
+        moveArmyFromTo(currentPlayer.assignedCountries.get(0),currentPlayer.assignedCountries.get(1),1);
+        int newArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
+        int newArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
+        System.out.println(newArmyInCountry1);
+        saveGame();
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date today;
+        String fileName="";
+        try {
+            today = formatter.parse(formatter.format(new Date()));
+            fileName=today.toString().replaceAll("00:00:00"," ").replaceAll("\\s+","").concat("_1");
+        } catch (ParseException e1) {
+            e1.printStackTrace();
+        }
+        loadGame("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/"+fileName+".ser");
+        System.out.println(canFortify);
+        System.out.println(currentPlayer.assignedCountries.get(0).currentArmiesDeployed);
+    }
+
+
+
 
     /**
      * over ride showMoveArmiesToCaptureCountryDialogBox
