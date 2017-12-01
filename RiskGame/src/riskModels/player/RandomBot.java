@@ -49,7 +49,7 @@ public class RandomBot implements PlayerStrategy {
         model.updatePhaseDetails("Repaint");
         model.updatePhaseDetails("===Attack Phase==");
         rng = new Random();
-        int randomTimeAttacks = rng.nextInt(5)+1;
+        int randomTimeAttacks = rng.nextInt(9)+1;
         while(randomTimeAttacks > 0){
             if(checkPlayerTurnCanContinue(countryA,countryB)){
                 dice = new Dice();

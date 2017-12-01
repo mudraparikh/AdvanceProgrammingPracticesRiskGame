@@ -1,56 +1,41 @@
 package test.player;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import riskModels.cards.Card;
-import riskModels.cards.Deck;
 import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskModels.player.BenevolentBot;
-import riskModels.player.CheaterBot;
 import riskModels.player.Player;
-import riskModels.player.RandomBot;
 import riskView.GameView;
+
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertTrue;
+
 /**
  * This test class checks whether BenevolentBot strategy is working as intended or not
- * @author hnath
  *
+ * @author hnath
  */
 public class BenevolentBotTest extends Player {
+    String location = PlayerTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
     private GameMap gameMap;
     private GameView gameView;
-    private Player model;
-
     private ArrayList<String> playerNames;
     private ArrayList<String> playerTypes;
-
-
     private String filePath;
-    String location = PlayerTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
     /**
      * This method setting up the context as many test cases share the same values
      * In this we are assigning the London.map file
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Before
     public void setUp() throws Exception {
         mapModel = new MapModel();
-        filePath = location.replaceAll("/bin", "/res");
-        File f = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/London.map");
-        gameMap = mapModel.readMapFile("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/London.map");
+        gameMap = mapModel.readMapFile("/home/akshay/AdvanceProgrammingPracticesRiskGame/London.map");
         playerNames = new ArrayList<String>();
         playerTypes = new ArrayList<String>();
 
@@ -73,10 +58,11 @@ public class BenevolentBotTest extends Player {
 
     /**
      * This method checks if reinforcement for BenevolentBot strategy is working as intended
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
-    public void reinforceBenevolentTest() throws Exception{
+    public void reinforceBenevolentTest() throws Exception {
         initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
@@ -93,13 +79,14 @@ public class BenevolentBotTest extends Player {
         executeReinforce(weakestCountry.getCountryName(), gameView, this);
         assertTrue(oldArmy <= weakestCountry.getCurrentArmiesDeployed());
     }
-    
+
     /**
      * This method checks if fortification for BenevolentBot strategy is working as intended
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
-    public void fortificationBenevolentTest() throws Exception{
+    public void fortificationBenevolentTest() throws Exception {
         initializePlayerData(6, playerNames, playerTypes);
         playerCount = 6;
         setInitialArmies();
@@ -113,8 +100,8 @@ public class BenevolentBotTest extends Player {
         setStrategy(new BenevolentBot());
         Country weakestCountry = getWeakestCountry(currentPlayer);
         weakestCountry.setCurrentArmiesDeployed(10);
-        Country neighbor = MapModel.getCountryObj(weakestCountry.getNeighborNodes().get(0).getCountryName(),GameMap.getInstance());
-        executeFortification(weakestCountry.getCountryName(),neighbor.getCountryName(),gameView,this);
+        Country neighbor = MapModel.getCountryObj(weakestCountry.getNeighborNodes().get(0).getCountryName(), GameMap.getInstance());
+        executeFortification(weakestCountry.getCountryName(), neighbor.getCountryName(), gameView, this);
         assertTrue(weakestCountry.getCurrentArmiesDeployed() <= neighbor.getCurrentArmiesDeployed());
     }
 
