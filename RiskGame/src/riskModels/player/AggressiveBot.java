@@ -5,6 +5,7 @@ import riskModels.dice.Dice;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskView.GameView;
+import riskView.PlayerView;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicIconFactory;
@@ -200,6 +201,7 @@ public class AggressiveBot implements PlayerStrategy {
         countryA.subtractArmy(moveArmies);
         countryB.addArmy(moveArmies);
         model.hasCountryCaptured = true;
+        model.addObserver(new PlayerView());
         model.updateDomination();
     }
     

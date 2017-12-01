@@ -5,6 +5,7 @@ import riskModels.dice.Dice;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskView.GameView;
+import riskView.PlayerView;
 
 import java.util.Random;
 /**
@@ -112,6 +113,7 @@ public class CheaterBot implements PlayerStrategy {
         countryA.subtractArmy(moveArmies);
         countryB.addArmy(moveArmies);
         model.hasCountryCaptured = true;
+        model.addObserver(new PlayerView());
         model.updateDomination();
     }
 

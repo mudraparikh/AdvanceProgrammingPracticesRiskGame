@@ -43,7 +43,7 @@ public class Hand implements Serializable {
     public void removeCardsFromHand(int index1, int index2, int index3) {
 
         if (canTurnInCards(index1, index2, index3)) {
-            addCardsToDeckAgain(index1,index2,index3);
+            //addCardsToDeckAgain(index1,index2,index3);
             hand.remove(index3);
             hand.remove(index2);
             hand.remove(index1);

@@ -1250,7 +1250,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     }
                 }
 
-                if (currentPlayer.mustTurnInCards()) {
+                if (currentPlayer.mustTurnInCards() && !currentPlayer.isBot()) {
                     // While player has 5 or more cards
                     GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
                     canTurnInCards = true;
