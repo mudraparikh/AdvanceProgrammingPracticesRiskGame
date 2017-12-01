@@ -113,7 +113,7 @@ public class CheaterBot implements PlayerStrategy {
         countryA.subtractArmy(moveArmies);
         countryB.addArmy(moveArmies);
         model.hasCountryCaptured = true;
-        model.addObserver(new PlayerView());
+        //model.addObserver(new PlayerView());
         model.updateDomination();
     }
 
