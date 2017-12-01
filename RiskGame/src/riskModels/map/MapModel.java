@@ -274,8 +274,8 @@ public class MapModel {
      * @return mapDetails with correct error message.
      */
     public GameMap validateMap(GameMap mapDetails) {
-    	boolean isConnectedContient=checkUnconnectedContinent(mapDetails);
-    	if(isConnectedContient) {
+
+    	
         Iterator it = mapDetails.getCountryAndNeighborsMap().entrySet().iterator();
         for(Continent continent: mapDetails.getContinentList()) {
         	if(continent.getControlValue()<=0) {
@@ -284,7 +284,8 @@ public class MapModel {
                 break;
         	}
         }
-        if(mapDetails.isCorrectMap()) {
+        
+        if(mapDetails.isCorrectMap() && checkUnconnectedContinent(mapDetails)) {
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry) it.next();
             Country country = (Country) pair.getKey();
@@ -311,8 +312,8 @@ public class MapModel {
                 }
             }
         }
-       }
       }
+      
         return mapDetails;
    }
     /**
