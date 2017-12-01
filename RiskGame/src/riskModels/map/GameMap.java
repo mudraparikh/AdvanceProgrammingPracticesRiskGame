@@ -59,7 +59,6 @@ public class GameMap implements Serializable {
      * @param gameMapToSet GameMap object
      */
     public static void setInstance(GameMap gameMapToSet){
-        //System.out.println("inside set instance of transaction manager");
         gameMap = gameMapToSet;
     }
     
