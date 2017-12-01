@@ -1266,9 +1266,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             }
 
             GameMap.getInstance().setCurrentPlayer(currentPlayer);
-            //testing purpose. remove below two lines if you are getting exception.
-            //MapModel.saveGame(GameMap.getInstance(), "test");
-           // MapModel.loadGame("test");
         }
     }
     /**
@@ -1415,7 +1412,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     }
                 }
             }
-            //System.out.println("**AI fortify - Created priorityTargets list");
 
             if (priorityTargets.size() > 0) {
                 List<Country> priorityCountries = new ArrayList<Country>();
@@ -1429,7 +1425,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     }
                 }
                 if (priorityCountries.size() > 0) {
-                    //System.out.println("**AI fortify - Created priorityCountries list");
                     int r2 = rng.nextInt(priorityCountries.size());
                     GameView.displayLog(" Fortifying...");
                     executeFortification(priorityCountries.get(r2).getCountryName(), priorityTargets.get(r1).getCountryName(), gameView, this);
@@ -1477,7 +1472,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                 }
 
             }
-            //System.out.println("**AI fortify - Created priorityTargets list");
 
             if (priorityTargets.size() > 0) {
                 List<Country> priorityCountries = new ArrayList<Country>();
@@ -1491,7 +1485,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     }
                 }
                 if (priorityCountries.size() > 0) {
-                    //System.out.println("**AI fortify - Created priorityCountries list");
                     int r2 = rng.nextInt(priorityCountries.size());
                     GameView.displayLog(" Fortifying...");
                     executeFortification(priorityCountries.get(r2).getCountryName(), priorityTargets.get(r1).getCountryName(), gameView, this);
@@ -1520,7 +1513,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
 
             //reinforce phase for bot
             executeReinforce(strongestCountry.getCountryName(), gameView, this);
-
 
             //attack phase for bot
             List<Country> neighbors = strongestCountry.getNeighborNodes();
@@ -1552,7 +1544,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                 }
 
             }
-            //System.out.println("**AI fortify - Created priorityTargets list");
 
             if (priorityTargets.size() > 0) {
                 List<Country> priorityCountries = new ArrayList<Country>();
@@ -1566,7 +1557,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     }
                 }
                 if (priorityCountries.size() > 0) {
-                    //System.out.println("**AI fortify - Created priorityCountries list");
                     int r2 = rng.nextInt(priorityCountries.size());
                     GameView.displayLog("Fortifying...");
                     executeFortification(priorityCountries.get(r2).getCountryName(), priorityTargets.get(r1).getCountryName(), gameView, this);
@@ -1599,7 +1589,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
      */
     public void startGame(Player model, GameView gameView) {
         this.gameView = gameView;
-        //Collections.shuffle(playerList);
         player.setPlayerList(playerList);
         GameMap.getInstance().setPlayerList(playerList);
         GameView.displayLog(startUpPhaseLogs);
@@ -1805,8 +1794,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
         canFortify = currentPlayer.canFortify;
         canReinforce = currentPlayer.canReinforce;
         deck = gameMap.getDeck();
-        
-
     }
 
     /**

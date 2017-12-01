@@ -399,7 +399,6 @@ public class TournamentMode extends JDialog{
         }
     }
 
-    // Get methods for combo boxes
     /**
      * Getter methods for the comboBox
      * @param playerNum maintains the player number
