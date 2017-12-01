@@ -118,27 +118,9 @@ public class MapModelTest extends Player {
         assertFalse(gameMapObj.isCorrectMap());
     }
 
-    /**
-     * This method checks whether the selected map is valid , if World map is selected
-     *
-     * @throws Exception it throws if there are any exceptions found
-     */
-    @Test
-    public void testWorldMap() throws Exception {
-        gameMapObj = mapObj.readMapFile(filePath + "World.map");
-        assertTrue(gameMapObj.isCorrectMap());
-    }
 
-    /**
-     * This method checks whether the selected map is valid , if 3D_Cliff map is selected
-     *
-     * @throws Exception it throws if there are any exceptions found
-     */
-    @Test
-    public void testCliffUniDirectionalMap() throws Exception {
-        gameMapObj = mapObj.readMapFile(filePath + "3D_Cliff.map");
-        assertTrue(gameMapObj.isCorrectMap());
-    }
+
+
 
     /**
      * This method checks whether the selected map is valid , if Volcano map is selected
