@@ -42,8 +42,7 @@ public class TournamentTest extends Player {
 
     private List<File> fileList;
 
-    private String filePath;
-    String location = PlayerTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+
 
     /**
      * This method setting up the context as many test cases share the same values
@@ -55,9 +54,8 @@ public class TournamentTest extends Player {
     	Player.isTournamentMode=true;
         mapModel = new MapModel();
         fileList = new ArrayList<>();
-        filePath = location.replaceAll("/bin", "/res");
-        File f = new File("C:\\Users\\prashantp95\\Dropbox\\APP\\TB\\Build3Grading.SOEN6441.2017.2\\World\\World.map");
-       // File f2 = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/3d_cliff.map");
+        //File f = new File("C:\\Users\\prashantp95\\Dropbox\\APP\\TB\\Build3Grading.SOEN6441.2017.2\\World\\World.map");
+        File f = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/World.map");
         playerNames = new ArrayList<String>();
         playerTypes = new ArrayList<String>();
 
@@ -136,14 +134,14 @@ public class TournamentTest extends Player {
      * if result is not draw, then check if some one has won the game or not. 
      */
     @Test
-    public void tournamentBetweenAgressiveBenevolent() {
+    public void tournamentBetweenAggressiveBenevolent() {
     	 playerNames = new ArrayList<String>();
          playerTypes = new ArrayList<String>();
          playerNames.add("Aggressive");
          playerNames.add("Benevolent");
          playerTypes.add("Aggressive Bot");
          playerTypes.add("Benevolent Bot");
-         int agressiveCountryCounter = 1,benevolentCountryCounter=1;
+         int aggressiveCountryCounter = 1,benevolentCountryCounter=1;
          for (File mapFile : fileList) {
              Player model = new Player();
              for (int i = 1; i < 3; i++) {
@@ -160,7 +158,7 @@ public class TournamentTest extends Player {
                  
                  for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
                 	 	if(country.getBelongsToPlayer().getName().equalsIgnoreCase("Aggressive")) {
-                	 		agressiveCountryCounter++;
+                	 		aggressiveCountryCounter++;
                 	 	}else if(country.getBelongsToPlayer().getName().equalsIgnoreCase("Benevolent")) {
                 	 		benevolentCountryCounter++;
                 	 	}
@@ -168,7 +166,7 @@ public class TournamentTest extends Player {
                  }
                  
              	if(Player.winner.equalsIgnoreCase("DrawGame")) {
-             		assertTrue(agressiveCountryCounter>benevolentCountryCounter);	
+             		assertTrue(aggressiveCountryCounter>benevolentCountryCounter);
              	}else {
              		assertTrue(Player.hasBotWon);
              	}

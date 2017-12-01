@@ -89,7 +89,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public Random rng;
     String updateMessage = "";
     String phaseDetailMessage="";
-    public String winner;
+    public static String winner;
 
     /**
      * getter method give the message to update
@@ -562,7 +562,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             case 6:
                 return 20;
             default:
-                return 10;
+                return 40;
         }
     }
 
@@ -1720,6 +1720,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     			strongestCountry = country;
     		}
     	}
+    	if(strongestCountry == null){
+    	    strongestCountry = player.getAssignedCountries().get(0);
+        }
 		return strongestCountry;
 }
     
@@ -1740,6 +1743,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     			weakestCountry = country;
     		}
     	}
+    	if(weakestCountry == null){
+    	    weakestCountry = player.getAssignedCountries().get(0);
+        }
 		return weakestCountry;
 }
     /**

@@ -8,6 +8,7 @@ import test.cards.DiceTest;
 import test.cards.HandTest;
 import test.map.MapModelTest;
 import test.player.*;
+import test.tournament.TournamentTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({MapModelTest.class,
@@ -17,7 +18,8 @@ import test.player.*;
         AggressiveBotTest.class,
         BenevolentBotTest.class,
         RandomBotTest.class,
-        CheaterBotTest.class})
+        CheaterBotTest.class,
+        TournamentTest.class})
 public class TestSuite {
     //nothing
 }
