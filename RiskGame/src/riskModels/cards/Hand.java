@@ -1,5 +1,7 @@
 package riskModels.cards;
 
+import riskView.GameView;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -49,7 +51,7 @@ public class Hand implements Serializable {
             hand.remove(index1);
 
         } else {
-            System.out.println("You must trade in three cards of the same type or one of each type.");
+            GameView.displayLog("You must trade in three cards of the same type or one of each type.");
         }
     }
 

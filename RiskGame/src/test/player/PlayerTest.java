@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -232,7 +233,6 @@ public class PlayerTest extends Player {
         canAttack = true;
         mapModel = new MapModel();
         attack(attacker.assignedCountries.get(0).getCountryName(), countryToAssignDefender.getCountryName(), gameView, attacker);
-        System.out.println(hasPlayerWon);
 
         assertTrue(hasPlayerWon);
     }
@@ -253,7 +253,6 @@ public class PlayerTest extends Player {
         nextPlayerTurn(this);
         Country country = currentPlayer.assignedCountries.get(0);
         int oldArmies = country.currentArmiesDeployed;
-        System.out.println();
         reinforce(country.getCountryName(), gameView, this);
         assertTrue(country.currentArmiesDeployed - oldArmies == 1);
     }
@@ -287,7 +286,7 @@ public class PlayerTest extends Player {
         deck.add(card2);
         deck.add(card3);
         deck.add(card4);
-        assertEquals(6, currentPlayerReinforceArmies);
+        assertEquals(3, currentPlayerReinforceArmies);
         currentPlayer.addRiskCard(card1);
         currentPlayer.addRiskCard(card2);
         currentPlayer.addRiskCard(card3);
@@ -298,7 +297,7 @@ public class PlayerTest extends Player {
         cardsToTurn[1] = 1;
         cardsToTurn[2] = 2;
         turnInCards(cardsToTurn);
-        assertEquals(11, currentPlayer.getTotalArmies());
+        assertEquals(8, currentPlayer.getTotalArmies());
     }
 
     /**
@@ -318,11 +317,8 @@ public class PlayerTest extends Player {
         canFortify = true;
         int oldArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
         int oldArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
-        System.out.println(oldArmyInCountry1);
-        //System.out.println(oldArmyInCountry2);
         moveArmyFromTo(currentPlayer.assignedCountries.get(0), currentPlayer.assignedCountries.get(1), 1);
         int newArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
-        System.out.println(newArmyInCountry1);
         int newArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
         assertEquals(oldArmyInCountry1, newArmyInCountry1 + 1);
         assertEquals(oldArmyInCountry2, newArmyInCountry2 - 1);
@@ -343,12 +339,15 @@ public class PlayerTest extends Player {
         gameView = new GameView();
         nextPlayerTurn(this);
         canFortify = true;
+        String currentPlayerNameBeforeSaving = currentPlayer.getName();
         int oldArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
         int oldArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
         moveArmyFromTo(currentPlayer.assignedCountries.get(0), currentPlayer.assignedCountries.get(1), 1);
         int newArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
         int newArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
-        System.out.println(newArmyInCountry1);
+        for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()){
+            country.setBelongsToPlayer(currentPlayer);
+        }
         saveGame();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today;
@@ -360,8 +359,12 @@ public class PlayerTest extends Player {
             e1.printStackTrace();
         }
         loadGame("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/" + fileName + ".ser");
-        System.out.println(canFortify);
-        System.out.println(currentPlayer.assignedCountries.get(0).currentArmiesDeployed);
+        String currentPlayerNameAfterLoading = GameMap.getInstance().getCurrentPlayer().getName();
+        assertEquals(currentPlayerNameBeforeSaving,currentPlayerNameAfterLoading);
+        assertTrue(GameMap.getInstance().getCurrentPlayer().canFortify);
+        for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()){
+            assertTrue(country.getBelongsToPlayer().getName().equals(currentPlayerNameBeforeSaving));
+        }
     }
 
 
@@ -435,6 +438,6 @@ public class PlayerTest extends Player {
      */
     @Override
     protected void showWinDialogBox() {
-        System.out.println("Congratulations! " + currentPlayer.getName() + " won the game.");
+        //Do nothing
     }
 }

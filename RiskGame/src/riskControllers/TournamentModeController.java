@@ -82,12 +82,10 @@ public class TournamentModeController implements ActionListener{
 
 			TournamentMode.numTurns = TournamentMode.turns.getText();
 			stringBuilder.append("Number of Turns :").append(TournamentMode.numTurns).append("\n");
-			System.out.println("Number of turns :"+ TournamentMode.numTurns);
             int maxNumberOfIteration =Integer.valueOf(TournamentMode.numTurns);
 
 			TournamentMode.numGames = (String) TournamentMode.gamesList.getSelectedItem();
 			stringBuilder.append("Number of Games :").append(TournamentMode.numGames);
-            System.out.println("Number of Games :"+ TournamentMode.numGames);
             int numberOfGames =Integer.valueOf(TournamentMode.numGames);
 
 

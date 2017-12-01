@@ -644,7 +644,6 @@ public class MapModel {
 			oos = new ObjectOutputStream(fout);
 			GameView.displayLog(fileName+".ser");
 			oos.writeObject(gameMap);
-            System.out.println("Done");
 
 		} catch (Exception ex) {
 

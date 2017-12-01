@@ -1119,10 +1119,10 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     GameView.displayLog("You must trade in three cards of the same type or one of each three types.");
                 }
             } else {
-                System.out.println("You must trade in three cards of the same type or one of each three types.");
+                GameView.displayLog("You must trade in three cards of the same type or one of each three types.");
             }
         } else {
-            System.out.println("You can't turn in cards right now.");
+            GameView.displayLog("You can't turn in cards right now.");
         }
     }
 
@@ -1223,7 +1223,6 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
             if(currentIteration > getDrawTurns()){
                 //TODO GameReport
             	model.winner="DrawGame";
-                System.out.println("Game is draw ! ");
             }
             else{
                 currentPlayer = playerList.get(playerIndex);

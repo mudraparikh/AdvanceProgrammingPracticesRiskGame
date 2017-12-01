@@ -54,7 +54,6 @@ public class FileSelectDialogController implements ActionListener {
         GameMap gameMap=GameMap.getInstance();
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileSelectDialog.getSelectedFile();
-            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
             if (playerCount == 0){
                 loadGame = true;
                 model.setDrawTurns(10000);
