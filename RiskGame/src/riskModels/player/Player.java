@@ -89,7 +89,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
     public Random rng;
     String updateMessage = "";
     String phaseDetailMessage="";
-    public String winner;
+    public static String winner;
 
     /**
      * getter method give the message to update
