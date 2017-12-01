@@ -639,7 +639,6 @@ public class MapModel {
 		}
        
 		try {
-          //  fout = new FileOutputStream("c:\\temp\\"+fileName+".ser");
             fout = new FileOutputStream(fileName+".ser");
 			oos = new ObjectOutputStream(fout);
 			GameView.displayLog(fileName+".ser");

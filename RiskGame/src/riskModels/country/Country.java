@@ -203,7 +203,6 @@ public class Country implements Serializable {
      */
     public void addArmy(int n) {
         currentArmiesDeployed += n;
-        // update UI
     }
 
     /**
@@ -212,7 +211,6 @@ public class Country implements Serializable {
      */
     public void subtractArmy(int n) {
         currentArmiesDeployed -= n;
-        // update UI
     }
 
     /**
@@ -223,7 +221,6 @@ public class Country implements Serializable {
     public void setPlayer(Player player, int noOfArmy) {
         this.belongsToPlayer = player;
         this.currentArmiesDeployed = noOfArmy;
-        // update UI
     }
 
 }
