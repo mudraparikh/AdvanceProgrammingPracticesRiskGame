@@ -1,21 +1,7 @@
 package test.player;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import riskModels.cards.Card;
 import riskModels.cards.Deck;
 import riskModels.country.Country;
@@ -24,12 +10,21 @@ import riskModels.map.MapModel;
 import riskModels.player.Player;
 import riskView.GameView;
 
-import javax.swing.*;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
- * The Player Test class tests all the important functions of player working as expected 
- * @author hnath
+ * The Player Test class tests all the important functions of player working as expected
  *
+ * @author hnath
  */
 public class PlayerTest extends Player {
 
@@ -40,21 +35,16 @@ public class PlayerTest extends Player {
 
     private ArrayList<String> playerNames;
     private ArrayList<String> playerTypes;
-    
-
-    private String filePath;
-    String location = PlayerTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
     /**
      * This method setting up the context as many test cases share the same values
-     * In this we are assigning the London.map file 
+     * In this we are assigning the London.map file
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Before
     public void setUp() throws Exception {
         mapModel = new MapModel();
-        filePath = location.replaceAll("/bin", "/res");
-        File f = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/London.map");
         gameMap = mapModel.readMapFile("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/London.map");
         playerNames = new ArrayList<String>();
         playerTypes = new ArrayList<String>();
@@ -79,7 +69,7 @@ public class PlayerTest extends Player {
      * This method checks whether the deck cards has populated correctly
      */
     @Test
-    public void checkDeckCardsPopulated(){
+    public void checkDeckCardsPopulated() {
         Deck deck = new Deck((ArrayList<Country>) gameMap.getCountries());
         assertEquals(gameMap.getCountries().size(), deck.deck.size());
     }
@@ -88,18 +78,19 @@ public class PlayerTest extends Player {
      * This method initializing the player data by assigning names
      */
     @Test
-    public void testInitialisePlayerData(){
+    public void testInitialisePlayerData() {
         initializePlayerData(6, playerNames, playerTypes);
         assertEquals("John", getPlayerList().get(0).getName());
         assertEquals("Alexa", getPlayerList().get(1).getName());
         assertEquals("Penny", getPlayerList().get(2).getName());
-        assertEquals("Sheldon",getPlayerList().get(3).getName());
+        assertEquals("Sheldon", getPlayerList().get(3).getName());
         assertEquals("Amy", getPlayerList().get(4).getName());
         assertEquals("Raj", getPlayerList().get(5).getName());
     }
 
     /**
      * This method checks whether the attack function is working as expected
+     *
      * @throws IOException if there is input output exceptions
      */
     @Test
@@ -125,14 +116,14 @@ public class PlayerTest extends Player {
         playerCount = 6;
         setInitialArmies();
         playerList.get(0);
-        assertEquals(20,playerList.get(0).totalArmies);
+        assertEquals(20, playerList.get(0).totalArmies);
     }
-    
+
     /**
      * This method checks if the decision is correct by comparing the dice result and calculated loss
      */
     @Test
-    public void testCompareDiceResultsAndCalculateLosses(){
+    public void testCompareDiceResultsAndCalculateLosses() {
         attackerDice = 3;
         defenderDice = 2;
         attackerRolls = new Integer[3];
@@ -143,8 +134,8 @@ public class PlayerTest extends Player {
         defenderRolls[0] = 2;
         defenderRolls[1] = 1;
         compareDiceResultsAndCalculateLosses();
-        assertEquals(0,attackerLosses);
-        assertEquals(2,defenderLosses);
+        assertEquals(0, attackerLosses);
+        assertEquals(2, defenderLosses);
 
         attackerLosses = 0;
         defenderLosses = 0;
@@ -154,8 +145,8 @@ public class PlayerTest extends Player {
         defenderRolls[0] = 4;
         defenderRolls[1] = 5;
         compareDiceResultsAndCalculateLosses();
-        assertEquals(2,attackerLosses);
-        assertEquals(0,defenderLosses);
+        assertEquals(2, attackerLosses);
+        assertEquals(0, defenderLosses);
 
         attackerLosses = 0;
         defenderLosses = 0;
@@ -165,12 +156,13 @@ public class PlayerTest extends Player {
         defenderRolls[0] = 5;
         defenderRolls[1] = 3;
         compareDiceResultsAndCalculateLosses();
-        assertEquals(1,attackerLosses);
-        assertEquals(1,defenderLosses);
+        assertEquals(1, attackerLosses);
+        assertEquals(1, defenderLosses);
     }
 
     /**
      * This method checks if the defending player lost country or not
+     *
      * @throws IOException if there are any input output exceptions
      */
     @Test
@@ -195,6 +187,7 @@ public class PlayerTest extends Player {
 
     /**
      * This method checks the functioning of gameWon
+     *
      * @throws IOException if there are any input output exceptions
      */
     @Test
@@ -205,47 +198,48 @@ public class PlayerTest extends Player {
         setInitialArmies();
         allocateCountriesToPlayers();
         addInitialArmiesInRR();
-       // gameView = new GameView();
-        
+        // gameView = new GameView();
+
         Player attacker = getPlayerList().get(0);
         attacker.assignedCountries.clear();
-        for(Country c : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
-        	c.setBelongsToPlayer(attacker);
-        	c.setCurrentArmiesDeployed(50);
-        	attacker.assignedCountries.add(c);
+        for (Country c : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+            c.setBelongsToPlayer(attacker);
+            c.setCurrentArmiesDeployed(50);
+            attacker.assignedCountries.add(c);
         }
-        Player defender =  getPlayerList().get(1);
+        Player defender = getPlayerList().get(1);
         defender.assignedCountries.clear();
         Country countryToAssignDefender = GameMap.getInstance().getCountryAndNeighborsMap().get(attacker.assignedCountries.get(0)).get(0);
-        
+
         attacker.assignedCountries.remove(countryToAssignDefender);
         countryToAssignDefender.setBelongsToPlayer(defender);
         defender.assignedCountries.add(countryToAssignDefender);
-        
-        for(Country country :attacker.assignedCountries ) {
+
+        for (Country country : attacker.assignedCountries) {
             List<Country> neighbors = GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(country.getCountryName()));
-        	GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbors);
+            GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbors);
         }
-        for(Country country :GameMap.getInstance().getCountryAndNeighborsMap().keySet() ) {
-        	if(country.getCountryName().equalsIgnoreCase(defender.assignedCountries.get(0).getCountryName())) {
-        		country.setBelongsToPlayer(defender);
-        		country.setCurrentArmiesDeployed(1);
-        		List<Country> neighbors = GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(country.getCountryName()));
-            	GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbors);
-        	}
+        for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+            if (country.getCountryName().equalsIgnoreCase(defender.assignedCountries.get(0).getCountryName())) {
+                country.setBelongsToPlayer(defender);
+                country.setCurrentArmiesDeployed(1);
+                List<Country> neighbors = GameMap.getInstance().getCountryAndNeighborsMap().get(new Country(country.getCountryName()));
+                GameMap.getInstance().getCountryAndNeighborsMap().put(country, neighbors);
+            }
         }
-       GameView gameView = new GameView();
-       currentPlayer=attacker;
-       canAttack=true;
-       mapModel = new MapModel();
-       attack(attacker.assignedCountries.get(0).getCountryName(),countryToAssignDefender.getCountryName(),gameView,attacker);
+        GameView gameView = new GameView();
+        currentPlayer = attacker;
+        canAttack = true;
+        mapModel = new MapModel();
+        attack(attacker.assignedCountries.get(0).getCountryName(), countryToAssignDefender.getCountryName(), gameView, attacker);
         System.out.println(hasPlayerWon);
 
-       assertTrue(hasPlayerWon);
+        assertTrue(hasPlayerWon);
     }
 
     /**
      * This method checks if the reinforcement function is working properly as expected or not
+     *
      * @throws IOException if there are any input output exceptions
      */
     @Test
@@ -260,12 +254,13 @@ public class PlayerTest extends Player {
         Country country = currentPlayer.assignedCountries.get(0);
         int oldArmies = country.currentArmiesDeployed;
         System.out.println();
-        reinforce(country.getCountryName(),gameView, this);
+        reinforce(country.getCountryName(), gameView, this);
         assertTrue(country.currentArmiesDeployed - oldArmies == 1);
     }
 
     /**
      * This method checks if the reinforcement armies are calculated correctly are not
+     *
      * @throws IOException if there are any input output exceptions
      */
     @Test
@@ -284,28 +279,31 @@ public class PlayerTest extends Player {
         Country c2 = GameMap.getInstance().getCountries().get(1);
         Country c3 = GameMap.getInstance().getCountries().get(2);
         Country c4 = GameMap.getInstance().getCountries().get(3);
-        Card card1 = new Card("Infantry",c1);
-        Card card2 = new Card("Infantry",c2);
-        Card card3 = new Card("Infantry",c3);
-        Card card4 = new Card("Infantry",c4);
+        Card card1 = new Card("Infantry", c1);
+        Card card2 = new Card("Infantry", c2);
+        Card card3 = new Card("Infantry", c3);
+        Card card4 = new Card("Infantry", c4);
         deck.add(card1);
         deck.add(card2);
         deck.add(card3);
         deck.add(card4);
-        assertEquals(3,currentPlayerReinforceArmies);
+        assertEquals(6, currentPlayerReinforceArmies);
         currentPlayer.addRiskCard(card1);
         currentPlayer.addRiskCard(card2);
         currentPlayer.addRiskCard(card3);
         currentPlayer.addRiskCard(card4);
         canTurnInCards = true;
         int[] cardsToTurn = new int[3];
-        cardsToTurn[0] = 0; cardsToTurn[1] = 1; cardsToTurn[2] = 2;
+        cardsToTurn[0] = 0;
+        cardsToTurn[1] = 1;
+        cardsToTurn[2] = 2;
         turnInCards(cardsToTurn);
-        assertEquals(8,currentPlayer.getTotalArmies());
+        assertEquals(11, currentPlayer.getTotalArmies());
     }
 
     /**
      * This method checks the functioning  of fortification phase is working as expected or not
+     *
      * @throws IOException if there are any input output exceptions
      */
     @Test
@@ -322,16 +320,17 @@ public class PlayerTest extends Player {
         int oldArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
         System.out.println(oldArmyInCountry1);
         //System.out.println(oldArmyInCountry2);
-        moveArmyFromTo(currentPlayer.assignedCountries.get(0),currentPlayer.assignedCountries.get(1),1);
+        moveArmyFromTo(currentPlayer.assignedCountries.get(0), currentPlayer.assignedCountries.get(1), 1);
         int newArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
         System.out.println(newArmyInCountry1);
         int newArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
-        assertEquals(oldArmyInCountry1,newArmyInCountry1+1);
+        assertEquals(oldArmyInCountry1, newArmyInCountry1 + 1);
         assertEquals(oldArmyInCountry2, newArmyInCountry2 - 1);
     }
 
     /**
      * This method is used to check where the game getting saved correctly
+     *
      * @throws IOException when the input or output has some exceptions
      */
     @Test
@@ -346,26 +345,24 @@ public class PlayerTest extends Player {
         canFortify = true;
         int oldArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
         int oldArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
-        moveArmyFromTo(currentPlayer.assignedCountries.get(0),currentPlayer.assignedCountries.get(1),1);
+        moveArmyFromTo(currentPlayer.assignedCountries.get(0), currentPlayer.assignedCountries.get(1), 1);
         int newArmyInCountry1 = currentPlayer.assignedCountries.get(0).currentArmiesDeployed;
         int newArmyInCountry2 = currentPlayer.assignedCountries.get(1).currentArmiesDeployed;
         System.out.println(newArmyInCountry1);
         saveGame();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date today;
-        String fileName="";
+        String fileName = "";
         try {
             today = formatter.parse(formatter.format(new Date()));
-            fileName=today.toString().replaceAll("00:00:00"," ").replaceAll("\\s+","").concat("_1");
+            fileName = today.toString().replaceAll("00:00:00", " ").replaceAll("\\s+", "").concat("_1");
         } catch (ParseException e1) {
             e1.printStackTrace();
         }
-        loadGame("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/"+fileName+".ser");
+        loadGame("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/" + fileName + ".ser");
         System.out.println(canFortify);
         System.out.println(currentPlayer.assignedCountries.get(0).currentArmiesDeployed);
     }
-
-
 
 
     /**
@@ -375,12 +372,12 @@ public class PlayerTest extends Player {
     protected int showMoveArmiesToCaptureCountryDialogBox(GameView gameView) {
         return 1;
     }
-    
+
     /**
      * over ride showAttackerDiceDialogBox
      */
     @Override
-    protected int showAttackerDiceDialogBox(GameView gameView){
+    protected int showAttackerDiceDialogBox(GameView gameView) {
         return 1;
     }
 
@@ -393,11 +390,11 @@ public class PlayerTest extends Player {
     }
 
     /**
-     *  over rides isAttackValid and returns true if its valid
+     * over rides isAttackValid and returns true if its valid
      */
     @Override
     protected boolean isAttackValid(Player p, Country c, Country c1) {
-    	return true;    	
+        return true;
     }
 
     /**
@@ -420,15 +417,15 @@ public class PlayerTest extends Player {
      * over rides showFortificationArmyMoveDialog
      */
     @Override
-    protected int showFortificationArmyMoveDialog(GameView gameView){
-        return  1;
+    protected int showFortificationArmyMoveDialog(GameView gameView) {
+        return 1;
     }
 
     /**
      * over rides updateArmiesBasedOnDiceResult
      */
     @Override
-    protected void updateArmiesBasedOnDiceResult(int attackerLosses,int defenderLosses){
+    protected void updateArmiesBasedOnDiceResult(int attackerLosses, int defenderLosses) {
         countryA.subtractArmy(0);
         countryB.subtractArmy(countryB.getCurrentArmiesDeployed());
     }
@@ -438,6 +435,6 @@ public class PlayerTest extends Player {
      */
     @Override
     protected void showWinDialogBox() {
-        System.out.println("Congratulations! "+currentPlayer.getName()+" won the game.");
+        System.out.println("Congratulations! " + currentPlayer.getName() + " won the game.");
     }
 }

@@ -6,9 +6,7 @@ import riskModels.country.Country;
 import riskModels.map.GameMap;
 import riskModels.map.MapModel;
 import riskModels.player.Player;
-import riskView.GameView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +14,15 @@ import static org.junit.Assert.*;
 
 /**
  * This class performs the validations related to maps
- * @author hnath
  *
+ * @author hnath
  */
 public class MapModelTest extends Player {
     String location = MapModelTest.class.getProtectionDomain().getCodeSource().getLocation().getPath();
     private MapModel mapObj;
     private GameMap gameMapObj;
     private String filePath;
-    
+
     private ArrayList<String> playerNames;
     private ArrayList<String> playerTypes;
 
@@ -51,11 +49,12 @@ public class MapModelTest extends Player {
         playerTypes.add("Human");
         playerTypes.add("Human");
         playerTypes.add("Human");
-        playerTypes.add("Human"); 
+        playerTypes.add("Human");
     }
 
     /**
      * This method checks if the selected map is the correct map
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
@@ -66,6 +65,7 @@ public class MapModelTest extends Player {
 
     /**
      * This method checks whether the selected map is valid , if no header map is selected
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
@@ -76,6 +76,7 @@ public class MapModelTest extends Player {
 
     /**
      * This method checks whether the selected map is valid , if no neighbours map is selected
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
@@ -83,28 +84,32 @@ public class MapModelTest extends Player {
         gameMapObj = mapObj.readMapFile(filePath + "no_neighbours.map");
         assertFalse(gameMapObj.isCorrectMap());
     }
-    
+
     /**
      * This method checks whether the selected map is valid , if disconnected map is selected
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
-    public void testDisconnectedMap() throws Exception{
-    	gameMapObj = mapObj.readMapFile(filePath + "disconnectedTest.map");
-    	assertFalse(gameMapObj.isCorrectMap());
+    public void testDisconnectedMap() throws Exception {
+        gameMapObj = mapObj.readMapFile(filePath + "disconnectedTest.map");
+        assertFalse(gameMapObj.isCorrectMap());
     }
 
     /**
      * This method checks UnconnectedContinent map is valid or not
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
-    public void testUnconnectedContinent() throws Exception{
-    	gameMapObj = mapObj.readMapFile(filePath + "UnconnectedContinent.map");
-    	assertFalse(gameMapObj.isCorrectMap());
+    public void testUnconnectedContinent() throws Exception {
+        gameMapObj = mapObj.readMapFile(filePath + "UnconnectedContinent.map");
+        assertFalse(gameMapObj.isCorrectMap());
     }
+
     /**
      * This method checks whether the selected map is valid , if blank map is selected
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
@@ -114,7 +119,41 @@ public class MapModelTest extends Player {
     }
 
     /**
+     * This method checks whether the selected map is valid , if World map is selected
+     *
+     * @throws Exception it throws if there are any exceptions found
+     */
+    @Test
+    public void testWorldMap() throws Exception {
+        gameMapObj = mapObj.readMapFile(filePath + "World.map");
+        assertTrue(gameMapObj.isCorrectMap());
+    }
+
+    /**
+     * This method checks whether the selected map is valid , if 3D_Cliff map is selected
+     *
+     * @throws Exception it throws if there are any exceptions found
+     */
+    @Test
+    public void testCliffUniDirectionalMap() throws Exception {
+        gameMapObj = mapObj.readMapFile(filePath + "3D_Cliff.map");
+        assertTrue(gameMapObj.isCorrectMap());
+    }
+
+    /**
+     * This method checks whether the selected map is valid , if Volcano map is selected
+     *
+     * @throws Exception it throws if there are any exceptions found
+     */
+    @Test
+    public void testZeroControlValueMap() throws Exception {
+        gameMapObj = mapObj.readMapFile(filePath + "Twin_Volcano.map");
+        assertFalse(gameMapObj.isCorrectMap());
+    }
+
+    /**
      * This method checks whether the selected map is valid , if invalid extension map is selected
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
@@ -125,6 +164,7 @@ public class MapModelTest extends Player {
 
     /**
      * This method checks for map validation by testing country object
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
@@ -135,6 +175,7 @@ public class MapModelTest extends Player {
 
     /**
      * This method checks if the map is valid , the country object with null
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
@@ -145,6 +186,7 @@ public class MapModelTest extends Player {
 
     /**
      * This method checks if the country is removed as expected to the map
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
@@ -157,6 +199,7 @@ public class MapModelTest extends Player {
 
     /**
      * This method checks if the country is added as expected to the map
+     *
      * @throws Exception it throws if there are any exceptions found
      */
     @Test
