@@ -26,8 +26,8 @@ import riskView.GameView;
 import riskView.TournamentView;
 import test.player.PlayerTest;
 /**
- * This test class checks whether Tournament mode is working as intended or not
- * @author hnath
+ * Test Cases for the tournament mode.
+ * @author prashantp95
  *
  */
 public class TournamentTest extends Player {
@@ -52,13 +52,12 @@ public class TournamentTest extends Player {
      */
     @Before
     public void setUp() throws Exception {
+    	Player.isTournamentMode=true;
         mapModel = new MapModel();
         fileList = new ArrayList<>();
         filePath = location.replaceAll("/bin", "/res");
-        File f = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/London.map");
-        File f1 = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/World.map");
-        File f2 = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/3d_cliff.map");
-        //gameMap = mapModel.readMapFile("/home/akshay/AdvanceProgrammingPracticesRiskGame/RiskGame/London.map");
+        File f = new File("C:\\Users\\prashantp95\\Dropbox\\APP\\TB\\Build3Grading.SOEN6441.2017.2\\World\\World.map");
+       // File f2 = new File("/home/akshay/AdvanceProgrammingPracticesRiskGame/3d_cliff.map");
         playerNames = new ArrayList<String>();
         playerTypes = new ArrayList<String>();
 
@@ -71,18 +70,19 @@ public class TournamentTest extends Player {
         playerTypes.add("Randomize Bot");
         playerTypes.add("Cheater Bot");
         fileList.add(f);
-        fileList.add(f1);
-        fileList.add(f2);
-        //createGameMapFromFile(f);
+     
     }
-
+    /**
+     * Testing if game result turns draw if there is low number of draw turn
+     * If  drawturns number is less , there is high probability that game will end in draw.   
+     */
     @Test
     public void tournamentGameWithDrawTurnsWithThreeGames(){
         for (File mapFile : fileList) {
             Player model = new Player();
             for (int i = 1; i <= 3; i++) {
                 model.initData(mapFile,playerNames.size(),playerNames,playerTypes,true);
-                model.setDrawTurns(1);
+                model.setDrawTurns(3);
                 try {
                     gameView = new GameView();
                     gameView.setVisible(false);
@@ -94,19 +94,142 @@ public class TournamentTest extends Player {
                 gameView=null;
                 GameMap.setInstance(null);
                 Player.hasBotWon=false;
-                System.out.println(winner);
+                assertTrue(("DrawGame").equalsIgnoreCase(winner.trim()));
+                Player.winner="";
             }
         }
     }
-
+    /**
+     * If number of draw turn is max , Test if some one winning the game or not.
+     */
     @Test
     public void tournamentGameWithWinner(){
-
+        for (File mapFile : fileList) {
+            Player model = new Player();
+            for (int i = 1; i <= 3; i++) {
+                model.initData(mapFile,playerNames.size(),playerNames,playerTypes,true);
+                model.setDrawTurns(50);
+                try {
+                    gameView = new GameView();
+                    gameView.setVisible(false);
+                } catch (IOException e) {
+                    // e.printStackTrace();
+                }
+                gameView.addActionListeners(new GamePlayController(model, gameView, false));
+                gameView.setVisible(false);
+                assertTrue(Player.hasBotWon);
+                Player.winner="";
+                gameView=null;
+                GameMap.setInstance(null);
+                Player.hasBotWon=false;
+            }
+        }
     }
 
     @Test
     public void tournamentModeWithHighestGamePossible(){
 
     }
+    /**
+     * Play tournament between Aggressive and Benevolent bot with less number of draw turns . 
+     * if the game result is draw after certain turn , Aggressive should have more number of countries compare to benevolent. checking the same.
+     * if result is not draw, then check if some one has won the game or not. 
+     */
+    @Test
+    public void tournamentBetweenAgressiveBenevolent() {
+    	 playerNames = new ArrayList<String>();
+         playerTypes = new ArrayList<String>();
+         playerNames.add("Aggressive");
+         playerNames.add("Benevolent");
+         playerTypes.add("Aggressive Bot");
+         playerTypes.add("Benevolent Bot");
+         int agressiveCountryCounter = 1,benevolentCountryCounter=1;
+         for (File mapFile : fileList) {
+             Player model = new Player();
+             for (int i = 1; i < 3; i++) {
+                 model.initData(mapFile,playerNames.size(),playerNames,playerTypes,true);
+                 model.setDrawTurns(10);
+                 try {
+                     gameView = new GameView();
+                     gameView.setVisible(false);
+                 } catch (IOException e) {
+                     // e.printStackTrace();
+                 }
+                 gameView.addActionListeners(new GamePlayController(model, gameView, false));
+                 gameView.setVisible(false);
+                 
+                 for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+                	 	if(country.getBelongsToPlayer().getName().equalsIgnoreCase("Aggressive")) {
+                	 		agressiveCountryCounter++;
+                	 	}else if(country.getBelongsToPlayer().getName().equalsIgnoreCase("Benevolent")) {
+                	 		benevolentCountryCounter++;
+                	 	}
+                     }
+                 }
+                 
+             	if(Player.winner.equalsIgnoreCase("DrawGame")) {
+             		assertTrue(agressiveCountryCounter>benevolentCountryCounter);	
+             	}else {
+             		assertTrue(Player.hasBotWon);
+             	}
+                 
+                 Player.winner="";
+                 gameView=null;
+                 GameMap.setInstance(null);
+                 Player.hasBotWon=false;
+             }
+         }
+    
+    /**
+     * Play tournament between Cheater and Benevolent bot with less number of draw turns . 
+     * if the game result is draw after certain turn , Cheater should have more number of countries compare to benevolent. checking the same.
+     * if result is not draw, then check if some one has won the game or not.
+     */
+    @Test
+    public void tournamentBetweenCheaterBenevolent() {
 
-}
+    	playerNames = new ArrayList<String>();
+        playerTypes = new ArrayList<String>();
+        playerNames.add("Cheater");
+        playerNames.add("Benevolent");
+        playerTypes.add("Aggressive Bot");
+        playerTypes.add("Benevolent Bot");
+        int cheaterCountryCounter = 1,benevolentCountryCounter=1;
+        for (File mapFile : fileList) {
+            Player model = new Player();
+            
+                model.initData(mapFile,playerNames.size(),playerNames,playerTypes,true);
+                model.setDrawTurns(10);
+                try {
+                    gameView = new GameView();
+                    gameView.setVisible(false);
+                } catch (IOException e) {
+                    // e.printStackTrace();
+                }
+                gameView.addActionListeners(new GamePlayController(model, gameView, false));
+                gameView.setVisible(false);
+                
+                for (Country country : GameMap.getInstance().getCountryAndNeighborsMap().keySet()) {
+               	 	if(country.getBelongsToPlayer().getName().equalsIgnoreCase("Cheater")) {
+               	 		cheaterCountryCounter++;
+               	 	}else if(country.getBelongsToPlayer().getName().equalsIgnoreCase("Benevolent")) {
+               	 		benevolentCountryCounter++;
+               	 	}
+                    }
+                }
+                
+            	if(Player.winner.equalsIgnoreCase("DrawGame")) {
+            		assertTrue(cheaterCountryCounter>benevolentCountryCounter);	
+            	}else {
+            		assertTrue(Player.hasBotWon);
+            	}
+                
+                Player.winner="";
+                gameView=null;
+                GameMap.setInstance(null);
+                Player.hasBotWon=false;
+            }
+
+    }
+
+
