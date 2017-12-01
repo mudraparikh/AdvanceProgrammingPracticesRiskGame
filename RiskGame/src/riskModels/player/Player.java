@@ -1104,6 +1104,9 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     // Increments armies according to how many turn-ins have occurred
                     currentPlayer.addArmy(5 * turnInCount);
                     currentPlayerReinforceArmies += (5 * turnInCount);
+                    deck.add(currentPlayer.getHandObject().getCards().get(cardsToRemove[0]));
+                    deck.add(currentPlayer.getHandObject().getCards().get(cardsToRemove[1]));
+                    deck.add(currentPlayer.getHandObject().getCards().get(cardsToRemove[2]));
                     currentPlayer.removeCards(cardsToRemove);
                     canReinforce = true;
                     canTurnInCards = false;
@@ -1250,7 +1253,7 @@ public class Player extends Observable implements Serializable,PlayerStrategy {
                     }
                 }
 
-                if (currentPlayer.mustTurnInCards()) {
+                if (currentPlayer.mustTurnInCards() && !currentPlayer.isBot()) {
                     // While player has 5 or more cards
                     GameView.displayLog("Your hand is full. Trade in cards for reinforcements to continue.");
                     canTurnInCards = true;
